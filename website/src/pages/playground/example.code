@@ -1,0 +1,18 @@
+const columns = generateColumns(10, 'col-', {
+  resizable: true,
+})
+const data = generateData(columns, 200)
+
+render(
+  <AutoResizer>
+    {({ width, height }) => (
+      <Table
+        fixed
+        width={width}
+        height={height}
+        columns={columns}
+        data={data}
+      />
+    )}
+  </AutoResizer>
+)

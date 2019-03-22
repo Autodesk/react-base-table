@@ -1,0 +1,79 @@
+@font-face {
+  font-family: 'Artifakt Element';
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Book.eot'); /* IE9 Compat Modes */
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Book.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ local('Artifakt Element Book'), local('ArtifaktElement-Book'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF2/Artifakt%20Element%20Book.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */ local('Artifakt Element Book'),
+    local('ArtifaktElement-Book'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF/Artifakt%20Element%20Book.woff')
+      format('woff'),
+    /* Pretty Modern Browsers */ local('Artifakt Element Book'),
+    local('ArtifaktElement-Book'),
+    url('https://fonts.autodesk.com/ArtifaktElement/TTF/Artifakt%20Element%20Book.ttf')
+      format('truetype'); /* Safari, Android, iOS */
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Artifakt Element';
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Medium.eot'); /* IE9 Compat Modes */
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Medium.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ local('Artifakt Element Medium'),
+    local('ArtifaktElement-Medium'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF2/Artifakt%20Element%20Medium.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */ local('Artifakt Element Medium'),
+    local('ArtifaktElement-Medium'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF/Artifakt%20Element%20Medium.woff')
+      format('woff'),
+    /* Pretty Modern Browsers */ local('Artifakt Element Medium'),
+    local('ArtifaktElement-Medium'),
+    url('https://fonts.autodesk.com/ArtifaktElement/TTF/Artifakt%20Element%20Medium.ttf')
+      format('truetype'); /* Safari, Android, iOS */
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Artifakt Element';
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Bold.eot'); /* IE9 Compat Modes */
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Bold.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ local('Artifakt Element Bold'), local('ArtifaktElement-Bold'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF2/Artifakt%20Element%20Bold.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */ local('Artifakt Element Bold'),
+    local('ArtifaktElement-Bold'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF/Artifakt%20Element%20Bold.woff')
+      format('woff'),
+    /* Pretty Modern Browsers */ local('Artifakt Element Bold'),
+    local('ArtifaktElement-Bold'),
+    url('https://fonts.autodesk.com/ArtifaktElement/TTF/Artifakt%20Element%20Bold.ttf')
+      format('truetype'); /* Safari, Android, iOS */
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Artifakt Element';
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Black.eot'); /* IE9 Compat Modes */
+  src: url('https://fonts.autodesk.com/ArtifaktElement/EOT/Artifakt%20Element%20Black.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ local('Artifakt Element Black'),
+    local('ArtifaktElement-Black'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF2/Artifakt%20Element%20Black.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */ local('Artifakt Element Black'),
+    local('ArtifaktElement-Black'),
+    url('https://fonts.autodesk.com/ArtifaktElement/WOFF/Artifakt%20Element%20Black.woff')
+      format('woff'),
+    /* Pretty Modern Browsers */ local('Artifakt Element Black'),
+    local('ArtifaktElement-Black'),
+    url('https://fonts.autodesk.com/ArtifaktElement/TTF/Artifakt%20Element%20Black.ttf')
+      format('truetype'); /* Safari, Android, iOS */
+  font-weight: 800;
+  font-style: normal;
+}

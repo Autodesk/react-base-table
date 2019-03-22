@@ -1,0 +1,20 @@
+# Project dependencies
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+.cache
+
+# Build directory
+/public
+
+# Ignore annoying DS files
+.DS_Store
+*.DS_Store
+**.DS_Store
+
+# npm
+node_modules
+npm-debug.log
+npm-debug.log.*
+
+# yarn
+yarn-error.log
+yarn-error.log.*

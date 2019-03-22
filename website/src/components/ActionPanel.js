@@ -1,0 +1,69 @@
+import React from 'react'
+import styled from 'styled-components'
+import Inspector from 'react-inspector'
+
+import Button from './Button'
+
+const Container = styled.div`
+  position: relative;
+  outline: 1px solid #edf0f2;
+  padding: 15px 0;
+`
+
+const ActionsContainer = styled.div`
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0 15px;
+`
+
+const ClearButton = styled(Button)`
+  background-color: transparent;
+`
+
+class ActionPanel extends React.Component {
+  state = {
+    actions: [],
+  }
+
+  componentDidMount() {
+    this.props.channel.on(this.onAction)
+  }
+
+  componentWillUnmount() {
+    this.props.channel.off(this.onAction)
+  }
+
+  render() {
+    const { actions } = this.state
+    if (!actions.length) return null
+    return (
+      <Container>
+        <ActionsContainer>
+          {actions.map((action, idx) => (
+            <Inspector
+              key={`${action.name}-${actions.length - idx}`}
+              showNonenumerable={false}
+              name={action.name}
+              data={action.args}
+            />
+          ))}
+        </ActionsContainer>
+        <ClearButton onClick={this.onClear}>clear</ClearButton>
+      </Container>
+    )
+  }
+
+  onAction = action => {
+    this.setState(({ actions }) => ({
+      actions: [action, ...actions.slice(0, 99)],
+    }))
+  }
+
+  onClear = () => {
+    this.setState({
+      actions: [],
+    })
+  }
+}
+
+export default ActionPanel

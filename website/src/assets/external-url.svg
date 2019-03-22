@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="external_ico" fill="#6B787F">
+            <g id="SHAPE" transform="translate(3.000000, 3.000000)">
+                <path d="M12.2925552,1 L9,1 L9,0 L14,0 L14,0.5 L14,5 L13,5 L13,1.70676879 L6.28243255,8.42456818 L5.57532577,7.7174614 L12.2925552,1 Z M6,2 L6,3 L1,3 L1,13 L11,13 L11,8 L12,8 L12,12.9975267 C12,13.5511774 11.544239,14 10.9975267,14 L1.00247329,14 C0.448822582,14 0,13.544239 0,12.9975267 L0,3.00247329 C0,2.44882258 0.455760956,2 1.00247329,2 L6,2 Z" id="Combined-Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

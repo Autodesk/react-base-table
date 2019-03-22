@@ -74,18 +74,19 @@ export default class ColumnManager {
       const columns = this.getVisibleColumns();
       if (!this.hasFrozenColumns()) return columns;
 
-      //columns placeholder for the fixed table above them
-      const leftFrozenColumns = this.getLeftFrozenColumns().map(column => ({
-        ...column,
-        [ColumnManager.PlaceholderKey]: true,
-      }));
-      const rightFrozenColumns = this.getRightFrozenColumns().map(column => ({
-        ...column,
-        [ColumnManager.PlaceholderKey]: true,
-      }));
-      const mainColumns = this.getVisibleColumns().filter(column => !column.frozen);
+      const mainColumns = [];
+      this.getLeftFrozenColumns().forEach(column => {
+        //columns placeholder for the fixed table above them
+        mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
+      });
+      this.getVisibleColumns().forEach(column => {
+        if (!column.frozen) mainColumns.push(column);
+      });
+      this.getRightFrozenColumns().forEach(column => {
+        mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
+      });
 
-      return [...leftFrozenColumns, ...mainColumns, ...rightFrozenColumns];
+      return mainColumns;
     });
   }
 
@@ -106,7 +107,8 @@ export default class ColumnManager {
   }
 
   getColumn(key) {
-    return this._columns.find(column => column.key === key);
+    const idx = this._columns.findIndex(column => column.key === key);
+    return this._columns[idx];
   }
 
   getColumnsWidth() {

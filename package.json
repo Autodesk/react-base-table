@@ -16,10 +16,12 @@
     "url": "https://github.com/Autodesk/react-base-table.git"
   },
   "scripts": {
+    "start": "cd website && npm start",
+    "deploy": "cd website && npm run deploy",
     "lint": "eslint ./src/**/*.js",
     "clean": "rimraf lib es styles.css",
-    "build:js": "cross-env NODE_ENV=production babel src -d lib --ignore 'src/**/*.spec.js' --copy-files --source-maps",
-    "build:es": "cross-env BABEL_ENV=es NODE_ENV=production babel src -d es --ignore 'src/**/*.spec.js' --copy-files --source-maps",
+    "build:js": "cross-env NODE_ENV=production babel src -d lib --ignore '**/*.spec.js','__snapshots__' --copy-files --source-maps",
+    "build:es": "cross-env BABEL_ENV=es NODE_ENV=production babel src -d es --ignore '**/*.spec.js','__snapshots__' --copy-files --source-maps",
     "build:css": "node-sass src/_BaseTable.scss ./styles.css --output-style expanded",
     "build": "npm run build:js && npm run build:es && npm run build:css",
     "format": "prettier --write 'src/**/*.{js,scss}'",

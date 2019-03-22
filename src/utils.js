@@ -72,34 +72,13 @@ export function unflatten(array, parent = null, dataKey = 'id', parentKey = 'par
   return tree;
 }
 
-// TODO: this non-recursion version is not compatible with disordered keys
-export function _flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
-  if (!keys || !keys.length) return tree;
-
-  let array = [...tree];
-
-  keys.forEach(key => {
-    const index = array.findIndex(x => x[dataKey] === key);
-    const child = index >= 0 && array[index];
-    if (child && hasChildren(child)) {
-      array = array.slice(0, index + 1).concat(child.children, array.slice(index + 1));
-
-      const depth = depthMap[child[dataKey]] || 0;
-      depthMap[child[dataKey]] = depth;
-      child.children.forEach(x => (depthMap[x[dataKey]] = depth + 1));
-    }
-  });
-
-  return array;
-}
-
 export function flattenOnKeys(tree, keys, depthMap = {}, depth = 0, dataKey = 'id') {
   if (!keys || !keys.length) return tree;
 
   let array = [];
   tree.forEach(child => {
     array.push(child);
-    if (keys.includes(child[dataKey])) {
+    if (keys.indexOf(child[dataKey]) >= 0) {
       depthMap[child[dataKey]] = depth;
       if (hasChildren(child)) {
         child.children.forEach(x => {

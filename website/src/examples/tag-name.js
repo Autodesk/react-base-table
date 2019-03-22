@@ -1,8 +1,35 @@
 const columns = generateColumns(10)
 const data = generateData(columns, 200)
 
+const move = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+`
+
 const InlineLoader = styled.div`
-  background-color: 'red';
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background-color: #eee;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, transparent, #ccc, transparent);
+    animation: ${move} 1.5s linear infinite;
+  }
 `
 
 const CellLoader = styled(InlineLoader)`

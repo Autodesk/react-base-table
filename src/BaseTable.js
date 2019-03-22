@@ -203,7 +203,7 @@ class BaseTable extends React.PureComponent {
     if (!expandColumnKey) return null;
 
     const expandable = rowIndex >= 0 && hasChildren(rowData);
-    const expanded = rowIndex >= 0 && this.state.expandedRowKeys.includes(rowData[rowKey]);
+    const expanded = rowIndex >= 0 && this.state.expandedRowKeys.indexOf(rowData[rowKey]) >= 0;
     const extraProps = callOrReturn(expandIconProps, { rowData, rowIndex, depth, expandable, expanded });
     const ExpandIcon = this._getComponent('ExpandIcon');
 
@@ -220,7 +220,7 @@ class BaseTable extends React.PureComponent {
 
     const className = cn(this._prefixClass('row'), rowClass, {
       [this._prefixClass(`row--depth-${depth}`)]: !!expandColumnKey && rowIndex >= 0,
-      [this._prefixClass('row--expanded')]: !!expandColumnKey && this.state.expandedRowKeys.includes(rowKey),
+      [this._prefixClass('row--expanded')]: !!expandColumnKey && this.state.expandedRowKeys.indexOf(rowKey) >= 0,
       [this._prefixClass('row--hovered')]: !isScrolling && rowKey === this.state.hoveredRowKey,
       [this._prefixClass('row--frozen')]: depth === 0 && rowIndex < 0,
       [this._prefixClass('row--customized')]: rowRenderer,
@@ -769,7 +769,7 @@ class BaseTable extends React.PureComponent {
   _handleRowExpand({ expanded, rowData, rowIndex, rowKey }) {
     const expandedRowKeys = cloneArray(this.state.expandedRowKeys);
     if (expanded) {
-      if (!expandedRowKeys.includes(rowKey)) expandedRowKeys.push(rowKey);
+      if (!expandedRowKeys.indexOf(rowKey) >= 0) expandedRowKeys.push(rowKey);
     } else {
       const index = expandedRowKeys.indexOf(rowKey);
       if (index > -1) {

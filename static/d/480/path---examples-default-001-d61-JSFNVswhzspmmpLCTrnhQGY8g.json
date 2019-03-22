@@ -1,0 +1,1 @@
+{"data":{"rawCode":{"content":"const columns = generateColumns(10)\nconst data = generateData(columns, 200)\n\nexport default () => <Table columns={columns} data={data} />\n"}},"pageContext":{"isCreatedByStatefulCreatePages":false,"name":"default"}}

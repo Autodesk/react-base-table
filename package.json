@@ -1,6 +1,6 @@
 {
   "name": "react-base-table",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -28,6 +28,7 @@
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
     "prepush": "npm run test",
+    "prepublish": "npm run build && npm run test",
     "test": "jest"
   },
   "lint-staged": {

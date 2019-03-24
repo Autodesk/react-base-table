@@ -2337,13 +2337,13 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -2404,13 +2404,13 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -2511,13 +2511,13 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -2781,13 +2781,13 @@ exports[`Table table can receive expandColumnKey 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -2848,13 +2848,13 @@ exports[`Table table can receive expandColumnKey 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -2955,13 +2955,13 @@ exports[`Table table can receive expandColumnKey 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -3083,13 +3083,13 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -3150,13 +3150,13 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }
@@ -3257,13 +3257,13 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
-                  "display": "inline-block",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
                   "marginLeft": 0,
-                  "outline": "none",
                   "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
                   "userSelect": "none",
                   "width": "16px",
                 }

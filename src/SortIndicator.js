@@ -23,7 +23,7 @@ const SortIndicator = ({ sortOrder, className, style }) => {
         ...style,
       }}
     >
-      {sortOrder === SortOrder.DESC ? '↓' : '↑'}
+      {sortOrder === SortOrder.DESC ? '\u2193' : '\u2191'}
     </div>
   );
 };

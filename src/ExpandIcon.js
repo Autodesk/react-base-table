@@ -25,8 +25,6 @@ class ExpandIcon extends React.PureComponent {
         className={cls}
         onClick={expandable && onExpand ? this._handleClick : null}
         style={{
-          display: 'inline-block',
-          outline: 'none',
           cursor: 'pointer',
           userSelect: 'none',
           width: '16px',
@@ -34,10 +32,12 @@ class ExpandIcon extends React.PureComponent {
           lineHeight: '16px',
           fontSize: '16px',
           textAlign: 'center',
+          transition: 'transform 0.15s ease-out',
+          transform: `rotate(${expandable && expanded ? 90 : 0}deg)`,
           marginLeft: depth * indentSize,
         }}
       >
-        {expandable && (expanded ? '-' : '+')}
+        {expandable && '\u25B8'}
       </div>
     );
   }

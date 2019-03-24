@@ -3,63 +3,71 @@ const _ = require('lodash')
 
 const siteConfig = require('./siteConfig')
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        assets: path.resolve(__dirname, 'src/assets'),
-        components: path.resolve(__dirname, 'src/components'),
-        utils: path.resolve(__dirname, 'src/utils'),
-        siteConfig: path.resolve(__dirname, 'siteConfig'),
-        'react-base-table/package.json': path.resolve(__dirname, '../package.json'),
-        'react-base-table/styles.css': path.resolve(__dirname, '../styles.css'),
-        'react-base-table': path.resolve(__dirname, '../src'),
-      },
-    },
-  })
+exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
+  const config = getConfig()
+
+  switch (stage) {
+    case 'build-javascript':
+      const app =
+        typeof config.entry.app === 'string'
+          ? [config.entry.app]
+          : config.entry.app
+
+      config.entry.app = ['core-js/modules/es6.symbol', ...app]
+  }
+
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    assets: path.resolve(__dirname, 'src/assets'),
+    components: path.resolve(__dirname, 'src/components'),
+    utils: path.resolve(__dirname, 'src/utils'),
+    siteConfig: path.resolve(__dirname, 'siteConfig'),
+    'react-base-table/package.json': path.resolve(__dirname, '../package.json'),
+    'react-base-table/styles.css': path.resolve(__dirname, '../styles.css'),
+    'react-base-table': path.resolve(__dirname, '../src'),
+  }
+
+  config.module.rules = config.module.rules.map(rule =>
+    String(rule.test) !== String(/\.jsx?$/)
+      ? rule
+      : {
+          ...rule,
+          exclude: modulePath =>
+            /node_modules/.test(modulePath) &&
+            !/node_modules\/(react-inspector|acorn-jsx|regexpu-core|unicode-match-property-ecmascript|unicode-match-property-value-ecmascript)/.test(
+              modulePath
+            ),
+        }
+  )
+
+  actions.replaceWebpackConfig(config)
 }
 
 exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
-  if (node.internal.type === 'MarkdownRemark') {
-    let slug
-    const fileNode = getNode(node.parent)
-    if (!fileNode.relativePath) return
-    const parsedFilePath = path.parse(fileNode.relativePath)
-    if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
-      slug = `/${parsedFilePath.dir}/${parsedFilePath.name}`
-    } else if (parsedFilePath.dir === ``) {
-      slug = `/${parsedFilePath.name}`
-    } else {
-      slug = `/${parsedFilePath.dir}`
-    }
-    slug = `/${fileNode.sourceInstanceName}${slug}`
 
-    // Add slug as a field on the node.
-    createNodeField({ node, name: 'slug', value: slug })
-  } else if (
-    node.internal.type === 'ComponentMetadata' &&
-    node.methods.length
-  ) {
-    node.methods.filter(method => method.docblock).map(method => {
-      const methodNode = {
-        id: createNodeId(`${node.id} >>> ${method.name}`),
-        parent: node.id,
-        children: [],
-        name: method.name,
-        params: method.params,
-        description: method.description,
-        internal: {
-          type: `ComponentMethodExt`,
-          mediaType: `text/markdown`,
-          content: method.description,
-          contentDigest: method.description,
-        },
-      }
+  if (node.internal.type === 'ComponentMetadata' && node.methods.length) {
+    node.methods
+      .filter(method => method.docblock)
+      .map(method => {
+        const methodNode = {
+          id: createNodeId(`${node.id} >>> ${method.name}`),
+          parent: node.id,
+          children: [],
+          name: method.name,
+          params: method.params,
+          description: method.description,
+          internal: {
+            type: `ComponentMethodExt`,
+            mediaType: `text/markdown`,
+            content: method.description,
+            contentDigest: method.description,
+          },
+        }
 
-      createNode(methodNode)
-      createParentChildLink({ parent: node, child: methodNode })
-    })
+        createNode(methodNode)
+        createParentChildLink({ parent: node, child: methodNode })
+      })
   }
 }
 

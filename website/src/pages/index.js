@@ -23,7 +23,7 @@ const Description = styled.p`
   font-size: 16px;
   color: #bcc9d1;
   max-width: 600px;
-  margin: 20px auto;
+  margin: 20px auto 40px;
 `
 
 const Content = styled.div`
@@ -68,10 +68,11 @@ export default () => (
         BaseTable is a react table component to display large data set with high
         performance and flexibility
       </Description>
-      <StartLink to="/api">Get Started</StartLink>
+      <StartLink to="/docs">Get Started</StartLink>
       <ExampleLink to="/examples">View Examples</ExampleLink>
     </Hero>
     <Content>
+      <StyledLink to="/docs">Docs</StyledLink>
       <StyledLink to="/api">API</StyledLink>
       <StyledLink to="/examples">Examples</StyledLink>
       <ExternalLink

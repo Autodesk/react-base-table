@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+import pkg from 'react-base-table/package.json'
 
 import linkIcon from 'assets/mark-github.svg'
-
-const pkg = require('react-base-table/package.json')
 
 const Container = styled.div`
   background-color: #182a3d;
@@ -82,6 +81,9 @@ const Header = ({ pathname }) => {
           </Version>
         </div>
         <div>
+          <NavLink to="/docs" pathname={pathname}>
+            Docs
+          </NavLink>
           <NavLink to="/api" pathname={pathname}>
             API
           </NavLink>
@@ -91,6 +93,12 @@ const Header = ({ pathname }) => {
           <NavLink to="/playground" pathname={pathname}>
             Playground
           </NavLink>
+          <ExternalLink
+            href="https://github.com/Autodesk/react-base-table/blob/master/CHANGELOG.md"
+            target="_blank"
+          >
+            CHANGELOG
+          </ExternalLink>
           <ExternalLink last href={pkg.repository.url} target="_blank">
             <LinkIcon src={linkIcon} alt="Github" />
           </ExternalLink>

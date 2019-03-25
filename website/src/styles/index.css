@@ -1,13 +1,11 @@
 @import '~sanitize.css';
 @import '~prismjs/themes/prism-okaidia.css';
-@import './artifakt.css';
 
 html {
   font-size: 62.5%;
 }
 
 body {
-  font-family: 'Artifakt Element', Helvetica, Arial, sans-serif;
   /* Currently ems cause chrome bug misinterpreting rems on body element */
   font-size: 1.6em;
   line-height: 1.6;
@@ -35,8 +33,4 @@ pre[class*='language-'] {
   font-size: 85%;
   color: #c7254e;
   text-shadow: none;
-}
-
-.MatrixTable__container {
-  font-size: 13px;
 }

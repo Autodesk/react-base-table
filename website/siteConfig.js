@@ -1,24 +1,4 @@
 module.exports = {
-  redirects: [
-    {
-      fromPath: '/docs',
-      toPath: '/docs/get-started',
-      isPermanent: true,
-      redirectInBrowser: true,
-    },
-    {
-      fromPath: '/api',
-      toPath: '/api/basetable',
-      isPermanent: true,
-      redirectInBrowser: true,
-    },
-    {
-      fromPath: '/examples',
-      toPath: '/examples/default',
-      isPermanent: true,
-      redirectInBrowser: true,
-    },
-  ],
   docs: [
     {
       title: 'Get Started',

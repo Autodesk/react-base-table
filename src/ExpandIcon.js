@@ -25,6 +25,7 @@ class ExpandIcon extends React.PureComponent {
         className={cls}
         onClick={expandable && onExpand ? this._handleClick : null}
         style={{
+          fontFamily: 'initial',
           cursor: 'pointer',
           userSelect: 'none',
           width: '16px',

@@ -2337,6 +2337,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -2404,6 +2405,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -2511,6 +2513,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -2781,6 +2784,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -2848,6 +2852,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -2955,6 +2960,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -3083,6 +3089,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -3150,6 +3157,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",
@@ -3257,6 +3265,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               style={
                 Object {
                   "cursor": "pointer",
+                  "fontFamily": "initial",
                   "fontSize": "16px",
                   "height": "16px",
                   "lineHeight": "16px",

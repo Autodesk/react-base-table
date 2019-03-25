@@ -45,8 +45,27 @@ exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
 
 exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
+  if (node.internal.type === 'MarkdownRemark') {
+    let slug
+    const fileNode = getNode(node.parent)
+    if (!fileNode.relativePath) return
 
-  if (node.internal.type === 'ComponentMetadata' && node.methods.length) {
+    const parsedFilePath = path.parse(fileNode.relativePath)
+    if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
+      slug = `/${parsedFilePath.dir}/${parsedFilePath.name}`
+    } else if (parsedFilePath.dir === '') {
+      slug = `/${parsedFilePath.name}`
+    } else {
+      slug = `/${parsedFilePath.dir}`
+    }
+    slug = `/${fileNode.sourceInstanceName}${slug}`
+
+    // Add slug as a field on the node.
+    createNodeField({ node, name: 'slug', value: slug })
+  } else if (
+    node.internal.type === 'ComponentMetadata' &&
+    node.methods.length
+  ) {
     node.methods
       .filter(method => method.docblock)
       .map(method => {
@@ -72,16 +91,24 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
 }
 
 exports.createPages = async ({ graphql, actions, getNode }) => {
-  const { createPage, createRedirect } = actions
+  const { createPage } = actions
 
-  siteConfig.redirects.forEach(item => createRedirect(item))
-
+  const docPage = path.resolve('src/templates/doc.js')
   const apiPage = path.resolve('src/templates/api.js')
   const examplePage = path.resolve('src/templates/example.js')
 
   const result = await graphql(
     `
       {
+        allMarkdownRemark {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
         allComponentMetadata {
           edges {
             node {
@@ -106,6 +133,18 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
   if (result.errors) {
     throw new Error(result.errors)
   }
+
+  result.data.allMarkdownRemark.edges.forEach(edge => {
+    const slug = _.get(edge, 'node.fields.slug')
+    if (!slug || !slug.includes('docs')) return
+    createPage({
+      path: slug,
+      component: docPage,
+      context: {
+        slug,
+      },
+    })
+  })
 
   result.data.allComponentMetadata.edges.forEach(edge => {
     const node = edge.node

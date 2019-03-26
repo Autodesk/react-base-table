@@ -3,6 +3,7 @@
 ## NEXT VERSION
 
 - chore: use unicode for icon character
+- fix: make sure `scrollLeft` is always integer
 
 ## v0.2.0
 

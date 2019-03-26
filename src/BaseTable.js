@@ -397,7 +397,7 @@ class BaseTable extends React.PureComponent {
     if (fixed) {
       const columnsWidth = this.columnManager.getColumnsWidth();
       // make sure `scrollLeft` is always integer to fix a sync bug when scrolling to end horizontally
-      tableWidth = Math.max(columnsWidth, Math.round(tableWidth));
+      tableWidth = Math.max(Math.round(columnsWidth), tableWidth);
     }
     return (
       <GridTable

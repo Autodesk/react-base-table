@@ -5,6 +5,10 @@ module.exports = {
       path: '/docs/get-started',
     },
     {
+      title: 'Advance',
+      path: '/docs/advance',
+    },
+    {
       title: 'Glossary',
       path: '/docs/glossary',
     },

@@ -4,6 +4,7 @@ import cn from 'classnames';
 import Grid from 'react-virtualized/dist/commonjs/Grid';
 
 import cellRangeRenderer from './cellRangeRenderer';
+import { isObjectEqual } from './utils';
 
 /**
  * A wrapper of the Grid for internal only
@@ -141,6 +142,16 @@ class GridTable extends React.PureComponent {
         )}
       </div>
     );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      !isObjectEqual(this.props.headerHeight, prevProps.headerHeight) ||
+      // if there are frozen rows
+      this.props.rowHeight !== prevProps.rowHeight
+    ) {
+      this.headerRef && this.headerRef.recomputeGridSize();
+    }
   }
 
   _setHeaderRef(ref) {

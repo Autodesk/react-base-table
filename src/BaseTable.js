@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import get from 'lodash/get';
 
 import GridTable from './GridTable';
-import TableHeader from './TableHeader';
+import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
 import TableCell from './TableCell';
@@ -317,7 +317,7 @@ class BaseTable extends React.PureComponent {
       expandIcon: this._getComponent('ExpandIcon'),
     };
 
-    return <TableHeader {...headerProps} />;
+    return <TableHeaderRow {...headerProps} />;
   }
 
   renderHeaderCell({ isScrolling, columns, column, columnIndex, headerIndex, expandIcon }) {

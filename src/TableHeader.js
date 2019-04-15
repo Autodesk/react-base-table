@@ -1,61 +1,75 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { renderElement } from './utils';
+class TableHeeader extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-/**
- * Header component for BaseTable
- */
-const TableHeader = ({
-  isScrolling,
-  className,
-  style,
-  columns,
-  headerIndex,
-  cellRenderer,
-  headerRenderer,
-  expandColumnKey,
-  expandIcon: ExpandIcon,
-  tagName: Tag,
-  ...rest
-}) => {
-  let cells = columns.map((column, columnIndex) =>
-    cellRenderer({
-      isScrolling,
-      columns,
-      column,
-      columnIndex,
-      headerIndex,
-      expandIcon: column.key === expandColumnKey && <ExpandIcon />,
-    })
-  );
-
-  if (headerRenderer) {
-    cells = renderElement(headerRenderer, { isScrolling, cells, columns, headerIndex });
+    this.renderHeaderRow = this.renderHeaderRow.bind(this);
+    this.renderFrozenRow = this.renderFrozenRow.bind(this);
+    this._setRef = this._setRef.bind(this);
   }
 
-  return (
-    <Tag {...rest} className={className} style={style}>
-      {cells}
-    </Tag>
-  );
-};
+  scrollToLeft(offset) {
+    if (this.headerRef) this.headerRef.scrollLeft = offset;
+  }
 
-TableHeader.defaultProps = {
-  tagName: 'div',
-};
+  renderHeaderRow(height, index) {
+    const { columns, headerRenderer, rowWidth } = this.props;
+    if (height <= 0) return null;
 
-TableHeader.propTypes = {
-  isScrolling: PropTypes.bool,
+    const style = { width: rowWidth, height };
+    return headerRenderer({ headerIndex: index, style, columns });
+  }
+
+  renderFrozenRow(rowData, index) {
+    const { columns, rowRenderer, rowHeight, rowWidth } = this.props;
+    const style = {
+      width: rowWidth,
+      height: rowHeight,
+    };
+    // for frozen row the `rowIndex` is negative
+    const rowIndex = -index - 1;
+    return rowRenderer({ rowIndex, style, columns, rowData });
+  }
+
+  render() {
+    const { className, width, height, headerHeight, frozenData } = this.props;
+    if (height <= 0) return null;
+
+    const style = {
+      width,
+      height: height,
+      position: 'relative',
+      overflow: 'hidden',
+    };
+
+    const headerHeights = Array.isArray(headerHeight) ? headerHeight : [headerHeight];
+    return (
+      <div ref={this._setRef} className={className} style={style}>
+        {headerHeights.map(this.renderHeaderRow)}
+        {frozenData.map(this.renderFrozenRow)}
+      </div>
+    );
+  }
+
+  _setRef(ref) {
+    this.headerRef = ref;
+  }
+}
+
+TableHeeader.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
+  rowWidth: PropTypes.number.isRequired,
+  rowHeight: PropTypes.number.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headerIndex: PropTypes.number,
-  cellRenderer: PropTypes.func,
-  headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-  expandColumnKey: PropTypes.string,
-  expandIcon: PropTypes.func,
-  tagName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  frozenData: PropTypes.arrayOf(PropTypes.object),
+  headerRenderer: PropTypes.func.isRequired,
+  rowRenderer: PropTypes.func.isRequired,
 };
 
-export default TableHeader;
+export default TableHeeader;

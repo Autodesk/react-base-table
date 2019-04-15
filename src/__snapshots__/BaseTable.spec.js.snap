@@ -151,92 +151,63 @@ exports[`Table renders correctly 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -399,92 +370,63 @@ exports[`Table table can be set to disabled 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -647,92 +589,63 @@ exports[`Table table can be set to fixed 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 0 auto",
+              "flex": "0 0 auto",
+              "msFlex": "0 0 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 0 auto",
-                "flex": "0 0 auto",
-                "msFlex": "0 0 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 0 auto",
-                "flex": "0 0 auto",
-                "msFlex": "0 0 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 0 auto",
+              "flex": "0 0 auto",
+              "msFlex": "0 0 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -780,190 +693,155 @@ exports[`Table table can freeze rows 1`] = `
       tabIndex={0}
     />
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 100,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
-            "height": 150,
-            "maxHeight": 150,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "height": 50,
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
-          </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
-          >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            code
           </div>
         </div>
         <div
-          className="BaseTable__row BaseTable__row--frozen"
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 50,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__row-cell"
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__row-cell-text"
-            >
-              1
-            </div>
+            name
           </div>
-          <div
-            className="BaseTable__row-cell"
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+      </div>
+      <div
+        className="BaseTable__row BaseTable__row--frozen"
+        style={
+          Object {
+            "height": 50,
+            "width": 100,
+          }
+        }
+      >
+        <div
+          className="BaseTable__row-cell"
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__row-cell-text"
           >
-            <div
-              className="BaseTable__row-cell-text"
-            >
-              1
-            </div>
+            1
           </div>
         </div>
         <div
-          className="BaseTable__row BaseTable__row--frozen"
+          className="BaseTable__row-cell"
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 100,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__row-cell"
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__row-cell-text"
           >
-            <div
-              className="BaseTable__row-cell-text"
-            >
-              2
-            </div>
+            1
           </div>
-          <div
-            className="BaseTable__row-cell"
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+      </div>
+      <div
+        className="BaseTable__row BaseTable__row--frozen"
+        style={
+          Object {
+            "height": 50,
+            "width": 100,
+          }
+        }
+      >
+        <div
+          className="BaseTable__row-cell"
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__row-cell-text"
           >
-            <div
-              className="BaseTable__row-cell-text"
-            >
-              2
-            </div>
+            2
+          </div>
+        </div>
+        <div
+          className="BaseTable__row-cell"
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
+            }
+          }
+        >
+          <div
+            className="BaseTable__row-cell-text"
+          >
+            2
           </div>
         </div>
       </div>
@@ -1283,92 +1161,63 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -1531,54 +1380,25 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row BaseTable__header-row--customized"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
-      >
-        <div
-          className="BaseTable__header-row BaseTable__header-row--customized"
-          style={
-            Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
-            }
-          }
-        />
-      </div>
+      />
     </div>
   </div>
   <div
@@ -1664,92 +1484,63 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -1912,92 +1703,63 @@ exports[`Table table can receive children 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -2160,92 +1922,63 @@ exports[`Table table can receive className 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -2446,111 +2179,82 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
+            className="BaseTable__expand-icon"
             onClick={null}
             style={
               Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
+                "cursor": "pointer",
+                "fontFamily": "initial",
+                "fontSize": "16px",
+                "height": "16px",
+                "lineHeight": "16px",
+                "marginLeft": 0,
+                "textAlign": "center",
+                "transform": "rotate(0deg)",
+                "transition": "transform 0.15s ease-out",
+                "userSelect": "none",
+                "width": "16px",
               }
             }
-          >
-            <div
-              className="BaseTable__expand-icon"
-              onClick={null}
-              style={
-                Object {
-                  "cursor": "pointer",
-                  "fontFamily": "initial",
-                  "fontSize": "16px",
-                  "height": "16px",
-                  "lineHeight": "16px",
-                  "marginLeft": 0,
-                  "textAlign": "center",
-                  "transform": "rotate(0deg)",
-                  "transition": "transform 0.15s ease-out",
-                  "userSelect": "none",
-                  "width": "16px",
-                }
-              }
-            />
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
-          </div>
+          />
           <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            code
+          </div>
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
+            }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
+          >
+            name
           </div>
         </div>
       </div>
@@ -2598,92 +2302,63 @@ exports[`Table table can receive empty data 1`] = `
       tabIndex={0}
     />
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -2893,111 +2568,82 @@ exports[`Table table can receive expandColumnKey 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
+            className="BaseTable__expand-icon"
             onClick={null}
             style={
               Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
+                "cursor": "pointer",
+                "fontFamily": "initial",
+                "fontSize": "16px",
+                "height": "16px",
+                "lineHeight": "16px",
+                "marginLeft": 0,
+                "textAlign": "center",
+                "transform": "rotate(0deg)",
+                "transition": "transform 0.15s ease-out",
+                "userSelect": "none",
+                "width": "16px",
               }
             }
-          >
-            <div
-              className="BaseTable__expand-icon"
-              onClick={null}
-              style={
-                Object {
-                  "cursor": "pointer",
-                  "fontFamily": "initial",
-                  "fontSize": "16px",
-                  "height": "16px",
-                  "lineHeight": "16px",
-                  "marginLeft": 0,
-                  "textAlign": "center",
-                  "transform": "rotate(0deg)",
-                  "transition": "transform 0.15s ease-out",
-                  "userSelect": "none",
-                  "width": "16px",
-                }
-              }
-            />
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
-          </div>
+          />
           <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            code
+          </div>
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
+            }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
+          >
+            name
           </div>
         </div>
       </div>
@@ -3198,111 +2844,82 @@ exports[`Table table can receive expandedRowKeys 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
+            className="BaseTable__expand-icon"
             onClick={null}
             style={
               Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
+                "cursor": "pointer",
+                "fontFamily": "initial",
+                "fontSize": "16px",
+                "height": "16px",
+                "lineHeight": "16px",
+                "marginLeft": 0,
+                "textAlign": "center",
+                "transform": "rotate(0deg)",
+                "transition": "transform 0.15s ease-out",
+                "userSelect": "none",
+                "width": "16px",
               }
             }
-          >
-            <div
-              className="BaseTable__expand-icon"
-              onClick={null}
-              style={
-                Object {
-                  "cursor": "pointer",
-                  "fontFamily": "initial",
-                  "fontSize": "16px",
-                  "height": "16px",
-                  "lineHeight": "16px",
-                  "marginLeft": 0,
-                  "textAlign": "center",
-                  "transform": "rotate(0deg)",
-                  "transition": "transform 0.15s ease-out",
-                  "userSelect": "none",
-                  "width": "16px",
-                }
-              }
-            />
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
-          </div>
+          />
           <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            code
+          </div>
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
+            }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
+          >
+            name
           </div>
         </div>
       </div>
@@ -3465,92 +3082,63 @@ exports[`Table table can receive headerClassName 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row custom-class"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row custom-class"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -3713,92 +3301,63 @@ exports[`Table table can receive headerHeight 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 30,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 30,
-            "maxHeight": 30,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 30,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -3961,92 +3520,63 @@ exports[`Table table can receive height 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -4209,92 +3739,63 @@ exports[`Table table can receive rowClassName 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -4457,92 +3958,63 @@ exports[`Table table can receive rowHeight 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -4706,92 +4178,63 @@ exports[`Table table can receive style 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -4954,92 +4397,63 @@ exports[`Table table can receive width 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>
@@ -5202,92 +4616,63 @@ exports[`Table table can specific a different rowKey 1`] = `
       </div>
     </div>
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__header"
-      onScroll={[Function]}
-      role="grid"
+      className="BaseTable__header"
       style={
         Object {
-          "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
-          "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "hidden",
           "position": "relative",
           "width": 100,
-          "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
+        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
-            "maxHeight": 50,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-row"
+          className="BaseTable__header-cell"
+          data-key="code"
+          onClick={null}
           style={
             Object {
-              "height": 50,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 100,
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
           }
         >
           <div
-            className="BaseTable__header-cell"
-            data-key="code"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
-            }
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              code
-            </div>
+            code
           </div>
-          <div
-            className="BaseTable__header-cell"
-            data-key="name"
-            onClick={null}
-            style={
-              Object {
-                "WebkitFlex": "0 1 auto",
-                "flex": "0 1 auto",
-                "msFlex": "0 1 auto",
-                "overflow": "hidden",
-                "width": 50,
-              }
+        </div>
+        <div
+          className="BaseTable__header-cell"
+          data-key="name"
+          onClick={null}
+          style={
+            Object {
+              "WebkitFlex": "0 1 auto",
+              "flex": "0 1 auto",
+              "msFlex": "0 1 auto",
+              "overflow": "hidden",
+              "width": 50,
             }
+          }
+        >
+          <div
+            className="BaseTable__header-cell-text"
           >
-            <div
-              className="BaseTable__header-cell-text"
-            >
-              name
-            </div>
+            name
           </div>
         </div>
       </div>

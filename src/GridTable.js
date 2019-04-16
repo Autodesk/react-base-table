@@ -27,7 +27,7 @@ class GridTable extends React.PureComponent {
   }
 
   scrollToPosition(args) {
-    this.headerRef && this.headerRef.scrollToLeft(args.scrollLeft);
+    this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
     this.bodyRef && this.bodyRef.scrollToPosition(args);
   }
 
@@ -36,7 +36,7 @@ class GridTable extends React.PureComponent {
   }
 
   scrollToLeft(scrollLeft) {
-    this.headerRef && this.headerRef.scrollToLeft(scrollLeft);
+    this.headerRef && this.headerRef.scrollTo(scrollLeft);
     this.bodyRef && this.bodyRef.scrollToPosition({ scrollLeft });
   }
 

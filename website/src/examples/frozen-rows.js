@@ -1,6 +1,6 @@
 const columns = generateColumns(10)
 const data = generateData(columns, 200)
-const frozenData = generateData(columns, 1, 'frozen-row-')
+const frozenData = generateData(columns, 3, 'frozen-row-')
 
 const fixedColumns = columns.map((column, columnIndex) => {
   let frozen

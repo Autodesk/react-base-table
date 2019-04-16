@@ -10,31 +10,28 @@ class TableHeader extends React.PureComponent {
     this._setRef = this._setRef.bind(this);
   }
 
-  scrollToLeft(offset) {
+  scrollTo(offset) {
     if (this.headerRef) this.headerRef.scrollLeft = offset;
   }
 
   renderHeaderRow(height, index) {
-    const { columns, headerRenderer, rowWidth } = this.props;
+    const { columns, headerRenderer } = this.props;
     if (height <= 0) return null;
 
-    const style = { width: rowWidth, height };
-    return headerRenderer({ headerIndex: index, style, columns });
+    const style = { width: '100%', height };
+    return headerRenderer({ style, columns, headerIndex: index });
   }
 
   renderFrozenRow(rowData, index) {
-    const { columns, rowRenderer, rowHeight, rowWidth } = this.props;
-    const style = {
-      width: rowWidth,
-      height: rowHeight,
-    };
+    const { columns, rowHeight, rowRenderer } = this.props;
+    const style = { width: '100%', height: rowHeight };
     // for frozen row the `rowIndex` is negative
     const rowIndex = -index - 1;
-    return rowRenderer({ rowIndex, style, columns, rowData });
+    return rowRenderer({ style, columns, rowData, rowIndex });
   }
 
   render() {
-    const { className, width, height, headerHeight, frozenData } = this.props;
+    const { className, width, height, rowWidth, headerHeight, frozenData } = this.props;
     if (height <= 0) return null;
 
     const style = {
@@ -44,11 +41,18 @@ class TableHeader extends React.PureComponent {
       overflow: 'hidden',
     };
 
-    const headerHeights = Array.isArray(headerHeight) ? headerHeight : [headerHeight];
+    const innerStyle = {
+      width: rowWidth,
+      height,
+    };
+
+    const rowHeights = Array.isArray(headerHeight) ? headerHeight : [headerHeight];
     return (
       <div ref={this._setRef} className={className} style={style}>
-        {headerHeights.map(this.renderHeaderRow)}
-        {frozenData.map(this.renderFrozenRow)}
+        <div style={innerStyle}>
+          {rowHeights.map(this.renderHeaderRow)}
+          {frozenData.map(this.renderFrozenRow)}
+        </div>
       </div>
     );
   }

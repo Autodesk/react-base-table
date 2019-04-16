@@ -162,7 +162,6 @@ exports[`Table renders correctly 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -171,43 +170,53 @@ exports[`Table renders correctly 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -381,7 +390,6 @@ exports[`Table table can be set to disabled 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -390,43 +398,53 @@ exports[`Table table can be set to disabled 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -600,7 +618,6 @@ exports[`Table table can be set to fixed 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -609,43 +626,53 @@ exports[`Table table can be set to fixed 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 0 auto",
-              "flex": "0 0 auto",
-              "msFlex": "0 0 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 0 auto",
+                "flex": "0 0 auto",
+                "msFlex": "0 0 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 0 auto",
-              "flex": "0 0 auto",
-              "msFlex": "0 0 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 0 auto",
+                "flex": "0 0 auto",
+                "msFlex": "0 0 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -704,144 +731,153 @@ exports[`Table table can freeze rows 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
-            "height": 50,
+            "height": 100,
             "width": 100,
           }
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
+          >
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
         <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
+          className="BaseTable__row BaseTable__row--frozen"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__row-cell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              1
+            </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="BaseTable__row BaseTable__row--frozen"
-        style={
-          Object {
-            "height": 50,
-            "width": 100,
-          }
-        }
-      >
-        <div
-          className="BaseTable__row-cell"
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__row-cell-text"
-          >
-            1
-          </div>
-        </div>
-        <div
-          className="BaseTable__row-cell"
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+            className="BaseTable__row-cell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
             }
-          }
-        >
-          <div
-            className="BaseTable__row-cell-text"
           >
-            1
-          </div>
-        </div>
-      </div>
-      <div
-        className="BaseTable__row BaseTable__row--frozen"
-        style={
-          Object {
-            "height": 50,
-            "width": 100,
-          }
-        }
-      >
-        <div
-          className="BaseTable__row-cell"
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
-          <div
-            className="BaseTable__row-cell-text"
-          >
-            2
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              1
+            </div>
           </div>
         </div>
         <div
-          className="BaseTable__row-cell"
+          className="BaseTable__row BaseTable__row--frozen"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__row-cell-text"
+            className="BaseTable__row-cell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            2
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            className="BaseTable__row-cell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
+          >
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              2
+            </div>
           </div>
         </div>
       </div>
@@ -1172,7 +1208,6 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -1181,43 +1216,53 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -1391,14 +1436,23 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row BaseTable__header-row--customized"
         style={
           Object {
             "height": 50,
             "width": 100,
           }
         }
-      />
+      >
+        <div
+          className="BaseTable__header-row BaseTable__header-row--customized"
+          style={
+            Object {
+              "height": 50,
+              "width": "100%",
+            }
+          }
+        />
+      </div>
     </div>
   </div>
   <div
@@ -1495,7 +1549,6 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -1504,43 +1557,53 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -1714,7 +1777,6 @@ exports[`Table table can receive children 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -1723,43 +1785,53 @@ exports[`Table table can receive children 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -1933,7 +2005,6 @@ exports[`Table table can receive className 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -1942,43 +2013,53 @@ exports[`Table table can receive className 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -2190,7 +2271,6 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -2199,62 +2279,72 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__expand-icon"
+            className="BaseTable__header-cell"
+            data-key="code"
             onClick={null}
             style={
               Object {
-                "cursor": "pointer",
-                "fontFamily": "initial",
-                "fontSize": "16px",
-                "height": "16px",
-                "lineHeight": "16px",
-                "marginLeft": 0,
-                "textAlign": "center",
-                "transform": "rotate(0deg)",
-                "transition": "transform 0.15s ease-out",
-                "userSelect": "none",
-                "width": "16px",
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
               }
             }
-          />
-          <div
-            className="BaseTable__header-cell-text"
           >
-            code
+            <div
+              className="BaseTable__expand-icon"
+              onClick={null}
+              style={
+                Object {
+                  "cursor": "pointer",
+                  "fontFamily": "initial",
+                  "fontSize": "16px",
+                  "height": "16px",
+                  "lineHeight": "16px",
+                  "marginLeft": 0,
+                  "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
+                  "userSelect": "none",
+                  "width": "16px",
+                }
+              }
+            />
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -2313,7 +2403,6 @@ exports[`Table table can receive empty data 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -2322,43 +2411,53 @@ exports[`Table table can receive empty data 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -2579,7 +2678,6 @@ exports[`Table table can receive expandColumnKey 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -2588,62 +2686,72 @@ exports[`Table table can receive expandColumnKey 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__expand-icon"
+            className="BaseTable__header-cell"
+            data-key="code"
             onClick={null}
             style={
               Object {
-                "cursor": "pointer",
-                "fontFamily": "initial",
-                "fontSize": "16px",
-                "height": "16px",
-                "lineHeight": "16px",
-                "marginLeft": 0,
-                "textAlign": "center",
-                "transform": "rotate(0deg)",
-                "transition": "transform 0.15s ease-out",
-                "userSelect": "none",
-                "width": "16px",
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
               }
             }
-          />
-          <div
-            className="BaseTable__header-cell-text"
           >
-            code
+            <div
+              className="BaseTable__expand-icon"
+              onClick={null}
+              style={
+                Object {
+                  "cursor": "pointer",
+                  "fontFamily": "initial",
+                  "fontSize": "16px",
+                  "height": "16px",
+                  "lineHeight": "16px",
+                  "marginLeft": 0,
+                  "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
+                  "userSelect": "none",
+                  "width": "16px",
+                }
+              }
+            />
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -2855,7 +2963,6 @@ exports[`Table table can receive expandedRowKeys 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -2864,62 +2971,72 @@ exports[`Table table can receive expandedRowKeys 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__expand-icon"
+            className="BaseTable__header-cell"
+            data-key="code"
             onClick={null}
             style={
               Object {
-                "cursor": "pointer",
-                "fontFamily": "initial",
-                "fontSize": "16px",
-                "height": "16px",
-                "lineHeight": "16px",
-                "marginLeft": 0,
-                "textAlign": "center",
-                "transform": "rotate(0deg)",
-                "transition": "transform 0.15s ease-out",
-                "userSelect": "none",
-                "width": "16px",
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
               }
             }
-          />
-          <div
-            className="BaseTable__header-cell-text"
           >
-            code
+            <div
+              className="BaseTable__expand-icon"
+              onClick={null}
+              style={
+                Object {
+                  "cursor": "pointer",
+                  "fontFamily": "initial",
+                  "fontSize": "16px",
+                  "height": "16px",
+                  "lineHeight": "16px",
+                  "marginLeft": 0,
+                  "textAlign": "center",
+                  "transform": "rotate(0deg)",
+                  "transition": "transform 0.15s ease-out",
+                  "userSelect": "none",
+                  "width": "16px",
+                }
+              }
+            />
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -3093,7 +3210,6 @@ exports[`Table table can receive headerClassName 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row custom-class"
         style={
           Object {
             "height": 50,
@@ -3102,43 +3218,53 @@ exports[`Table table can receive headerClassName 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row custom-class"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -3312,7 +3438,6 @@ exports[`Table table can receive headerHeight 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 30,
@@ -3321,43 +3446,53 @@ exports[`Table table can receive headerHeight 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 30,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -3531,7 +3666,6 @@ exports[`Table table can receive height 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -3540,43 +3674,53 @@ exports[`Table table can receive height 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -3750,7 +3894,6 @@ exports[`Table table can receive rowClassName 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -3759,43 +3902,53 @@ exports[`Table table can receive rowClassName 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -3969,7 +4122,6 @@ exports[`Table table can receive rowHeight 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -3978,43 +4130,53 @@ exports[`Table table can receive rowHeight 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -4189,7 +4351,6 @@ exports[`Table table can receive style 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -4198,43 +4359,53 @@ exports[`Table table can receive style 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -4408,7 +4579,6 @@ exports[`Table table can receive width 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -4417,43 +4587,53 @@ exports[`Table table can receive width 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>
@@ -4627,7 +4807,6 @@ exports[`Table table can specific a different rowKey 1`] = `
       }
     >
       <div
-        className="BaseTable__header-row"
         style={
           Object {
             "height": 50,
@@ -4636,43 +4815,53 @@ exports[`Table table can specific a different rowKey 1`] = `
         }
       >
         <div
-          className="BaseTable__header-cell"
-          data-key="code"
-          onClick={null}
+          className="BaseTable__header-row"
           style={
             Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
+              "height": 50,
+              "width": "100%",
             }
           }
         >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="code"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            code
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              code
+            </div>
           </div>
-        </div>
-        <div
-          className="BaseTable__header-cell"
-          data-key="name"
-          onClick={null}
-          style={
-            Object {
-              "WebkitFlex": "0 1 auto",
-              "flex": "0 1 auto",
-              "msFlex": "0 1 auto",
-              "overflow": "hidden",
-              "width": 50,
-            }
-          }
-        >
           <div
-            className="BaseTable__header-cell-text"
+            className="BaseTable__header-cell"
+            data-key="name"
+            onClick={null}
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
           >
-            name
+            <div
+              className="BaseTable__header-cell-text"
+            >
+              name
+            </div>
           </div>
         </div>
       </div>

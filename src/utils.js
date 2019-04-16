@@ -99,23 +99,3 @@ export function cloneArray(array) {
   if (!Array.isArray(array)) return [];
   return [].concat(array);
 }
-
-let size = -1;
-
-export function getScrollbarSize(recalc) {
-  if (size === -1 || recalc) {
-    let scrollDiv = document.createElement('div');
-
-    scrollDiv.style.position = 'absolute';
-    scrollDiv.style.top = '-9999px';
-    scrollDiv.style.width = '50px';
-    scrollDiv.style.height = '50px';
-    scrollDiv.style.overflow = 'scroll';
-
-    document.body.appendChild(scrollDiv);
-    size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-    document.body.removeChild(scrollDiv);
-  }
-
-  return size;
-}

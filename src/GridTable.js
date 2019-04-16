@@ -31,7 +31,7 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToPosition(args);
   }
 
-  scollToTop(scrollTop) {
+  scrollToTop(scrollTop) {
     this.bodyRef && this.bodyRef.scrollToPosition({ scrollTop });
   }
 

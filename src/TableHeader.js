@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class TableHeeader extends React.PureComponent {
+class TableHeader extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -58,7 +58,7 @@ class TableHeeader extends React.PureComponent {
   }
 }
 
-TableHeeader.propTypes = {
+TableHeader.propTypes = {
   className: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
@@ -72,4 +72,4 @@ TableHeeader.propTypes = {
   rowRenderer: PropTypes.func.isRequired,
 };
 
-export default TableHeeader;
+export default TableHeader;

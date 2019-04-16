@@ -36,7 +36,7 @@ const getContainerStyle = (width, maxWidth, height) => ({
   overflow: 'hidden',
 });
 
-const DEFUALT_COMPONENTS = {
+const DEFAULT_COMPONENTS = {
   TableCell,
   TableHeaderCell,
   ExpandIcon,
@@ -88,7 +88,7 @@ class BaseTable extends React.PureComponent {
 
     this._scroll = {};
     this._scrollHeight = 0;
-    this._lastScanedRowIndex = -1;
+    this._lastScannedRowIndex = -1;
     this._hasDataChangedSinceEndReached = true;
 
     this._data = props.data;
@@ -143,8 +143,8 @@ class BaseTable extends React.PureComponent {
     this._scroll = offset;
 
     this.table && this.table.scrollToPosition(offset);
-    this.leftTable && this.leftTable.scollToTop(offset.scrollTop);
-    this.rightTable && this.rightTable.scollToTop(offset.scrollTop);
+    this.leftTable && this.leftTable.scrollToTop(offset.scrollTop);
+    this.rightTable && this.rightTable.scrollToTop(offset.scrollTop);
   }
 
   /**
@@ -156,8 +156,8 @@ class BaseTable extends React.PureComponent {
     this._scroll.scrollTop = scrollTop;
 
     this.table && this.table.scrollToPosition(this._scroll);
-    this.leftTable && this.leftTable.scollToTop(scrollTop);
-    this.rightTable && this.rightTable.scollToTop(scrollTop);
+    this.leftTable && this.leftTable.scrollToTop(scrollTop);
+    this.rightTable && this.rightTable.scrollToTop(scrollTop);
   }
 
   /**
@@ -554,7 +554,7 @@ class BaseTable extends React.PureComponent {
     } = this.props;
     const cls = cn(classPrefix, className, {
       [`${classPrefix}--fixed`]: fixed,
-      [`${classPrefix}--expanable`]: !!expandColumnKey,
+      [`${classPrefix}--expandable`]: !!expandColumnKey,
       [`${classPrefix}--empty`]: data.length === 0,
       [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0,
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
@@ -601,7 +601,7 @@ class BaseTable extends React.PureComponent {
     }
 
     if (nextProps.data !== this.props.data) {
-      this._lastScanedRowIndex = -1;
+      this._lastScannedRowIndex = -1;
       this._hasDataChangedSinceEndReached = true;
     }
 
@@ -647,7 +647,7 @@ class BaseTable extends React.PureComponent {
 
   _getComponent(name) {
     if (this.props.components && this.props.components[name]) return this.props.components[name];
-    return DEFUALT_COMPONENTS[name];
+    return DEFAULT_COMPONENTS[name];
   }
 
   _maybeUpdateTableHeight() {
@@ -718,7 +718,7 @@ class BaseTable extends React.PureComponent {
     if (maxHeight || !onEndReached || !clientHeight || !scrollHeight) return;
     const distanceFromEnd = scrollHeight - scrollTop - clientHeight + horizontalScrollbarWidth;
     if (
-      this._lastScanedRowIndex >= 0 &&
+      this._lastScannedRowIndex >= 0 &&
       distanceFromEnd <= onEndReachedThreshold &&
       (this._hasDataChangedSinceEndReached || scrollHeight !== this._scrollHeight)
     ) {
@@ -754,8 +754,8 @@ class BaseTable extends React.PureComponent {
   _handleRowsRendered(args) {
     this.props.onRowsRendered(args);
 
-    if (args.overscanStopIndex > this._lastScanedRowIndex) {
-      this._lastScanedRowIndex = args.overscanStopIndex;
+    if (args.overscanStopIndex > this._lastScannedRowIndex) {
+      this._lastScannedRowIndex = args.overscanStopIndex;
       this._maybeCallOnEndReached();
     }
   }
@@ -968,7 +968,7 @@ BaseTable.propTypes = {
    */
   expandColumnKey: PropTypes.string,
   /**
-   * Default expanded row keys when initalize the table
+   * Default expanded row keys when initialize the table
    */
   defaultExpandedRowKeys: PropTypes.arrayOf(PropTypes.string),
   /**

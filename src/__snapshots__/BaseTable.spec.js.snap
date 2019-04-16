@@ -1992,7 +1992,7 @@ exports[`Table table can receive className 1`] = `
 
 exports[`Table table can receive defaultExpandedRowKeys 1`] = `
 <div
-  className="BaseTable BaseTable--expanable"
+  className="BaseTable BaseTable--expandable"
   style={
     Object {
       "height": 100,
@@ -2381,7 +2381,7 @@ exports[`Table table can receive empty data 1`] = `
 
 exports[`Table table can receive expandColumnKey 1`] = `
 <div
-  className="BaseTable BaseTable--expanable"
+  className="BaseTable BaseTable--expandable"
   style={
     Object {
       "height": 100,
@@ -2657,7 +2657,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
 
 exports[`Table table can receive expandedRowKeys 1`] = `
 <div
-  className="BaseTable BaseTable--expanable"
+  className="BaseTable BaseTable--expandable"
   style={
     Object {
       "height": 100,

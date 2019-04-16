@@ -7,7 +7,6 @@ import { renderElement } from './utils';
  * HeaderRow component for BaseTable
  */
 const TableHeaderRow = ({
-  isScrolling,
   className,
   style,
   columns,
@@ -21,7 +20,6 @@ const TableHeaderRow = ({
 }) => {
   let cells = columns.map((column, columnIndex) =>
     cellRenderer({
-      isScrolling,
       columns,
       column,
       columnIndex,
@@ -31,11 +29,11 @@ const TableHeaderRow = ({
   );
 
   if (headerRenderer) {
-    cells = renderElement(headerRenderer, { isScrolling, cells, columns, headerIndex });
+    cells = renderElement(headerRenderer, { cells, columns, headerIndex });
   }
 
   return (
-    <Tag role="row" {...rest} className={className} style={style}>
+    <Tag {...rest} className={className} style={style}>
       {cells}
     </Tag>
   );

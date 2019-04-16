@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * HeaderCell component for BaseTable
  */
-const TableHeaderCell = ({ className, column, columnIndex }) => (
-  <div role="gridcell" className={className}>
-    {column.title}
-  </div>
-);
+const TableHeaderCell = ({ className, column, columnIndex }) => <div className={className}>{column.title}</div>;
 
 TableHeaderCell.propTypes = {
   className: PropTypes.string,

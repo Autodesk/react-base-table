@@ -228,6 +228,7 @@ class BaseTable extends React.PureComponent {
 
     const rowProps = {
       ...extraProps,
+      role: 'row',
       key: `row-${rowKey}`,
       isScrolling,
       className,
@@ -281,6 +282,7 @@ class BaseTable extends React.PureComponent {
     const Tag = tagName || 'div';
     return (
       <Tag
+        role="gridcell"
         key={`row-${rowData[this.props.rowKey]}-cell-${column.key}`}
         {...rest}
         className={cls}
@@ -292,7 +294,7 @@ class BaseTable extends React.PureComponent {
     );
   }
 
-  renderHeader({ isScrolling, columns, headerIndex, style }) {
+  renderHeader({ columns, headerIndex, style }) {
     const { headerClassName, headerRenderer } = this.props;
 
     const headerClass = callOrReturn(headerClassName, { columns, headerIndex });
@@ -305,8 +307,8 @@ class BaseTable extends React.PureComponent {
 
     const headerProps = {
       ...extraProps,
+      role: 'row',
       key: `header-${headerIndex}`,
-      isScrolling,
       className,
       style,
       columns,
@@ -320,7 +322,7 @@ class BaseTable extends React.PureComponent {
     return <TableHeaderRow {...headerProps} />;
   }
 
-  renderHeaderCell({ isScrolling, columns, column, columnIndex, headerIndex, expandIcon }) {
+  renderHeaderCell({ columns, column, columnIndex, headerIndex, expandIcon }) {
     if (column[ColumnManager.PlaceholderKey]) {
       return (
         <div
@@ -336,7 +338,7 @@ class BaseTable extends React.PureComponent {
     const TableHeaderCell = this._getComponent('TableHeaderCell');
     const SortIndicator = this._getComponent('SortIndicator');
 
-    const cellProps = { isScrolling, columns, column, columnIndex, headerIndex, container: this };
+    const cellProps = { columns, column, columnIndex, headerIndex, container: this };
     const cell = renderElement(
       headerRenderer || <TableHeaderCell className={this._prefixClass('header-cell-text')} />,
       cellProps
@@ -357,6 +359,7 @@ class BaseTable extends React.PureComponent {
     const Tag = tagName || 'div';
     return (
       <Tag
+        role="gridcell"
         key={`header-${headerIndex}-cell-${column.key}`}
         onClick={column.sortable ? this._handleColumnSort : null}
         {...rest}
@@ -920,7 +923,7 @@ BaseTable.propTypes = {
   footerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   /**
    * Custom header renderer
-   * The renderer receives props `{ isScrolling, cells, columns, headerIndex }`
+   * The renderer receives props `{ cells, columns, headerIndex }`
    */
   headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   /**

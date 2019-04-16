@@ -83,7 +83,7 @@ class GridTable extends React.PureComponent {
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
     return (
-      <div className={cls} {...containerProps}>
+      <div role="table" className={cls} {...containerProps}>
         <Grid
           {...rest}
           className={`${classPrefix}__body`}

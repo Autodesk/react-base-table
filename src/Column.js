@@ -89,12 +89,12 @@ Column.propTypes = {
   sortable: PropTypes.bool,
   /**
    * Custom column cell renderer
-   * The renderer receives props `{ isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container }`
+   * The renderer receives props `{ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }`
    */
   cellRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   /**
    * Custom column header renderer
-   * The renderer receives props `{ isScrolling, columns, column, columnIndex, headerIndex, container }`
+   * The renderer receives props `{ columns, column, columnIndex, headerIndex, container }`
    */
   headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };

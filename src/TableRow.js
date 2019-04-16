@@ -57,7 +57,7 @@ class TableRow extends React.PureComponent {
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
 
     return (
-      <Tag row="row" {...rest} className={className} style={style} {...eventHandlers}>
+      <Tag {...rest} className={className} style={style} {...eventHandlers}>
         {cells}
       </Tag>
     );

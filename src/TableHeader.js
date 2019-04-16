@@ -48,8 +48,8 @@ class TableHeader extends React.PureComponent {
 
     const rowHeights = Array.isArray(headerHeight) ? headerHeight : [headerHeight];
     return (
-      <div ref={this._setRef} className={className} style={style}>
-        <div style={innerStyle}>
+      <div role="grid" ref={this._setRef} className={className} style={style}>
+        <div role="rowgroup" style={innerStyle}>
           {rowHeights.map(this.renderHeaderRow)}
           {frozenData.map(this.renderFrozenRow)}
         </div>

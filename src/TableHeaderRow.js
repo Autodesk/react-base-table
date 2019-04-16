@@ -35,7 +35,7 @@ const TableHeaderRow = ({
   }
 
   return (
-    <Tag {...rest} className={className} style={style}>
+    <Tag role="row" {...rest} className={className} style={style}>
       {cells}
     </Tag>
   );

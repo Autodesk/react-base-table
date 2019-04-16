@@ -6,7 +6,9 @@ import toString from 'lodash/toString';
  * Cell component for BaseTable
  */
 const TableCell = ({ className, cellData, column, columnIndex, rowData, rowIndex }) => (
-  <div className={className}>{React.isValidElement(cellData) ? cellData : toString(cellData)}</div>
+  <div role="gridcell" className={className}>
+    {React.isValidElement(cellData) ? cellData : toString(cellData)}
+  </div>
 );
 
 TableCell.propTypes = {

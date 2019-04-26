@@ -3,6 +3,7 @@
 ## NEXT VERSION
 
 - fix: `flattenOnKeys` memoize is opt out because `this._depthMap` changes everytime
+- fix: hover state is out of sync in frozen rows, regression introduced in #9
 
 ## v1.1.0 (2019-04-26)
 

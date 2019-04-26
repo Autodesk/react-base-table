@@ -75,6 +75,7 @@ class GridTable extends React.PureComponent {
       useIsScrolling,
       onScroll,
       onScrollbarPresenceChange,
+      hoveredRowKey, // hoveredRowKey only effects the body
       ...rest
     } = this.props;
     const headerHeight = this._getHeaderHeight();
@@ -99,6 +100,7 @@ class GridTable extends React.PureComponent {
           isScrollingOptOut={!useIsScrolling}
           cellRenderer={this.renderRow}
           cellRangeRenderer={this.renderCellRange}
+          hoveredRowKey={hoveredRowKey}
           onScroll={onScroll}
           onSectionRendered={this._handleSectionRendered}
           onScrollbarPresenceChange={onScrollbarPresenceChange}
@@ -167,6 +169,7 @@ GridTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   frozenData: PropTypes.arrayOf(PropTypes.object),
   useIsScrolling: PropTypes.bool,
+  hoveredRowKey: PropTypes.string,
 
   onScroll: PropTypes.func,
   onRowsRendered: PropTypes.func,

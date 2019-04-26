@@ -41,7 +41,8 @@ export default () => (
     columns={fixedColumns}
     data={treeData}
     frozenData={frozenData}
-    maxHeight={500}
+    maxHeight={600}
     expandColumnKey={expandColumnKey}
+    onScrollbarPresenceChange={action('onScrollbarPresenceChange')}
   />
 )

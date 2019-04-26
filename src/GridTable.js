@@ -74,7 +74,6 @@ class GridTable extends React.PureComponent {
       bodyWidth,
       useIsScrolling,
       onScroll,
-      onScrollbarPresenceChange,
       hoveredRowKey, // hoveredRowKey only effects the body
       ...rest
     } = this.props;
@@ -103,7 +102,7 @@ class GridTable extends React.PureComponent {
           hoveredRowKey={hoveredRowKey}
           onScroll={onScroll}
           onSectionRendered={this._handleSectionRendered}
-          onScrollbarPresenceChange={onScrollbarPresenceChange}
+          onScrollbarPresenceChange={undefined}
         />
         {headerHeight + frozenRowsHeight > 0 && (
           // put header after body and reverse the display order via css
@@ -122,6 +121,7 @@ class GridTable extends React.PureComponent {
             headerRenderer={this.props.headerRenderer}
             rowRenderer={this.props.rowRenderer}
             hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
+            onScrollbarPresenceChange={undefined}
           />
         )}
       </div>
@@ -174,7 +174,6 @@ GridTable.propTypes = {
 
   onScroll: PropTypes.func,
   onRowsRendered: PropTypes.func,
-  onScrollbarPresenceChange: PropTypes.func,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
 };

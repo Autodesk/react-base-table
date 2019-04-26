@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: `flattenOnKeys` memoize is opt out because `this._depthMap` changes everytime
+
 ## v1.1.0 (2019-04-26)
 
 - chore: stop using `Grid` for table's header

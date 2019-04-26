@@ -2,9 +2,12 @@
 
 ## NEXT VERSION
 
+## v1.1.0 (2019-04-26)
+
 - chore: stop using `Grid` for table's header
 - chore: add `role` to table's elements
 - chore: stop using `forceUpdate` to update the table
+- fix: table's header is re-rendered unnecessarily on row hovered
 
 ## v1.0.2 (2019-04-03)
 

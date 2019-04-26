@@ -4,6 +4,7 @@
 
 - chore: stop using `Grid` for table's header
 - chore: add `role` to table's elements
+- chore: stop using `forceUpdate` to update the table
 
 ## v1.0.2 (2019-04-03)
 

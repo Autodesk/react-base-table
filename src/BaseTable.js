@@ -58,6 +58,7 @@ class BaseTable extends React.PureComponent {
       horizontalScrollbarWidth: 0,
       hoveredRowKey: null,
       resizingKey: null,
+      resizingWidth: 0,
       expandedRowKeys: cloneArray(props.expandedRowKeys !== undefined ? expandedRowKeys : defaultExpandedRowKeys),
     };
     this.columnManager = new ColumnManager(columns || normalizeColumns(children), props.fixed);
@@ -393,7 +394,7 @@ class BaseTable extends React.PureComponent {
 
   renderMainTable() {
     const { headerHeight, rowHeight, fixed, ...rest } = this.props;
-    const { scrollbarWidth } = this.state;
+    const { scrollbarWidth, hoveredRowKey, resizingKey, resizingWidth } = this.state;
     const { width, height } = this._getTableSize();
 
     let tableWidth = width - scrollbarWidth;
@@ -418,6 +419,9 @@ class BaseTable extends React.PureComponent {
         bodyWidth={tableWidth}
         headerRenderer={this.renderHeader}
         rowRenderer={this.renderRow}
+        hoveredRowKey={hoveredRowKey}
+        resizingKey={resizingKey}
+        resizingWidth={resizingWidth}
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
         onScrollbarPresenceChange={this._handleScrollbarPresenceChange}
@@ -429,7 +433,7 @@ class BaseTable extends React.PureComponent {
     if (!this.columnManager.hasLeftFrozenColumns()) return null;
 
     const { headerHeight, rowHeight, ...rest } = this.props;
-    const { scrollbarWidth } = this.state;
+    const { scrollbarWidth, hoveredRowKey, resizingKey, resizingWidth } = this.state;
     const { width } = this._getTableSize();
 
     const containerHeight = this._getFrozenContainerHeight();
@@ -452,6 +456,9 @@ class BaseTable extends React.PureComponent {
         bodyWidth={columnsWidth + offset}
         headerRenderer={this.renderHeader}
         rowRenderer={this.renderRow}
+        hoveredRowKey={hoveredRowKey}
+        resizingKey={resizingKey}
+        resizingWidth={resizingWidth}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
         onScrollbarPresenceChange={noop}
@@ -463,7 +470,7 @@ class BaseTable extends React.PureComponent {
     if (!this.columnManager.hasRightFrozenColumns()) return null;
 
     const { headerHeight, rowHeight, ...rest } = this.props;
-    const { scrollbarWidth } = this.state;
+    const { scrollbarWidth, hoveredRowKey, resizingKey, resizingWidth } = this.state;
     const { width } = this._getTableSize();
 
     const containerHeight = this._getFrozenContainerHeight();
@@ -485,6 +492,9 @@ class BaseTable extends React.PureComponent {
         bodyWidth={columnsWidth}
         headerRenderer={this.renderHeader}
         rowRenderer={this.renderRow}
+        hoveredRowKey={hoveredRowKey}
+        resizingKey={resizingKey}
+        resizingWidth={resizingWidth}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
         onScrollbarPresenceChange={noop}
@@ -765,7 +775,6 @@ class BaseTable extends React.PureComponent {
 
   _handleRowHover({ hovered, rowKey }) {
     this.setState({ hoveredRowKey: hovered ? rowKey : null });
-    this.forceUpdateTable();
   }
 
   _handleRowExpand({ expanded, rowData, rowIndex, rowKey }) {
@@ -788,7 +797,7 @@ class BaseTable extends React.PureComponent {
 
   _handleColumnResize({ key }, width) {
     this.columnManager.setColumnWidth(key, width);
-    this.forceUpdate();
+    this.setState({ resizingWidth: width });
 
     const column = this.columnManager.getColumn(key);
     this.props.onColumnResize({ column, width });
@@ -800,7 +809,6 @@ class BaseTable extends React.PureComponent {
 
   _handleColumnResizeStop() {
     this.setState({ resizingKey: null });
-    this.forceUpdateTable(); // forceUpdate or the resize handler will stay there until re-render
   }
 
   _handleColumnSort(event) {

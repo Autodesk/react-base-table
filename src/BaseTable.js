@@ -23,11 +23,9 @@ import {
   isObjectEqual,
   callOrReturn,
   hasChildren,
-  flattenOnKeys as _flattenOnKeys,
+  flattenOnKeys,
   cloneArray,
 } from './utils';
-
-const flattenOnKeys = memoize(_flattenOnKeys);
 
 const getContainerStyle = (width, maxWidth, height) => ({
   width,
@@ -86,6 +84,10 @@ class BaseTable extends React.PureComponent {
 
     this._getLeftTableContainerStyle = memoize(getContainerStyle);
     this._getRightTableContainerStyle = memoize(getContainerStyle);
+    this._flattenOnKeys = memoize((tree, keys, dataKey) => {
+      this._depthMap = {};
+      return flattenOnKeys(tree, keys, this._depthMap, 0, dataKey);
+    });
 
     this._scroll = {};
     this._scrollHeight = 0;
@@ -574,8 +576,7 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--disabled`]: disabled,
     });
     if (expandColumnKey) {
-      this._depthMap = {};
-      this._data = flattenOnKeys(data, this.state.expandedRowKeys, this._depthMap, 0, this.props.rowKey);
+      this._data = this._flattenOnKeys(data, this.state.expandedRowKeys, this.props.rowKey);
     } else {
       this._data = data;
     }

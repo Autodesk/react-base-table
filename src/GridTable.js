@@ -121,6 +121,7 @@ class GridTable extends React.PureComponent {
             headerHeight={this.props.headerHeight}
             headerRenderer={this.props.headerRenderer}
             rowRenderer={this.props.rowRenderer}
+            hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
           />
         )}
       </div>

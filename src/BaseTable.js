@@ -573,8 +573,12 @@ class BaseTable extends React.PureComponent {
     const { width, height } = this._getTableSize();
 
     const scrollbarSize = getScrollbarSize() || 0;
-    const verticalScrollbarSize = this.getTotalRowsHeight() > this._getBodyHeight() ? scrollbarSize : 0;
-    const horizontalScrollbarSize = this.getTotalColumnsWidth() > width ? scrollbarSize : 0;
+    const totalRowsHeight = this.getTotalRowsHeight();
+    const totalColumnsWidth = this.getTotalColumnsWidth();
+    const bodyHeight = this._getBodyHeight();
+    let horizontalScrollbarSize = fixed && totalColumnsWidth > width ? scrollbarSize : 0;
+    const verticalScrollbarSize = totalRowsHeight > bodyHeight - horizontalScrollbarSize ? scrollbarSize : 0;
+    horizontalScrollbarSize = fixed && totalColumnsWidth > width - verticalScrollbarSize ? scrollbarSize : 0;
     if (
       horizontalScrollbarSize !== this._horizontalScrollbarSize ||
       verticalScrollbarSize !== this._verticalScrollbarSize
@@ -668,34 +672,6 @@ class BaseTable extends React.PureComponent {
     return DEFAULT_COMPONENTS[name];
   }
 
-  _maybeScrollbarPresenceChange() {
-    if (this._scrollbarPresenceChanged) {
-      const { onScrollbarPresenceChange } = this.props;
-      this._scrollbarPresenceChanged = false;
-
-      onScrollbarPresenceChange({
-        size: getScrollbarSize(),
-        horizontal: this._horizontalScrollbarSize > 0,
-        vertical: this._verticalScrollbarSize > 0,
-      });
-    }
-  }
-
-  _maybeUpdateTableHeight() {
-    const { maxHeight, footerHeight } = this.props;
-    if (maxHeight > 0) {
-      const frozenRowsHeight = this._getFrozenRowsHeight();
-      const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this._getHeaderHeight();
-      const totalHeight =
-        headerHeight + footerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
-      const tableHeight = Math.min(totalHeight, maxHeight);
-      if (tableHeight !== this.state.tableHeight) {
-        this.setState({ tableHeight });
-      }
-    }
-  }
-
   _getTableSize() {
     const { width, height, maxHeight, footerHeight } = this.props;
     const { tableHeight } = this.state;
@@ -734,6 +710,34 @@ class BaseTable extends React.PureComponent {
 
     const totalHeight = this.getTotalRowsHeight() + this._getHeaderHeight() + this._getFrozenRowsHeight();
     return Math.min(tableHeight, totalHeight);
+  }
+
+  _maybeScrollbarPresenceChange() {
+    if (this._scrollbarPresenceChanged) {
+      const { onScrollbarPresenceChange } = this.props;
+      this._scrollbarPresenceChanged = false;
+
+      onScrollbarPresenceChange({
+        size: getScrollbarSize(),
+        horizontal: this._horizontalScrollbarSize > 0,
+        vertical: this._verticalScrollbarSize > 0,
+      });
+    }
+  }
+
+  _maybeUpdateTableHeight() {
+    const { maxHeight, footerHeight } = this.props;
+    if (maxHeight > 0) {
+      const frozenRowsHeight = this._getFrozenRowsHeight();
+      const totalRowsHeight = this.getTotalRowsHeight();
+      const headerHeight = this._getHeaderHeight();
+      const totalHeight =
+        headerHeight + footerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
+      const tableHeight = Math.min(totalHeight, maxHeight);
+      if (tableHeight !== this.state.tableHeight) {
+        this.setState({ tableHeight });
+      }
+    }
   }
 
   _maybeCallOnEndReached() {

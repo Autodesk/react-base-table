@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import memoize from 'memoize-one';
-import noop from 'lodash/noop';
 import get from 'lodash/get';
 
 import GridTable from './GridTable';
@@ -20,12 +19,13 @@ import ColumnManager from './ColumnManager';
 import {
   renderElement,
   normalizeColumns,
+  getScrollbarSize,
   isObjectEqual,
   callOrReturn,
   hasChildren,
   flattenOnKeys,
   cloneArray,
-  getScrollbarSize,
+  noop,
 } from './utils';
 
 const getContainerStyle = (width, maxWidth, height) => ({

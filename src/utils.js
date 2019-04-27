@@ -100,6 +100,8 @@ export function cloneArray(array) {
   return [].concat(array);
 }
 
+export function noop() {}
+
 // copied from dom-helpers
 let scrollbarSize;
 export function getScrollbarSize(recalculate) {

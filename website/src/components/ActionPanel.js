@@ -21,12 +21,13 @@ const ClearButton = styled(Button)`
 `
 
 class ActionPanel extends React.Component {
-  state = {
-    actions: [],
+  constructor(props) {
+    super(props)
+    this.props.channel.on(this.onAction)
   }
 
-  componentDidMount() {
-    this.props.channel.on(this.onAction)
+  state = {
+    actions: [],
   }
 
   componentWillUnmount() {

@@ -570,9 +570,12 @@ class BaseTable extends React.PureComponent {
     const scrollbarSize = getScrollbarSize() || 0;
     const totalRowsHeight = this.getTotalRowsHeight();
     const totalColumnsWidth = this.getTotalColumnsWidth();
-    const bodyHeight = this._getBodyHeight();
     let horizontalScrollbarSize = fixed && totalColumnsWidth > width ? scrollbarSize : 0;
-    const verticalScrollbarSize = totalRowsHeight > bodyHeight - horizontalScrollbarSize ? scrollbarSize : 0;
+    if (horizontalScrollbarSize !== this._horizontalScrollbarSize) {
+      this._horizontalScrollbarSize = horizontalScrollbarSize;
+      this._scrollbarPresenceChanged = true;
+    }
+    const verticalScrollbarSize = totalRowsHeight > this._getBodyHeight() - horizontalScrollbarSize ? scrollbarSize : 0;
     horizontalScrollbarSize = fixed && totalColumnsWidth > width - verticalScrollbarSize ? scrollbarSize : 0;
     if (
       horizontalScrollbarSize !== this._horizontalScrollbarSize ||

@@ -412,7 +412,6 @@ class BaseTable extends React.PureComponent {
         {...rest}
         {...this.state}
         className={this._prefixClass('table-main')}
-        style={undefined} // don't pass style to inner Grid
         ref={this._setMainTableRef}
         data={this._data}
         columns={this.columnManager.getMainColumns()}
@@ -445,7 +444,6 @@ class BaseTable extends React.PureComponent {
         {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth, width, containerHeight)}
         className={this._prefixClass('table-frozen-left')}
-        style={undefined} // don't pass style to inner Grid
         ref={this._setLeftTableRef}
         data={this._data}
         columns={this.columnManager.getLeftFrozenColumns()}
@@ -478,7 +476,6 @@ class BaseTable extends React.PureComponent {
         {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
         className={this._prefixClass('table-frozen-right')}
-        style={undefined} // don't pass style to inner Grid
         ref={this._setRightTableRef}
         data={this._data}
         columns={this.columnManager.getRightFrozenColumns()}

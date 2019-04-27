@@ -49,10 +49,8 @@ class BaseTable extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { footerHeight, columns, children, expandedRowKeys, defaultExpandedRowKeys } = props;
+    const { columns, children, expandedRowKeys, defaultExpandedRowKeys } = props;
     this.state = {
-      // used for auto height table
-      tableHeight: this._getHeaderHeight() + footerHeight,
       hoveredRowKey: null,
       resizingKey: null,
       resizingWidth: 0,
@@ -642,12 +640,10 @@ class BaseTable extends React.PureComponent {
       this.setState({});
     }
 
-    this._maybeUpdateTableHeight();
     this._maybeScrollbarPresenceChange();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this._maybeUpdateTableHeight();
     this._maybeScrollbarPresenceChange();
   }
 
@@ -674,11 +670,19 @@ class BaseTable extends React.PureComponent {
 
   _getTableSize() {
     const { width, height, maxHeight, footerHeight } = this.props;
-    const { tableHeight } = this.state;
+    let tableHeight = height - footerHeight;
+
+    if (maxHeight > 0) {
+      const frozenRowsHeight = this._getFrozenRowsHeight();
+      const totalRowsHeight = this.getTotalRowsHeight();
+      const headerHeight = this._getHeaderHeight();
+      const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
+      tableHeight = Math.min(totalHeight, maxHeight - footerHeight);
+    }
 
     return {
       width,
-      height: (maxHeight > 0 ? tableHeight : height) - footerHeight,
+      height: tableHeight,
     };
   }
 
@@ -722,21 +726,6 @@ class BaseTable extends React.PureComponent {
         horizontal: this._horizontalScrollbarSize > 0,
         vertical: this._verticalScrollbarSize > 0,
       });
-    }
-  }
-
-  _maybeUpdateTableHeight() {
-    const { maxHeight, footerHeight } = this.props;
-    if (maxHeight > 0) {
-      const frozenRowsHeight = this._getFrozenRowsHeight();
-      const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this._getHeaderHeight();
-      const totalHeight =
-        headerHeight + footerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
-      const tableHeight = Math.min(totalHeight, maxHeight);
-      if (tableHeight !== this.state.tableHeight) {
-        this.setState({ tableHeight });
-      }
     }
   }
 

@@ -396,8 +396,8 @@ class BaseTable extends React.PureComponent {
   }
 
   renderMainTable() {
-    const { headerHeight, rowHeight, fixed, ...rest } = this.props;
-    const { width, height } = this._getTableSize();
+    const { width, headerHeight, rowHeight, fixed, ...rest } = this.props;
+    const height = this._getTableHeight();
 
     let tableWidth = width - this._verticalScrollbarSize;
     if (fixed) {
@@ -430,8 +430,7 @@ class BaseTable extends React.PureComponent {
   renderLeftTable() {
     if (!this.columnManager.hasLeftFrozenColumns()) return null;
 
-    const { headerHeight, rowHeight, ...rest } = this.props;
-    const { width } = this._getTableSize();
+    const { width, headerHeight, rowHeight, ...rest } = this.props;
 
     const containerHeight = this._getFrozenContainerHeight();
     const offset = this._verticalScrollbarSize || 20;
@@ -462,8 +461,7 @@ class BaseTable extends React.PureComponent {
   renderRightTable() {
     if (!this.columnManager.hasRightFrozenColumns()) return null;
 
-    const { headerHeight, rowHeight, ...rest } = this.props;
-    const { width } = this._getTableSize();
+    const { width, headerHeight, rowHeight, ...rest } = this.props;
 
     const containerHeight = this._getFrozenContainerHeight();
     const columnsWidth = this.columnManager.getRightFrozenColumnsWidth();
@@ -492,12 +490,12 @@ class BaseTable extends React.PureComponent {
   }
 
   renderResizingLine() {
-    const { fixed, resizingKey } = this.state;
+    const { width, fixed } = this.props;
+    const { resizingKey } = this.state;
     if (!fixed || !resizingKey) return null;
     const columns = this.columnManager.getMainColumns();
     const idx = columns.findIndex(column => column.key === resizingKey);
     const column = this.columnManager.getColumn(resizingKey);
-    const { width, height } = this._getTableSize();
 
     let left = this.columnManager.recomputeColumnsWidth(columns.slice(0, idx + 1));
     if (!column.frozen) {
@@ -509,7 +507,7 @@ class BaseTable extends React.PureComponent {
       left,
       width: 3,
       transform: 'translateX(-3px)',
-      height: height - this._horizontalScrollbarSize,
+      height: this._getTableHeight() - this._horizontalScrollbarSize,
     };
     return <div className={this._prefixClass('resizing-line')} style={style} />;
   }
@@ -545,6 +543,7 @@ class BaseTable extends React.PureComponent {
   render() {
     const {
       classPrefix,
+      width,
       fixed,
       data,
       frozenData,
@@ -568,8 +567,6 @@ class BaseTable extends React.PureComponent {
       this._data = data;
     }
 
-    const { width, height } = this._getTableSize();
-
     const scrollbarSize = getScrollbarSize() || 0;
     const totalRowsHeight = this.getTotalRowsHeight();
     const totalColumnsWidth = this.getTotalColumnsWidth();
@@ -589,7 +586,7 @@ class BaseTable extends React.PureComponent {
     const containerStyle = {
       ...style,
       width,
-      height: height + footerHeight,
+      height: this._getTableHeight() + footerHeight,
       position: 'relative',
     };
     return (
@@ -668,24 +665,6 @@ class BaseTable extends React.PureComponent {
     return DEFAULT_COMPONENTS[name];
   }
 
-  _getTableSize() {
-    const { width, height, maxHeight, footerHeight } = this.props;
-    let tableHeight = height - footerHeight;
-
-    if (maxHeight > 0) {
-      const frozenRowsHeight = this._getFrozenRowsHeight();
-      const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this._getHeaderHeight();
-      const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
-      tableHeight = Math.min(totalHeight, maxHeight - footerHeight);
-    }
-
-    return {
-      width,
-      height: tableHeight,
-    };
-  }
-
   _getHeaderHeight() {
     const { headerHeight } = this.props;
     if (Array.isArray(headerHeight)) {
@@ -699,16 +678,29 @@ class BaseTable extends React.PureComponent {
     return frozenData.length * rowHeight;
   }
 
+  _getTableHeight() {
+    const { height, maxHeight, footerHeight } = this.props;
+    let tableHeight = height - footerHeight;
+
+    if (maxHeight > 0) {
+      const frozenRowsHeight = this._getFrozenRowsHeight();
+      const totalRowsHeight = this.getTotalRowsHeight();
+      const headerHeight = this._getHeaderHeight();
+      const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
+      tableHeight = Math.min(totalHeight, maxHeight - footerHeight);
+    }
+
+    return tableHeight;
+  }
+
   _getBodyHeight() {
-    const { height } = this._getTableSize();
-    return height - this._getHeaderHeight() - this._getFrozenRowsHeight();
+    return this._getTableHeight() - this._getHeaderHeight() - this._getFrozenRowsHeight();
   }
 
   _getFrozenContainerHeight() {
     const { maxHeight } = this.props;
-    const { height } = this._getTableSize();
 
-    const tableHeight = height - (this._data.length > 0 ? this._horizontalScrollbarSize : 0);
+    const tableHeight = this._getTableHeight() - (this._data.length > 0 ? this._horizontalScrollbarSize : 0);
     // in auto height mode tableHeight = totalHeight
     if (maxHeight > 0) return tableHeight;
 

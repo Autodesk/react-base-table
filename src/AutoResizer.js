@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 /**
  * Decorator component that automatically adjusts the width and height of a single child

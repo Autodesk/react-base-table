@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Grid from 'react-virtualized/dist/commonjs/Grid';
+import { FixedSizeGrid as Grid } from 'react-window';
 
 import Header from './TableHeader';
-import cellRangeRenderer from './cellRangeRenderer';
 
 /**
  * A wrapper of the Grid for internal only
@@ -15,10 +14,10 @@ class GridTable extends React.PureComponent {
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
     this._setBodyRef = this._setBodyRef.bind(this);
-    this._handleSectionRendered = this._handleSectionRendered.bind(this);
+    this._itemKey = this._itemKey.bind(this);
+    this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
-    this.renderCellRange = this.renderCellRange.bind(this);
   }
 
   forceUpdateTable() {
@@ -28,11 +27,11 @@ class GridTable extends React.PureComponent {
 
   scrollToPosition(args) {
     this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
-    this.bodyRef && this.bodyRef.scrollToPosition(args);
+    this.bodyRef && this.bodyRef.scrollTo(args);
   }
 
   scrollToTop(scrollTop) {
-    this.bodyRef && this.bodyRef.scrollToPosition({ scrollTop });
+    this.bodyRef && this.bodyRef.scrollTo({ scrollTop });
   }
 
   scrollToLeft(scrollLeft) {
@@ -40,24 +39,14 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToPosition({ scrollLeft });
   }
 
-  scrollToRow(rowIndex = 0) {
-    this.bodyRef &&
-      this.bodyRef.scrollToCell({
-        rowIndex,
-        columnIndex: 0,
-      });
+  scrollToRow(rowIndex = 0, align = 'auto') {
+    this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, columnIndex: 0, align });
   }
 
   renderRow(args) {
     const { data, columns, rowRenderer } = this.props;
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
-  }
-
-  renderCellRange(args) {
-    const { useIsScrolling } = this.props;
-    const isScrolling = useIsScrolling ? args.isScrolling : undefined;
-    return cellRangeRenderer({ ...args, useIsScrolling, isScrolling });
   }
 
   render() {
@@ -75,6 +64,7 @@ class GridTable extends React.PureComponent {
       useIsScrolling,
       onScroll,
       hoveredRowKey,
+      overscanRowCount,
       // omit from rest
       style,
       onScrollbarPresenceChange,
@@ -92,19 +82,21 @@ class GridTable extends React.PureComponent {
           className={`${classPrefix}__body`}
           ref={this._setBodyRef}
           data={data}
+          itemKey={this._itemKey}
           frozenData={frozenData}
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
           rowHeight={rowHeight}
           rowCount={data.length}
+          overscanRowsCount={overscanRowCount}
           columnWidth={bodyWidth}
           columnCount={1}
-          isScrollingOptOut={!useIsScrolling}
-          cellRenderer={this.renderRow}
-          cellRangeRenderer={this.renderCellRange}
+          overscanColumnsCount={0}
+          useIsScrolling={useIsScrolling}
           hoveredRowKey={hoveredRowKey}
           onScroll={onScroll}
-          onSectionRendered={this._handleSectionRendered}
+          onItemsRendered={this._handleItemsRendered}
+          children={this.renderRow}
         />
         {headerHeight + frozenRowsHeight > 0 && (
           // put header after body and reverse the display order via css
@@ -137,6 +129,11 @@ class GridTable extends React.PureComponent {
     this.bodyRef = ref;
   }
 
+  _itemKey({ rowIndex }) {
+    const { data, rowKey } = this.props;
+    return data[rowIndex][rowKey];
+  }
+
   _getHeaderHeight() {
     const { headerHeight } = this.props;
     if (Array.isArray(headerHeight)) {
@@ -145,14 +142,12 @@ class GridTable extends React.PureComponent {
     return headerHeight;
   }
 
-  _handleSectionRendered({ rowOverscanStartIndex, rowOverscanStopIndex, rowStartIndex, rowStopIndex }) {
-    const { onRowsRendered } = this.props;
-
-    onRowsRendered({
-      overscanStartIndex: rowOverscanStartIndex,
-      overscanStopIndex: rowOverscanStopIndex,
-      startIndex: rowStartIndex,
-      stopIndex: rowStopIndex,
+  _handleItemsRendered({ overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex }) {
+    this.props.onRowsRendered({
+      overscanStartIndex: overscanRowStartIndex,
+      overscanStopIndex: overscanRowStopIndex,
+      startIndex: visibleRowStartIndex,
+      stopIndex: visibleRowStopIndex,
     });
   }
 }
@@ -169,8 +164,10 @@ GridTable.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  rowKey: PropTypes.string.isRequired,
   frozenData: PropTypes.arrayOf(PropTypes.object),
   useIsScrolling: PropTypes.bool,
+  overscanRowCount: PropTypes.number,
   hoveredRowKey: PropTypes.string,
   style: PropTypes.object,
   onScrollbarPresenceChange: PropTypes.func,

@@ -176,15 +176,26 @@ class BaseTable extends React.PureComponent {
   }
 
   /**
-   * Ensure row is visible.
-   * This method can be used to safely scroll back to a row that a user has scrolled away from even if it was previously scrolled to.
-   *
-   * @param {number} rowIndex
+   * Scroll to the specified row.
+   * By default, the table will scroll as little as possible to ensure the row is visible.
+   * You can control the alignment of the row though by specifying an align property. Acceptable values are:
+   * 
+   * - `auto` (default) - Scroll as little as possible to ensure the row is visible.
+   *  (If the row is already visible, it won't scroll at all.)
+   * - `smart` - If the row is already visible, don't scroll at all. If it is less than one viewport away,
+   *  scroll as little as possible so that it becomes visible. 
+   *  If it is more than one viewport away, scroll so that it is centered within the grid.
+   * - `center` - Center align the row within the table.
+   * - `end` - Align the row to the bottom, right hand side of the table.
+   * - `start` - Align the row to the top, left hand of the table.
+
+   * @param {number} rowIndex 
+   * @param {string} align 
    */
-  scrollToRow(rowIndex = 0) {
-    this.table && this.table.scrollToRow(rowIndex);
-    this.leftTable && this.leftTable.scrollToRow(rowIndex);
-    this.rightTable && this.rightTable.scrollToRow(rowIndex);
+  scrollToRow(rowIndex = 0, align = 'auto') {
+    this.table && this.table.scrollToRow(rowIndex, align);
+    this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
+    this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
   }
 
   /**
@@ -1044,7 +1055,14 @@ BaseTable.propTypes = {
   overscanRowCount: PropTypes.number,
   /**
    * A callback function when scrolling the table
-   * The handler is of the shape of `({ scrollLeft, scrollTop }) => *`
+   * The handler is of the shape of `({ scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested }) => *`
+   *
+   * `scrollLeft` and `scrollTop` are numbers.
+   *
+   * `horizontalDirection` and `verticalDirection` are either `forward` or `backward`.
+   *
+   * `scrollUpdateWasRequested` is a boolean. This value is true if the scroll was caused by `scrollTo*`,
+   * and false if it was the result of a user interaction in the browser.
    */
   onScroll: PropTypes.func,
   /**

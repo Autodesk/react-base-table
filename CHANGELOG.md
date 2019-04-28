@@ -3,6 +3,9 @@
 ## NEXT VERSION
 
 - chore: stop relying on `onScrollbarPresenceChange`
+- feat: replace `react-virtualized` with `react-window`
+- feat: add scroll direction to `onScroll`
+- feat: add `align` to `scrollToRow`
 
 # v1.1.1 (2019-04-27)
 

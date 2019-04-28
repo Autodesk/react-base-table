@@ -16,37 +16,25 @@ exports[`Table renders correctly 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -256,37 +244,25 @@ exports[`Table table can be set to disabled 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -496,37 +472,25 @@ exports[`Table table can be set to fixed 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -736,26 +700,135 @@ exports[`Table table can freeze rows 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 0,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
-    />
+    >
+      <div
+        style={
+          Object {
+            "height": 100,
+            "pointerEvents": undefined,
+            "width": 100,
+          }
+        }
+      >
+        <div
+          className="BaseTable__row"
+          role="row"
+          style={
+            Object {
+              "height": 50,
+              "left": 0,
+              "position": "absolute",
+              "top": 0,
+              "width": 100,
+            }
+          }
+        >
+          <div
+            className="BaseTable__row-cell"
+            role="gridcell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
+          >
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            className="BaseTable__row-cell"
+            role="gridcell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
+          >
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          className="BaseTable__row"
+          role="row"
+          style={
+            Object {
+              "height": 50,
+              "left": 0,
+              "position": "absolute",
+              "top": 50,
+              "width": 100,
+            }
+          }
+        >
+          <div
+            className="BaseTable__row-cell"
+            role="gridcell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
+          >
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            className="BaseTable__row-cell"
+            role="gridcell"
+            style={
+              Object {
+                "WebkitFlex": "0 1 auto",
+                "flex": "0 1 auto",
+                "msFlex": "0 1 auto",
+                "overflow": "hidden",
+                "width": 50,
+              }
+            }
+          >
+            <div
+              className="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       className="BaseTable__header"
       role="grid"
@@ -953,37 +1026,25 @@ exports[`Table table can hide the header 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 100,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -1117,37 +1178,25 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -1357,37 +1406,25 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -1554,37 +1591,25 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -1716,37 +1741,25 @@ exports[`Table table can receive children 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -1956,37 +1969,25 @@ exports[`Table table can receive className 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -2196,37 +2197,25 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -2496,26 +2485,30 @@ exports[`Table table can receive empty data 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "hidden",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
-    />
+    >
+      <div
+        style={
+          Object {
+            "height": 0,
+            "pointerEvents": undefined,
+            "width": 100,
+          }
+        }
+      />
+    </div>
     <div
       className="BaseTable__header"
       role="grid"
@@ -2624,37 +2617,25 @@ exports[`Table table can receive expandColumnKey 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -2924,37 +2905,25 @@ exports[`Table table can receive expandedRowKeys 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -3224,37 +3193,25 @@ exports[`Table table can receive headerClassName 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -3464,37 +3421,25 @@ exports[`Table table can receive headerHeight 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 70,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -3704,37 +3649,25 @@ exports[`Table table can receive height 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -3944,37 +3877,25 @@ exports[`Table table can receive rowClassName 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -4184,37 +4105,25 @@ exports[`Table table can receive rowHeight 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 60,
-            "maxHeight": 60,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -4425,37 +4334,25 @@ exports[`Table table can receive style 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -4665,37 +4562,25 @@ exports[`Table table can receive width 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }
@@ -4905,37 +4790,25 @@ exports[`Table table can specific a different rowKey 1`] = `
     role="table"
   >
     <div
-      aria-label="grid"
-      aria-readonly={true}
-      className="ReactVirtualized__Grid BaseTable__body"
+      className="BaseTable__body"
       onScroll={[Function]}
-      role="grid"
       style={
         Object {
           "WebkitOverflowScrolling": "touch",
-          "boxSizing": "border-box",
           "direction": "ltr",
           "height": 50,
-          "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflow": "auto",
           "position": "relative",
           "width": 100,
           "willChange": "transform",
         }
       }
-      tabIndex={0}
     >
       <div
-        className="ReactVirtualized__Grid__innerScrollContainer"
-        role="rowgroup"
         style={
           Object {
             "height": 100,
-            "maxHeight": 100,
-            "maxWidth": 100,
-            "overflow": "hidden",
-            "pointerEvents": "",
-            "position": "relative",
+            "pointerEvents": undefined,
             "width": 100,
           }
         }

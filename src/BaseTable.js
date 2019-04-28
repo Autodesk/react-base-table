@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import memoize from 'memoize-one';
-import noop from 'lodash/noop';
 import get from 'lodash/get';
 
 import GridTable from './GridTable';
@@ -20,11 +19,13 @@ import ColumnManager from './ColumnManager';
 import {
   renderElement,
   normalizeColumns,
+  getScrollbarSize,
   isObjectEqual,
   callOrReturn,
   hasChildren,
   flattenOnKeys,
   cloneArray,
+  noop,
 } from './utils';
 
 const getContainerStyle = (width, maxWidth, height) => ({
@@ -48,12 +49,8 @@ class BaseTable extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { footerHeight, columns, children, expandedRowKeys, defaultExpandedRowKeys } = props;
+    const { columns, children, expandedRowKeys, defaultExpandedRowKeys } = props;
     this.state = {
-      // used for auto height table
-      tableHeight: this._getHeaderHeight() + footerHeight,
-      scrollbarWidth: 0,
-      horizontalScrollbarWidth: 0,
       hoveredRowKey: null,
       resizingKey: null,
       resizingWidth: 0,
@@ -71,7 +68,6 @@ class BaseTable extends React.PureComponent {
     this.renderHeader = this.renderHeader.bind(this);
     this.renderHeaderCell = this.renderHeaderCell.bind(this);
 
-    this._handleScrollbarPresenceChange = this._handleScrollbarPresenceChange.bind(this);
     this._handleScroll = this._handleScroll.bind(this);
     this._handleVerticalScroll = this._handleVerticalScroll.bind(this);
     this._handleRowsRendered = this._handleRowsRendered.bind(this);
@@ -96,6 +92,11 @@ class BaseTable extends React.PureComponent {
 
     this._data = props.data;
     this._depthMap = {};
+
+    this._horizontalScrollbarSize = 0;
+    this._verticalScrollbarSize = 0;
+    this._scrollbarPresenceChanged = false;
+    this._scrollbarSizeMeasured = getScrollbarSize() !== undefined;
   }
 
   /**
@@ -395,11 +396,10 @@ class BaseTable extends React.PureComponent {
   }
 
   renderMainTable() {
-    const { headerHeight, rowHeight, fixed, ...rest } = this.props;
-    const { scrollbarWidth, hoveredRowKey, resizingKey, resizingWidth } = this.state;
-    const { width, height } = this._getTableSize();
+    const { width, headerHeight, rowHeight, fixed, ...rest } = this.props;
+    const height = this._getTableHeight();
 
-    let tableWidth = width - scrollbarWidth;
+    let tableWidth = width - this._verticalScrollbarSize;
     if (fixed) {
       const columnsWidth = this.columnManager.getColumnsWidth();
       // make sure `scrollLeft` is always integer to fix a sync bug when scrolling to end horizontally
@@ -408,8 +408,8 @@ class BaseTable extends React.PureComponent {
     return (
       <GridTable
         {...rest}
+        {...this.state}
         className={this._prefixClass('table-main')}
-        style={undefined} // don't pass style to inner Grid
         ref={this._setMainTableRef}
         data={this._data}
         columns={this.columnManager.getMainColumns()}
@@ -417,16 +417,12 @@ class BaseTable extends React.PureComponent {
         height={height}
         headerHeight={headerHeight}
         rowHeight={rowHeight}
-        headerWidth={tableWidth + (fixed ? scrollbarWidth : 0)}
+        headerWidth={tableWidth + (fixed ? this._verticalScrollbarSize : 0)}
         bodyWidth={tableWidth}
         headerRenderer={this.renderHeader}
         rowRenderer={this.renderRow}
-        hoveredRowKey={hoveredRowKey}
-        resizingKey={resizingKey}
-        resizingWidth={resizingWidth}
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
-        onScrollbarPresenceChange={this._handleScrollbarPresenceChange}
       />
     );
   }
@@ -434,19 +430,17 @@ class BaseTable extends React.PureComponent {
   renderLeftTable() {
     if (!this.columnManager.hasLeftFrozenColumns()) return null;
 
-    const { headerHeight, rowHeight, ...rest } = this.props;
-    const { scrollbarWidth, hoveredRowKey, resizingKey, resizingWidth } = this.state;
-    const { width } = this._getTableSize();
+    const { width, headerHeight, rowHeight, ...rest } = this.props;
 
     const containerHeight = this._getFrozenContainerHeight();
-    const offset = scrollbarWidth || 20;
+    const offset = this._verticalScrollbarSize || 20;
     const columnsWidth = this.columnManager.getLeftFrozenColumnsWidth();
     return (
       <GridTable
         {...rest}
+        {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth, width, containerHeight)}
         className={this._prefixClass('table-frozen-left')}
-        style={undefined} // don't pass style to inner Grid
         ref={this._setLeftTableRef}
         data={this._data}
         columns={this.columnManager.getLeftFrozenColumns()}
@@ -458,12 +452,8 @@ class BaseTable extends React.PureComponent {
         bodyWidth={columnsWidth + offset}
         headerRenderer={this.renderHeader}
         rowRenderer={this.renderRow}
-        hoveredRowKey={hoveredRowKey}
-        resizingKey={resizingKey}
-        resizingWidth={resizingWidth}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
-        onScrollbarPresenceChange={noop}
       />
     );
   }
@@ -471,18 +461,17 @@ class BaseTable extends React.PureComponent {
   renderRightTable() {
     if (!this.columnManager.hasRightFrozenColumns()) return null;
 
-    const { headerHeight, rowHeight, ...rest } = this.props;
-    const { scrollbarWidth, hoveredRowKey, resizingKey, resizingWidth } = this.state;
-    const { width } = this._getTableSize();
+    const { width, headerHeight, rowHeight, ...rest } = this.props;
 
     const containerHeight = this._getFrozenContainerHeight();
     const columnsWidth = this.columnManager.getRightFrozenColumnsWidth();
+    const scrollbarWidth = this._verticalScrollbarSize;
     return (
       <GridTable
         {...rest}
+        {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
         className={this._prefixClass('table-frozen-right')}
-        style={undefined} // don't pass style to inner Grid
         ref={this._setRightTableRef}
         data={this._data}
         columns={this.columnManager.getRightFrozenColumns()}
@@ -494,35 +483,31 @@ class BaseTable extends React.PureComponent {
         bodyWidth={columnsWidth}
         headerRenderer={this.renderHeader}
         rowRenderer={this.renderRow}
-        hoveredRowKey={hoveredRowKey}
-        resizingKey={resizingKey}
-        resizingWidth={resizingWidth}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
-        onScrollbarPresenceChange={noop}
       />
     );
   }
 
   renderResizingLine() {
-    const { resizingKey, scrollbarWidth } = this.state;
-    if (!this.props.fixed || !resizingKey) return null;
+    const { width, fixed } = this.props;
+    const { resizingKey } = this.state;
+    if (!fixed || !resizingKey) return null;
     const columns = this.columnManager.getMainColumns();
     const idx = columns.findIndex(column => column.key === resizingKey);
     const column = this.columnManager.getColumn(resizingKey);
-    const { width, height } = this._getTableSize();
 
     let left = this.columnManager.recomputeColumnsWidth(columns.slice(0, idx + 1));
     if (!column.frozen) {
       left -= this._scroll.scrollLeft;
     } else if (column.frozen === FrozenDirection.RIGHT) {
-      left = width - scrollbarWidth - this.columnManager.recomputeColumnsWidth(columns.slice(idx + 1));
+      left = width - this._verticalScrollbarSize - this.columnManager.recomputeColumnsWidth(columns.slice(idx + 1));
     }
     const style = {
       left,
       width: 3,
       transform: 'translateX(-3px)',
-      height: height - this.state.horizontalScrollbarWidth,
+      height: this._getTableHeight() - this._horizontalScrollbarSize,
     };
     return <div className={this._prefixClass('resizing-line')} style={style} />;
   }
@@ -555,9 +540,10 @@ class BaseTable extends React.PureComponent {
     return <div className={this._prefixClass('overlay')}>{!!overlayRenderer && renderElement(overlayRenderer)}</div>;
   }
 
-  renderTable() {
+  render() {
     const {
       classPrefix,
+      width,
       fixed,
       data,
       frozenData,
@@ -567,6 +553,21 @@ class BaseTable extends React.PureComponent {
       style,
       footerHeight,
     } = this.props;
+
+    if (expandColumnKey) {
+      this._data = this._flattenOnKeys(data, this.state.expandedRowKeys, this.props.rowKey);
+    } else {
+      this._data = data;
+    }
+    // should be after `this._data` assigned
+    this._calcScrollbarSizes();
+
+    const containerStyle = {
+      ...style,
+      width,
+      height: this._getTableHeight() + footerHeight,
+      position: 'relative',
+    };
     const cls = cn(classPrefix, className, {
       [`${classPrefix}--fixed`]: fixed,
       [`${classPrefix}--expandable`]: !!expandColumnKey,
@@ -575,19 +576,6 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
       [`${classPrefix}--disabled`]: disabled,
     });
-    if (expandColumnKey) {
-      this._data = this._flattenOnKeys(data, this.state.expandedRowKeys, this.props.rowKey);
-    } else {
-      this._data = data;
-    }
-
-    const { width, height } = this._getTableSize();
-    const containerStyle = {
-      ...style,
-      width,
-      height: height + footerHeight,
-      position: 'relative',
-    };
     return (
       <div className={cls} style={containerStyle}>
         {this.renderFooter()}
@@ -599,12 +587,6 @@ class BaseTable extends React.PureComponent {
         {this.renderOverlay()}
       </div>
     );
-  }
-
-  render() {
-    const { width, height, maxHeight } = this.props;
-    const { tableHeight } = this.state;
-    return this.renderTable({ width, height: maxHeight > 0 ? tableHeight : height });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -636,11 +618,17 @@ class BaseTable extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._maybeUpdateTableHeight();
+    // in SSR getScrollbarSize() === undefined, so we have to measure again here
+    if (!this._scrollbarSizeMeasured) {
+      getScrollbarSize();
+      this.setState({});
+    }
+
+    this._maybeScrollbarPresenceChange();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this._maybeUpdateTableHeight();
+    this._maybeScrollbarPresenceChange();
   }
 
   _prefixClass(className) {
@@ -664,31 +652,6 @@ class BaseTable extends React.PureComponent {
     return DEFAULT_COMPONENTS[name];
   }
 
-  _maybeUpdateTableHeight() {
-    const { maxHeight, footerHeight } = this.props;
-    if (maxHeight > 0) {
-      const { horizontalScrollbarWidth } = this.state;
-      const frozenRowsHeight = this._getFrozenRowsHeight();
-      const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this._getHeaderHeight();
-      const totalHeight = headerHeight + footerHeight + frozenRowsHeight + totalRowsHeight + horizontalScrollbarWidth;
-      const tableHeight = Math.min(totalHeight, maxHeight);
-      if (tableHeight !== this.state.tableHeight) {
-        this.setState({ tableHeight });
-      }
-    }
-  }
-
-  _getTableSize() {
-    const { width, height, maxHeight, footerHeight } = this.props;
-    const { tableHeight } = this.state;
-
-    return {
-      width,
-      height: (maxHeight > 0 ? tableHeight : height) - footerHeight,
-    };
-  }
-
   _getHeaderHeight() {
     const { headerHeight } = this.props;
     if (Array.isArray(headerHeight)) {
@@ -702,19 +665,29 @@ class BaseTable extends React.PureComponent {
     return frozenData.length * rowHeight;
   }
 
-  _getClientHeight() {
-    if (this._scroll.clientHeight) return this._scroll.clientHeight;
-    if (!this.props.height) return 0;
+  _getTableHeight() {
+    const { height, maxHeight, footerHeight } = this.props;
+    let tableHeight = height - footerHeight;
 
-    return this.props.height - this._getHeaderHeight() - this.props.footerHeight - this._getFrozenRowsHeight();
+    if (maxHeight > 0) {
+      const frozenRowsHeight = this._getFrozenRowsHeight();
+      const totalRowsHeight = this.getTotalRowsHeight();
+      const headerHeight = this._getHeaderHeight();
+      const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
+      tableHeight = Math.min(totalHeight, maxHeight - footerHeight);
+    }
+
+    return tableHeight;
+  }
+
+  _getBodyHeight() {
+    return this._getTableHeight() - this._getHeaderHeight() - this._getFrozenRowsHeight();
   }
 
   _getFrozenContainerHeight() {
     const { maxHeight } = this.props;
-    const { horizontalScrollbarWidth } = this.state;
-    const { height } = this._getTableSize();
 
-    const tableHeight = height - (this._data.length > 0 ? horizontalScrollbarWidth : 0);
+    const tableHeight = this._getTableHeight() - (this._data.length > 0 ? this._horizontalScrollbarSize : 0);
     // in auto height mode tableHeight = totalHeight
     if (maxHeight > 0) return tableHeight;
 
@@ -722,15 +695,63 @@ class BaseTable extends React.PureComponent {
     return Math.min(tableHeight, totalHeight);
   }
 
+  _calcScrollbarSizes() {
+    const { fixed, width } = this.props;
+    const totalRowsHeight = this.getTotalRowsHeight();
+    const totalColumnsWidth = this.getTotalColumnsWidth();
+    const scrollbarSize = getScrollbarSize() || 0;
+
+    const prevHorizontalScrollbarSize = this._horizontalScrollbarSize;
+    const prevVerticalScrollbarSize = this._verticalScrollbarSize;
+
+    // we have to set `this._horizontalScrollbarSize` before calling `this._getBodyHeight`
+    if (!fixed || totalColumnsWidth <= width - scrollbarSize) {
+      this._horizontalScrollbarSize = 0;
+      this._verticalScrollbarSize = totalRowsHeight > this._getBodyHeight() ? scrollbarSize : 0;
+    } else {
+      if (totalColumnsWidth > width) {
+        this._horizontalScrollbarSize = scrollbarSize;
+        this._verticalScrollbarSize =
+          totalRowsHeight > this._getBodyHeight() - this._horizontalScrollbarSize ? scrollbarSize : 0;
+      } else {
+        this._horizontalScrollbarSize = 0;
+        this._verticalScrollbarSize = 0;
+        if (totalRowsHeight > this._getBodyHeight()) {
+          this._horizontalScrollbarSize = scrollbarSize;
+          this._verticalScrollbarSize = scrollbarSize;
+        }
+      }
+    }
+
+    if (
+      prevHorizontalScrollbarSize !== this._horizontalScrollbarSize ||
+      prevVerticalScrollbarSize !== this._verticalScrollbarSize
+    ) {
+      this._scrollbarPresenceChanged = true;
+    }
+  }
+
+  _maybeScrollbarPresenceChange() {
+    if (this._scrollbarPresenceChanged) {
+      const { onScrollbarPresenceChange } = this.props;
+      this._scrollbarPresenceChanged = false;
+
+      onScrollbarPresenceChange({
+        size: getScrollbarSize(),
+        horizontal: this._horizontalScrollbarSize > 0,
+        vertical: this._verticalScrollbarSize > 0,
+      });
+    }
+  }
+
   _maybeCallOnEndReached() {
     const { maxHeight, onEndReached, onEndReachedThreshold } = this.props;
     const { scrollTop } = this._scroll;
     const scrollHeight = this.getTotalRowsHeight();
-    const clientHeight = this._getClientHeight();
-    const { horizontalScrollbarWidth } = this.state;
+    const clientHeight = this._getBodyHeight();
     // onEndReached is not available is maxHeight is set
     if (maxHeight || !onEndReached || !clientHeight || !scrollHeight) return;
-    const distanceFromEnd = scrollHeight - scrollTop - clientHeight + horizontalScrollbarWidth;
+    const distanceFromEnd = scrollHeight - scrollTop - clientHeight + this._horizontalScrollbarSize;
     if (
       this._lastScannedRowIndex >= 0 &&
       distanceFromEnd <= onEndReachedThreshold &&
@@ -740,14 +761,6 @@ class BaseTable extends React.PureComponent {
       this._scrollHeight = scrollHeight;
       onEndReached({ distanceFromEnd });
     }
-  }
-
-  _handleScrollbarPresenceChange({ size, vertical, horizontal }) {
-    this.setState({
-      scrollbarWidth: vertical ? size : 0,
-      horizontalScrollbarWidth: horizontal ? size : 0,
-    });
-    this.props.onScrollbarPresenceChange({ size, vertical, horizontal });
   }
 
   _handleScroll(args) {

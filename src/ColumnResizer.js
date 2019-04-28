@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { DraggableCore } from 'react-draggable';
 import throttle from 'lodash/throttle';
-import noop from 'lodash/noop';
+
+import { noop } from './utils';
 
 const INVALID_VALUE = null;
 const MIN_WIDTH = 25;
@@ -19,7 +20,7 @@ class ColumnResizer extends React.PureComponent {
     this.lastX = INVALID_VALUE;
     this.width = 0;
 
-    this._handleDrag = this._handleDrag.bind(this);
+    this._handleDrag = throttle(this._handleDrag.bind(this), THROTTLE_WAIT);
     this._handleStart = this._handleStart.bind(this);
     this._handleStop = this._handleStop.bind(this);
     this._handleClick = this._handleClick.bind(this);
@@ -34,7 +35,7 @@ class ColumnResizer extends React.PureComponent {
         axis="x"
         disabled={disabled}
         onStart={this._handleStart}
-        onDrag={throttle(this._handleDrag, THROTTLE_WAIT)}
+        onDrag={this._handleDrag}
         onStop={this._handleStop}
       >
         <div

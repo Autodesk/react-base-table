@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- chore: stop relying on `onScrollbarPresenceChange`
+
 # v1.1.1 (2019-04-27)
 
 - fix: `flattenOnKeys` memoize is opt out because `this._depthMap` changes everytime

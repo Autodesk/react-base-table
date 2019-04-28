@@ -29,6 +29,7 @@ class ExpandIcon extends React.PureComponent {
           cursor: 'pointer',
           userSelect: 'none',
           width: '16px',
+          minWidth: '16px',
           height: '16px',
           lineHeight: '16px',
           fontSize: '16px',

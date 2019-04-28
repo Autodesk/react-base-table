@@ -14,4 +14,5 @@ export {
   hasChildren,
   unflatten,
   flattenOnKeys,
+  getScrollbarSize,
 } from './utils';

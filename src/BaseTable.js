@@ -553,6 +553,21 @@ class BaseTable extends React.PureComponent {
       style,
       footerHeight,
     } = this.props;
+
+    if (expandColumnKey) {
+      this._data = this._flattenOnKeys(data, this.state.expandedRowKeys, this.props.rowKey);
+    } else {
+      this._data = data;
+    }
+    // should be after `this._data` assigned
+    this._calcScrollbarSizes();
+
+    const containerStyle = {
+      ...style,
+      width,
+      height: this._getTableHeight() + footerHeight,
+      position: 'relative',
+    };
     const cls = cn(classPrefix, className, {
       [`${classPrefix}--fixed`]: fixed,
       [`${classPrefix}--expandable`]: !!expandColumnKey,
@@ -561,37 +576,6 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
       [`${classPrefix}--disabled`]: disabled,
     });
-    if (expandColumnKey) {
-      this._data = this._flattenOnKeys(data, this.state.expandedRowKeys, this.props.rowKey);
-    } else {
-      this._data = data;
-    }
-
-    const scrollbarSize = getScrollbarSize() || 0;
-    const totalRowsHeight = this.getTotalRowsHeight();
-    const totalColumnsWidth = this.getTotalColumnsWidth();
-    let horizontalScrollbarSize = fixed && totalColumnsWidth > width ? scrollbarSize : 0;
-    if (horizontalScrollbarSize !== this._horizontalScrollbarSize) {
-      this._horizontalScrollbarSize = horizontalScrollbarSize;
-      this._scrollbarPresenceChanged = true;
-    }
-    const verticalScrollbarSize = totalRowsHeight > this._getBodyHeight() - horizontalScrollbarSize ? scrollbarSize : 0;
-    horizontalScrollbarSize = fixed && totalColumnsWidth > width - verticalScrollbarSize ? scrollbarSize : 0;
-    if (
-      horizontalScrollbarSize !== this._horizontalScrollbarSize ||
-      verticalScrollbarSize !== this._verticalScrollbarSize
-    ) {
-      this._horizontalScrollbarSize = horizontalScrollbarSize;
-      this._verticalScrollbarSize = verticalScrollbarSize;
-      this._scrollbarPresenceChanged = true;
-    }
-
-    const containerStyle = {
-      ...style,
-      width,
-      height: this._getTableHeight() + footerHeight,
-      position: 'relative',
-    };
     return (
       <div className={cls} style={containerStyle}>
         {this.renderFooter()}
@@ -709,6 +693,42 @@ class BaseTable extends React.PureComponent {
 
     const totalHeight = this.getTotalRowsHeight() + this._getHeaderHeight() + this._getFrozenRowsHeight();
     return Math.min(tableHeight, totalHeight);
+  }
+
+  _calcScrollbarSizes() {
+    const { fixed, width } = this.props;
+    const totalRowsHeight = this.getTotalRowsHeight();
+    const totalColumnsWidth = this.getTotalColumnsWidth();
+    const scrollbarSize = getScrollbarSize() || 0;
+
+    const prevHorizontalScrollbarSize = this._horizontalScrollbarSize;
+    const prevVerticalScrollbarSize = this._verticalScrollbarSize;
+
+    // we have to set `this._horizontalScrollbarSize` before calling `this._getBodyHeight`
+    if (!fixed || totalColumnsWidth <= width - scrollbarSize) {
+      this._horizontalScrollbarSize = 0;
+      this._verticalScrollbarSize = totalRowsHeight > this._getBodyHeight() ? scrollbarSize : 0;
+    } else {
+      if (totalColumnsWidth > width) {
+        this._horizontalScrollbarSize = scrollbarSize;
+        this._verticalScrollbarSize =
+          totalRowsHeight > this._getBodyHeight() - this._horizontalScrollbarSize ? scrollbarSize : 0;
+      } else {
+        this._horizontalScrollbarSize = 0;
+        this._verticalScrollbarSize = 0;
+        if (totalRowsHeight > this._getBodyHeight()) {
+          this._horizontalScrollbarSize = scrollbarSize;
+          this._verticalScrollbarSize = scrollbarSize;
+        }
+      }
+    }
+
+    if (
+      prevHorizontalScrollbarSize !== this._horizontalScrollbarSize ||
+      prevVerticalScrollbarSize !== this._verticalScrollbarSize
+    ) {
+      this._scrollbarPresenceChanged = true;
+    }
   }
 
   _maybeScrollbarPresenceChange() {

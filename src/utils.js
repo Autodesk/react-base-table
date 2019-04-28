@@ -116,7 +116,80 @@ export function cloneArray(array) {
 
 export function noop() {}
 
-// copied from dom-helpers
+export function toString(value) {
+  if (typeof value === 'string') return value;
+  if (value === null || value === undefined) return '';
+  return value.toString ? value.toString() : '';
+}
+
+function getPathSegments(path) {
+  const pathArray = path.split('.');
+  const parts = [];
+
+  for (let i = 0; i < pathArray.length; i++) {
+    let p = pathArray[i];
+
+    while (p[p.length - 1] === '\\' && pathArray[i + 1] !== undefined) {
+      p = p.slice(0, -1) + '.';
+      p += pathArray[++i];
+    }
+
+    parts.push(p);
+  }
+
+  return parts;
+}
+
+// copied from https://github.com/sindresorhus/dot-prop/blob/master/index.js
+export function getValue(object, path, defaultValue) {
+  if (object === null || typeof object !== 'object' || typeof path !== 'string') {
+    return defaultValue === undefined ? object : defaultValue;
+  }
+
+  const pathArray = getPathSegments(path);
+
+  for (let i = 0; i < pathArray.length; i++) {
+    if (!Object.prototype.propertyIsEnumerable.call(object, pathArray[i])) {
+      return defaultValue;
+    }
+
+    object = object[pathArray[i]];
+
+    if (object === undefined || object === null) {
+      if (i !== pathArray.length - 1) {
+        return defaultValue;
+      }
+
+      break;
+    }
+  }
+
+  return object;
+}
+
+// copied from https://30secondsofcode.org/function#throttle
+export function throttle(fn, wait) {
+  let inThrottle, lastFn, lastTime;
+  return function() {
+    const context = this,
+      args = arguments;
+    if (!inThrottle) {
+      fn.apply(context, args);
+      lastTime = Date.now();
+      inThrottle = true;
+    } else {
+      clearTimeout(lastFn);
+      lastFn = setTimeout(function() {
+        if (Date.now() - lastTime >= wait) {
+          fn.apply(context, args);
+          lastTime = Date.now();
+        }
+      }, Math.max(wait - (Date.now() - lastTime), 0));
+    }
+  };
+}
+
+// copied from https://github.com/react-bootstrap/dom-helpers
 let scrollbarSize;
 export function getScrollbarSize(recalculate) {
   if ((!scrollbarSize && scrollbarSize !== 0) || recalculate) {

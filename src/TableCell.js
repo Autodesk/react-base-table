@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import toString from 'lodash/toString';
+import { toString } from './utils';
 
 /**
  * Cell component for BaseTable

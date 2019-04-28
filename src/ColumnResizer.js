@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { DraggableCore } from 'react-draggable';
-import throttle from 'lodash/throttle';
 
-import { noop } from './utils';
+import { noop, throttle } from './utils';
 
 const INVALID_VALUE = null;
 const MIN_WIDTH = 25;

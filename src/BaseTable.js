@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import memoize from 'memoize-one';
-import get from 'lodash/get';
 
 import GridTable from './GridTable';
 import TableHeaderRow from './TableHeaderRow';
@@ -25,6 +24,7 @@ import {
   hasChildren,
   flattenOnKeys,
   cloneArray,
+  getValue,
   noop,
 } from './utils';
 
@@ -282,7 +282,7 @@ class BaseTable extends React.PureComponent {
 
     const cellData = dataGetter
       ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
-      : get(rowData, dataKey);
+      : getValue(rowData, dataKey);
     const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
     const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, cellProps);
 

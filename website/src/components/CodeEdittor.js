@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 import Table, {
@@ -112,6 +112,8 @@ const CodeEditor = ({ noInline, code, scope = {} }) => (
       ReactDOM,
       styled,
       css,
+      keyframes,
+      createGlobalStyle,
       Table,
       Column,
       SortOrder,

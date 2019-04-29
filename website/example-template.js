@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 
 import BaseTable, {
   Column,

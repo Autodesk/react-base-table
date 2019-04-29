@@ -45,6 +45,10 @@ module.exports = {
       path: '/examples/jsx-column',
     },
     {
+      title: 'Auto Resize',
+      path: '/examples/auto-resize',
+    },
+    {
       title: 'Fixed Table',
       path: '/examples/fixed',
     },
@@ -55,6 +59,14 @@ module.exports = {
     {
       title: 'Frozen Rows',
       path: '/examples/frozen-rows',
+    },
+    {
+      title: 'Sticky Rows',
+      path: '/examples/sticky-rows',
+    },
+    {
+      title: '10000 Rows',
+      path: '/examples/10000-rows',
     },
     {
       title: 'Disabled',
@@ -127,6 +139,10 @@ module.exports = {
     {
       title: 'Sortable',
       path: '/examples/sortable',
+    },
+    {
+      title: 'Multi SortIndicator',
+      path: '/examples/multi-sort',
     },
     {
       title: 'Expand - Uncontrolled',

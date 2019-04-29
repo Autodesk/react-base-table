@@ -177,7 +177,8 @@ $table-prefix: BaseTable !default;
     align-items: center;
     padding: 0 $column-padding;
     box-sizing: border-box;
-
+    border-right: $border;
+    
     &--align-center {
       justify-content: center;
       text-align: center;

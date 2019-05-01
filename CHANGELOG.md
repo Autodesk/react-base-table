@@ -2,6 +2,10 @@
 
 ## NEXT VERSION
 
+# v1.2.1 (2019-05-01)
+
+- fix: scrollbar size don't updated in SSR
+
 # v1.2.0 (2019-04-29)
 
 - chore: more accurate `onScrollbarPresenceChange`

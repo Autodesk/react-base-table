@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+# v1.2.2 (2019-05-03)
+
 - perf: optimize `unflatten` and `flattenOnKeys` to not use recursion
 
 # v1.2.1 (2019-05-01)

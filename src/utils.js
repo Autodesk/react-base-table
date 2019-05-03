@@ -60,34 +60,48 @@ export function hasChildren(data) {
   return Array.isArray(data.children) && data.children.length > 0;
 }
 
-export function unflatten(array, parent = null, dataKey = 'id', parentKey = 'parentId') {
-  // deep clone the array
-  const tree = Array.prototype.filter.call(array, x => x[parentKey] === parent).map(x => ({ ...x }));
+export function unflatten(array, rootId = null, dataKey = 'id', parentKey = 'parentId') {
+  const tree = [];
+  const childrenMap = {};
 
-  tree.forEach(child => {
-    const childTree = unflatten(array, child[dataKey], dataKey, parentKey);
-    if (childTree.length > 0) child.children = childTree;
-  });
+  const length = array.length;
+  for (let i = 0; i < length; i++) {
+    const item = { ...array[i] };
+    const id = item[dataKey];
+    const parentId = item[parentKey];
+
+    if (!childrenMap[id]) childrenMap[id] = [];
+    item.children = childrenMap[id];
+
+    if (parentId !== rootId) {
+      if (!childrenMap[parentId]) childrenMap[parentId] = [];
+      childrenMap[parentId].push(item);
+    } else {
+      tree.push(item);
+    }
+  }
 
   return tree;
 }
 
-export function flattenOnKeys(tree, keys, depthMap = {}, depth = 0, dataKey = 'id') {
+export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
   if (!keys || !keys.length) return tree;
 
-  let array = [];
-  tree.forEach(child => {
-    array.push(child);
-    if (keys.indexOf(child[dataKey]) >= 0) {
-      depthMap[child[dataKey]] = depth;
-      if (hasChildren(child)) {
-        child.children.forEach(x => {
-          depthMap[x[dataKey]] = depth + 1;
-        });
-        array = array.concat(flattenOnKeys(child.children, keys, depthMap, depth + 1, dataKey));
-      }
+  const array = [];
+  const keysSet = new Set();
+  keys.forEach(x => keysSet.add(x));
+
+  let stack = [].concat(tree);
+  stack.forEach(x => (depthMap[x[dataKey]] = 0));
+  while (stack.length > 0) {
+    const item = stack.shift();
+
+    array.push(item);
+    if (keysSet.has(item[dataKey]) && Array.isArray(item.children) && item.children.length > 0) {
+      stack = item.children.concat(stack);
+      item.children.forEach(x => (depthMap[x[dataKey]] = depthMap[item[dataKey]] + 1));
     }
-  });
+  }
 
   return array;
 }

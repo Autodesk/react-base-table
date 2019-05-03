@@ -83,7 +83,7 @@ class BaseTable extends React.PureComponent {
     this._getRightTableContainerStyle = memoize(getContainerStyle);
     this._flattenOnKeys = memoize((tree, keys, dataKey) => {
       this._depthMap = {};
-      return flattenOnKeys(tree, keys, this._depthMap, 0, dataKey);
+      return flattenOnKeys(tree, keys, this._depthMap, dataKey);
     });
 
     this._scroll = {};

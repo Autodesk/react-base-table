@@ -60,14 +60,26 @@ export function hasChildren(data) {
   return Array.isArray(data.children) && data.children.length > 0;
 }
 
-export function unflatten(array, parent = null, dataKey = 'id', parentKey = 'parentId') {
-  // deep clone the array
-  const tree = Array.prototype.filter.call(array, x => x[parentKey] === parent).map(x => ({ ...x }));
+export function unflatten(array, rootId = null, dataKey = 'id', parentKey = 'parentId') {
+  const tree = [];
+  const childrenMap = {};
 
-  tree.forEach(child => {
-    const childTree = unflatten(array, child[dataKey], dataKey, parentKey);
-    if (childTree.length > 0) child.children = childTree;
-  });
+  const length = array.length;
+  for (let i = 0; i < length; i++) {
+    const item = { ...array[i] };
+    const id = item[dataKey];
+    const parentId = item[parentKey];
+
+    if (!childrenMap[id]) childrenMap[id] = [];
+    item.children = childrenMap[id];
+
+    if (parentId !== rootId) {
+      if (!childrenMap[parentId]) childrenMap[parentId] = [];
+      childrenMap[parentId].push(item);
+    } else {
+      tree.push(item);
+    }
+  }
 
   return tree;
 }

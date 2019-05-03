@@ -84,22 +84,24 @@ export function unflatten(array, rootId = null, dataKey = 'id', parentKey = 'par
   return tree;
 }
 
-export function flattenOnKeys(tree, keys, depthMap = {}, depth = 0, dataKey = 'id') {
+export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
   if (!keys || !keys.length) return tree;
 
-  let array = [];
-  tree.forEach(child => {
-    array.push(child);
-    if (keys.indexOf(child[dataKey]) >= 0) {
-      depthMap[child[dataKey]] = depth;
-      if (hasChildren(child)) {
-        child.children.forEach(x => {
-          depthMap[x[dataKey]] = depth + 1;
-        });
-        array = array.concat(flattenOnKeys(child.children, keys, depthMap, depth + 1, dataKey));
-      }
+  const array = [];
+  const keysSet = new Set();
+  keys.forEach(x => keysSet.add(x));
+
+  let stack = [].concat(tree);
+  stack.forEach(x => (depthMap[x[dataKey]] = 0));
+  while (stack.length > 0) {
+    const item = stack.shift();
+
+    array.push(item);
+    if (keysSet.has(item[dataKey]) && Array.isArray(item.children) && item.children.length > 0) {
+      stack = item.children.concat(stack);
+      item.children.forEach(x => (depthMap[x[dataKey]] = depthMap[item[dataKey]] + 1));
     }
-  });
+  }
 
   return array;
 }

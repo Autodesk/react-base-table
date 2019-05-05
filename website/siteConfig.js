@@ -93,8 +93,12 @@ module.exports = {
       path: '/examples/infinite-loading-loader',
     },
     {
-      title: 'ColSpan',
+      title: 'Col Span',
       path: '/examples/col-span',
+    },
+    {
+      title: 'Row Span',
+      path: '/examples/row-span',
     },
     {
       title: 'Custom Components',

@@ -353,7 +353,7 @@ class BaseTable extends React.PureComponent {
     const TableHeaderCell = this._getComponent('TableHeaderCell');
     const SortIndicator = this._getComponent('SortIndicator');
 
-    const cellProps = { columns, column, columnIndex, headerIndex, container: this };
+    const cellProps = { ...headerCellProps, columns, column, columnIndex, headerIndex, container: this };
     const cell = renderElement(
       headerRenderer || <TableHeaderCell className={this._prefixClass('header-cell-text')} />,
       cellProps

@@ -99,6 +99,12 @@ You can write your own styles from scratch or use CSS-in-JS solutions to achieve
 
 There are a lot of highly flexible props like `xxxRenderer` and `xxxProps` for you to build your own table component, please check the [api](https://autodesk.github.io/react-base-table/api) and [examples](https://autodesk.github.io/react-base-table/examples) for more details
 
+### Example
+
+We are using a advanced table component based on `BaseTable` internally, with much more features, including row selection, row grouping, data aggregation, column settings, column reordering, and column grouping, tooltip, inline editing.
+
+![AdvanceTable](screenshots/advance-table.png)
+
 ## Contributing
 
 Please check [guidelines](CONTRIBUTING.md) for more details

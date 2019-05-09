@@ -164,11 +164,11 @@ GridTable.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  rowKey: PropTypes.string.isRequired,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   frozenData: PropTypes.arrayOf(PropTypes.object),
   useIsScrolling: PropTypes.bool,
   overscanRowCount: PropTypes.number,
-  hoveredRowKey: PropTypes.string,
+  hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: PropTypes.object,
   onScrollbarPresenceChange: PropTypes.func,
 

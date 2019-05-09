@@ -911,7 +911,7 @@ BaseTable.propTypes = {
   /**
    * The key field of each data item
    */
-  rowKey: PropTypes.string.isRequired,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /**
    * The width of the table
    */
@@ -1009,11 +1009,11 @@ BaseTable.propTypes = {
   /**
    * Default expanded row keys when initialize the table
    */
-  defaultExpandedRowKeys: PropTypes.arrayOf(PropTypes.string),
+  defaultExpandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   /**
    * Controlled expanded row keys
    */
-  expandedRowKeys: PropTypes.arrayOf(PropTypes.string),
+  expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   /**
    * A callback function when expand or collapse a tree node
    * The handler is of the shape of `({ expanded, rowData, rowIndex, rowKey }) => *`

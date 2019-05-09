@@ -8,56 +8,47 @@ const fixedColumns = columns.map((column, columnIndex) => {
   return { ...column, frozen }
 })
 
-const expandColumnKey = 'column-1'
+fixedColumns[0].format = 'checkbox'
+fixedColumns[1].format = 'contact'
 
-// add some sub items
-data.forEach((rowData, rowIndex) => {
-  const cellData = rowData[expandColumnKey]
-  rowData[expandColumnKey] = `Group ${rowIndex}`
-  for (let i = 0; i < 3; i++) {
-    const subData = {
-      ...rowData,
-      id: `${rowData.id}-sub-${i}`,
-      parentId: rowData.id,
-      [expandColumnKey]: `Sub Group ${i}`,
-    }
-    data.push(subData)
+const Contact = styled.div`
+  font-weight: 700;
+  color: orange;
+`
 
-    const subSubData = {
-      ...subData,
-      id: `${subData.id}-sub-sub-${i}`,
-      parentId: subData.id,
-      [expandColumnKey]: cellData,
-    }
-    data.push(subSubData)
-  }
-})
+const stringRenderer = ({ className, cellData }) => (
+  <div className={className}>{cellData}</div>
+)
+const checkboxRenderer = ({ rowIndex }) => (
+  <input type="checkbox" checked={rowIndex % 2 === 0} />
+)
+const contactRenderer = ({ cellData }) => <Contact>{cellData}</Contact>
 
-const treeData = unflatten(data)
+const renderers = {
+  string: stringRenderer,
+  checkbox: checkboxRenderer,
+  contact: contactRenderer,
+}
 
-const GroupCell = ({ cellData, rowData, column, className }) => {
-  if (
-    rowData.children &&
-    rowData.children.length &&
-    column.key !== expandColumnKey
-  )
-    return null
-  return <div className={className}>{cellData}</div>
+const Cell = cellProps => {
+  const format = cellProps.column.format || 'string'
+  const renderer = renderers[format] || renderers.string
+
+  return renderer(cellProps)
 }
 
 const components = {
-  TableCell: GroupCell,
+  TableCell: Cell,
 }
 
-const rowStyle = ({ rowData }) =>
-  rowData.children && rowData.children.length && { backgroundColor: '#f7f9fa' }
+const expandColumnKey = 'column-1'
+const treeData = unflatten(data)
 
 export default () => (
   <Table
     fixed
     columns={fixedColumns}
     data={treeData}
-    rowStyle={rowStyle}
     expandColumnKey={expandColumnKey}
     onExpandedRowsChange={action('onExpandedRowsChange')}
     components={components}

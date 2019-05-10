@@ -3,6 +3,7 @@
 ## NEXT VERSION
 
 - feat: allow `rowKey` to be `number`
+- feat: add `getScrollbarSize` to `BaseTable` to custom scrollbar size measurement
 
 # v1.2.2 (2019-05-03)
 

@@ -19,7 +19,7 @@ import ColumnManager from './ColumnManager';
 import {
   renderElement,
   normalizeColumns,
-  getScrollbarSize,
+  getScrollbarSize as defaultGetScrollbarSize,
   isObjectEqual,
   callOrReturn,
   hasChildren,
@@ -629,7 +629,7 @@ class BaseTable extends React.PureComponent {
   }
 
   componentDidMount() {
-    const scrollbarSize = getScrollbarSize();
+    const scrollbarSize = this.props.getScrollbarSize();
     if (scrollbarSize > 0) {
       this.setState({ scrollbarSize });
     }
@@ -869,6 +869,7 @@ BaseTable.defaultProps = {
   useIsScrolling: false,
   overscanRowCount: 1,
   onEndReachedThreshold: 500,
+  getScrollbarSize: defaultGetScrollbarSize,
 
   onScroll: noop,
   onRowsRendered: noop,
@@ -1056,6 +1057,10 @@ BaseTable.propTypes = {
    * Number of rows to render above/below the visible bounds of the list
    */
   overscanRowCount: PropTypes.number,
+  /**
+   * Custom scrollbar size measurement
+   */
+  getScrollbarSize: PropTypes.func,
   /**
    * A callback function when scrolling the table
    * The handler is of the shape of `({ scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested }) => *`

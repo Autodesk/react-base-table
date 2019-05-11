@@ -129,6 +129,10 @@ module.exports = {
       path: '/examples/width-height',
     },
     {
+      title: 'Custom Scrollbar',
+      path: '/examples/scrollbar',
+    },
+    {
       title: 'Max Height',
       path: '/examples/max-height',
     },

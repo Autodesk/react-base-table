@@ -49,13 +49,14 @@ class BaseTable extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { columns, children, expandedRowKeys, defaultExpandedRowKeys } = props;
+    const { columns, children, expandedRowKeys, defaultExpandedRowKeys, selectedRowKeys } = props;
     this.state = {
       scrollbarSize: 0,
       hoveredRowKey: null,
       resizingKey: null,
       resizingWidth: 0,
       expandedRowKeys: cloneArray(props.expandedRowKeys !== undefined ? expandedRowKeys : defaultExpandedRowKeys),
+      selectedRowKeys: cloneArray(props.selectedRowKeys !== undefined ? selectedRowKeys : []),
     };
     this.columnManager = new ColumnManager(columns || normalizeColumns(children), props.fixed);
 
@@ -74,6 +75,7 @@ class BaseTable extends React.PureComponent {
     this._handleRowsRendered = this._handleRowsRendered.bind(this);
     this._handleRowHover = this._handleRowHover.bind(this);
     this._handleRowExpand = this._handleRowExpand.bind(this);
+    this._handleRowSelect = this._handleRowSelect.bind(this);
     this._handleColumnResize = this._handleColumnResize.bind(this);
     this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
     this._handleColumnResizeStop = this._handleColumnResizeStop.bind(this);
@@ -254,6 +256,7 @@ class BaseTable extends React.PureComponent {
       rowKey,
       expandColumnKey,
       depth,
+      selectedRowKeys: this.state.selectedRowKeys,
       rowEventHandlers,
       rowRenderer,
       cellRenderer: this.renderRowCell,
@@ -303,8 +306,15 @@ class BaseTable extends React.PureComponent {
         className={cls}
         style={this.columnManager.getColumnStyle(column.key)}
       >
-        {expandIcon}
-        {cell}
+        {!column.selectable && expandIcon}
+        {!column.selectable && cell}
+        {column.selectable && column.cellRenderer === undefined && (
+          <input
+            type="checkbox"
+            onChange={e => this.selectChange(e, this.props.selectedRowKey !== undefined ? rowData[this.props.selectedRowKey] : rowData.id )}
+            checked={this.state.selectedRowKeys.includes(this.props.selectedRowKey !== undefined ? rowData[this.props.selectedRowKey] : rowData.id )}
+          />
+        )}
       </Tag>
     );
   }
@@ -382,9 +392,16 @@ class BaseTable extends React.PureComponent {
         style={this.columnManager.getColumnStyle(column.key)}
         data-key={column.key}
       >
-        {expandIcon}
-        {cell}
-        {column.sortable && (
+        {column.selectable && column.headerRenderer === undefined && (
+          <input
+            type="checkbox"
+            onChange={this.selectAll}
+            checked={this.state.selectedRowKeys.length === this.props.data.length}
+          />
+        )}
+        {!column.selectable && expandIcon}
+        {!column.selectable && cell}
+        {!column.selectable && column.sortable && (
           <SortIndicator
             sortOrder={sortOrder}
             className={cn(this._prefixClass('sort-indicator'), {
@@ -392,7 +409,7 @@ class BaseTable extends React.PureComponent {
             })}
           />
         )}
-        {column.resizable && (
+        {!column.selectable && column.resizable && (
           <ColumnResizer
             className={this._prefixClass('column-resizer')}
             handleClassName={this._prefixClass('column-resizer-handle')}
@@ -612,6 +629,12 @@ class BaseTable extends React.PureComponent {
       this._hasDataChangedSinceEndReached = true;
     }
 
+    if (nextProps.selectedRowKeys !== this.props.selectedRowKeys) {
+      this.setState({ selectedRowKeys: cloneArray(nextProps.selectedRowKeys) }, () => {
+        this.props.onSelectChange(this.state.selectedRowKeys);
+      });
+    }
+
     if (nextProps.height !== this.props.height) {
       this._maybeCallOnEndReached();
     }
@@ -823,6 +846,38 @@ class BaseTable extends React.PureComponent {
     this.props.onExpandedRowsChange(expandedRowKeys);
   }
 
+  _handleRowSelect() {
+    this.props.onSelectChange(this.state.selectedRowKeys);
+  }
+
+  selectChange(e, key) {
+    const checked = e.target.checked;
+    let selectedRowKeys = [];
+    if (checked) {
+      selectedRowKeys = [...this.state.selectedRowKeys, key];
+    } else {
+      selectedRowKeys = this.state.selectedRowKeys.filter(x => x !== key);
+    }
+
+    this.setState({ ...this.state, selectedRowKeys }, () => this._handleRowSelect());
+  }
+
+  selectAll = e => {
+    const checked = e.target.checked;
+    const rowKey = this.props.selectedRowKey !== undefined ? this.props.selectedRowKey : 'id';
+    this.setState(
+      {
+        ...this.state,
+        selectedRowKeys: checked
+          ? this.props.data.map(item => {
+              return item[rowKey];
+            })
+          : [],
+      },
+      () => this._handleRowSelect()
+    );
+  };
+
   _handleColumnResize({ key }, width) {
     this.columnManager.setColumnWidth(key, width);
     this.setState({ resizingWidth: width });
@@ -878,6 +933,7 @@ BaseTable.defaultProps = {
   onExpandedRowsChange: noop,
   onColumnSort: noop,
   onColumnResize: noop,
+  onSelectChange: noop,
 };
 
 BaseTable.propTypes = {
@@ -1012,6 +1068,14 @@ BaseTable.propTypes = {
    */
   defaultExpandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   /**
+   * Selected row keys when initialize the table
+   */
+  selectedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
+  /**
+   * Selected row data key
+   */
+  selectedRowKey: PropTypes.string,
+  /**
    * Controlled expanded row keys
    */
   expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
@@ -1107,6 +1171,7 @@ BaseTable.propTypes = {
     ExpandIcon: PropTypes.func,
     SortIndicator: PropTypes.func,
   }),
+  onSelectChange: PropTypes.func,
 };
 
 export default BaseTable;

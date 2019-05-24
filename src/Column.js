@@ -84,6 +84,10 @@ Column.propTypes = {
    */
   resizable: PropTypes.bool,
   /**
+   * Whether the column is selectable, defaults to false
+   */
+  selectable: PropTypes.bool,
+  /**
    * Whether the column is sortable, defaults to true
    */
   sortable: PropTypes.bool,

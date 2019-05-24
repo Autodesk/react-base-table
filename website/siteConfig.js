@@ -180,5 +180,13 @@ module.exports = {
       title: 'Tag Name',
       path: '/examples/tag-name',
     },
+    {
+      title: 'Select Column',
+      path: '/examples/select-column',
+    },
+    {
+      title: 'Select Column (Custom Checkbox)',
+      path: '/examples/select-column-custom-checkbox',
+    },
   ],
 }

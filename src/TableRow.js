@@ -33,6 +33,7 @@ class TableRow extends React.PureComponent {
       rowKey,
       onRowHover,
       onRowExpand,
+      selectedRowKeys,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -131,6 +132,7 @@ TableRow.propTypes = {
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,
   tagName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  selectedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
 };
 
 export default TableRow;

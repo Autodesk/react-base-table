@@ -67,7 +67,7 @@ const components = {
 }
 
 const expandIconProps = ({ rowData }) => ({
-  expanding: !rowData.children,
+  expanding: !rowData.children || rowData.children.length === 0,
 })
 
 export default () => (

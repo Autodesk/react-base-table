@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- chore: upgrade `react-window` to silence the deprecation
+
 # v1.3.0 (2019-05-10)
 
 - feat: allow `rowKey` to be `number`

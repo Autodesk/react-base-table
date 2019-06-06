@@ -88,10 +88,10 @@ class GridTable extends React.PureComponent {
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
           rowHeight={rowHeight}
           rowCount={data.length}
-          overscanRowsCount={overscanRowCount}
+          overscanRowCount={overscanRowCount}
           columnWidth={bodyWidth}
           columnCount={1}
-          overscanColumnsCount={0}
+          overscanColumnCount={0}
           useIsScrolling={useIsScrolling}
           hoveredRowKey={hoveredRowKey}
           onScroll={onScroll}

@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+# v1.3.1 (2019-06-06)
+
 - chore: upgrade `react-window` to silence the deprecation
 
 # v1.3.0 (2019-05-10)

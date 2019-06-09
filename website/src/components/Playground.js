@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import {
@@ -14,13 +14,8 @@ import BaseTable, {
   AutoResizer,
   normalizeColumns,
   unflatten,
-  TableRow as BaseTableRow,
 } from 'react-base-table'
 import 'react-base-table/styles.css'
-import BaseTableExpandIcon from 'react-base-table/ExpandIcon'
-
-import ActionPanel from 'components/ActionPanel'
-import ActionChannel, { createAction } from 'utils/actionChannel'
 
 const generateColumns = (count = 10, prefix = 'column-', props) =>
   new Array(count).fill(0).map((column, columnIndex) => ({
@@ -47,19 +42,13 @@ const generateData = (columns, count = 200, prefix = 'row-') =>
 
 const noop = () => {}
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const action = message => args => console.log(message, args)
 
 const Table = props => <BaseTable width={720} height={400} {...props} />
 Table.Column = Column
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`
-
 const EditorContainer = styled.div`
-  flex: none;
-  height: 300px;
+  flex: 0 1 500px;
   overflow: auto;
 `
 
@@ -80,14 +69,12 @@ const StyledEditor = styled(LiveEditor)`
 `
 
 const PreviewContainer = styled.div`
-  flex: none;
-  min-height: 400px;
+  flex: 1 1 500px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f3f3;
-  margin-bottom: 10px;
+  background: #fff;
 `
 
 const StyledPreview = styled(LivePreview)`
@@ -108,51 +95,64 @@ const StyledError = styled(LiveError)`
   white-space: pre;
 `
 
-const LiveRunner = ({ name, code, scope = {}, ...rest }) => {
-  const actionChannel = useMemo(() => new ActionChannel(name), [name])
-  const action = useMemo(() => createAction(name), [name])
+const Container = styled.div`
+  display: flex;
+  box-shadow: 0 0 8px 0 lightsteelblue;
+  height: 100%;
 
-  return (
-    <Container {...rest}>
-      <LiveProvider
-        code={code}
-        scope={{
-          React,
-          ReactDOM,
-          styled,
-          css,
-          keyframes,
-          createGlobalStyle,
-          BaseTable,
-          Column,
-          SortOrder,
-          AutoResizer,
-          normalizeColumns,
-          unflatten,
+  ${props =>
+    props.vertical &&
+    css`
+      flex-direction: column-reverse;
 
-          generateColumns,
-          generateData,
-          noop,
-          delay,
-          action,
+      ${EditorContainer} {
+        flex: none;
+        height: 300px;
+      }
 
-          Table,
-          BaseTableRow,
-          BaseTableExpandIcon,
-          ...scope,
-        }}
-      >
-        <PreviewContainer>
-          <StyledPreview />
-          <StyledError />
-        </PreviewContainer>
-        <ActionPanel name={name} channel={actionChannel} />
-        <EditorContainer>
-          <StyledEditor />
-        </EditorContainer>
-      </LiveProvider>
-    </Container>
-  )
-}
+      ${PreviewContainer} {
+        flex: none;
+        min-height: 400px;
+      }
+    `}
+`
+
+const LiveRunner = ({ children, code, scope = {}, vertical, ...rest }) => (
+  <Container vertical={vertical} {...rest}>
+    <LiveProvider
+      code={code}
+      scope={{
+        React,
+        ReactDOM,
+        styled,
+        css,
+        keyframes,
+        createGlobalStyle,
+        Table,
+        BaseTable,
+        Column,
+        SortOrder,
+        AutoResizer,
+        normalizeColumns,
+        unflatten,
+        generateColumns,
+        generateData,
+        noop,
+        delay,
+        action,
+        ...scope,
+      }}
+    >
+      <EditorContainer>
+        <StyledEditor />
+      </EditorContainer>
+      {children}
+      <PreviewContainer>
+        <StyledPreview />
+        <StyledError />
+      </PreviewContainer>
+    </LiveProvider>
+  </Container>
+)
 
 export default LiveRunner

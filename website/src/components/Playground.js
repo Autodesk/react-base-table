@@ -1,32 +1,30 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useLiveRunner } from 'react-live-runner'
-
-import ActionPanel from './ActionPanel'
 import Editor from './Editor'
-import ActionChannel, { createAction } from 'utils/actionChannel'
+
 import baseScope from 'utils/baseScope'
 
 const Container = styled.div`
+  display: flex;
+  box-shadow: 0 0 8px 0 lightsteelblue;
   height: 100%;
 `
 
 const StyledEditor = styled(Editor)`
-  height: 300px;
-  border-radius: 3px;
+  flex: 0 1 600px;
 `
 
 const PreviewContainer = styled.div`
-  min-height: 400px;
+  flex: 1 1 600px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #f3f3f3;
   overflow: auto;
-  padding: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 8px 0 lightsteelblue;
+  background: #fff;
 `
 
 const Preview = styled.div`
@@ -44,23 +42,15 @@ const Error = styled.div`
   color: #f00;
   white-space: pre;
 `
-
-const LiveRunner = ({
-  name,
+const Playground = ({
   code: sourceCode,
   scope: _scope,
   language,
   type,
   ...rest
 }) => {
-  const [action, actionChannel] = useMemo(
-    () => [createAction(name), new ActionChannel(name)],
-    [name]
-  )
-
-  const scope = useMemo(() => ({ ...baseScope, action, ..._scope }), [
+  const scope = useMemo(() => ({ ...baseScope, ..._scope }), [
     baseScope,
-    action,
     _scope,
   ])
   const { element, error, code, onChange } = useLiveRunner({
@@ -71,6 +61,7 @@ const LiveRunner = ({
 
   return (
     <Container {...rest}>
+      <StyledEditor code={code} language={language} onChange={onChange} />
       <PreviewContainer>
         {error ? (
           <Error>{error.toString()}</Error>
@@ -78,10 +69,8 @@ const LiveRunner = ({
           <Preview>{element}</Preview>
         )}
       </PreviewContainer>
-      <ActionPanel name={name} channel={actionChannel} />
-      <StyledEditor code={code} language={language} onChange={onChange} />
     </Container>
   )
 }
 
-export default LiveRunner
+export default Playground

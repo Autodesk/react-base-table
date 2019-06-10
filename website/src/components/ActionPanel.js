@@ -11,7 +11,7 @@ const Container = styled.div`
 `
 
 const ActionsContainer = styled.div`
-  max-height: 400px;
+  max-height: 200px;
   overflow-y: auto;
   padding: 0 15px;
 `

@@ -1,5 +1,3 @@
-import LegacyExpandIcon from 'react-base-table/ExpandIcon'
-
 const columns = generateColumns(10)
 const data = generateData(columns, 200)
 
@@ -60,7 +58,7 @@ const Loader = styled.div`
 `
 
 const ExpandIcon = ({ expanding, ...rest }) =>
-  expanding ? <Loader depth={rest.depth} /> : <LegacyExpandIcon {...rest} />
+  expanding ? <Loader depth={rest.depth} /> : <BaseTableExpandIcon {...rest} />
 
 const components = {
   ExpandIcon,

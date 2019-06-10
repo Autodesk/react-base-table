@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import ReactDOM from 'react-dom'
 import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 
 import BaseTable, {
@@ -7,26 +7,20 @@ import BaseTable, {
   SortOrder,
   AutoResizer,
   normalizeColumns,
+  callOrReturn,
   unflatten,
+  TableHeader as BaseTableHeader,
+  TableRow as BaseTableRow,
 } from 'react-base-table'
-import 'react-base-table/styles.css'
-
-import { createAction } from 'utils/actionChannel'
-
-const action = createAction(__filename)
-const noop = () => {}
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-const Table = props => <BaseTable width={720} height={400} {...props} />
-Table.Column = Column
+import BaseTableExpandIcon from 'react-base-table/ExpandIcon'
 
 const generateColumns = (count = 10, prefix = 'column-', props) =>
   new Array(count).fill(0).map((column, columnIndex) => ({
+    ...props,
     key: `${prefix}${columnIndex}`,
     dataKey: `${prefix}${columnIndex}`,
     title: `Column ${columnIndex}`,
     width: 150,
-    ...props,
   }))
 
 const generateData = (columns, count = 200, prefix = 'row-') =>
@@ -43,4 +37,37 @@ const generateData = (columns, count = 200, prefix = 'row-') =>
     )
   })
 
-/*** placeholder ***/
+const noop = () => {}
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const action = message => args => console.log(message, args)
+
+const Table = props => <BaseTable width={700} height={400} {...props} />
+Table.Column = Column
+
+export default {
+  React,
+  ReactDOM,
+
+  styled,
+  css,
+  keyframes,
+  createGlobalStyle,
+
+  BaseTable,
+  Column,
+  SortOrder,
+  AutoResizer,
+  normalizeColumns,
+  callOrReturn,
+  unflatten,
+  BaseTableRow,
+  BaseTableHeader,
+  BaseTableExpandIcon,
+
+  generateColumns,
+  generateData,
+  noop,
+  delay,
+  action,
+  Table,
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Page from 'components/Page'
-import CodeEditor from 'components/CodeEdittor'
+import Playground from 'components/Playground'
 
 // eslint-disable-next-line
 const code = require('!raw-loader!./example.code')
@@ -14,6 +14,6 @@ const Container = styled(Page).attrs({ full: true })`
 
 export default ({ location }) => (
   <Container title="Playground" location={location}>
-    <CodeEditor code={code} noInline />
+    <Playground code={code} />
   </Container>
 )

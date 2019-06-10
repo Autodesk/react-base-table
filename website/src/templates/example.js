@@ -3,21 +3,14 @@ import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
 import Anchor from 'components/Anchor'
-import Example from 'components/Example'
 import Code from 'components/Code'
 import Page from 'components/Page'
+import Example from 'components/Example'
+import ActionPanel from 'components/ActionPanel'
 
-import ActionChannel from 'utils/actionChannel'
+import ActionChannel, { createAction } from 'utils/actionChannel'
 
 import siteConfig from 'siteConfig'
-
-const context = require.context('../examples', false, /^\.\/(?!index).*\.js$/)
-
-const Examples = context.keys().reduce((modules, fileName) => {
-  const exportName = fileName.replace('./', '').replace('.js', '')
-  modules[exportName] = context(fileName).default
-  return modules
-}, {})
 
 const links = siteConfig.examples.map(item => ({
   key: item.title,
@@ -39,30 +32,8 @@ const Error = styled.div`
 `
 
 class ComponentTemplate extends React.Component {
-  state = {
-    actionChannel: new ActionChannel(this.props.pageContext.name),
-    error: null,
-  }
-
-  componentDidCatch(error) {
-    this.setState({ error })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.pageContext.name !== this.props.pageContext.name) {
-      this.setState({
-        actionChannel: new ActionChannel(nextProps.pageContext.name),
-      })
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.pageContext.name !== this.props.pageContext.name
-  }
-
   render() {
     const { data, pageContext, location } = this.props
-    const { actionChannel, error } = this.state
     const code = data.rawCode.content
     const name = pageContext.name
     const link = links.find(link => link.to === `/examples/${name}`)
@@ -70,18 +41,7 @@ class ComponentTemplate extends React.Component {
       <Page title={`Examples: ${link.title}`} location={location} links={links}>
         <Title>{link.title}</Title>
         <Anchor title="Example" />
-        {!error ? (
-          <Example
-            key={name}
-            name={name}
-            component={Examples[name]}
-            channel={actionChannel}
-          />
-        ) : (
-          <Error>There is something wrong with the Example</Error>
-        )}
-        <Anchor title="Code" />
-        <Code code={code} />
+        <Example name={name} code={code} />
       </Page>
     )
   }

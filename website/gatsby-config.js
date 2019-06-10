@@ -42,14 +42,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-template',
-      options: {
-        test: /\/src\/examples\/(?!index).*\.jsx?$/,
-        template: `${__dirname}/example-template.js`,
-        placeholder: '/*** placeholder ***/',
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'examples',
@@ -80,7 +72,7 @@ module.exports = {
     {
       resolve: 'gatsby-transformer-remark',
       options: {
-        plugins: ['gatsby-remark-prismjs', 'gatsby-remark-copy-linked-files'],
+        plugins: ['gatsby-remark-copy-linked-files'],
       },
     },
     'gatsby-transformer-react-docgen',

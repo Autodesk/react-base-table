@@ -32,7 +32,7 @@ Learn more at the [website](https://autodesk.github.io/react-base-table/)
 **`width` and `height` are required to display the table properly**
 
 In the [examples](https://autodesk.github.io/react-base-table/examples)
-we are using a wrapper `const Table = props => <BaseTable width={720} height={400} {...props} />` to do that
+we are using a wrapper `const Table = props => <BaseTable width={700} height={400} {...props} />` to do that
 
 You can use the [`AutoResizer`](https://autodesk.github.io/react-base-table/api/autoresizer) to make the table fill the container, take the [playground](https://autodesk.github.io/react-base-table/playground) for example
 

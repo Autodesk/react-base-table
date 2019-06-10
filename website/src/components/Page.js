@@ -7,6 +7,7 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 
 import '../styles/index.css'
+import 'react-base-table/styles.css'
 
 const pagelMixin = css`
   margin: 0 auto;

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Button = styled.button`
+const CornerButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
@@ -15,7 +15,8 @@ const Button = styled.button`
 
   &:hover {
     opacity: 0.8;
+    cursor: pointer;
   }
 `
 
-export default Button
+export default CornerButton

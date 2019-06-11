@@ -1,9 +1,11 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useLiveRunner } from 'react-live-runner'
 import Editor from './Editor'
+import CopyButton from './CopyButton'
 
 import baseScope from 'utils/baseScope'
+import { getCode, replaceState } from 'utils/urlHash'
 
 const Container = styled.div`
   display: flex;
@@ -42,31 +44,41 @@ const Error = styled.div`
   color: #f00;
   white-space: pre;
 `
-const Playground = ({
-  code: sourceCode,
-  scope: _scope,
-  language,
-  type,
-  ...rest
-}) => {
+
+const Playground = ({ scope: _scope, language, type, ...rest }) => {
   const scope = useMemo(() => ({ ...baseScope, ..._scope }), [
     baseScope,
     _scope,
   ])
+  const [sourceCode, setSourceCode] = useState('')
   const { element, error, code, onChange } = useLiveRunner({
     sourceCode,
     scope,
     type,
   })
+  const handleChange = useCallback(
+    code => {
+      onChange(code)
+      replaceState(code)
+    },
+    [onChange]
+  )
+
+  useEffect(() => {
+    setSourceCode(getCode)
+  }, [])
 
   return (
     <Container {...rest}>
-      <StyledEditor code={code} language={language} onChange={onChange} />
+      <StyledEditor code={code} language={language} onChange={handleChange} />
       <PreviewContainer>
         {error ? (
           <Error>{error.toString()}</Error>
         ) : (
           <Preview>{element}</Preview>
+        )}
+        {typeof document !== 'undefined' && (
+          <CopyButton text="copy link" content={document.location.href} />
         )}
       </PreviewContainer>
     </Container>

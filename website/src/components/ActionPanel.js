@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Inspector from 'react-inspector'
 
-import Button from './Button'
+import CornerButton from './CornerButton'
 
 const Container = styled.div`
   position: relative;
@@ -16,7 +16,7 @@ const ActionsContainer = styled.div`
   padding: 0 15px;
 `
 
-const ClearButton = styled(Button)`
+const ClearButton = styled(CornerButton)`
   background-color: transparent;
 `
 

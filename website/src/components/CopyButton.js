@@ -1,11 +1,11 @@
 import React from 'react'
 import clipboard from 'clipboard'
 
-import Button from './Button'
+import CornerButton from './CornerButton'
 
 class CopyButton extends React.PureComponent {
   state = {
-    text: 'copy',
+    text: this.props.text,
   }
 
   handleRef = ref => (this.ref = ref)
@@ -14,7 +14,7 @@ class CopyButton extends React.PureComponent {
     this.clearTimer()
     this.setState({ text: 'copied' }, () => {
       this.timer = setTimeout(() => {
-        this.setState({ text: 'copy' })
+        this.setState({ text: this.props.text })
       }, 300)
     })
   }
@@ -23,7 +23,7 @@ class CopyButton extends React.PureComponent {
     this.clearTimer()
     this.setState({ text: 'failed' }, () => {
       this.timer = setTimeout(() => {
-        this.setState({ text: 'copy' })
+        this.setState({ text: this.props.text })
       }, 300)
     })
   }
@@ -45,14 +45,22 @@ class CopyButton extends React.PureComponent {
   }
 
   render() {
-    const { content } = this.props
+    const { content, ...rest } = this.props
     const { text } = this.state
     return (
-      <Button ref={this.handleRef} data-clipboard-text={content}>
+      <CornerButton
+        ref={this.handleRef}
+        data-clipboard-text={content}
+        {...rest}
+      >
         {text}
-      </Button>
+      </CornerButton>
     )
   }
+}
+
+CopyButton.defaultProps = {
+  text: 'copy',
 }
 
 export default CopyButton

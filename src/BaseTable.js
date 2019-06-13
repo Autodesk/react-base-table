@@ -504,15 +504,23 @@ class BaseTable extends React.PureComponent {
     const { width, fixed } = this.props;
     const { resizingKey } = this.state;
     if (!fixed || !resizingKey) return null;
+
     const columns = this.columnManager.getMainColumns();
     const idx = columns.findIndex(column => column.key === resizingKey);
-    const column = this.columnManager.getColumn(resizingKey);
+    const column = columns[idx];
+    const { width: columnWidth, frozen } = column;
+    const leftWidth = this.columnManager.recomputeColumnsWidth(columns.slice(0, idx));
 
-    let left = this.columnManager.recomputeColumnsWidth(columns.slice(0, idx + 1));
-    if (!column.frozen) {
+    let left = leftWidth + columnWidth;
+    if (!frozen) {
       left -= this._scroll.scrollLeft;
-    } else if (column.frozen === FrozenDirection.RIGHT) {
-      left = width - this._verticalScrollbarSize - this.columnManager.recomputeColumnsWidth(columns.slice(idx + 1));
+    } else if (frozen === FrozenDirection.RIGHT) {
+      const rightWidth = this.columnManager.recomputeColumnsWidth(columns.slice(idx + 1));
+      if (rightWidth + columnWidth > width - this._verticalScrollbarSize) {
+        left = columnWidth;
+      } else {
+        left = width - this._verticalScrollbarSize - rightWidth;
+      }
     }
     const style = {
       left,

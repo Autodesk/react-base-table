@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+# v1.3.2 (2019-06-14)
+
 - fix: resizing line rendered incorrectly when resizing the right frozen column
 
 # v1.3.1 (2019-06-06)

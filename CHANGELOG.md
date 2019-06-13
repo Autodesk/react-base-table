@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: resizing line rendered incorrectly when resizing the right frozen column
+
 # v1.3.1 (2019-06-06)
 
 - chore: upgrade `react-window` to silence the deprecation

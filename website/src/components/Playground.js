@@ -8,6 +8,7 @@ import baseScope from 'utils/baseScope'
 import { getCode, replaceState } from 'utils/urlHash'
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   box-shadow: 0 0 8px 0 lightsteelblue;
   height: 100%;
@@ -18,8 +19,8 @@ const StyledEditor = styled(Editor)`
 `
 
 const PreviewContainer = styled.div`
-  flex: 1 1 600px;
   position: relative;
+  flex: 1 1 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,7 +43,7 @@ const Error = styled.div`
   margin: 0;
   padding: 10px;
   color: #f00;
-  white-space: pre;
+  white-space: pre-wrap;
 `
 
 const Playground = ({ scope: _scope, language, type, ...rest }) => {
@@ -50,7 +51,7 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
     baseScope,
     _scope,
   ])
-  const [sourceCode, setSourceCode] = useState('')
+  const [sourceCode, setSourceCode] = useState(getCode)
   const { element, error, code, onChange } = useLiveRunner({
     sourceCode,
     scope,
@@ -66,21 +67,18 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
 
   useEffect(() => {
     setSourceCode(getCode)
-  }, [])
+  }, [typeof document])
 
   return (
     <Container {...rest}>
       <StyledEditor code={code} language={language} onChange={handleChange} />
       <PreviewContainer>
-        {error ? (
-          <Error>{error.toString()}</Error>
-        ) : (
-          <Preview>{element}</Preview>
-        )}
-        {typeof document !== 'undefined' && (
-          <CopyButton text="copy link" content={document.location.href} />
-        )}
+        {error && <Error>{error.toString()}</Error>}
+        <Preview>{element}</Preview>
       </PreviewContainer>
+      {typeof document !== 'undefined' && (
+        <CopyButton text="copy link" content={document.location.href} />
+      )}
     </Container>
   )
 }

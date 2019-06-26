@@ -27,7 +27,7 @@
     "react-dom": "^16.8.5",
     "react-helmet": "^5.2.0",
     "react-inspector": "^2.3.1",
-    "react-live-runner": "^0.2.1",
+    "react-live-runner": "^0.3.0",
     "sanitize.css": "^8.0.0",
     "seamless-immutable": "^7.1.4",
     "slugify": "^1.3.4",

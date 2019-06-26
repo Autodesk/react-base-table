@@ -4,6 +4,8 @@ import LZString from 'lz-string'
 const sampleCode = require('!raw-loader!./sample.code')
 
 export const getCode = () => {
+  if (typeof document === 'undefined') return sampleCode
+
   const hash = document.location.hash.slice(1)
   if (!hash) return sampleCode
 
@@ -14,7 +16,6 @@ export const getCode = () => {
 
 export const replaceState = code => {
   const hash = code ? LZString.compressToEncodedURIComponent(code) : ''
-  console.log(hash)
 
   if (
     typeof URL === 'function' &&

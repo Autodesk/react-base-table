@@ -42,7 +42,7 @@ const Error = styled.div`
   margin: 0;
   padding: 10px;
   color: #f00;
-  white-space: pre;
+  white-space: pre-wrap;
 `
 
 const LiveRunner = ({
@@ -72,11 +72,8 @@ const LiveRunner = ({
   return (
     <Container {...rest}>
       <PreviewContainer>
-        {error ? (
-          <Error>{error.toString()}</Error>
-        ) : (
-          <Preview>{element}</Preview>
-        )}
+        {error && <Error>{error.toString()}</Error>}
+        <Preview>{element}</Preview>
       </PreviewContainer>
       <ActionPanel name={name} channel={actionChannel} />
       <StyledEditor code={code} language={language} onChange={onChange} />

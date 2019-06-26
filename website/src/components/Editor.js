@@ -15,13 +15,14 @@ const EditorContainer = styled.div`
 `
 
 const StyledEditor = styled(CodeEditor)`
+  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
+  font-size: 13px;
   white-space: pre;
   background: #222;
   caret-color: #fff;
   min-width: 100%;
   min-height: 100%;
   float: left;
-  font-size: 16px;
 
   & > textarea,
   & > pre {

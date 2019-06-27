@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+# v1.3.3 (2019-06-27)
+
 - fix: use `PropTypes.elementType` for `tagName`'s type
 
 # v1.3.2 (2019-06-14)

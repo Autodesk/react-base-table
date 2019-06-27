@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: use `PropTypes.elementType` for `tagName`'s type
+
 # v1.3.2 (2019-06-14)
 
 - fix: resizing line rendered incorrectly when resizing the right frozen column

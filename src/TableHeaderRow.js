@@ -53,7 +53,7 @@ TableHeaderRow.propTypes = {
   headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   expandColumnKey: PropTypes.string,
   expandIcon: PropTypes.func,
-  tagName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  tagName: PropTypes.elementType,
 };
 
 export default TableHeaderRow;

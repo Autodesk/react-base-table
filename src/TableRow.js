@@ -130,7 +130,7 @@ TableRow.propTypes = {
   expandIconRenderer: PropTypes.func,
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,
-  tagName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  tagName: PropTypes.elementType,
 };
 
 export default TableRow;

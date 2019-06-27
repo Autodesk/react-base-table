@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useLiveRunner } from 'react-live-runner'
-import Editor from './Editor'
+import CodeEditor from './CodeEditor'
 import CopyButton from './CopyButton'
 
 import baseScope from 'utils/baseScope'
@@ -14,7 +14,7 @@ const Container = styled.div`
   height: 100%;
 `
 
-const StyledEditor = styled(Editor)`
+const StyledEditor = styled(CodeEditor)`
   flex: 0 1 600px;
 `
 

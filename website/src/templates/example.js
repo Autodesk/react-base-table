@@ -3,12 +3,8 @@ import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
 import Anchor from 'components/Anchor'
-import Code from 'components/Code'
 import Page from 'components/Page'
-import Example from 'components/Example'
-import ActionPanel from 'components/ActionPanel'
-
-import ActionChannel, { createAction } from 'utils/actionChannel'
+import CodePreview from 'components/CodePreview'
 
 import siteConfig from 'siteConfig'
 
@@ -41,7 +37,7 @@ class ComponentTemplate extends React.Component {
       <Page title={`Examples: ${link.title}`} location={location} links={links}>
         <Title>{link.title}</Title>
         <Anchor title="Example" />
-        <Example name={name} code={code} />
+        <CodePreview code={code} />
       </Page>
     )
   }

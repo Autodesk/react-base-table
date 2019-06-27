@@ -87,7 +87,7 @@ class ApiTemplate extends React.Component {
       >
         <Title>{metaData.displayName}</Title>
         {metaData.description && (
-          <Block html={metaData.description.childMarkdownRemark.html} />
+          <Block htmlAst={metaData.description.childMarkdownRemark.htmlAst} />
         )}
         <Anchor title="Props" />
         {metaData.props
@@ -106,7 +106,7 @@ class ApiTemplate extends React.Component {
                 {prop.required && <Required>required</Required>}
               </Name>
               {prop.description && (
-                <Block html={prop.description.childMarkdownRemark.html} />
+                <Block htmlAst={prop.description.childMarkdownRemark.htmlAst} />
               )}
             </Prop>
           ))}
@@ -119,7 +119,7 @@ class ApiTemplate extends React.Component {
                   {method.name}
                   <Tag>{method.signature}</Tag>
                 </Name>
-                <Block html={method.childMarkdownRemark.html} />
+                <Block htmlAst={method.childMarkdownRemark.htmlAst} />
               </Prop>
             ))}
           </React.Fragment>
@@ -137,7 +137,7 @@ export const pageQuery = graphql`
       displayName
       description {
         childMarkdownRemark {
-          html
+          htmlAst
         }
       }
       props {
@@ -150,7 +150,7 @@ export const pageQuery = graphql`
         required
         description {
           childMarkdownRemark {
-            html
+            htmlAst
           }
         }
         defaultValue {
@@ -166,7 +166,7 @@ export const pageQuery = graphql`
           }
         }
         childMarkdownRemark {
-          html
+          htmlAst
         }
       }
     }

@@ -73,7 +73,7 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
     <Container {...rest}>
       <StyledEditor code={code} language={language} onChange={handleChange} />
       <PreviewContainer>
-        {error && <Error>{error.toString()}</Error>}
+        {error && <Error>{error}</Error>}
         <Preview>{element}</Preview>
       </PreviewContainer>
       {typeof document !== 'undefined' && (

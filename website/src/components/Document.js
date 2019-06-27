@@ -17,7 +17,7 @@ const Pre = props => {
 }
 
 const Code = styled.code`
-  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
   font-size: 13px;
   color: #c7254e;
   background-color: rgba(27, 31, 35, 0.05);

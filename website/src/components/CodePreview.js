@@ -67,7 +67,7 @@ const CodePreview = ({
   return (
     <Container {...rest}>
       <PreviewContainer>
-        {error && <Error>{error.toString()}</Error>}
+        {error && <Error>{error}</Error>}
         <Preview>{element}</Preview>
       </PreviewContainer>
       <ActionPanel channel={channel} />

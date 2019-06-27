@@ -16,8 +16,8 @@ const Scroll = styled.div`
 `
 
 const Pre = styled.pre`
-  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
-  font-size: 13px;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
+  font-size: 14px;
   margin: 0;
   padding: 10px;
   float: left;

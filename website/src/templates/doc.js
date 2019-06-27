@@ -20,7 +20,7 @@ class DocumentTemplate extends React.Component {
 
     return (
       <Page title={`Docs: ${link.title}`} location={location} links={links}>
-        <Document html={doc.html} />
+        <Document htmlAst={doc.htmlAst} />
       </Page>
     )
   }
@@ -31,7 +31,7 @@ export default DocumentTemplate
 export const pageQuery = graphql`
   query DocumentBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      htmlAst
     }
   }
 `

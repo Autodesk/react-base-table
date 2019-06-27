@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CodeEditor } from 'react-live-runner'
+import { CodeEditor as Editor } from 'react-live-runner'
 
 import CopyButton from './CopyButton'
 
@@ -14,7 +14,7 @@ const EditorContainer = styled.div`
   height: 100%;
 `
 
-const StyledEditor = styled(CodeEditor)`
+const StyledEditor = styled(Editor)`
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
   font-size: 13px;
   white-space: pre;
@@ -31,7 +31,7 @@ const StyledEditor = styled(CodeEditor)`
   }
 `
 
-const Editor = ({ code, language, onChange, ...rest }) => (
+const CodeEditor = ({ code, language, onChange, ...rest }) => (
   <Container {...rest}>
     <EditorContainer>
       <StyledEditor code={code} language={language} onChange={onChange} />
@@ -40,4 +40,4 @@ const Editor = ({ code, language, onChange, ...rest }) => (
   </Container>
 )
 
-export default Editor
+export default CodeEditor

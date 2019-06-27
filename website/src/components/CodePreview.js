@@ -3,15 +3,15 @@ import styled from 'styled-components'
 import { useLiveRunner } from 'react-live-runner'
 
 import ActionPanel from './ActionPanel'
-import Editor from './Editor'
-import ActionChannel, { createAction } from 'utils/actionChannel'
+import CodeEditor from './CodeEditor'
+import { createActionChannel } from 'utils/actionChannel'
 import baseScope from 'utils/baseScope'
 
 const Container = styled.div`
   height: 100%;
 `
 
-const StyledEditor = styled(Editor)`
+const StyledEditor = styled(CodeEditor)`
   height: 300px;
   border-radius: 3px;
 `
@@ -45,19 +45,14 @@ const Error = styled.div`
   white-space: pre-wrap;
 `
 
-const LiveRunner = ({
-  name,
+const CodePreview = ({
   code: sourceCode,
   scope: _scope,
   language,
   type,
   ...rest
 }) => {
-  const [action, actionChannel] = useMemo(
-    () => [createAction(name), new ActionChannel(name)],
-    [name]
-  )
-
+  const { action, channel } = useMemo(createActionChannel, [])
   const scope = useMemo(() => ({ ...baseScope, action, ..._scope }), [
     baseScope,
     action,
@@ -75,10 +70,10 @@ const LiveRunner = ({
         {error && <Error>{error.toString()}</Error>}
         <Preview>{element}</Preview>
       </PreviewContainer>
-      <ActionPanel name={name} channel={actionChannel} />
+      <ActionPanel channel={channel} />
       <StyledEditor code={code} language={language} onChange={onChange} />
     </Container>
   )
 }
 
-export default LiveRunner
+export default CodePreview

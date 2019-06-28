@@ -52,7 +52,7 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
     _scope,
   ])
   const [sourceCode, setSourceCode] = useState(getCode)
-  const { element, error, code, onChange } = useLiveRunner({
+  const { element, error, onChange } = useLiveRunner({
     sourceCode,
     scope,
     type,
@@ -71,7 +71,11 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
 
   return (
     <Container {...rest}>
-      <StyledEditor code={code} language={language} onChange={handleChange} />
+      <StyledEditor
+        sourceCode={sourceCode}
+        language={language}
+        onChange={handleChange}
+      />
       <PreviewContainer>
         {error && <Error>{error}</Error>}
         <Preview>{element}</Preview>

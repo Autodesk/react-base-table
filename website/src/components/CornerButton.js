@@ -5,7 +5,7 @@ const CornerButton = styled.button`
   top: 0;
   right: 0;
   border-bottom-left-radius: 3px;
-  padding: 4px 8px;
+  padding: 2px 8px;
   outline: none;
   border: 0;
   opacity: 0.5;

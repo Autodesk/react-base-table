@@ -58,7 +58,7 @@ const CodePreview = ({
     action,
     _scope,
   ])
-  const { element, error, code, onChange } = useLiveRunner({
+  const { element, error, onChange } = useLiveRunner({
     sourceCode,
     scope,
     type,
@@ -71,7 +71,11 @@ const CodePreview = ({
         <Preview>{element}</Preview>
       </PreviewContainer>
       <ActionPanel channel={channel} />
-      <StyledEditor code={code} language={language} onChange={onChange} />
+      <StyledEditor
+        sourceCode={sourceCode}
+        language={language}
+        onChange={onChange}
+      />
     </Container>
   )
 }

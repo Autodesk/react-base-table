@@ -20,13 +20,6 @@ const Title = styled.div`
   margin-bottom: 10px;
 `
 
-const Error = styled.div`
-  background-color: #dae1e6;
-  padding: 12px;
-  border-radius: 3.6px;
-  color: #ff495c;
-`
-
 class ComponentTemplate extends React.Component {
   render() {
     const { data, pageContext, location } = this.props

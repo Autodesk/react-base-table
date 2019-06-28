@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useCallback, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import { CodeEditor as Editor } from 'react-live-runner'
+import { debounce } from 'lodash'
 
 import CopyButton from './CopyButton'
 
@@ -30,13 +31,23 @@ const StyledEditor = styled(Editor)`
   }
 `
 
-const CodeEditor = ({ code, language, onChange, ...rest }) => (
-  <Container {...rest}>
-    <EditorContainer>
-      <StyledEditor code={code} language={language} onChange={onChange} />
-    </EditorContainer>
-    <CopyButton content={code} />
-  </Container>
-)
+const CodeEditor = ({ sourceCode, language, onChange, ...rest }) => {
+  const [code, setCode] = useState(sourceCode)
+  const debouncedChange = useMemo(() => debounce(onChange, 300), [])
+  const handleChange = useCallback(code => {
+    setCode(code)
+    debouncedChange(code)
+  })
+  useEffect(() => setCode(sourceCode), [sourceCode])
+
+  return (
+    <Container {...rest}>
+      <EditorContainer>
+        <StyledEditor code={code} language={language} onChange={handleChange} />
+      </EditorContainer>
+      <CopyButton content={code} />
+    </Container>
+  )
+}
 
 export default CodeEditor

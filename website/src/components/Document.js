@@ -1,6 +1,5 @@
 import React from 'react'
 import rehypeReact from 'rehype-react'
-import styled from 'styled-components'
 
 import CodeBlock from './CodeBlock'
 import CodePreview from './CodePreview'
@@ -16,19 +15,10 @@ const Pre = props => {
   return <CodeBlock code={code} language={language} />
 }
 
-const Code = styled.code`
-  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
-  font-size: 13px;
-  color: #c7254e;
-  background-color: rgba(27, 31, 35, 0.05);
-  padding: 2px 4px;
-`
-
 const renderAst = new rehypeReact({
   createElement: React.createElement,
   components: {
     pre: Pre,
-    code: Code,
   },
 }).Compiler
 

@@ -24,15 +24,21 @@ a:focus {
   color: #38abdf;
 }
 
-pre[class*='language-'] {
-  font-size: 1.3rem;
+code,
+kbd,
+pre,
+samp {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 }
 
-:not(pre) > code[class*='language-'] {
-  background-color: rgba(27, 31, 35, 0.05);
-  margin: 0;
+pre {
+  font-size: 1.4rem;
+}
+
+:not(pre) > code {
   padding: 0.2em 0.4em;
   font-size: 85%;
-  color: #c7254e;
-  text-shadow: none;
+  color: #bd4147;
+  background-color: #f7f7f7;
+  border-radius: 0.3em;
 }

@@ -1,5 +1,10 @@
 # react-base-table
 
+<a href="https://npmjs.com/package/react-base-table"><img src="https://badgen.net/npm/license/react-base-table"></a>
+<a href="https://npmjs.com/package/react-base-table"><img src="https://badgen.net/npm/v/react-base-table"></a>
+<a href="https://npmjs.com/package/react-base-table"><img src="https://badgen.net/npm/dw/react-base-table"></a>
+<a href="https://bundlephobia.com/result?p=react-base-table"><img src="https://badgen.net/bundlephobia/minzip/react-base-table"></a>
+
 BaseTable is a react table component to display large data set with high performance and flexibility
 
 ## Install

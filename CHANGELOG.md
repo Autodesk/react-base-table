@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- refactor: remove dependent on `lodash`, and export `getValue`
+
 ## v1.3.3 (2019-06-27)
 
 - fix: use `PropTypes.elementType` for `tagName`'s type

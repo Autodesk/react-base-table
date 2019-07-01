@@ -1,11 +1,11 @@
 # react-base-table
 
-<a href="https://npmjs.com/package/react-base-table"><img src="https://badgen.net/npm/license/react-base-table"></a>
-<a href="https://npmjs.com/package/react-base-table"><img src="https://badgen.net/npm/v/react-base-table"></a>
-<a href="https://npmjs.com/package/react-base-table"><img src="https://badgen.net/npm/dw/react-base-table"></a>
-<a href="https://bundlephobia.com/result?p=react-base-table"><img src="https://badgen.net/bundlephobia/minzip/react-base-table"></a>
-
 BaseTable is a react table component to display large data set with high performance and flexibility
+
+<a href="https://npm.io/react-base-table"><img src="https://badgen.net/npm/license/react-base-table"></a>
+<a href="https://npm.io/react-base-table"><img src="https://badgen.net/npm/v/react-base-table"></a>
+<a href="https://npm.io/react-base-table"><img src="https://badgen.net/npm/dw/react-base-table"></a>
+<a href="https://bundlephobia.com/result?p=react-base-table"><img src="https://badgen.net/bundlephobia/minzip/react-base-table"></a>
 
 ## Install
 
@@ -41,7 +41,7 @@ we are using a wrapper `const Table = props => <BaseTable width={700} height={40
 
 You can use the [`AutoResizer`](https://autodesk.github.io/react-base-table/api/autoresizer) to make the table fill the container, take the [playground](https://autodesk.github.io/react-base-table/playground) for example
 
-_You have to polyfil `Array.prototype.findIndex` to make it works on IE_
+_You have to polyfill `Array.prototype.findIndex` to make it works on IE_
 
 ## Advance
 

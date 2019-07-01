@@ -2,7 +2,7 @@
 
 ## NEXT VERSION
 
-- chore: remove dependent on `lodash`, and export `getValue`
+- refactor: remove dependent on `lodash`, and export `getValue`
 
 ## v1.3.3 (2019-06-27)
 

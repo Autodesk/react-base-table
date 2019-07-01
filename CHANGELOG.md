@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.4.0 (2019-07-01)
+
 - refactor: remove dependent on `lodash`, and export `getValue`
 - build: use `@babel/plugin-transform-runtime` to reduce bundle size
 

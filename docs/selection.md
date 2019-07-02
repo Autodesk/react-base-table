@@ -2,7 +2,7 @@
 
 There is a [PR](https://github.com/Autodesk/react-base-table/pull/39) to add selection feature, but I don't want to merge it with [good reasons](https://github.com/Autodesk/react-base-table/pull/39#pullrequestreview-241987600), so I'd like to share a recipe here for reference
 
-```live
+```jsx {live: true, editorHeight: 400}
 const StyledTable = styled(BaseTable)`
   .row-selected {
     background-color: #e3e3e3;

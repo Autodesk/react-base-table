@@ -11,8 +11,17 @@ const Pre = props => {
   const language = className && className.split('-')[1]
   const code = children[0]
 
-  if (language === 'live') return <CodePreview code={code} name={code} />
-  return <CodeBlock code={code} language={language} />
+  let meta
+  try {
+    const dataMeta = props.children[0].props['data-meta']
+    // eslint-disable-next-line
+    meta = dataMeta && eval(`(${dataMeta})`)
+    if (typeof meta !== 'object') meta = {}
+  } catch (err) {}
+
+  const { live, ...rest } = meta || {}
+  const Component = live ? CodePreview : CodeBlock
+  return <Component code={code} language={language} {...rest} />
 }
 
 const renderAst = new rehypeReact({

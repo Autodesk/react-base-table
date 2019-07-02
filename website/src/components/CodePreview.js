@@ -50,6 +50,7 @@ const CodePreview = ({
   scope: _scope,
   language,
   type,
+  editorHeight = 300,
   ...rest
 }) => {
   const { action, channel } = useMemo(createActionChannel, [])
@@ -75,6 +76,7 @@ const CodePreview = ({
         sourceCode={sourceCode}
         language={language}
         onChange={onChange}
+        style={{ height: editorHeight }}
       />
     </Container>
   )

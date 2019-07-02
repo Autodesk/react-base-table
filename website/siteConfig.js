@@ -9,6 +9,10 @@ module.exports = {
       path: '/docs/advance',
     },
     {
+      title: 'Selection',
+      path: '/docs/selection',
+    },
+    {
       title: 'Glossary',
       path: '/docs/glossary',
     },

@@ -1,1 +1,0 @@
-{"data":{"rawCode":{"content":"const columns = generateColumns(10)\nconst data = generateData(columns, 200)\n\nexport default () => (\n  <Table columns={columns} data={data} width={400} height={300} />\n)\n"}},"pageContext":{"isCreatedByStatefulCreatePages":false,"name":"width-height"}}

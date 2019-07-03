@@ -1,1 +1,0 @@
-{"data":{"rawCode":{"content":"const columns = generateColumns(10)\nconst data = generateData(columns, 200)\n\nexport default () => <Table columns={columns} data={data} headerHeight={0} />\n"}},"pageContext":{"isCreatedByStatefulCreatePages":false,"name":"hide-header"}}

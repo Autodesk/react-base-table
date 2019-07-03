@@ -6,40 +6,16 @@ const siteConfig = require('./siteConfig')
 exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
   const config = getConfig()
 
-  switch (stage) {
-    case 'build-javascript':
-      const app =
-        typeof config.entry.app === 'string'
-          ? [config.entry.app]
-          : config.entry.app
-
-      config.entry.app = ['core-js/modules/es6.symbol', ...app]
-  }
-
   config.resolve.alias = {
     ...config.resolve.alias,
     assets: path.resolve(__dirname, 'src/assets'),
     components: path.resolve(__dirname, 'src/components'),
     utils: path.resolve(__dirname, 'src/utils'),
     siteConfig: path.resolve(__dirname, 'siteConfig'),
-    'mdast-util-to-hast/handlers/code': path.resolve(__dirname, './patches/code-handler'),
     'react-base-table/package.json': path.resolve(__dirname, '../package.json'),
     'react-base-table/styles.css': path.resolve(__dirname, '../styles.css'),
     'react-base-table': path.resolve(__dirname, '../src'),
   }
-
-  config.module.rules = config.module.rules.map(rule =>
-    String(rule.test) !== String(/\.jsx?$/)
-      ? rule
-      : {
-          ...rule,
-          exclude: modulePath =>
-            /node_modules/.test(modulePath) &&
-            !/node_modules\/(react-inspector|acorn-jsx|regexpu-core|unicode-match-property-ecmascript|unicode-match-property-value-ecmascript)/.test(
-              modulePath
-            ),
-        }
-  )
 
   actions.replaceWebpackConfig(config)
 }

@@ -8994,14 +8994,14 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
-react-live-runner@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/react-live-runner/-/react-live-runner-0.7.1.tgz#a11523b2409a4f900e700258bbc7ee4d6fd3878b"
-  integrity sha512-d70M5yMpGvOqygCxIKc2WMfV+O0ID7TJdAS6WGTr0jTzBP+B0B2sVVdgHgAfVFFwVecC1w78vphE3zN76WwbWQ==
+react-live-runner@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/react-live-runner/-/react-live-runner-0.7.2.tgz#ab6a7829890468493730583b2cdbefff9988d6ec"
+  integrity sha512-pute8jc0GZBeFg5w5uviK5rYaKzEhadcR16lSReq7FYkDBe+M/8RxxOl06I1xpOiPWb3ZsRuL316wWI618gu4w==
   dependencies:
     create-react-context "^0.3.0"
     prism-react-renderer "^0.1.7"
-    react-runner "^0.4.2"
+    react-runner "^0.5.0"
     react-simple-code-editor "^0.9.11"
 
 react-reconciler@^0.20.0:
@@ -9014,10 +9014,10 @@ react-reconciler@^0.20.0:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-react-runner@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-runner/-/react-runner-0.4.2.tgz#2457db08869c070c56854314ce146c9b08290a40"
-  integrity sha512-fp5ltvaiwsz/guNR+e66ov7WEb0ktOogq5U5jZm9CBZveVHsFedkIdUlE4WaNB0eIvCzdcn6ZT8rcUSrbk0Msw==
+react-runner@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-runner/-/react-runner-0.5.0.tgz#c4fb2303f22c3c55492c110332323d0f5432d364"
+  integrity sha512-IIbYuHLfnyygrIgqK68O2ahxdZbiEsP8rQ9RY7heA0kC64glbavZZv1EbxoaG+DF8wvU8FDb3D0jcqeT17bnzQ==
   dependencies:
     sucrase "^3.10.1"
 

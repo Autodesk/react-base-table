@@ -34,13 +34,15 @@ const Link = styled.a`
   }
 `
 
-const Anchor = ({ title, link }) => {
-  const slug = link || slugify(title, { lower: true })
+const Anchor = ({ children, title, link }) => {
+  if (!title && !children) return null
+
+  const slug = link || slugify(title || children, { lower: true })
   return (
     <Container id={slug}>
       <Span />
       <Link href={`#${slug}`} aria-hidden="true" />
-      {title}
+      {children || title}
     </Container>
   )
 }

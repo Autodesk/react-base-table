@@ -38,7 +38,7 @@ pre {
 :not(pre) > code {
   padding: 0.2em 0.4em;
   font-size: 85%;
-  color: #bd4147;
-  background-color: #f7f7f7;
+  color: #c7254e;
+  background-color: #f3f3f3;
   border-radius: 0.3em;
 }

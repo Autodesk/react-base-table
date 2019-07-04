@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
 import Page from 'components/Page'
-import Document from 'components/Document'
-import Anchor from 'components/Anchor'
+import Html from 'components/Html'
+import Props from 'components/Props'
+import Methods from 'components/Methods'
 
 import siteConfig from 'siteConfig'
 
@@ -20,64 +21,18 @@ const Title = styled.div`
   margin-bottom: 10px;
 `
 
-const Block = styled(Document)`
+const Block = styled(Html)`
   font-size: 14px;
   p {
     font-size: 14px;
   }
 `
 
-const Prop = styled.div`
-  margin: 10px 0 20px 10px;
-`
-
-const Name = styled.div`
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 5px;
-`
-
-const Tag = styled.span`
-  font-size: 12px;
-  padding: 1px 6px;
-  margin: 0 8px;
-  border-radius: 4px;
-  background-color: #daf0f9;
-  color: #819099;
-`
-
-const Required = styled(Tag)`
-  background-color: #182a3d;
-  color: #fff;
-  margin: 0;
-`
-
-const DefaultValue = styled.span`
-  color: #819099;
-`
-
-const parseType = type => {
-  if (type.name === 'enum') {
-    if (typeof type.value === 'string') return type.value
-    return type.value.map(x => x.value).join(' | ')
-  }
-  if (type.name === 'union') {
-    return type.value.map(x => x.name).join(' | ')
-  }
-  return type.name
-}
-
 class ApiTemplate extends React.Component {
   render() {
     const { data, location } = this.props
     const metaData = data.componentMetadata
     const methods = metaData.childrenComponentMethodExt
-    methods.forEach(method => {
-      const signature = method.params
-        .map(x => `${x.name}${x.type ? `: ${x.type.name}` : ''}`)
-        .join(', ')
-      method.signature = `(${signature})`
-    })
 
     return (
       <Page
@@ -89,41 +44,8 @@ class ApiTemplate extends React.Component {
         {metaData.description && (
           <Block htmlAst={metaData.description.childMarkdownRemark.htmlAst} />
         )}
-        <Anchor title="Props" />
-        {metaData.props
-          .filter(prop => prop.type)
-          .map(prop => (
-            <Prop key={prop.name}>
-              <Name>
-                {prop.name}
-                <Tag>{parseType(prop.type)}</Tag>
-                {prop.defaultValue && (
-                  <DefaultValue>
-                    default to
-                    <Tag>{prop.defaultValue.value}</Tag>
-                  </DefaultValue>
-                )}
-                {prop.required && <Required>required</Required>}
-              </Name>
-              {prop.description && (
-                <Block htmlAst={prop.description.childMarkdownRemark.htmlAst} />
-              )}
-            </Prop>
-          ))}
-        {methods.length > 0 && (
-          <React.Fragment>
-            <Anchor title="Methods" />
-            {methods.map((method, idx) => (
-              <Prop key={method.name}>
-                <Name>
-                  {method.name}
-                  <Tag>{method.signature}</Tag>
-                </Name>
-                <Block htmlAst={method.childMarkdownRemark.htmlAst} />
-              </Prop>
-            ))}
-          </React.Fragment>
-        )}
+        <Props props={metaData.props} />
+        {methods.length > 0 && <Methods methods={methods} />}
       </Page>
     )
   }

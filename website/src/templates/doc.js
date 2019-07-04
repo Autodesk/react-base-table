@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import Document from 'components/Document'
+import Html from 'components/Html'
 import Page from 'components/Page'
 
 import siteConfig from 'siteConfig'
@@ -20,7 +20,7 @@ class DocumentTemplate extends React.Component {
 
     return (
       <Page title={`Docs: ${link.title}`} location={location} links={links}>
-        <Document htmlAst={doc.htmlAst} />
+        <Html htmlAst={doc.htmlAst} />
       </Page>
     )
   }

@@ -31,8 +31,16 @@ const renderAst = new rehypeReact({
   },
 }).Compiler
 
-const Document = ({ htmlAst, ...rest }) => (
-  <div {...rest}>{renderAst(htmlAst)}</div>
-)
+const Html = ({ html, htmlAst, ...rest }) => {
+  if (htmlAst) {
+    return <div {...rest}>{renderAst(htmlAst)}</div>
+  }
 
-export default Document
+  if (html) {
+    return <div dangerouslySetInnerHTML={{ __html: html }} />
+  }
+
+  return null
+}
+
+export default Html

@@ -20,7 +20,7 @@
     "gatsby-source-filesystem": "^2.1.2",
     "gatsby-transformer-code": "^0.1.0",
     "gatsby-transformer-react-docgen": "^4.1.0",
-    "gatsby-transformer-remark": "^2.5.0",
+    "gatsby-transformer-remark": "^2.6.0",
     "lz-string": "^1.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
@@ -41,16 +41,12 @@
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3"
   },
-  "resolutions": {
-    "remark-parse": "^6.0.0"
-  },
   "browserslist": [
     "> 1%",
     "IE >= 9",
     "last 2 versions"
   ],
   "scripts": {
-    "postinstall": "cp ./patches/code.js ./node_modules/mdast-util-to-hast/lib/handlers/code.js",
     "start": "gatsby develop",
     "build": "gatsby build",
     "clean": "rimraf .cache public",

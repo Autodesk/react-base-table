@@ -47,7 +47,6 @@
     "classnames": "^2.2.5",
     "memoize-one": "^5.0.0",
     "prop-types": "^15.7.0",
-    "react-draggable": "^3.0.5",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.2"
   },

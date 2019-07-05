@@ -395,7 +395,6 @@ class BaseTable extends React.PureComponent {
         {column.resizable && (
           <ColumnResizer
             className={this._prefixClass('column-resizer')}
-            handleClassName={this._prefixClass('column-resizer-handle')}
             column={column}
             onResizeStart={this._handleColumnResizeStart}
             onResizeStop={this._handleColumnResizeStop}
@@ -524,8 +523,6 @@ class BaseTable extends React.PureComponent {
     }
     const style = {
       left,
-      width: 3,
-      transform: 'translateX(-3px)',
       height: this._getTableHeight() - this._horizontalScrollbarSize,
     };
     return <div className={this._prefixClass('resizing-line')} style={style} />;

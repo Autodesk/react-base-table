@@ -9049,14 +9049,14 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-live-runner@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/react-live-runner/-/react-live-runner-0.7.2.tgz#ab6a7829890468493730583b2cdbefff9988d6ec"
-  integrity sha512-pute8jc0GZBeFg5w5uviK5rYaKzEhadcR16lSReq7FYkDBe+M/8RxxOl06I1xpOiPWb3ZsRuL316wWI618gu4w==
+react-live-runner@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/react-live-runner/-/react-live-runner-0.7.3.tgz#d42c312490d1da6884ca376533322a065bf201fa"
+  integrity sha512-L/09wC3EnIgNtcvwgO3rhbiNkG4Dc6IISMrArCftb/5yGqpHzLbkNiT/RM/QAqHO8Hg6rtEZduUCFYR98WEcUg==
   dependencies:
     create-react-context "^0.3.0"
     prism-react-renderer "^0.1.7"
-    react-runner "^0.5.0"
+    react-runner "^0.5.1"
     react-simple-code-editor "^0.9.11"
 
 react-reconciler@^0.20.0:
@@ -9069,10 +9069,10 @@ react-reconciler@^0.20.0:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-react-runner@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-runner/-/react-runner-0.5.0.tgz#c4fb2303f22c3c55492c110332323d0f5432d364"
-  integrity sha512-IIbYuHLfnyygrIgqK68O2ahxdZbiEsP8rQ9RY7heA0kC64glbavZZv1EbxoaG+DF8wvU8FDb3D0jcqeT17bnzQ==
+react-runner@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-runner/-/react-runner-0.5.1.tgz#20808463a8e617c732dcb99769eeeaec08403bef"
+  integrity sha512-GX3ky3qq7MAQ05Y4OJjEZTH1avR7IM45AETiXO8MUgY9IAOj3Y9e6Fz1eyVpAIMJVT46IcFeWpA7Jxk1I5jX4Q==
   dependencies:
     sucrase "^3.10.1"
 

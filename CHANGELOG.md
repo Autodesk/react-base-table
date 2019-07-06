@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.5.0 (2019-07-06)
+
 - refactor: remove dependent on `react-draggable`
 - fix: undefined parentId should be considered as root item
 - fix: `flattenOnKeys` not works with immutable data (regression from #23)

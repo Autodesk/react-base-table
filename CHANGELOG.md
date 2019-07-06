@@ -2,11 +2,11 @@
 
 ## NEXT VERSION
 
-## v1.6.0 (2019-07-06)
+## v1.6.1 (2019-07-06)
 
 - feat: support infinite loading with `maxHeight` 
 - chore: remove unused `$table-border-radius` variable
-- feat: add `sortByMultiple` to support multiple sort
+- feat: add `sortState` to support multi sort
 
 ## v1.5.0 (2019-07-06)
 

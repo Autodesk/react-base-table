@@ -352,7 +352,7 @@ class BaseTable extends React.PureComponent {
     }
 
     const { headerClassName, headerRenderer } = column;
-    const { sortBy, sortByMultiple, headerCellProps } = this.props;
+    const { sortBy, sortState, headerCellProps } = this.props;
     const TableHeaderCell = this._getComponent('TableHeaderCell');
     const SortIndicator = this._getComponent('SortIndicator');
 
@@ -364,8 +364,8 @@ class BaseTable extends React.PureComponent {
 
     let sorting, sortOrder;
 
-    if (sortByMultiple) {
-      const order = sortByMultiple[column.key];
+    if (sortState) {
+      const order = sortState[column.key];
       sorting = order === SortOrder.ASC || order === SortOrder.DESC;
       sortOrder = sorting ? order : SortOrder.ASC;
     } else {
@@ -858,11 +858,11 @@ class BaseTable extends React.PureComponent {
 
   _handleColumnSort(event) {
     const key = event.currentTarget.dataset.key;
-    const { sortBy, sortByMultiple, onColumnSort } = this.props;
+    const { sortBy, sortState, onColumnSort } = this.props;
     let order = SortOrder.ASC;
 
-    if (sortByMultiple) {
-      order = sortByMultiple[key] === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
+    if (sortState) {
+      order = sortState[key] === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
     } else if (key === sortBy.key) {
       order = sortBy.order === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
     }
@@ -1046,7 +1046,7 @@ BaseTable.propTypes = {
    */
   onExpandedRowsChange: PropTypes.func,
   /**
-   * The sort state for the table, will be ignored if `sortByMultiple` is set
+   * The sort state for the table, will be ignored if `sortState` is set
    */
   sortBy: PropTypes.shape({
     /**
@@ -1069,7 +1069,7 @@ BaseTable.propTypes = {
    * }
    * ```
    */
-  sortByMultiple: PropTypes.object,
+  sortState: PropTypes.object,
   /**
    * A callback function for the header cell click event
    * The handler is of the shape of `({ column, key, order }) => *`

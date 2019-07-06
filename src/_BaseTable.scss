@@ -30,7 +30,6 @@ $table-prefix: BaseTable !default;
 
 .#{$table-prefix} {
   $table-font-size: 13px !default;
-  $table-border-radius: 4px !default;
   $table-padding-left: 15px !default;
   $table-padding-right: 15px !default;
   $column-padding: 7.5px !default;
@@ -50,7 +49,6 @@ $table-prefix: BaseTable !default;
   $show-frozen-rows-shadow: false !default;
   $show-frozen-columns-shadow: true !default;
 
-  border-radius: $table-border-radius;
   box-shadow: 0 $box-shadow-offset $box-shadow-blur 0 $box-shadow-color;
   background-color: $background-color;
   position: relative;

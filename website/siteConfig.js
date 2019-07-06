@@ -153,7 +153,7 @@ module.exports = {
       path: '/examples/sortable',
     },
     {
-      title: 'Multi SortIndicator',
+      title: 'Multiple Sort',
       path: '/examples/multi-sort',
     },
     {

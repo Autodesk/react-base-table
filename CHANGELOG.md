@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- refactor: remove dependent on `react-draggable`
+
 ## v1.4.0 (2019-07-01)
 
 - refactor: remove dependent on `lodash`, and export `getValue`

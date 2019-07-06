@@ -25,6 +25,7 @@ import {
   flattenOnKeys,
   cloneArray,
   getValue,
+  throttle,
   noop,
 } from './utils';
 
@@ -41,6 +42,8 @@ const DEFAULT_COMPONENTS = {
   ExpandIcon,
   SortIndicator,
 };
+
+const RESIZE_THROTTLE_WAIT = 50;
 
 /**
  * React table component
@@ -74,7 +77,7 @@ class BaseTable extends React.PureComponent {
     this._handleRowsRendered = this._handleRowsRendered.bind(this);
     this._handleRowHover = this._handleRowHover.bind(this);
     this._handleRowExpand = this._handleRowExpand.bind(this);
-    this._handleColumnResize = this._handleColumnResize.bind(this);
+    this._handleColumnResize = throttle(this._handleColumnResize.bind(this), RESIZE_THROTTLE_WAIT);
     this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
     this._handleColumnResizeStop = this._handleColumnResizeStop.bind(this);
     this._handleColumnSort = this._handleColumnSort.bind(this);
@@ -395,7 +398,6 @@ class BaseTable extends React.PureComponent {
         {column.resizable && (
           <ColumnResizer
             className={this._prefixClass('column-resizer')}
-            handleClassName={this._prefixClass('column-resizer-handle')}
             column={column}
             onResizeStart={this._handleColumnResizeStart}
             onResizeStop={this._handleColumnResizeStop}
@@ -524,8 +526,6 @@ class BaseTable extends React.PureComponent {
     }
     const style = {
       left,
-      width: 3,
-      transform: 'translateX(-3px)',
       height: this._getTableHeight() - this._horizontalScrollbarSize,
     };
     return <div className={this._prefixClass('resizing-line')} style={style} />;

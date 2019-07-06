@@ -199,6 +199,17 @@ $table-prefix: BaseTable !default;
     position: relative;
     cursor: default;
 
+    &:hover {
+      .#{$table-prefix}__column-resizer {
+        visibility: visible;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
     .#{$table-prefix}__sort-indicator {
       display: none;
     }
@@ -223,9 +234,14 @@ $table-prefix: BaseTable !default;
 
     &--resizing {
       .#{$table-prefix}__column-resizer {
+        visibility: visible;
+        opacity: 1;
         // workaround to prevent header being clicked when resizing stopped on header
-        padding-left: 999px;
-        border-color: $column-resizer-color;
+        &::after {
+          @include fill-layout();
+          content: '';
+          left: -9999px;
+        }
       }
     }
 
@@ -239,7 +255,7 @@ $table-prefix: BaseTable !default;
   &__header-row--resizing {
     .#{$table-prefix}__header-cell {
       background-color: transparent;
-      cursor: ew-resize;
+      cursor: col-resize;
 
       &:not(.#{$table-prefix}__header-cell--sorting) {
         .#{$table-prefix}__sort-indicator {
@@ -249,17 +265,20 @@ $table-prefix: BaseTable !default;
 
       &:not(.#{$table-prefix}__header-cell--resizing) {
         .#{$table-prefix}__column-resizer {
-          border-color: transparent;
+          visibility: hidden;
         }
       }
     }
   }
 
   &__column-resizer {
-    border-color: transparent;
+    width: 3px;
+    visibility: hidden;
+    background-color: $column-resizer-color;
 
     &:hover {
-      border-color: $column-resizer-color;
+      visibility: visible;
+      opacity: 1;
     }
   }
 
@@ -269,10 +288,12 @@ $table-prefix: BaseTable !default;
   }
 
   &__resizing-line {
-    cursor: ew-resize;
+    cursor: col-resize;
     position: absolute;
     top: 0;
     background-color: $column-resizer-color;
+    width: 3px;
+    transform: translateX(-100%);
   }
 
   &__empty-layer {

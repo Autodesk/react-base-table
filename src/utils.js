@@ -98,7 +98,7 @@ export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
 
     array.push(item);
     if (keysSet.has(item[dataKey]) && Array.isArray(item.children) && item.children.length > 0) {
-      stack = item.children.concat(stack);
+      stack = [].concat(item.children, stack);
       item.children.forEach(x => (depthMap[x[dataKey]] = depthMap[item[dataKey]] + 1));
     }
   }

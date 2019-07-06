@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { noop, throttle } from './utils';
+import { noop } from './utils';
 
 const INVALID_VALUE = null;
-const MIN_WIDTH = 30;
-const THROTTLE_WAIT = 50;
 
 /**
  * ColumnResizer for BaseTable
@@ -22,7 +20,7 @@ class ColumnResizer extends React.PureComponent {
     this._handleClick = this._handleClick.bind(this);
     this._handleMouseDown = this._handleMouseDown.bind(this);
     this._handleMouseUp = this._handleMouseUp.bind(this);
-    this._handleMouseMove = throttle(this._handleMouseMove.bind(this), THROTTLE_WAIT);
+    this._handleMouseMove = this._handleMouseMove.bind(this);
   }
 
   componentWillMount() {
@@ -99,7 +97,7 @@ class ColumnResizer extends React.PureComponent {
       return;
     }
 
-    const { column } = this.props;
+    const { column, minWidth: MIN_WIDTH } = this.props;
     const { width, maxWidth, minWidth = MIN_WIDTH } = column;
     const movedX = x - this.lastX;
     if (!movedX) return;
@@ -123,6 +121,7 @@ ColumnResizer.defaultProps = {
   onResizeStart: noop,
   onResize: noop,
   onResizeStop: noop,
+  minWidth: 30,
 };
 
 ColumnResizer.propTypes = {
@@ -149,6 +148,10 @@ ColumnResizer.propTypes = {
    * The callback is of the shape of `(column) => *`
    */
   onResizeStop: PropTypes.func,
+  /**
+   * Minimum width of the column could be resized to if the column's `minWidth` is not set
+   */
+  minWidth: PropTypes.number,
 };
 
 export default ColumnResizer;

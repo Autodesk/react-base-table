@@ -228,6 +228,13 @@ $table-prefix: BaseTable !default;
       .#{$table-prefix}__sort-indicator {
         display: block;
       }
+
+      &:hover {
+        .#{$table-prefix}__sort-indicator {
+          display: block;
+          color: unset;
+        }
+      }
     }
 
     &--resizing {

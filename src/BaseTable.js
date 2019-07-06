@@ -352,7 +352,7 @@ class BaseTable extends React.PureComponent {
     }
 
     const { headerClassName, headerRenderer } = column;
-    const { sortBy, headerCellProps } = this.props;
+    const { sortBy, sortByMultiple, headerCellProps } = this.props;
     const TableHeaderCell = this._getComponent('TableHeaderCell');
     const SortIndicator = this._getComponent('SortIndicator');
 
@@ -362,8 +362,17 @@ class BaseTable extends React.PureComponent {
       cellProps
     );
 
-    const sorting = column.key === sortBy.key;
-    const sortOrder = sorting ? sortBy.order : SortOrder.ASC;
+    let sorting, sortOrder;
+
+    if (sortByMultiple) {
+      const order = sortByMultiple[column.key];
+      sorting = order === SortOrder.ASC || order === SortOrder.DESC;
+      sortOrder = sorting ? order : SortOrder.ASC;
+    } else {
+      sorting = column.key === sortBy.key;
+      sortOrder = sorting ? sortBy.order : SortOrder.ASC;
+    }
+
     const cellCls = callOrReturn(headerClassName, { columns, column, columnIndex, headerIndex });
     const cls = cn(this._prefixClass('header-cell'), cellCls, {
       [this._prefixClass('header-cell--align-center')]: column.align === Alignment.CENTER,
@@ -849,9 +858,12 @@ class BaseTable extends React.PureComponent {
 
   _handleColumnSort(event) {
     const key = event.currentTarget.dataset.key;
-    const { sortBy, onColumnSort } = this.props;
+    const { sortBy, sortByMultiple, onColumnSort } = this.props;
     let order = SortOrder.ASC;
-    if (key === sortBy.key) {
+
+    if (sortByMultiple) {
+      order = sortByMultiple[key] === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
+    } else if (key === sortBy.key) {
       order = sortBy.order === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
     }
 
@@ -1034,7 +1046,7 @@ BaseTable.propTypes = {
    */
   onExpandedRowsChange: PropTypes.func,
   /**
-   * The sort state for the table
+   * The sort state for the table, will be ignored if `sortByMultiple` is set
    */
   sortBy: PropTypes.shape({
     /**
@@ -1046,6 +1058,18 @@ BaseTable.propTypes = {
      */
     order: PropTypes.oneOf([SortOrder.ASC, SortOrder.DESC]),
   }),
+  /**
+   * Multiple columns sort state for the table
+   *
+   * example:
+   * ```js
+   * {
+   *   'column-0': SortOrder.ASC,
+   *   'column-1': SortOrder.DESC,
+   * }
+   * ```
+   */
+  sortByMultiple: PropTypes.object,
   /**
    * A callback function for the header cell click event
    * The handler is of the shape of `({ column, key, order }) => *`

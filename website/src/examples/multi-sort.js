@@ -1,42 +1,39 @@
-const columns = generateColumns(10)
+const columns = generateColumns(10, undefined, { sortable: true })
 const data = generateData(columns, 200)
 
-const GlobalStyle = createGlobalStyle`
-  .BaseTable__header-cell {
-    &.header-sort {
-      &-asc {
-        .BaseTable__sort-indicator {
-          display: block;
-        }
-      }
-
-      &-desc {
-        .BaseTable__sort-indicator {
-          display: block;
-          transform: rotate(180deg);
-        }
-      }
-    }
-  }
-`
-
-const sortState = {
-  'column-0': 'asc',
-  'column-1': 'desc',
-  'column-2': 'asc',
+const defaultSort = {
+  'column-0': SortOrder.ASC,
+  'column-1': SortOrder.DESC,
+  'column-2': SortOrder.ASC,
 }
 
-export default () => (
-  <>
-    <GlobalStyle />
-    <Table fixed data={data}>
-      {columns.map(column => (
-        <Column
-          {...column}
-          sortable
-          headerClassName={`header-sort-${sortState[column.key] || 'none'}`}
-        />
-      ))}
-    </Table>
-  </>
-)
+export default class App extends React.Component {
+  state = {
+    data,
+    sortBy: defaultSort,
+  }
+
+  onColumnSort = ({ key, order }) => {
+    const { data, sortBy } = this.state
+    this.setState({
+      // clear the sort state if the previous order is desc
+      sortBy: {
+        ...sortBy,
+        [key]: sortBy[key] === SortOrder.DESC ? null : order,
+      },
+      data: this.state.data.reverse(),
+    })
+  }
+
+  render() {
+    return (
+      <Table
+        fixed
+        columns={columns}
+        data={data}
+        sortByMultiple={this.state.sortBy}
+        onColumnSort={this.onColumnSort}
+      />
+    )
+  }
+}

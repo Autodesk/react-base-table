@@ -2,8 +2,9 @@
 
 ## NEXT VERSION
 
-- fix: infinite loading should work with `maxHeight` 
+- feat: support infinite loading with `maxHeight` 
 - chore: remove unused `$table-border-radius` variable
+- feat: add `sortByMultiple` to support multiple sort
 
 ## v1.5.0 (2019-07-06)
 

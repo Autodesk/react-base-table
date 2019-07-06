@@ -89,7 +89,7 @@ class BaseTable extends React.PureComponent {
       return flattenOnKeys(tree, keys, this._depthMap, dataKey);
     });
 
-    this._scroll = {};
+    this._scroll = { scrollLeft: 0, scrollTop: 0 };
     this._scrollHeight = 0;
     this._lastScannedRowIndex = -1;
     this._hasDataChangedSinceEndReached = true;
@@ -620,7 +620,7 @@ class BaseTable extends React.PureComponent {
       this._hasDataChangedSinceEndReached = true;
     }
 
-    if (nextProps.height !== this.props.height) {
+    if (nextProps.maxHeight !== this.props.maxHeight || nextProps.height !== this.props.height) {
       this._maybeCallOnEndReached();
     }
 
@@ -767,12 +767,12 @@ class BaseTable extends React.PureComponent {
   }
 
   _maybeCallOnEndReached() {
-    const { maxHeight, onEndReached, onEndReachedThreshold } = this.props;
+    const { onEndReached, onEndReachedThreshold } = this.props;
     const { scrollTop } = this._scroll;
     const scrollHeight = this.getTotalRowsHeight();
     const clientHeight = this._getBodyHeight();
-    // onEndReached is not available is maxHeight is set
-    if (maxHeight || !onEndReached || !clientHeight || !scrollHeight) return;
+
+    if (!onEndReached || !clientHeight || !scrollHeight) return;
     const distanceFromEnd = scrollHeight - scrollTop - clientHeight + this._horizontalScrollbarSize;
     if (
       this._lastScannedRowIndex >= 0 &&
@@ -786,7 +786,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleScroll(args) {
-    const lastScrollTop = this._scroll.scrollTop || 0;
+    const lastScrollTop = this._scroll.scrollTop;
     this.scrollToPosition(args);
     this.props.onScroll(args);
 
@@ -794,7 +794,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleVerticalScroll({ scrollTop }) {
-    const lastScrollTop = this._scroll.scrollTop || 0;
+    const lastScrollTop = this._scroll.scrollTop;
     this.scrollToTop(scrollTop);
 
     if (scrollTop > lastScrollTop) this._maybeCallOnEndReached();

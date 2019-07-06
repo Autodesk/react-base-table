@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: infinite loading should work with `maxHeight` 
+
 ## v1.5.0 (2019-07-06)
 
 - refactor: remove dependent on `react-draggable`

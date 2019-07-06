@@ -73,7 +73,7 @@ export function unflatten(array, rootId = null, dataKey = 'id', parentKey = 'par
     if (!childrenMap[id]) childrenMap[id] = [];
     item.children = childrenMap[id];
 
-    if (parentId !== rootId) {
+    if (parentId !== undefined && parentId !== rootId) {
       if (!childrenMap[parentId]) childrenMap[parentId] = [];
       childrenMap[parentId].push(item);
     } else {

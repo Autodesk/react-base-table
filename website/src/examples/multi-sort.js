@@ -10,16 +10,16 @@ const defaultSort = {
 export default class App extends React.Component {
   state = {
     data,
-    sortBy: defaultSort,
+    sortState: defaultSort,
   }
 
   onColumnSort = ({ key, order }) => {
-    const { data, sortBy } = this.state
+    const { data, sortState } = this.state
     this.setState({
       // clear the sort state if the previous order is desc
-      sortBy: {
-        ...sortBy,
-        [key]: sortBy[key] === SortOrder.DESC ? null : order,
+      sortState: {
+        ...sortState,
+        [key]: sortState[key] === SortOrder.DESC ? null : order,
       },
       data: this.state.data.reverse(),
     })
@@ -31,7 +31,7 @@ export default class App extends React.Component {
         fixed
         columns={columns}
         data={data}
-        sortByMultiple={this.state.sortBy}
+        sortState={this.state.sortState}
         onColumnSort={this.onColumnSort}
       />
     )

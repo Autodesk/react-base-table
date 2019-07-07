@@ -140,10 +140,10 @@ function getPathSegments(path) {
   return parts;
 }
 
-// copied from https://github.com/sindresorhus/dot-prop/blob/master/index.js
+// changed from https://github.com/sindresorhus/dot-prop/blob/master/index.js
 export function getValue(object, path, defaultValue) {
   if (object === null || typeof object !== 'object' || typeof path !== 'string') {
-    return defaultValue === undefined ? object : defaultValue;
+    return defaultValue;
   }
 
   const pathArray = getPathSegments(path);

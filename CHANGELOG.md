@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.6.2 (2019-07-07)
+
 - fix: `getValue` returns the object itself if the path is not valid string
 
 ## v1.6.1 (2019-07-06)

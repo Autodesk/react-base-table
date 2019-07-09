@@ -1,9 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { noop } from './utils';
+import { noop, addClassName, removeClassName } from './utils';
 
 const INVALID_VALUE = null;
+
+// copied from https://github.com/mzabriskie/react-draggable/blob/master/lib/utils/domFns.js
+export function addUserSelectStyles(doc) {
+  if (!doc) return;
+  let styleEl = doc.getElementById('react-draggable-style-el');
+  if (!styleEl) {
+    styleEl = doc.createElement('style');
+    styleEl.type = 'text/css';
+    styleEl.id = 'react-draggable-style-el';
+    styleEl.innerHTML = '.react-draggable-transparent-selection *::-moz-selection {background: transparent;}\n';
+    styleEl.innerHTML += '.react-draggable-transparent-selection *::selection {background: transparent;}\n';
+    doc.getElementsByTagName('head')[0].appendChild(styleEl);
+  }
+  if (doc.body) addClassName(doc.body, 'react-draggable-transparent-selection');
+}
+
+export function removeUserSelectStyles(doc) {
+  try {
+    if (doc && doc.body) removeClassName(doc.body, 'react-draggable-transparent-selection');
+    if (doc.selection) {
+      doc.selection.empty();
+    } else {
+      window.getSelection().removeAllRanges(); // remove selection caused by scroll
+    }
+  } catch (e) {
+    // probably IE
+  }
+}
 
 /**
  * ColumnResizer for BaseTable
@@ -28,6 +56,7 @@ class ColumnResizer extends React.PureComponent {
       const { ownerDocument } = this.handleRef;
       ownerDocument.removeEventListener('mousemove', this._handleMouseMove);
       ownerDocument.addEventListener('mouseup', this._handleMouseUp);
+      removeUserSelectStyles(ownerDocument);
     }
   }
 
@@ -72,6 +101,7 @@ class ColumnResizer extends React.PureComponent {
     this.props.onResizeStart(this.props.column);
 
     const { ownerDocument } = this.handleRef;
+    addUserSelectStyles(ownerDocument);
     ownerDocument.addEventListener('mousemove', this._handleMouseMove);
     ownerDocument.addEventListener('mouseup', this._handleMouseUp);
   }
@@ -83,6 +113,7 @@ class ColumnResizer extends React.PureComponent {
     this.props.onResizeStop(this.props.column);
 
     const { ownerDocument } = this.handleRef;
+    removeUserSelectStyles(ownerDocument);
     ownerDocument.removeEventListener('mousemove', this._handleMouseMove);
     ownerDocument.addEventListener('mouseup', this._handleMouseUp);
   }

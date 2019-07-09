@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: content been selected when dragging on IE/FF (regression from #56)
+
 ## v1.6.3 (2019-07-09)
 
 - fix: `minWidth` is passed to dom node in `ColumnResizer` in #56

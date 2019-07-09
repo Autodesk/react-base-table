@@ -32,7 +32,7 @@ class ColumnResizer extends React.PureComponent {
   }
 
   render() {
-    const { style, column, onResizeStart, onResize, onResizeStop, ...rest } = this.props;
+    const { style, column, onResizeStart, onResize, onResizeStop, minWidth, ...rest } = this.props;
 
     return (
       <div

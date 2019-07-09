@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.6.3 (2019-07-09)
+
 - fix: `minWidth` is passed to dom node in `ColumnResizer` in #56
 
 ## v1.6.2 (2019-07-07)

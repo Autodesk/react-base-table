@@ -38,7 +38,7 @@ _You have to polyfil `Array.prototype.findIndex` to make it works on IE_
 
 ## Playground
 
-```jsx {live: true}
+```jsx live
 const columns = generateColumns(10)
 const data = generateData(columns, 200)
 

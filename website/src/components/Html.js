@@ -4,6 +4,33 @@ import rehypeReact from 'rehype-react'
 import CodeBlock from './CodeBlock'
 import CodePreview from './CodePreview'
 
+const parseMeta = meta => {
+  const options = {}
+  if (!meta) return options
+
+  const items = meta.split(/\s+/)
+  items.forEach(item => {
+    if (/^[\w-]+=?$/.test(item)) options[item] = true
+    else if (/(?<=^[\w-]+)=/.test(item)) {
+      const [key, value] = item.split('=')
+      let parsed = value
+      if (value === 'true') parsed = true
+      else if (value === 'false') parsed = false
+      else if (/^\d+$/.test(value)) parsed = parseInt(value, 10)
+      else if (/^\d*\.\d+$/.test(value)) parsed = parseFloat(value)
+      else if (/^['"].*['"]$/.test(value))
+        parsed = value.substr(1, value.length - 2)
+      else if (/^{.*}$/.test(value)) {
+        try {
+          parsed = eval(`(${value})`)
+        } catch (err) {}
+      }
+      options[key] = parsed
+    }
+  })
+  return options
+}
+
 const Pre = props => {
   if (!props.children[0]) return <pre {...props} />
 
@@ -11,15 +38,8 @@ const Pre = props => {
   const language = className && className.split('-')[1]
   const code = children[0]
 
-  let meta
-  try {
-    const dataMeta = props.children[0].props['data-meta']
-    // eslint-disable-next-line
-    meta = dataMeta && eval(`(${dataMeta})`)
-    if (typeof meta !== 'object') meta = {}
-  } catch (err) {}
-
-  const { live, ...rest } = meta || {}
+  const meta = parseMeta(props.children[0].props['data-meta'])
+  const { live, ...rest } = meta
   const Component = live ? CodePreview : CodeBlock
   return <Component code={code} language={language} {...rest} />
 }

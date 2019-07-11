@@ -11,7 +11,7 @@ const parseMeta = meta => {
   const items = meta.split(/\s+/)
   items.forEach(item => {
     if (/^[\w-]+=?$/.test(item)) options[item] = true
-    else if (/(?<=^[\w-]+)=/.test(item)) {
+    else if (/^[\w-]+=[^=]+$/.test(item)) {
       const [key, value] = item.split('=')
       let parsed = value
       if (value === 'true') parsed = true
@@ -22,6 +22,7 @@ const parseMeta = meta => {
         parsed = value.substr(1, value.length - 2)
       else if (/^{.*}$/.test(value)) {
         try {
+          // eslint-disable-next-line no-eval
           parsed = eval(`(${value})`)
         } catch (err) {}
       }

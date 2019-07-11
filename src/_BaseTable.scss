@@ -216,7 +216,9 @@ $table-prefix: BaseTable !default;
       &:hover {
         background-color: $header-cell-hovered-background-color;
         cursor: pointer;
+      }
 
+      &:not(.#{$table-prefix}__header-cell--sorting):hover {
         .#{$table-prefix}__sort-indicator {
           display: block;
           color: $sort-indicator-hovered-color;
@@ -225,14 +227,10 @@ $table-prefix: BaseTable !default;
     }
 
     &--sorting {
-      .#{$table-prefix}__sort-indicator {
-        display: block;
-      }
-
+      &,
       &:hover {
         .#{$table-prefix}__sort-indicator {
           display: block;
-          color: unset;
         }
       }
     }

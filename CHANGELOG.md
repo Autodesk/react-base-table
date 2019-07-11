@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: style value `unset` is not supported on IE
+
 ## v1.6.4 (2019-07-09)
 
 - fix: content been selected when dragging on IE/FF (regression from #56)

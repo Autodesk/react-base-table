@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.6.5 (2019-07-11)
+
 - fix: style value `unset` is not supported on IE
 
 ## v1.6.4 (2019-07-09)

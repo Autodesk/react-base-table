@@ -1,6 +1,6 @@
 # react-base-table
 
-BaseTable is a react table component to display large data set with high performance and flexibility
+BaseTable is a react table component to display large datasets with high performance and flexibility
 
 <a href="https://npm.io/react-base-table"><img src="https://badgen.net/npm/license/react-base-table"></a>
 <a href="https://npm.io/react-base-table"><img src="https://badgen.net/npm/v/react-base-table"></a>
@@ -39,9 +39,13 @@ Learn more at the [website](https://autodesk.github.io/react-base-table/)
 In the [examples](https://autodesk.github.io/react-base-table/examples)
 we are using a wrapper `const Table = props => <BaseTable width={700} height={400} {...props} />` to do that
 
-You can use the [`AutoResizer`](https://autodesk.github.io/react-base-table/api/autoresizer) to make the table fill the container, take the [playground](https://autodesk.github.io/react-base-table/playground) for example
+If you want it responsive, you can use the [`AutoResizer`](https://autodesk.github.io/react-base-table/api/autoresizer) to make the table fill the container, checkout the [Auto Resize example](https://autodesk.github.io/react-base-table/examples/auto-resize)
 
-_You have to polyfill `Array.prototype.findIndex` to make it works on IE_
+## Browser Support
+
+`BaseTable` is well tested on all modern browsers and IE11. _You have to polyfill `Array.prototype.findIndex` to make it works on IE_
+
+**The [examples](https://autodesk.github.io/react-base-table/examples) don't work on IE as they are powered by [react-runner](https://github.com/nihgwu/react-runner) which is a `react-live` like library but only for modern browsers.**
 
 ## Advance
 

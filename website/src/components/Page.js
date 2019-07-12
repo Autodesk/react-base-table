@@ -11,7 +11,7 @@ import 'react-base-table/styles.css'
 
 const pagelMixin = css`
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 1000px;
 `
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-  margin-left: 200px;
+  margin-left: 240px;
 `
 
 const Page = ({ title, location = {}, children, links, ...rest }) => (

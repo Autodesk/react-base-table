@@ -1,4 +1,4 @@
-## Get Started
+# Get Started
 
 BaseTable is a react table component to display large data set with high performance and flexibility
 

@@ -1,8 +1,8 @@
-## Advance
+# Advance
 
 BaseTable is designed to be the base component to build your own complex table component
 
-### Styling
+## Styling
 
 The simplest way is overriding the default styles (assuming you are using `scss`)
 
@@ -40,7 +40,7 @@ $show-frozen-columns-shadow: true;
 
 You can write your own styles from scratch or use CSS-in-JS solutions to achieve that
 
-### Custom components
+## Custom components
 
 ```jsx
 <BaseTable
@@ -55,6 +55,6 @@ You can write your own styles from scratch or use CSS-in-JS solutions to achieve
 />
 ```
 
-### Custom renderers & props
+## Custom renderers & props
 
 There are a lot of highly flexible props like `xxxRenderer` and `xxxProps` for you to build your own table component, please check the [api](https://autodesk.github.io/react-base-table/api) and [examples](https://autodesk.github.io/react-base-table/examples) for more details

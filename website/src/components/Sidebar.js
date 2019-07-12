@@ -9,8 +9,8 @@ const Container = styled.div`
   top: 70px;
   bottom: 20px;
   overflow-y: auto;
-  width: 180px;
-  min-width: 180px;
+  width: 220px;
+  min-width: 220px;
   padding-right: 20px;
   border-right: 1px solid #edf0f2;
 `
@@ -25,8 +25,10 @@ const Li = styled.li`
 `
 
 const StyledLink = styled(Link).attrs({
+  partiallyActive: true,
   activeStyle: {
-    borderRight: '3px solid',
+    fontWeight: 700,
+    borderRight: '3px solid #0696d7',
   },
 })`
   display: block;
@@ -34,7 +36,8 @@ const StyledLink = styled(Link).attrs({
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 14px;
+  font-size: 16px;
+  color: #222;
 `
 
 const ExternalLink = StyledLink.withComponent('a')

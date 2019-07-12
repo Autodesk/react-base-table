@@ -13,6 +13,10 @@ module.exports = {
       path: '/docs/selection',
     },
     {
+      title: 'Inline Editing',
+      path: '/docs/inline-editing',
+    },
+    {
       title: 'Glossary',
       path: '/docs/glossary',
     },

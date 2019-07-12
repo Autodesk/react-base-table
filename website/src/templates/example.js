@@ -17,7 +17,7 @@ const links = siteConfig.examples.map(item => ({
 const Title = styled.div`
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-top: 16px;
 `
 
 class ComponentTemplate extends React.Component {

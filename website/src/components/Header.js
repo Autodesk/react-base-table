@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const Nav = styled.div`
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 1000px;
   height: 50px;
   padding: 0 20px;
   display: flex;

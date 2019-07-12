@@ -77,6 +77,10 @@ module.exports = {
       path: '/examples/10000-rows',
     },
     {
+      title: 'Draggable Rows',
+      path: '/examples/draggable-rows',
+    },
+    {
       title: 'Disabled',
       path: '/examples/disabled',
     },
@@ -159,6 +163,10 @@ module.exports = {
     {
       title: 'Multi Sort',
       path: '/examples/multi-sort',
+    },
+    {
+      title: 'Selection',
+      path: '/examples/selection',
     },
     {
       title: 'Expand - Uncontrolled',

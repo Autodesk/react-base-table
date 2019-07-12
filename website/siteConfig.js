@@ -196,5 +196,9 @@ module.exports = {
       title: 'Tag Name',
       path: '/examples/tag-name',
     },
+    {
+      title: 'Inline Editing',
+      path: '/examples/inline-editing',
+    },
   ],
 }

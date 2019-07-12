@@ -1,30 +1,3 @@
-# Inline Editing
-
-`Inline Editing` is a very common feature in a table, but it's highly coupled with specific ui libraries, so it won't be a part of `BaseTable` itself.
-
-## The Problem
-
-`Inline Editing` would be a bit tricky in `BaseTable` because of it's using the `virtualization` technology to render the rows, so there are `overflow: hidden` for the table and rows and cells, so if your editing content is larger then the cell area, the content would be cut, you genius would find that you could override the `overflow: hidden` via style to prevent the content to be cut, but **PLEASE DON"T DO THAT**, as there would be always problems with this solution, e.g. what would happens if it's in the last row?
-
-## How
-
-The suggested solution is using something like `Portal` to render the editing content out of the cell, then it won't be constrained in the cell. As `Portal` needs a container to attach the target to, most of the custom renderers provide a param `container` to be used in this case, the `container` is table itself.
-
-Internally we are using the `Overlay` component from [react-overlays](https://github.com/react-bootstrap/react-overlays) to do that, `react-overlays` is based on [Popper.js](https://github.com/FezVrasta/popper.js) which provides excellent positioning mechanism.
-
-If you are using fixed mode with frozen columns, there will be a problem with the `Popper.js`. As the default `boundariesElement` for `preventOverflow` is `scrollParent`, but there would be three tables internal tables to mimic the frozen feature, and those tables are all scrollable, then the positioning could be not expected, you could change the `boundariesElement` to `viewport` or the `container` to fix that.
-
-## API Design
-
-`Column.editable: object | fun({ cellData, column, columnIndex, rowData, rowIndex })`
-
-You can use `callOrReturn` exported from this package to get the result, the result could be a `boolean` to indicate the specific cell is editable or not, or an object which include the options like `{ disabled, ...editorProps }`, the result would be used in your custom `TableCell` component.
-
-## Recipe
-
-_The following is really a rough one, will improve it later_
-
-```jsx
 // import { Overlay } from 'react-overlays'
 const { Overlay } = ReactOverlays
 
@@ -129,4 +102,3 @@ export default () => (
     <Table fixed columns={columns} data={data} />
   </>
 )
-```

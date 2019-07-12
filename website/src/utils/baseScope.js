@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import * as ReactSortableHoc from 'react-sortable-hoc'
+import * as ReactOverlays from 'react-overlays'
 
 import BaseTable, {
   Column,
@@ -55,6 +56,7 @@ export default {
   createGlobalStyle,
 
   ReactSortableHoc,
+  ReactOverlays,
 
   BaseTable,
   Column,

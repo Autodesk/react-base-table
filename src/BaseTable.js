@@ -182,18 +182,18 @@ class BaseTable extends React.PureComponent {
    * Scroll to the specified row.
    * By default, the table will scroll as little as possible to ensure the row is visible.
    * You can control the alignment of the row though by specifying an align property. Acceptable values are:
-   * 
+   *
    * - `auto` (default) - Scroll as little as possible to ensure the row is visible.
    *  (If the row is already visible, it won't scroll at all.)
    * - `smart` - If the row is already visible, don't scroll at all. If it is less than one viewport away,
-   *  scroll as little as possible so that it becomes visible. 
+   *  scroll as little as possible so that it becomes visible.
    *  If it is more than one viewport away, scroll so that it is centered within the grid.
    * - `center` - Center align the row within the table.
    * - `end` - Align the row to the bottom, right hand side of the table.
    * - `start` - Align the row to the top, left hand of the table.
 
-   * @param {number} rowIndex 
-   * @param {string} align 
+   * @param {number} rowIndex
+   * @param {string} align
    */
   scrollToRow(rowIndex = 0, align = 'auto') {
     this.table && this.table.scrollToRow(rowIndex, align);
@@ -617,34 +617,6 @@ class BaseTable extends React.PureComponent {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextColumns = nextProps.columns || normalizeColumns(nextProps.children);
-    const columns = this.columnManager.getOriginalColumns();
-    if (!isObjectEqual(nextColumns, columns) || nextProps.fixed !== this.props.fixed) {
-      this.columnManager.reset(nextColumns, nextProps.fixed);
-    }
-
-    if (nextProps.data !== this.props.data) {
-      this._lastScannedRowIndex = -1;
-      this._hasDataChangedSinceEndReached = true;
-    }
-
-    if (nextProps.maxHeight !== this.props.maxHeight || nextProps.height !== this.props.height) {
-      this._maybeCallOnEndReached();
-    }
-
-    // if `expandedRowKeys` is controlled
-    if (
-      nextProps.expandColumnKey &&
-      nextProps.expandedRowKeys !== undefined &&
-      nextProps.expandedRowKeys !== this.props.expandedRowKeys
-    ) {
-      this.setState({
-        expandedRowKeys: cloneArray(nextProps.expandedRowKeys),
-      });
-    }
-  }
-
   componentDidMount() {
     const scrollbarSize = this.props.getScrollbarSize();
     if (scrollbarSize > 0) {
@@ -654,6 +626,32 @@ class BaseTable extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     this._maybeScrollbarPresenceChange();
+    const nextProps = this.props;
+    const nextColumns = nextProps.columns || normalizeColumns(nextProps.children);
+    const columns = this.columnManager.getOriginalColumns();
+    if (!isObjectEqual(nextColumns, columns) || nextProps.fixed !== prevProps.fixed) {
+      this.columnManager.reset(nextColumns, nextProps.fixed);
+    }
+
+    if (nextProps.data !== prevProps.data) {
+      this._lastScannedRowIndex = -1;
+      this._hasDataChangedSinceEndReached = true;
+    }
+
+    if (nextProps.maxHeight !== prevProps.maxHeight || nextProps.height !== prevProps.height) {
+      this._maybeCallOnEndReached();
+    }
+
+    // if `expandedRowKeys` is controlled
+    if (
+      nextProps.expandColumnKey &&
+      nextProps.expandedRowKeys !== undefined &&
+      nextProps.expandedRowKeys !== prevProps.expandedRowKeys
+    ) {
+      this.setState({
+        expandedRowKeys: cloneArray(nextProps.expandedRowKeys),
+      });
+    }
   }
 
   _prefixClass(className) {

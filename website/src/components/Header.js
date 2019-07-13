@@ -74,7 +74,7 @@ const Header = ({ pathname }) => {
         <div>
           <Title to="/">BaseTable</Title>
           <Version
-            href="https://github.com/Autodesk/react-base-table/releases"
+            href="https://github.com/Autodesk/react-base-table/blob/master/CHANGELOG.md"
             target="_blank"
           >
             v{pkg.version}
@@ -93,12 +93,6 @@ const Header = ({ pathname }) => {
           <NavLink to="/playground" pathname={pathname}>
             Playground
           </NavLink>
-          <ExternalLink
-            href="https://github.com/Autodesk/react-base-table/blob/master/CHANGELOG.md"
-            target="_blank"
-          >
-            CHANGELOG
-          </ExternalLink>
           <ExternalLink last href={pkg.repository.url} target="_blank">
             <LinkIcon src={linkIcon} alt="Github" />
           </ExternalLink>

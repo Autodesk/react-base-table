@@ -130,3 +130,5 @@ export default () => (
   </>
 )
 ```
+
+Check the live example [here](https://autodesk.github.io/react-base-table/examples/inline-editing).

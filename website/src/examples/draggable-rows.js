@@ -8,7 +8,18 @@ const Handle = styled.div`
   flex: none;
   width: 7.5px;
   height: 100%;
-  background: #888;
+
+  &::before {
+    content: '';
+    border-left: 4px dotted #ccc;
+    display: block;
+    height: 20px;
+    margin: 15px 3px;
+  }
+
+  &:hover::before {
+    border-color: #888
+  }
 `
 
 const Row = ({ key, index, children, ...rest }) => (
@@ -28,6 +39,10 @@ const rowProps = ({ rowIndex }) => ({
 })
 
 class DraggableTable extends React.PureComponent {
+  state = {
+    data: this.props.data,
+  }
+
   getContainer() {
     return document.querySelector('.BaseTable__body')
   }
@@ -46,14 +61,27 @@ class DraggableTable extends React.PureComponent {
     }
   }
 
+  handleSortEnd = ({ oldIndex, newIndex }) => {
+    const data = [...this.state.data]
+    const [removed] = data.splice(oldIndex, 1)
+    data.splice(newIndex, 0, removed)
+    this.setState({ data })
+  }
+
   render() {
     return (
       <DraggableContainer
         useDragHandle
         getContainer={this.getContainer}
         helperContainer={this.getHelperContainer}
+        onSortEnd={this.handleSortEnd}
       >
-        <Table {...this.props} fixed={false} rowProps={this.rowProps} />
+        <Table
+          {...this.props}
+          data={this.state.data}
+          fixed={false}
+          rowProps={this.rowProps}
+        />
       </DraggableContainer>
     )
   }
@@ -68,10 +96,11 @@ const Hint = styled.div`
 
 const columns = generateColumns(10)
 const data = generateData(columns, 200)
+columns[0].minWidth = 150
 
 export default () => (
   <>
-    <Hint>Drag the gray handles, only works in flex mode(fixed=false)</Hint>
+    <Hint>Drag the dots, only works in flex mode(fixed=false)</Hint>
     <DraggableTable columns={columns} data={data} />
   </>
 )

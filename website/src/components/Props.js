@@ -63,7 +63,7 @@ const Props = ({ title = 'Props', props, ...rest }) => {
       <Anchor>{title}</Anchor>
       {Array.isArray(props) &&
         props.map(prop => (
-          <Prop key={prop.name}>
+          <Prop key={prop.name} id={`props-${prop.name}`}>
             <Name>
               {prop.name}
               <Tag>{parseType(prop.type)}</Tag>

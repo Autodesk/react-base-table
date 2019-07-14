@@ -6,6 +6,7 @@ import Page from 'components/Page'
 import Html from 'components/Html'
 import Props from 'components/Props'
 import Methods from 'components/Methods'
+import Pagination from 'components/Pagination'
 
 import siteConfig from 'siteConfig'
 
@@ -30,9 +31,11 @@ const Block = styled(Html)`
 
 class ApiTemplate extends React.Component {
   render() {
-    const { data, location } = this.props
+    const { data, pageContext, location } = this.props
     const metaData = data.componentMetadata
     const methods = metaData.childrenComponentMethodExt
+    const name = pageContext.name
+    const link = links.find(link => link.to === `/api/${name.toLowerCase()}`)
 
     return (
       <Page
@@ -46,6 +49,7 @@ class ApiTemplate extends React.Component {
         )}
         <Props props={metaData.props} />
         {methods.length > 0 && <Methods methods={methods} />}
+        <Pagination links={links} link={link} />
       </Page>
     )
   }

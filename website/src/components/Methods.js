@@ -42,7 +42,7 @@ const Methods = ({ title = 'Methods', methods, ...rest }) => (
     <Anchor>{title}</Anchor>
     {Array.isArray(methods) &&
       methods.map((method, idx) => (
-        <Method key={method.name}>
+        <Method key={method.name} id={`methods-${method.name}`}>
           <Name>
             {method.name}
             <Tag>{getSignature(method.params)}</Tag>

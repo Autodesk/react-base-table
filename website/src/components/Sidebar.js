@@ -25,7 +25,6 @@ const Li = styled.li`
 `
 
 const StyledLink = styled(Link).attrs({
-  partiallyActive: true,
   activeStyle: {
     fontWeight: 700,
     borderRight: '3px solid #0696d7',

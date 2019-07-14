@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
-import Anchor from 'components/Anchor'
 import Page from 'components/Page'
 import CodePreview from 'components/CodePreview'
+import Pagination from 'components/Pagination'
 
 import siteConfig from 'siteConfig'
 
@@ -17,7 +17,7 @@ const links = siteConfig.examples.map(item => ({
 const Title = styled.div`
   font-size: 16px;
   font-weight: 700;
-  margin-top: 16px;
+  margin: 16px 0;
 `
 
 class ComponentTemplate extends React.Component {
@@ -29,8 +29,8 @@ class ComponentTemplate extends React.Component {
     return (
       <Page title={`Examples: ${link.title}`} location={location} links={links}>
         <Title>{link.title}</Title>
-        <Anchor title="Example" />
         <CodePreview code={code} />
+        <Pagination links={links} link={link} />
       </Page>
     )
   }

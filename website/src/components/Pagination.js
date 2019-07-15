@@ -6,8 +6,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
-  margin-top: 20px;
+  height: 5rem;
+  margin-top: 2rem;
   border-top: 1px solid #edf0f2;
 `
 
@@ -17,7 +17,6 @@ const StyledLink = styled(Link)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 16px;
   color: #888;
 
   &:hover,

@@ -18,7 +18,7 @@ const Handle = styled.div`
   }
 
   &:hover::before {
-    border-color: #888
+    border-color: #888;
   }
 `
 

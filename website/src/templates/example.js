@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
 import Page from 'components/Page'
@@ -14,12 +13,6 @@ const links = siteConfig.examples.map(item => ({
   to: item.path,
 }))
 
-const Title = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  margin: 16px 0;
-`
-
 class ComponentTemplate extends React.Component {
   render() {
     const { data, pageContext, location } = this.props
@@ -28,7 +21,7 @@ class ComponentTemplate extends React.Component {
     const link = links.find(link => link.to === `/examples/${name}`)
     return (
       <Page title={`Examples: ${link.title}`} location={location} links={links}>
-        <Title>{link.title}</Title>
+        <h1>{link.title}</h1>
         <CodePreview code={code} />
         <Pagination links={links} link={link} />
       </Page>

@@ -7,7 +7,7 @@ import CopyButton from './CopyButton'
 const Container = styled.div`
   position: relative;
   overflow: hidden;
-  border-radius: 3px;
+  border-radius: 0.3rem;
 `
 
 const Scroll = styled.div`

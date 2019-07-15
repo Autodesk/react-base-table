@@ -6,22 +6,21 @@ import linkIcon from 'assets/external-url.svg'
 
 const Container = styled.div`
   position: fixed;
-  top: 70px;
-  bottom: 20px;
+  top: 7rem;
+  bottom: 2rem;
   overflow-y: auto;
-  width: 220px;
-  min-width: 220px;
-  padding-right: 20px;
+  width: 22rem;
+  min-width: 22rem;
+  padding-right: 2rem;
   border-right: 1px solid #edf0f2;
 `
 
 const Ul = styled.ul`
-  list-style: none;
-  padding-left: 0;
+  padding-top: 1rem;
 `
 
 const Li = styled.li`
-  margin-bottom: 10px;
+  padding-bottom: 1rem;
 `
 
 const StyledLink = styled(Link).attrs({
@@ -35,16 +34,15 @@ const StyledLink = styled(Link).attrs({
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 16px;
   color: #222;
 `
 
 const ExternalLink = StyledLink.withComponent('a')
 
 const LinkIcon = styled.img`
-  width: 14px;
-  height: 14px;
-  margin-left: 4px;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-left: 0.4rem;
 `
 
 const Sidebar = ({ links }) => (

@@ -9,15 +9,15 @@ import Sidebar from './Sidebar'
 import '../styles/index.css'
 import 'react-base-table/styles.css'
 
-const pagelMixin = css`
+const pageMixin = css`
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 100rem;
 `
 
 const Container = styled.div`
   position: relative;
   padding: 70px 20px 20px;
-  ${props => !props.full && pagelMixin};
+  ${props => !props.full && pageMixin};
 `
 
 const Content = styled.div`

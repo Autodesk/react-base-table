@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
 import Page from 'components/Page'
@@ -16,19 +15,6 @@ const links = siteConfig.api.map(item => ({
   to: item.path,
 }))
 
-const Title = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  margin-top: 16px;
-`
-
-const Block = styled(Html)`
-  font-size: 14px;
-  p {
-    font-size: 14px;
-  }
-`
-
 class ApiTemplate extends React.Component {
   render() {
     const { data, pageContext, location } = this.props
@@ -43,9 +29,9 @@ class ApiTemplate extends React.Component {
         location={location}
         links={links}
       >
-        <Title>{metaData.displayName}</Title>
+        <h1>{metaData.displayName}</h1>
         {metaData.description && (
-          <Block htmlAst={metaData.description.childMarkdownRemark.htmlAst} />
+          <Html htmlAst={metaData.description.childMarkdownRemark.htmlAst} />
         )}
         <Props props={metaData.props} />
         {methods.length > 0 && <Methods methods={methods} />}

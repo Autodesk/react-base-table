@@ -17,7 +17,7 @@ const EditorContainer = styled.div`
 
 const StyledEditor = styled(Editor)`
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
-  font-size: 14px;
+  font-size: 1.4rem;
   white-space: pre;
   background: #222;
   caret-color: #fff;

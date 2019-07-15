@@ -12,21 +12,21 @@ const Container = styled.div`
 `
 
 const StyledEditor = styled(CodeEditor)`
-  height: 300px;
-  border-radius: 3px;
+  height: 30rem;
+  border-radius: 0.3rem;
 `
 
 const PreviewContainer = styled.div`
-  min-height: 400px;
+  min-height: 40rem;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: auto;
-  padding: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 8px 0 lightsteelblue;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 0.8rem 0 lightsteelblue;
 `
 
 const Preview = styled.div`
@@ -40,7 +40,7 @@ const Error = styled.div`
   left: 0;
   min-width: 100%;
   margin: 0;
-  padding: 10px;
+  padding: 1rem;
   color: #f00;
   white-space: pre-wrap;
 `

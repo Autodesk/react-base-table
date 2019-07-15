@@ -41,5 +41,11 @@ const rowRenderer = ({ rowData, rowIndex, cells, columns }) => {
 }
 
 export default () => (
-  <Table fixed columns={columns} data={data} rowRenderer={rowRenderer} overscanRowCount={2} />
+  <Table
+    fixed
+    columns={columns}
+    data={data}
+    rowRenderer={rowRenderer}
+    overscanRowCount={2}
+  />
 )

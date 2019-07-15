@@ -9111,7 +9111,7 @@ react-overlays@^1.2.0:
     uncontrollable "^6.0.0"
     warning "^4.0.2"
 
-react-popper@^1.3.2:
+react-popper@^1.3.2, react-popper@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.3.3.tgz#2c6cef7515a991256b4f0536cd4bdcb58a7b6af6"
   integrity sha512-ynMZBPkXONPc5K4P5yFWgZx5JGAUIP3pGGLNs58cfAPgK67olx7fmLp+AdpZ0+GoQ+ieFDa/z4cdV6u7sioH6w==
@@ -9161,6 +9161,13 @@ react-sortable-hoc@^1.9.1:
     "@babel/runtime" "^7.2.0"
     invariant "^2.2.4"
     prop-types "^15.5.7"
+
+react-texty@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-texty/-/react-texty-0.1.0.tgz#405a76f77705c84a1b154cb68e9e51bd5babe055"
+  integrity sha512-THyjCs5xnfATh50tpgIbqkKs1J5mYISAGGRpnII57so6XlnFdajonieAo1VcXNqEIFuvXF2LX++yGxfW+zqWew==
+  dependencies:
+    react-popper "^1.3.3"
 
 react@^16.8.4, react@^16.8.5:
   version "16.8.6"

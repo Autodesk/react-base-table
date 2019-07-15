@@ -1,4 +1,5 @@
 @import '~minireset.css';
+@import '~react-texty/styles.css';
 
 html {
   font-size: 62.5%;
@@ -83,4 +84,9 @@ pre {
   color: #c7254e;
   background-color: #f3f3f3;
   border-radius: 0.3em;
+}
+
+[data-texty-tooltip] {
+  font-size: 1.2rem;
+  padding: 0.2rem 0.8rem;
 }

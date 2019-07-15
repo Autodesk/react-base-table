@@ -8,7 +8,9 @@ const Method = styled.div`
   margin-bottom: 1.6rem;
 `
 
-const Name = styled.h4``
+const Name = styled.div`
+  font-weight: 600;
+`
 
 const Tag = styled.span`
   font-size: 0.8em;

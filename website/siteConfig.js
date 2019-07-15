@@ -53,6 +53,10 @@ module.exports = {
       path: '/examples/jsx-column',
     },
     {
+      title: 'Tooltip Cell',
+      path: '/examples/tooltip-cell',
+    },
+    {
       title: 'Auto Resize',
       path: '/examples/auto-resize',
     },
@@ -77,10 +81,6 @@ module.exports = {
       path: '/examples/10000-rows',
     },
     {
-      title: 'Draggable Rows',
-      path: '/examples/draggable-rows',
-    },
-    {
       title: 'Disabled',
       path: '/examples/disabled',
     },
@@ -91,6 +91,10 @@ module.exports = {
     {
       title: 'Hide Header',
       path: '/examples/hide-header',
+    },
+    {
+      title: 'Draggable Rows',
+      path: '/examples/draggable-rows',
     },
     {
       title: 'Multi Header',

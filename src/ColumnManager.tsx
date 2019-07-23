@@ -1,18 +1,38 @@
-import { FrozenDirection } from './Column';
+import { FrozenDirection, IColumnProps } from './Column';
+type anyFunction<T> = (...args: any[]) => T;
+interface ICache {
+  mainColumns?: IColumnProps[];
+  visibleColumns?: IColumnProps[];
+  hasFrozenColumns?: boolean;
+  hasLeftFrozenColumns?: boolean;
+  hasRightFrozenColumns?: boolean;
+  leftFrozenColumns?: IColumnProps[];
+  rightFrozenColumns?: IColumnProps[];  
+  columnsWidth?: number;
+  leftFrozenColumnsWidth?: number;
+  rightFrozenColumnsWidth?: number;
+}
 
 export default class ColumnManager {
-  constructor(columns, fixed) {
+
+  private _cached: ICache = {};
+  private _columns: IColumnProps[];
+  private _origColumns: IColumnProps[];
+  private _fixed: boolean;
+  private _columnStyles: {[key: string]: React.CSSProperties};
+  
+  constructor(columns: IColumnProps[], fixed: boolean) {
     this._origColumns = [];
     this.reset(columns, fixed);
   }
 
-  _cache(key, fn) {
+  private _cache<K extends keyof ICache>(key: K, fn: anyFunction<ICache[K]>) {
     if (key in this._cached) return this._cached[key];
     this._cached[key] = fn();
     return this._cached[key];
   }
 
-  reset(columns, fixed) {
+  public reset(columns: IColumnProps[], fixed: boolean) {
     this._columns = columns.map(column => {
       let width = column.width;
       if (column.resizable) {
@@ -30,15 +50,15 @@ export default class ColumnManager {
     this._columnStyles = this.recomputeColumnStyles();
   }
 
-  resetCache() {
+  public resetCache() {
     this._cached = {};
   }
 
-  getOriginalColumns() {
+  public getOriginalColumns() {
     return this._origColumns;
   }
 
-  getColumns() {
+  public getColumns() {
     return this._columns;
   }
 
@@ -50,7 +70,7 @@ export default class ColumnManager {
 
   hasFrozenColumns() {
     return this._cache('hasFrozenColumns', () => {
-      return this._fixed && this.getVisibleColumns().some(column => !!column.frozen);
+      return this._fixed && this.getVisibleColumns().some((column: IColumnProps) => !!column.frozen);
     });
   }
 
@@ -58,14 +78,14 @@ export default class ColumnManager {
     return this._cache('hasLeftFrozenColumns', () => {
       return (
         this._fixed &&
-        this.getVisibleColumns().some(column => column.frozen === FrozenDirection.LEFT || column.frozen === true)
+        this.getVisibleColumns().some((column: IColumnProps) => column.frozen === FrozenDirection.LEFT || column.frozen === true)
       );
     });
   }
 
   hasRightFrozenColumns() {
     return this._cache('hasRightFrozenColumns', () => {
-      return this._fixed && this.getVisibleColumns().some(column => column.frozen === FrozenDirection.RIGHT);
+      return this._fixed && this.getVisibleColumns().some((column: IColumnProps) => column.frozen === FrozenDirection.RIGHT);
     });
   }
 
@@ -74,15 +94,16 @@ export default class ColumnManager {
       const columns = this.getVisibleColumns();
       if (!this.hasFrozenColumns()) return columns;
 
-      const mainColumns = [];
-      this.getLeftFrozenColumns().forEach(column => {
+      const mainColumns: IColumnProps[] = [];
+      this.getLeftFrozenColumns().forEach((column: IColumnProps) => {
         //columns placeholder for the fixed table above them
+        
         mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
       });
-      this.getVisibleColumns().forEach(column => {
+      this.getVisibleColumns().forEach((column: IColumnProps) => {
         if (!column.frozen) mainColumns.push(column);
       });
-      this.getRightFrozenColumns().forEach(column => {
+      this.getRightFrozenColumns().forEach((column: IColumnProps) => {
         mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
       });
 
@@ -94,7 +115,7 @@ export default class ColumnManager {
     return this._cache('leftFrozenColumns', () => {
       if (!this._fixed) return [];
       return this.getVisibleColumns().filter(
-        column => column.frozen === FrozenDirection.LEFT || column.frozen === true
+        (column: IColumnProps) => column.frozen === FrozenDirection.LEFT || column.frozen === true
       );
     });
   }
@@ -102,11 +123,11 @@ export default class ColumnManager {
   getRightFrozenColumns() {
     return this._cache('rightFrozenColumns', () => {
       if (!this._fixed) return [];
-      return this.getVisibleColumns().filter(column => column.frozen === FrozenDirection.RIGHT);
+      return this.getVisibleColumns().filter((column: IColumnProps) => column.frozen === FrozenDirection.RIGHT);
     });
   }
 
-  getColumn(key) {
+  getColumn(key: IColumnProps['key']) {
     const idx = this._columns.findIndex(column => column.key === key);
     return this._columns[idx];
   }
@@ -129,18 +150,18 @@ export default class ColumnManager {
     });
   }
 
-  recomputeColumnsWidth(columns) {
+  recomputeColumnsWidth(columns: IColumnProps[]) {
     return columns.reduce((width, column) => width + column.width, 0);
   }
 
-  setColumnWidth(key, width) {
+  setColumnWidth(key: IColumnProps['key'], width: number) {
     const column = this.getColumn(key);
     column.width = width;
     this._cached = {};
     this._columnStyles[column.key] = this.recomputeColumnStyle(column);
   }
 
-  getColumnStyle(key) {
+  getColumnStyle(key: React.Key) {
     return this._columnStyles[key];
   }
 
@@ -148,7 +169,7 @@ export default class ColumnManager {
     return this._columnStyles;
   }
 
-  recomputeColumnStyle(column) {
+  public recomputeColumnStyle(column: IColumnProps): React.CSSProperties {
     let flexGrow = 0;
     let flexShrink = 0;
     if (!this._fixed) {
@@ -177,12 +198,14 @@ export default class ColumnManager {
     return style;
   }
 
-  recomputeColumnStyles() {
+  recomputeColumnStyles(): {[key: string]: React.CSSProperties} {
     return this._columns.reduce((styles, column) => {
       styles[column.key] = this.recomputeColumnStyle(column);
       return styles;
-    }, {});
+    }, {} as {[key: string]: React.CSSProperties});
   }
+
+  static PlaceholderKey: '__placeholder__' = '__placeholder__';
 }
 
-ColumnManager.PlaceholderKey = '__placeholder__';
+

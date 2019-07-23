@@ -1,9 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import BaseTable from './BaseTable';
+import BaseTable, { IBaseTableProps } from './BaseTable';
 
-const RENDERER = () => null;
+type TRenderer = () => null;
+const RENDERER: TRenderer = () => null;
 
 const columns = [
   {
@@ -33,7 +34,22 @@ const data = [
   },
 ];
 
-const Table = props => <BaseTable width={100} height={100} data={data} columns={columns} {...props} />;
+type DefaultPropsKeys = keyof typeof BaseTable.defaultProps;
+interface TableProps extends Partial<typeof BaseTable.defaultProps> {};
+interface MinusDefaultKeys extends Partial<Omit<IBaseTableProps<any>, DefaultPropsKeys>> {};
+
+const Table: React.FunctionComponent<
+  TableProps &
+  MinusDefaultKeys> = ({width, height, data, columns, ...restProps}) => (
+  <BaseTable width={width} height={height} {...restProps} />
+);
+
+Table.defaultProps = {
+  width: 100,
+  height: 100,
+  data,
+  columns
+};
 
 describe('Table', function() {
   test('renders correctly', () => {

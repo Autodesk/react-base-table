@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
 /**
  * Decorator component that automatically adjusts the width and height of a single child
  */
-const AutoResizer = ({ className, width, height, children, onResize }) => {
+const AutoResizer: React.FunctionComponent<AutoResizerProps> = ({ className, width, height, children, onResize }) => {
   const disableWidth = typeof width === 'number';
   const disableHeight = typeof height === 'number';
 
@@ -29,29 +28,31 @@ const AutoResizer = ({ className, width, height, children, onResize }) => {
   );
 };
 
-AutoResizer.propTypes = {
+
+type ChildrenArgs = {width: number, height: number};
+export interface AutoResizerProps {
   /**
    * Class name for the component
    */
-  className: PropTypes.string,
+  className?: string;
   /**
    * the width of the component, will be the container's width if not set
    */
-  width: PropTypes.number,
+  width?: number;
   /**
    * the height of the component, will be the container's width if not set
    */
-  height: PropTypes.number,
+  height?: number;
   /**
    * A callback function to render the children component
    * The handler is of the shape of `({ width, height }) => node`
    */
-  children: PropTypes.func.isRequired,
+  children: (args: ChildrenArgs) => React.ReactNode;
   /**
    * A callback function when the size of the table container changed if the width and height are not set
    * The handler is of the shape of `({ width, height }) => *`
    */
-  onResize: PropTypes.func,
+  onResize?: (args: ChildrenArgs) => void;
 };
 
 export default AutoResizer;

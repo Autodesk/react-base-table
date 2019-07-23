@@ -1,13 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import SortOrder from './SortOrder';
 
+export interface SortIndicatorProps {
+  sortOrder?: SortOrder.ASC |  SortOrder.DESC;
+  className?: string;
+  style?: React.CSSProperties;
+};
+
+export type TSortIndicator = React.FunctionComponent<SortIndicatorProps>;
+
 /**
  * default SortIndicator for BaseTable
  */
-const SortIndicator = ({ sortOrder, className, style }) => {
+const SortIndicator: TSortIndicator = ({ sortOrder, className, style }) => {
   const cls = cn('BaseTable__sort-indicator', className, {
     'BaseTable__sort-indicator--descending': sortOrder === SortOrder.DESC,
   });
@@ -26,12 +33,6 @@ const SortIndicator = ({ sortOrder, className, style }) => {
       {sortOrder === SortOrder.DESC ? '\u2193' : '\u2191'}
     </div>
   );
-};
-
-SortIndicator.propTypes = {
-  sortOrder: PropTypes.oneOf([SortOrder.ASC, SortOrder.DESC]),
-  className: PropTypes.string,
-  style: PropTypes.object,
 };
 
 export default SortIndicator;

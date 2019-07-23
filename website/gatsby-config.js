@@ -66,7 +66,7 @@ module.exports = {
       options: {
         name: 'api',
         ignore: ['**/*.snap', '**/*.scss'],
-        path: `${__dirname}/../src`,
+        path: `${__dirname}/../build`,
       },
     },
     {

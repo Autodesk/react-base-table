@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "paths": { "*": ["types/*"] },
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "outDir": "build",
+    "baseUrl": ".",
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react"
+  },
+  "include": [
+    "./src/**/*",
+  ],
+  "exclude": ["node_modules"]
+}

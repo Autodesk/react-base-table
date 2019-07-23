@@ -1,15 +1,15 @@
 /**
  * Sort order for BaseTable
  */
-const SortOrder = {
+enum SortOrder  {
   /**
    * Sort data in ascending order
    */
-  ASC: 'asc',
+  ASC = 'asc',
   /**
    * Sort data in descending order
    */
-  DESC: 'desc',
+  DESC = 'desc',
 };
 
 export default SortOrder;

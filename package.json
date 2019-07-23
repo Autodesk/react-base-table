@@ -16,6 +16,7 @@
     "url": "https://github.com/Autodesk/react-base-table.git"
   },
   "scripts": {
+    "prestart": "npm run build:typescript",
     "start": "cd website && npm start",
     "deploy": "cd website && npm run deploy",
     "lint": "eslint ./src/**/*.js",
@@ -24,6 +25,7 @@
     "build:es": "cross-env BABEL_ENV=es NODE_ENV=production babel src -d es --ignore '**/*.spec.js','__snapshots__' --copy-files --source-maps",
     "build:css": "node-sass src/_BaseTable.scss ./styles.css --output-style expanded",
     "build": "npm run build:js && npm run build:es && npm run build:css",
+    "build:typescript": "tsc",
     "format": "prettier --write 'src/**/*.{js,scss}'",
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
@@ -44,11 +46,17 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "@types/classnames": "^2.2.9",
+    "@types/memoize-one": "^4.1.1",
+    "@types/react": "^16.9.2",
+    "@types/react-test-renderer": "^16.9.0",
+    "@types/react-virtualized-auto-sizer": "^1.0.0",
+    "@types/react-window": "^1.8.1",
     "classnames": "^2.2.5",
     "memoize-one": "^5.0.0",
-    "prop-types": "^15.7.0",
     "react-virtualized-auto-sizer": "^1.0.2",
-    "react-window": "^1.8.2"
+    "react-window": "^1.8.2",
+    "typescript": "^3.5.3"
   },
   "peerDependencies": {
     "react": "^16.0.0",
@@ -62,9 +70,9 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@types/jest": "^24.0.18",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.4.2",
     "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.6.0",
@@ -76,7 +84,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
-    "jest": "^23.5.0",
+    "jest": "^23.6.0",
     "lerna": "^3.2.1",
     "lint-staged": "^7.2.2",
     "node-sass": "^4.9.3",
@@ -84,15 +92,16 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-test-renderer": "^16.4.2",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "ts-jest": "^24.0.2"
   },
   "jest": {
     "roots": [
       "<rootDir>/src"
     ],
-    "testRegex": ".*.spec\\.js$",
+    "testRegex": ".*.spec\\.tsx?$",
     "transform": {
-      "^.+\\.jsx?$": "babel-jest"
+      "^.+\\.tsx?$": "ts-jest"
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/"

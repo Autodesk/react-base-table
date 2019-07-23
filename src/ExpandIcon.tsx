@@ -1,17 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 /**
  * default ExpandIcon for BaseTable
  */
-class ExpandIcon extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this._handleClick = this._handleClick.bind(this);
-  }
-
+class ExpandIcon extends React.PureComponent<IExpandIconProps> {
   render() {
     const { expandable, expanded, indentSize, depth, onExpand, ...rest } = this.props;
     if (!expandable && indentSize === 0) return null;
@@ -44,25 +37,25 @@ class ExpandIcon extends React.PureComponent {
     );
   }
 
-  _handleClick(e) {
+  private _handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     e.preventDefault();
     const { onExpand, expanded } = this.props;
     onExpand(!expanded);
   }
+  public static defaultProps = {
+    depth: 0,
+    indentSize: 16,
+  };
 }
 
-ExpandIcon.defaultProps = {
-  depth: 0,
-  indentSize: 16,
-};
 
-ExpandIcon.propTypes = {
-  expandable: PropTypes.bool,
-  expanded: PropTypes.bool,
-  indentSize: PropTypes.number,
-  depth: PropTypes.number,
-  onExpand: PropTypes.func,
-};
+export interface IExpandIconProps {
+  expandable?: boolean;
+  expanded?: boolean;
+  indentSize?: number;
+  depth?: number;
+  onExpand?: (param: boolean) => void;
+}
 
 export default ExpandIcon;

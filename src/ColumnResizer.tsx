@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {IColumnProps} from './Column';
 
 import { noop, addClassName, removeClassName } from './utils';
 
-const INVALID_VALUE = null;
+const INVALID_VALUE: null = null;
 
 // copied from https://github.com/mzabriskie/react-draggable/blob/master/lib/utils/domFns.js
-export function addUserSelectStyles(doc) {
+export function addUserSelectStyles(doc: Document) {
   if (!doc) return;
-  let styleEl = doc.getElementById('react-draggable-style-el');
+  let styleEl = doc.getElementById('react-draggable-style-el') as IHTMLElementExtended;
   if (!styleEl) {
     styleEl = doc.createElement('style');
     styleEl.type = 'text/css';
@@ -20,11 +20,11 @@ export function addUserSelectStyles(doc) {
   if (doc.body) addClassName(doc.body, 'react-draggable-transparent-selection');
 }
 
-export function removeUserSelectStyles(doc) {
+export function removeUserSelectStyles(doc: Document) {
   try {
     if (doc && doc.body) removeClassName(doc.body, 'react-draggable-transparent-selection');
-    if (doc.selection) {
-      doc.selection.empty();
+    if ((doc as any).selection) {
+      (doc as any).selection.empty();
     } else {
       window.getSelection().removeAllRanges(); // remove selection caused by scroll
     }
@@ -51,26 +51,13 @@ let dragEventFor = eventsFor.mouse;
 /**
  * ColumnResizer for BaseTable
  */
-class ColumnResizer extends React.PureComponent {
-  constructor(props) {
-    super(props);
+class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
+  private isDragging = false;
+  private lastX: number | typeof INVALID_VALUE = INVALID_VALUE;
+  private width = 0;
+  private handleRef: HTMLDivElement;
 
-    this.isDragging = false;
-    this.lastX = INVALID_VALUE;
-    this.width = 0;
-
-    this._setHandleRef = this._setHandleRef.bind(this);
-    this._handleClick = this._handleClick.bind(this);
-    this._handleMouseDown = this._handleMouseDown.bind(this);
-    this._handleMouseUp = this._handleMouseUp.bind(this);
-    this._handleTouchStart = this._handleTouchStart.bind(this);
-    this._handleTouchEnd = this._handleTouchEnd.bind(this);
-    this._handleDragStart = this._handleDragStart.bind(this);
-    this._handleDragStop = this._handleDragStop.bind(this);
-    this._handleDrag = this._handleDrag.bind(this);
-  }
-
-  componentWillUnmount() {
+  public componentWillMount() {
     if (this.handleRef) {
       const { ownerDocument } = this.handleRef;
       ownerDocument.removeEventListener(eventsFor.mouse.move, this._handleDrag);
@@ -81,7 +68,7 @@ class ColumnResizer extends React.PureComponent {
     }
   }
 
-  render() {
+  public render() {
     const { style, column, onResizeStart, onResize, onResizeStop, minWidth, ...rest } = this.props;
 
     return (
@@ -107,35 +94,35 @@ class ColumnResizer extends React.PureComponent {
     );
   }
 
-  _setHandleRef(ref) {
+  private _setHandleRef = (ref: HTMLDivElement) => {
     this.handleRef = ref;
   }
 
-  _handleClick(e) {
+  private _handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   }
 
-  _handleMouseDown(e) {
+  private _handleMouseDown = (e: React.MouseEvent) => {
     dragEventFor = eventsFor.mouse;
-    this._handleDragStart(e);
+    this._handleDragStart(e as any);
   }
 
-  _handleMouseUp(e) {
+  private _handleMouseUp = (e: React.TouchEvent | React.MouseEvent) => {
     dragEventFor = eventsFor.mouse;
-    this._handleDragStop(e);
+    this._handleDragStop(e as any);
   }
 
-  _handleTouchStart(e) {
+  private _handleTouchStart = (e: React.TouchEvent) => {
     dragEventFor = eventsFor.touch;
-    this._handleDragStart(e);
+    this._handleDragStart(e as any);
   }
 
-  _handleTouchEnd(e) {
+  private _handleTouchEnd = (e: React.TouchEvent) => {
     dragEventFor = eventsFor.touch;
-    this._handleDragStop(e);
+    this._handleDragStop(e as any);
   }
 
-  _handleDragStart(e) {
+  private _handleDragStart = (e: DragEvent) => {
     if (typeof e.button === 'number' && e.button !== 0) return;
 
     this.isDragging = true;
@@ -149,7 +136,7 @@ class ColumnResizer extends React.PureComponent {
     ownerDocument.addEventListener(dragEventFor.stop, this._handleDragStop);
   }
 
-  _handleDragStop(e) {
+  private _handleDragStop = (e: TouchEvent | MouseEvent) => {
     if (!this.isDragging) return;
     this.isDragging = false;
 
@@ -161,7 +148,7 @@ class ColumnResizer extends React.PureComponent {
     ownerDocument.removeEventListener(dragEventFor.stop, this._handleDragStop);
   }
 
-  _handleDrag(e) {
+  private _handleDrag = (e: any) => {
     let clientX = e.clientX;
     if (e.type === eventsFor.touch.move) {
       e.preventDefault();
@@ -195,43 +182,57 @@ class ColumnResizer extends React.PureComponent {
     if (newWidth === width) return;
     this.props.onResize(column, newWidth);
   }
+
+  public static defaultProps = {
+    onResizeStart: noop,
+    onResize: noop,
+    onResizeStop: noop,
+    minWidth: 30,
+  }
 }
 
-ColumnResizer.defaultProps = {
-  onResizeStart: noop,
-  onResize: noop,
-  onResizeStop: noop,
-  minWidth: 30,
+interface IHTMLElementExtended extends HTMLElement {
+  type?: string
 };
 
-ColumnResizer.propTypes = {
+type IColumnResizerCallBack<T> = (param: T) => any;
+export interface IOnResizeStartCBParam {
+  column? : IColumnProps;
+  key?: React.Key;
+}
+export interface IColumnResizerProps {
+  /**
+   * className
+   */
+  className?: string;
   /**
    * Custom style for the drag handler
    */
-  style: PropTypes.object,
+  style?: React.CSSProperties;
   /**
    * The column object to be dragged
    */
-  column: PropTypes.object,
+  column?: IColumnProps;
   /**
    * A callback function when resizing started
    * The callback is of the shape of `(column) => *`
    */
-  onResizeStart: PropTypes.func,
+  onResizeStart?: IColumnResizerCallBack<IOnResizeStartCBParam>;
+
   /**
    * A callback function when resizing the column
    * The callback is of the shape of `(column, width) => *`
    */
-  onResize: PropTypes.func,
+  onResize?: (param1?: IColumnProps, width?: number, column?: IColumnProps) => any;
   /**
    * A callback function when resizing stopped
    * The callback is of the shape of `(column) => *`
    */
-  onResizeStop: PropTypes.func,
+  onResizeStop?: (column: IColumnProps) => any;
   /**
    * Minimum width of the column could be resized to if the column's `minWidth` is not set
    */
-  minWidth: PropTypes.number,
+  minWidth?: number;
 };
 
 export default ColumnResizer;

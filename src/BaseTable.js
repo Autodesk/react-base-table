@@ -197,15 +197,15 @@ class BaseTable extends React.PureComponent {
    * Scroll to the specified row.
    * By default, the table will scroll as little as possible to ensure the row is visible.
    * You can control the alignment of the row though by specifying an align property. Acceptable values are:
-   * 
+   *
    * - `auto` (default) - Scroll as little as possible to ensure the row is visible.
    * - `smart` - Same as `auto` if it is less than one viewport away, or it's the same as`center`.
    * - `center` - Center align the row within the table.
    * - `end` - Align the row to the bottom side of the table.
    * - `start` - Align the row to the top side of the table.
 
-   * @param {number} rowIndex 
-   * @param {string} align 
+   * @param {number} rowIndex
+   * @param {string} align
    */
   scrollToRow(rowIndex = 0, align = 'auto') {
     this.table && this.table.scrollToRow(rowIndex, align);

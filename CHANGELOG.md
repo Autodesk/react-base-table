@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.7.0 (2019-08-06)
+
 - chore: remove the use of `Object.values`
 - feat: add `getColumnManager` and `getDOMNode` methods
 

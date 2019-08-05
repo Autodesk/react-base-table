@@ -62,6 +62,7 @@ class BaseTable extends React.PureComponent {
     };
     this.columnManager = new ColumnManager(columns || normalizeColumns(children), props.fixed);
 
+    this._setContainerRef = this._setContainerRef.bind(this);
     this._setMainTableRef = this._setMainTableRef.bind(this);
     this._setLeftTableRef = this._setLeftTableRef.bind(this);
     this._setRightTableRef = this._setRightTableRef.bind(this);
@@ -100,6 +101,20 @@ class BaseTable extends React.PureComponent {
     this._horizontalScrollbarSize = 0;
     this._verticalScrollbarSize = 0;
     this._scrollbarPresenceChanged = false;
+  }
+
+  /**
+   * Get the DOM node of the table
+   */
+  getDOMNode() {
+    return this.tableNode;
+  }
+
+  /**
+   * Get the column manager
+   */
+  getColumnManager() {
+    return this.columnManager;
   }
 
   /**
@@ -605,7 +620,7 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--disabled`]: disabled,
     });
     return (
-      <div className={cls} style={containerStyle}>
+      <div ref={this._setContainerRef} className={cls} style={containerStyle}>
         {this.renderFooter()}
         {this.renderMainTable()}
         {this.renderLeftTable()}
@@ -658,6 +673,10 @@ class BaseTable extends React.PureComponent {
 
   _prefixClass(className) {
     return `${this.props.classPrefix}__${className}`;
+  }
+
+  _setContainerRef(ref) {
+    this.tableNode = ref;
   }
 
   _setMainTableRef(ref) {

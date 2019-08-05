@@ -44,7 +44,9 @@ const noop = () => {}
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 const action = message => args => console.log(message, args)
 
-const Table = props => <BaseTable width={700} height={400} {...props} />
+const Table = React.forwardRef((props, ref) => (
+  <BaseTable ref={ref} width={700} height={400} {...props} />
+))
 Table.Column = Column
 
 export default {

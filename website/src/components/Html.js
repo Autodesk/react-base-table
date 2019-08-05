@@ -42,7 +42,14 @@ const Pre = props => {
   const meta = parseMeta(props.children[0].props['data-meta'])
   const { live, ...rest } = meta
   const Component = live ? CodePreview : CodeBlock
-  return <Component code={code} language={language} {...rest} />
+  return (
+    <Component
+      code={code}
+      language={language}
+      {...rest}
+      style={{ marginBottom: '1.2rem' }}
+    />
+  )
 }
 
 const renderAst = new rehypeReact({

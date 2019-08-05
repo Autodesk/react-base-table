@@ -5,20 +5,18 @@ import Html from './Html'
 import Anchor from './Anchor'
 
 const Prop = styled.div`
-  margin-bottom: 15px;
+  margin-bottom: 1.6rem;
 `
 
 const Name = styled.div`
-  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 5px;
 `
 
 const Tag = styled.span`
-  font-size: 12px;
-  padding: 2px 6px;
-  margin: 0 8px;
-  border-radius: 4px;
+  font-size: 0.8em;
+  padding: 0.1em 0.4em;
+  margin: 0 0.4em;
+  border-radius: 0.2em;
   background-color: #daf0f9;
   color: #819099;
 `
@@ -34,12 +32,7 @@ const DefaultValue = styled.span`
 `
 
 const Block = styled(Html)`
-  font-size: 14px;
-
-  p {
-    font-size: 14px;
-    margin: 0 0 10px;
-  }
+  color: #666;
 `
 
 const parseType = type => {
@@ -63,7 +56,7 @@ const Props = ({ title = 'Props', props, ...rest }) => {
       <Anchor>{title}</Anchor>
       {Array.isArray(props) &&
         props.map(prop => (
-          <Prop key={prop.name}>
+          <Prop key={prop.name} id={`props-${prop.name}`}>
             <Name>
               {prop.name}
               <Tag>{parseType(prop.type)}</Tag>

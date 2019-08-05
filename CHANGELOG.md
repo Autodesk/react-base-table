@@ -2,6 +2,9 @@
 
 ## NEXT VERSION
 
+- chore: remove the use of `Object.values`
+- feat: add `getColumnManager` and `getDOMNode` methods
+
 ## v1.6.5 (2019-07-11)
 
 - fix: style value `unset` is not supported on IE

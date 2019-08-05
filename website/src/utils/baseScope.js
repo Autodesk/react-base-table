@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
+import * as ReactSortableHoc from 'react-sortable-hoc'
+import * as ReactOverlays from 'react-overlays'
+import ReactTexty from 'react-texty'
 
 import BaseTable, {
   Column,
@@ -41,7 +44,9 @@ const noop = () => {}
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 const action = message => args => console.log(message, args)
 
-const Table = props => <BaseTable width={700} height={400} {...props} />
+const Table = React.forwardRef((props, ref) => (
+  <BaseTable ref={ref} width={700} height={400} {...props} />
+))
 Table.Column = Column
 
 export default {
@@ -52,6 +57,10 @@ export default {
   css,
   keyframes,
   createGlobalStyle,
+
+  ReactSortableHoc,
+  ReactOverlays,
+  ReactTexty,
 
   BaseTable,
   Column,

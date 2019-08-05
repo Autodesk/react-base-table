@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 
 import Html from 'components/Html'
 import Page from 'components/Page'
+import Pagination from 'components/Pagination'
 
 import siteConfig from 'siteConfig'
 
@@ -21,6 +22,7 @@ class DocumentTemplate extends React.Component {
     return (
       <Page title={`Docs: ${link.title}`} location={location} links={links}>
         <Html htmlAst={doc.htmlAst} />
+        <Pagination links={links} link={link} />
       </Page>
     )
   }

@@ -62,6 +62,7 @@ class BaseTable extends React.PureComponent {
     };
     this.columnManager = new ColumnManager(columns || normalizeColumns(children), props.fixed);
 
+    this._setContainerRef = this._setContainerRef.bind(this);
     this._setMainTableRef = this._setMainTableRef.bind(this);
     this._setLeftTableRef = this._setLeftTableRef.bind(this);
     this._setRightTableRef = this._setRightTableRef.bind(this);
@@ -100,6 +101,20 @@ class BaseTable extends React.PureComponent {
     this._horizontalScrollbarSize = 0;
     this._verticalScrollbarSize = 0;
     this._scrollbarPresenceChanged = false;
+  }
+
+  /**
+   * Get the DOM node of the table
+   */
+  getDOMNode() {
+    return this.tableNode;
+  }
+
+  /**
+   * Get the column manager
+   */
+  getColumnManager() {
+    return this.columnManager;
   }
 
   /**
@@ -184,13 +199,10 @@ class BaseTable extends React.PureComponent {
    * You can control the alignment of the row though by specifying an align property. Acceptable values are:
    *
    * - `auto` (default) - Scroll as little as possible to ensure the row is visible.
-   *  (If the row is already visible, it won't scroll at all.)
-   * - `smart` - If the row is already visible, don't scroll at all. If it is less than one viewport away,
-   *  scroll as little as possible so that it becomes visible.
-   *  If it is more than one viewport away, scroll so that it is centered within the grid.
+   * - `smart` - Same as `auto` if it is less than one viewport away, or it's the same as`center`.
    * - `center` - Center align the row within the table.
-   * - `end` - Align the row to the bottom, right hand side of the table.
-   * - `start` - Align the row to the top, left hand of the table.
+   * - `end` - Align the row to the bottom side of the table.
+   * - `start` - Align the row to the top side of the table.
 
    * @param {number} rowIndex
    * @param {string} align
@@ -199,6 +211,7 @@ class BaseTable extends React.PureComponent {
     this.table && this.table.scrollToRow(rowIndex, align);
     this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
     this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
+    this.scrollToLeft(0);
   }
 
   /**
@@ -605,7 +618,7 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--disabled`]: disabled,
     });
     return (
-      <div className={cls} style={containerStyle}>
+      <div ref={this._setContainerRef} className={cls} style={containerStyle}>
         {this.renderFooter()}
         {this.renderMainTable()}
         {this.renderLeftTable()}
@@ -656,6 +669,10 @@ class BaseTable extends React.PureComponent {
 
   _prefixClass(className) {
     return `${this.props.classPrefix}__${className}`;
+  }
+
+  _setContainerRef(ref) {
+    this.tableNode = ref;
   }
 
   _setMainTableRef(ref) {

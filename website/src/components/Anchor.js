@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import slugify from 'slugify'
 
 const Container = styled.div`
-  margin: 20px 0 10px 0;
-  font-size: 18px;
-  font-weight: 500;
+  position: relative;
 `
 
 const Span = styled.span`
@@ -16,14 +14,11 @@ const Span = styled.span`
 `
 
 const Link = styled.a`
-  float: left;
-  padding-right: 4px;
-  margin-left: -20px;
-  padding-left: 6px;
+  position: absolute;
+  left: -1.6rem;
 
   &::before {
     content: '#';
-    font-size: 16px;
     visibility: hidden;
   }
 
@@ -34,12 +29,12 @@ const Link = styled.a`
   }
 `
 
-const Anchor = ({ children, title, link }) => {
+const Anchor = ({ tagName = 'h2', children, title, link, ...rest }) => {
   if (!title && !children) return null
 
   const slug = link || slugify(title || children, { lower: true })
   return (
-    <Container id={slug}>
+    <Container as={tagName} id={slug} {...rest}>
       <Span />
       <Link href={`#${slug}`} aria-hidden="true" />
       {children || title}

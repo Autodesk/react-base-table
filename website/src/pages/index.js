@@ -11,32 +11,27 @@ const Container = styled(Page).attrs({ full: true })`
 const Hero = styled.div`
   background-color: #182a3d;
   color: #fff;
-  padding: 100px;
+  padding: 10rem;
   text-align: center;
 `
 
-const Title = styled.h1`
-  font-size: 24px;
-`
-
 const Description = styled.p`
-  font-size: 16px;
   color: #bcc9d1;
-  max-width: 600px;
-  margin: 20px auto 40px;
+  max-width: 60rem;
+  margin: 2rem auto 4rem;
 `
 
 const Content = styled.div`
   margin: 0 auto;
-  max-width: 960px;
-  padding: 20px;
+  max-width: 96rem;
+  padding: 2rem;
   position: relative;
 `
 
 const StyledLink = styled(Link)`
   display: block;
-  margin-top: 10px;
-  font-size: 18px;
+  margin-top: 1rem;
+  font-size: 1.8rem;
   font-weight: 500;
 `
 
@@ -45,9 +40,8 @@ const ExternalLink = StyledLink.withComponent('a')
 const StartLink = styled(Link)`
   background-color: #0696d7;
   color: #fff;
-  font-size: 16px;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 0.5em 1em;
+  border-radius: 0.2em;
   &:hover {
     background-color: #fff;
   }
@@ -63,7 +57,7 @@ const ExampleLink = styled(StartLink)`
 export default () => (
   <Container title="Home">
     <Hero>
-      <Title>BaseTable</Title>
+      <h1>BaseTable</h1>
       <Description>
         BaseTable is a react table component to display large data set with high
         performance and flexibility

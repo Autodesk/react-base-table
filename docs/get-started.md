@@ -30,11 +30,15 @@ import 'react-base-table/styles.css'
 **`width` and `height` are required to display the table properly**
 
 In the [examples](https://autodesk.github.io/react-base-table/examples)
-we are using a wrapper `const Table = props => <BaseTable width={720} height={400} {...props} />` to do that
+we are using a wrapper `const Table = props => <BaseTable width={700} height={400} {...props} />` to do that
 
-You can use the [`AutoResizer`](https://autodesk.github.io/react-base-table/api/autoresizer) to make the table fill the container, take the [playground](https://autodesk.github.io/react-base-table/playground) for example
+If you want it responsive, you can use the [`AutoResizer`](https://autodesk.github.io/react-base-table/api/autoresizer) to make the table fill the container, checkout the [Auto Resize example](https://autodesk.github.io/react-base-table/examples/auto-resize)
 
-_You have to polyfil `Array.prototype.findIndex` to make it works on IE_
+## Browser Support
+
+`BaseTable` is well tested on all modern browsers and IE11. _You have to polyfill `Array.prototype.findIndex` to make it works on IE_
+
+**The [examples](https://autodesk.github.io/react-base-table/examples) don't work on IE as they are powered by [react-runner](https://github.com/nihgwu/react-runner) which is a `react-live` like library but only for modern browsers.**
 
 ## Playground
 

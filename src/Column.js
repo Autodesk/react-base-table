@@ -50,7 +50,7 @@ Column.propTypes = {
   /**
    * Alignment of the column cell
    */
-  align: PropTypes.oneOf(Object.values(Alignment)),
+  align: PropTypes.oneOf(['left', 'center', 'right']),
   /**
    * Flex grow style, defaults to 0
    */
@@ -74,7 +74,7 @@ Column.propTypes = {
   /**
    * Whether the column is frozen and what's the frozen side
    */
-  frozen: PropTypes.oneOf(Object.values(FrozenDirection)),
+  frozen: PropTypes.oneOf(['left', 'right', true, false]),
   /**
    * Whether the column is hidden
    */

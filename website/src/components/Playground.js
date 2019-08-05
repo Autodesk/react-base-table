@@ -15,12 +15,12 @@ const Container = styled.div`
 `
 
 const StyledEditor = styled(CodeEditor)`
-  flex: 0 1 600px;
+  flex: 0 1 60rem;
 `
 
 const PreviewContainer = styled.div`
   position: relative;
-  flex: 1 1 600px;
+  flex: 1 1 60rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@ const Error = styled.div`
   left: 0;
   min-width: 100%;
   margin: 0;
-  padding: 10px;
+  padding: 1rem;
   color: #f00;
   white-space: pre-wrap;
 `

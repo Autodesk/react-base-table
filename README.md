@@ -59,8 +59,7 @@ The simplest way is overriding the default styles (assuming you are using `scss`
 // override default variables for BaseTable
 $table-prefix: AdvanceTable;
 
-$table-font-size: $bim-font-size-small;
-$table-border-radius: 4px;
+$table-font-size: 13px;
 $table-padding-left: 15px;
 $table-padding-right: 15px;
 $column-padding: 7.5px;

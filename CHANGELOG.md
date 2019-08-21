@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: `scrollToRow` doesn't work regression introduced in #73
+
 ## v1.7.0 (2019-08-06)
 
 - chore: remove the use of `Object.values`

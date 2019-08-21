@@ -208,10 +208,19 @@ class BaseTable extends React.PureComponent {
    * @param {string} align
    */
   scrollToRow(rowIndex = 0, align = 'auto') {
-    this.table && this.table.scrollToRow(rowIndex, align);
-    this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
-    this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
-    this.scrollToLeft(0);
+    // if the table is in `fixed` mode, it could be scrolled horizontally, in that case,
+    // the horizontal scroll position would be unexpected if the `align` is not `start`,
+    // so we reset the horizontal scroll to the previous value in that case,
+    // and the two scroll methods would be batched on event callback, and the `onScroll` event will be called after that,
+    // then it will be reset to the original position as the `this._scroll` is not synced to the new state,
+    // so we put them in a `setTimeout` to make `onScroll` be called before we set the horizontal position.
+    setTimeout(() => {
+      const prevScrollLeft = this._scroll.scrollLeft;
+      this.table && this.table.scrollToRow(rowIndex, align);
+      this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
+      this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
+      this.props.fixed && this.scrollToLeft(prevScrollLeft);
+    }, 0);
   }
 
   /**

@@ -204,5 +204,9 @@ module.exports = {
       title: 'Inline Editing',
       path: '/examples/inline-editing',
     },
+    {
+      title: 'Scroll Methods',
+      path: '/examples/scroll-to',
+    },
   ],
 }

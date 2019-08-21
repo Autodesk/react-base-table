@@ -211,7 +211,6 @@ class BaseTable extends React.PureComponent {
     this.table && this.table.scrollToRow(rowIndex, align);
     this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
     this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
-    this.scrollToLeft(0);
   }
 
   /**

@@ -40,7 +40,7 @@ class GridTable extends React.PureComponent {
   }
 
   scrollToRow(rowIndex = 0, align = 'auto') {
-    this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, columnIndex: 0, align });
+    this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
   renderRow(args) {

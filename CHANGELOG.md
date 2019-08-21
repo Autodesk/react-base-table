@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.7.1 (2019-08-22)
+
 - fix: `scrollToRow` doesn't work regression introduced in #73
 
 ## v1.7.0 (2019-08-06)

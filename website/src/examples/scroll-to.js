@@ -7,17 +7,14 @@ const Button = styled.button`
 `
 
 export default class App extends React.Component {
-  setRef = ref => {
-    this.table = ref
-    window.t = ref
-  }
-
-  scroll = () => this.table.scrollToRow(100, 'auto')
+  setRef = ref => (this.table = ref)
 
   render() {
     return (
       <>
-        <Button onClick={this.scroll}>scrollToRow(100, 'auto')</Button>
+        <Button onClick={() => this.table.scrollToRow(100, 'auto')}>
+          scrollToRow(100, 'auto')
+        </Button>
         <Button onClick={() => this.table.scrollToRow(200, 'start')}>
           scrollToRow(200, 'start')
         </Button>

@@ -985,25 +985,25 @@ BaseTable.propTypes = {
   /**
    * Custom renderer on top of the table component
    */
-  overlayRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  overlayRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   /**
    * Custom renderer when the length of data is 0
    */
-  emptyRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  emptyRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   /**
    * Custom footer renderer, available only if `footerHeight` is larger then 0
    */
-  footerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  footerRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   /**
    * Custom header renderer
    * The renderer receives props `{ cells, columns, headerIndex }`
    */
-  headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  headerRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   /**
    * Custom row renderer
    * The renderer receives props `{ isScrolling, cells, columns, rowData, rowIndex, depth }`
    */
-  rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  rowRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   /**
    * Class name for the table header, could be a callback to return the class name
    * The callback is of the shape of `({ columns, headerIndex }) => string`

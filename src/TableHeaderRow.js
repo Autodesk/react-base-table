@@ -50,7 +50,7 @@ TableHeaderRow.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   headerIndex: PropTypes.number,
   cellRenderer: PropTypes.func,
-  headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  headerRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   expandColumnKey: PropTypes.string,
   expandIcon: PropTypes.func,
   tagName: PropTypes.elementType,

@@ -125,7 +125,7 @@ TableRow.propTypes = {
   expandColumnKey: PropTypes.string,
   depth: PropTypes.number,
   rowEventHandlers: PropTypes.object,
-  rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  rowRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   cellRenderer: PropTypes.func,
   expandIconRenderer: PropTypes.func,
   onRowHover: PropTypes.func,

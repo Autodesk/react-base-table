@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.7.2 (2019-08-26)
+
 - fix: custom renderers should support function component with hooks
 
 ## v1.7.1 (2019-08-22)

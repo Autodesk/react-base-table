@@ -91,12 +91,12 @@ Column.propTypes = {
    * Custom column cell renderer
    * The renderer receives props `{ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }`
    */
-  cellRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  cellRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
   /**
    * Custom column header renderer
    * The renderer receives props `{ columns, column, columnIndex, headerIndex, container }`
    */
-  headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  headerRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
 };
 
 Column.Alignment = Alignment;

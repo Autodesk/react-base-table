@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: custom renderers should support function component with hooks
+
 ## v1.7.1 (2019-08-22)
 
 - fix: `scrollToRow` doesn't work regression introduced in #73

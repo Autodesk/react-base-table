@@ -3,6 +3,7 @@
 ## NEXT VERSION
 
 - fix: fix possible memory leak in `ColumnResizer`
+- fix: bring back column resize on touch events support
 
 ## v1.7.2 (2019-08-26)
 
@@ -35,7 +36,7 @@
 
 ## v1.6.1 (2019-07-06)
 
-- feat: support infinite loading with `maxHeight` 
+- feat: support infinite loading with `maxHeight`
 - chore: remove unused `$table-border-radius` variable
 - feat: add `sortState` to support multi sort
 

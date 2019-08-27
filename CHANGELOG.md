@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: fix possible memory leak in `ColumnResizer`
+
 ## v1.7.2 (2019-08-26)
 
 - fix: custom renderers should support function component with hooks

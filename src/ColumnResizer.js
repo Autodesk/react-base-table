@@ -51,11 +51,11 @@ class ColumnResizer extends React.PureComponent {
     this._handleMouseMove = this._handleMouseMove.bind(this);
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     if (this.handleRef) {
       const { ownerDocument } = this.handleRef;
       ownerDocument.removeEventListener('mousemove', this._handleMouseMove);
-      ownerDocument.addEventListener('mouseup', this._handleMouseUp);
+      ownerDocument.removeEventListener('mouseup', this._handleMouseUp);
       removeUserSelectStyles(ownerDocument);
     }
   }

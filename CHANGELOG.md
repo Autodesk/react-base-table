@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.7.3 (2019-08-27)
+
 - fix: fix possible memory leak in `ColumnResizer`
 - fix: bring back column resize on touch events support
 

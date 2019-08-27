@@ -158,7 +158,7 @@ class ColumnResizer extends React.PureComponent {
     const { ownerDocument } = this.handleRef;
     removeUserSelectStyles(ownerDocument);
     ownerDocument.removeEventListener(dragEventFor.move, this._handleDrag);
-    ownerDocument.addEventListener(dragEventFor.stop, this._handleDragStop);
+    ownerDocument.removeEventListener(dragEventFor.stop, this._handleDragStop);
   }
 
   _handleDrag(e) {

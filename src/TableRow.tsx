@@ -1,12 +1,19 @@
 import React from 'react';
+import { ICellProps, IOnRowExpandCBParam, IOnRowHover, IRenderExpandIcon, IRowRendererCBParam } from './BaseTable';
+import { ICellRendererCBParam, IColumnProps, RowDataType } from './Column';
 import { renderElement } from './utils';
-import { IRowRendererCBParam, IRenderExpandIcon, IOnRowHover, IOnRowExpandCBParam, ICellProps } from './BaseTable';
-import { ICellRendererCBParam, RowDataType, IColumnProps } from './Column';
 
-type handlerArgs = { rowData: RowDataType, rowIndex: number, rowKey: React.Key, event: Event };
-export type THandlerCollection = {[key: string]: (args: handlerArgs) => void};
+interface HandlerArgs {
+  rowData: RowDataType;
+  rowIndex: number;
+  rowKey: React.Key;
+  event: Event;
+}
+export interface THandlerCollection {
+  [key: string]: (args: HandlerArgs) => void;
+}
 
-export interface ITableRowProps<T=RowDataType> {
+export interface ITableRowProps<T = RowDataType> {
   isScrolling?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -23,12 +30,15 @@ export interface ITableRowProps<T=RowDataType> {
   onRowHover?: (args: IOnRowHover) => void;
   onRowExpand?: (args: IOnRowExpandCBParam) => any;
   tagName?: React.ElementType;
-};
+}
 
 /**
  * Row component for BaseTable
  */
-class TableRow<T=any> extends React.PureComponent<ITableRowProps<T>> {
+class TableRow<T = any> extends React.PureComponent<ITableRowProps<T>> {
+  public static defaultProps = {
+    tagName: 'div',
+  };
   public render() {
     /* eslint-disable no-unused-vars */
     const {
@@ -54,22 +64,20 @@ class TableRow<T=any> extends React.PureComponent<ITableRowProps<T>> {
     /* eslint-enable no-unused-vars */
 
     const expandIconProps: IRenderExpandIcon<T> = { rowData, rowIndex, depth, onExpand: this.handleExpand };
-    const expandIcon = <ExpandIconRenderer {...expandIconProps}/>;
-
+    const expandIcon = <ExpandIconRenderer {...expandIconProps} />;
 
     let cells: React.ReactNode = columns.map((column, columnIndex) => {
-        const cellProps: ICellProps<T> = {
-          isScrolling,
-          columns,
-          column,
-          columnIndex,
-          rowData,
-          rowIndex,
-          expandIcon: column.key === expandColumnKey && expandIcon,
-        };
-        return  <CellRenderer {...cellProps}/>
-      }
-    );
+      const cellProps: ICellProps<T> = {
+        isScrolling,
+        columns,
+        column,
+        columnIndex,
+        rowData,
+        rowIndex,
+        expandIcon: column.key === expandColumnKey && expandIcon,
+      };
+      return <CellRenderer {...cellProps} />;
+    });
 
     if (rowRenderer) {
       cells = renderElement(rowRenderer, { isScrolling, cells, columns, rowData, rowIndex, depth });
@@ -86,24 +94,24 @@ class TableRow<T=any> extends React.PureComponent<ITableRowProps<T>> {
 
   private handleExpand = (expanded: string[]) => {
     const { onRowExpand, rowData, rowIndex, rowKey } = this.props;
-    onRowExpand && onRowExpand({ expanded, rowData, rowIndex, rowKey });
+    if (onRowExpand) { onRowExpand({ expanded, rowData, rowIndex, rowKey }); }
   }
 
   private getEventHandlers = (handlers: THandlerCollection = {}) => {
     const { rowData, rowIndex, rowKey, onRowHover } = this.props;
-    const eventHandlers: {[key:string]: (event:Event) =>  void} = {};
-    Object.keys(handlers).forEach(eventKey => {
+    const eventHandlers: { [key: string]: (event: Event) => void } = {};
+    Object.keys(handlers).forEach((eventKey) => {
       const callback = handlers[eventKey];
       if (typeof callback === 'function') {
-        eventHandlers[eventKey] = event => {
+        eventHandlers[eventKey] = (event) => {
           callback({ rowData, rowIndex, rowKey, event });
         };
       }
     });
 
     if (onRowHover) {
-      const mouseEnterHandler = eventHandlers['onMouseEnter'];
-      eventHandlers['onMouseEnter'] = event => {
+      const mouseEnterHandler = eventHandlers.onMouseEnter;
+      eventHandlers.onMouseEnter = (event) => {
         onRowHover({
           hovered: true,
           rowData,
@@ -111,11 +119,11 @@ class TableRow<T=any> extends React.PureComponent<ITableRowProps<T>> {
           rowKey,
           event,
         });
-        mouseEnterHandler && mouseEnterHandler(event);
+        if ( mouseEnterHandler ) { mouseEnterHandler(event); }
       };
 
-      const mouseLeaveHandler = eventHandlers['onMouseLeave'];
-      eventHandlers['onMouseLeave'] = event => {
+      const mouseLeaveHandler = eventHandlers.onMouseLeave;
+      eventHandlers.onMouseLeave = (event) => {
         onRowHover({
           hovered: false,
           rowData,
@@ -123,16 +131,12 @@ class TableRow<T=any> extends React.PureComponent<ITableRowProps<T>> {
           rowKey,
           event,
         });
-        mouseLeaveHandler && mouseLeaveHandler(event);
+        if (mouseLeaveHandler) { mouseLeaveHandler(event); }
       };
     }
 
     return eventHandlers;
   }
-  public static defaultProps = {
-    tagName: 'div',
-  };
 }
-
 
 export default TableRow;

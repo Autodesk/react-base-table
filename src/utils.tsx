@@ -1,11 +1,10 @@
 import React from 'react';
 import { IColumnProps } from './Column';
 
-export function renderElement(
-  renderer: React.ElementType | React.ReactElement,
-  props?: any
-  ) {
-  if (!renderer) return null;
+export function renderElement(renderer: React.ElementType | React.ReactElement, props?: any) {
+  if (!renderer) {
+    return null;
+  }
 
   if (React.isValidElement(renderer)) {
     return React.cloneElement(renderer, props);
@@ -16,9 +15,9 @@ export function renderElement(
 
 export type GetProps<C> = C extends React.ElementType<infer P> ? P : never;
 
-export function normalizeColumns(elements: React.ReactElement<IColumnProps>[]) {
+export function normalizeColumns(elements: Array<React.ReactElement<IColumnProps>>) {
   const columns: IColumnProps[] = [];
-  React.Children.forEach<React.ReactElement<IColumnProps>>(elements, element => {
+  React.Children.forEach<React.ReactElement<IColumnProps>>(elements, (element) => {
     if (React.isValidElement(element) && element.key) {
       const column: IColumnProps = { ...element.props, key: element.key };
       columns.push(column);
@@ -28,32 +27,51 @@ export function normalizeColumns(elements: React.ReactElement<IColumnProps>[]) {
 }
 
 export function isObjectEqual(objA: any, objB: any) {
-  if (objA === objB) return true;
-  if (objA === null && objB === null) return true;
-  if (objA === null || objB === null) return false;
-  if (typeof objA !== 'object' || typeof objB !== 'object') return false;
+  if (objA === objB) {
+    return true;
+  }
+  if (objA === null && objB === null) {
+    return true;
+  }
+  if (objA === null || objB === null) {
+    return false;
+  }
+  if (typeof objA !== 'object' || typeof objB !== 'object') {
+    return false;
+  }
 
   const keysA = Object.keys(objA);
   const keysB = Object.keys(objB);
-  if (keysA.length !== keysB.length) return false;
-
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+  // tslint:disable-next-line
   for (let i = 0; i < keysA.length; i++) {
     const key = keysA[i];
     const valueA = objA[key];
     const valueB = objB[key];
 
-    if (typeof valueA !== typeof valueB) return false;
-    if (typeof valueA === 'function') continue;
-    if (typeof valueA === 'object') {
-      if (!isObjectEqual(valueA, valueB)) return false;
-      else continue;
+    if (typeof valueA !== typeof valueB) {
+      return false;
     }
-    if (valueA !== valueB) return false;
+    if (typeof valueA === 'function') {
+      continue;
+    }
+    if (typeof valueA === 'object') {
+      if (!isObjectEqual(valueA, valueB)) {
+        return false;
+      } else {
+        continue;
+      }
+    }
+    if (valueA !== valueB) {
+      return false;
+    }
   }
   return true;
 }
 
-export function callOrReturn(funcOrValue: any, ...args: any []) {
+export function callOrReturn(funcOrValue: any, ...args: any[]) {
   return typeof funcOrValue === 'function' ? funcOrValue(...args) : funcOrValue;
 }
 
@@ -63,7 +81,7 @@ export function hasChildren(data: any) {
 
 export function unflatten(array: any[], rootId: string = null, dataKey: string = 'id', parentKey: string = 'parentId') {
   const tree = [];
-  const childrenMap: {[key: string]: any[]} = {};
+  const childrenMap: { [key: string]: any[] } = {};
 
   const length = array.length;
   for (let i = 0; i < length; i++) {
@@ -71,11 +89,15 @@ export function unflatten(array: any[], rootId: string = null, dataKey: string =
     const id = item[dataKey];
     const parentId = item[parentKey];
 
-    if (!childrenMap[id]) childrenMap[id] = [];
+    if (!childrenMap[id]) {
+      childrenMap[id] = [];
+    }
     item.children = childrenMap[id];
 
     if (parentId !== undefined && parentId !== rootId) {
-      if (!childrenMap[parentId]) childrenMap[parentId] = [];
+      if (!childrenMap[parentId]) {
+        childrenMap[parentId] = [];
+      }
       childrenMap[parentId].push(item);
     } else {
       tree.push(item);
@@ -85,15 +107,17 @@ export function unflatten(array: any[], rootId: string = null, dataKey: string =
   return tree;
 }
 
-export function flattenOnKeys(tree: any[], keys: string[], depthMap: {[key: string]: number} = {}, dataKey = 'id') {
-  if (!keys || !keys.length) return tree;
+export function flattenOnKeys(tree: any[], keys: string[], depthMap: { [key: string]: number } = {}, dataKey = 'id') {
+  if (!keys || !keys.length) {
+    return tree;
+  }
 
   const array = [];
   const keysSet: Set<string> = new Set();
-  keys.forEach(x => keysSet.add(x));
+  keys.forEach((x) => keysSet.add(x));
 
   let stack: any[] = [].concat(tree);
-  stack.forEach(x => (depthMap[x[dataKey]] = 0));
+  stack.forEach((x) => (depthMap[x[dataKey]] = 0));
   while (stack.length > 0) {
     const item = stack.shift();
 
@@ -111,15 +135,22 @@ export function flattenOnKeys(tree: any[], keys: string[], depthMap: {[key: stri
 // [...array] is transpiled to array.concat() while it was [].concat(array) before
 // this change breaks immutable array(seamless-immutable), [...array] should always return mutable array
 export function cloneArray(array: any[]) {
-  if (!Array.isArray(array)) return [];
+  if (!Array.isArray(array)) {
+    return [];
+  }
   return [].concat(array);
 }
 
+// tslint:disable-next-line:no-empty
 export function noop() {}
 
 export function toString(value: any) {
-  if (typeof value === 'string') return value;
-  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (value === null || value === undefined) {
+    return '';
+  }
   return value.toString ? value.toString() : '';
 }
 
@@ -142,7 +173,7 @@ function getPathSegments(path: string) {
 }
 
 // changed from https://github.com/sindresorhus/dot-prop/blob/master/index.js
-export function getValue<T extends {[key: string]: any}>(object: T, path: string, defaultValue?: T) {
+export function getValue<T extends { [key: string]: any }>(object: T, path: string, defaultValue?: T) {
   if (object === null || typeof object !== 'object' || typeof path !== 'string') {
     return defaultValue;
   }
@@ -169,18 +200,20 @@ export function getValue<T extends {[key: string]: any}>(object: T, path: string
 }
 
 // copied from https://30secondsofcode.org/function#throttle
-export function throttle(fn: Function, wait: number) {
-  let inThrottle: boolean, lastFn: number, lastTime: number;
+export function throttle(fn: (...args: any[]) => any, wait: number) {
+  let inThrottle: boolean;
+  let lastFn: number;
+  let lastTime: number;
   return function() {
-    const context = this,
-      args = arguments;
+    const context = this;
+    const args = arguments;
     if (!inThrottle) {
       fn.apply(context, args);
       lastTime = Date.now();
       inThrottle = true;
     } else {
       clearTimeout(lastFn);
-      lastFn = setTimeout(function() {
+      lastFn = setTimeout(() => {
         if (Date.now() - lastTime >= wait) {
           fn.apply(context, args);
           lastTime = Date.now();
@@ -195,7 +228,7 @@ let scrollbarSize: number;
 export function getScrollbarSize(recalculate?: boolean) {
   if ((!scrollbarSize && scrollbarSize !== 0) || recalculate) {
     if (typeof window !== 'undefined' && window.document && window.document.createElement) {
-      let scrollDiv = document.createElement('div');
+      const scrollDiv = document.createElement('div');
 
       scrollDiv.style.position = 'absolute';
       scrollDiv.style.top = '-9999px';

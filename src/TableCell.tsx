@@ -1,20 +1,20 @@
 import React from 'react';
+import { IColumnEssential, IRowEssential, RowDataType } from './Column';
 import { toString } from './utils';
-import { IRowEssential, RowDataType, IColumnEssential } from './Column';
 
-export interface TableCellProps<T=RowDataType> extends IRowEssential<T>, Omit<IColumnEssential, 'columns'> {
+export interface TableCellProps<T = RowDataType, C = any> extends IRowEssential<T>, Omit<IColumnEssential, 'columns'> {
   className?: string;
-  cellData?: any;
+  cellData?: C;
 }
 
 /**
  * Cell component for BaseTable
  */
-export type TTableCell<T=any> = React.FunctionComponent<React.HTMLProps<HTMLDivElement> & TableCellProps<T>>;
-const TableCell: TTableCell =
-({ className, cellData, column, columnIndex, rowData, rowIndex }) => (
+export type TTableCell<T = any, C = any> = React.FunctionComponent<
+  React.HTMLProps<HTMLDivElement> & TableCellProps<T, C>
+>;
+const TableCell: TTableCell = ({ className, cellData, column, columnIndex, rowData, rowIndex }) => (
   <div className={className}>{React.isValidElement(cellData) ? cellData : toString(cellData)}</div>
 );
-
 
 export default TableCell;

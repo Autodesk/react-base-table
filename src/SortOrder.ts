@@ -1,7 +1,7 @@
 /**
  * Sort order for BaseTable
  */
-enum SortOrder  {
+enum SortOrder {
   /**
    * Sort data in ascending order
    */
@@ -10,6 +10,6 @@ enum SortOrder  {
    * Sort data in descending order
    */
   DESC = 'desc',
-};
+}
 
 export default SortOrder;

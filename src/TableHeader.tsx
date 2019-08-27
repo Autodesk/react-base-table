@@ -1,7 +1,7 @@
 import React from 'react';
-import { IHeaderRendererParam } from './GridTable'
+import { IRowRendererCBParam, RendererArgs } from './BaseTable';
 import { IColumnProps, IHeaderRendererCBParam, RowDataType } from './Column';
-import { RendererArgs, IRowRendererCBParam } from './BaseTable';
+import { IHeaderRendererParam } from './GridTable';
 
 export interface TableHeaderProps<T = any> {
   className?: string;
@@ -11,24 +11,27 @@ export interface TableHeaderProps<T = any> {
   rowWidth: number;
   rowHeight: React.Key;
   columns: IColumnProps[];
-  data: T[],
-  frozenData?: T[],
+  data: T[];
+  frozenData?: T[];
   headerRenderer: React.ElementType<IHeaderRendererParam>;
   rowRenderer: React.ElementType<RendererArgs>;
   hoveredRowKey?: React.Key;
-};
+}
 
 class TableHeader extends React.PureComponent<TableHeaderProps> {
-
   private headerRef: HTMLDivElement;
-  
+
   public scrollTo(offset: number) {
-    if (this.headerRef) this.headerRef.scrollLeft = offset;
+    if (this.headerRef) {
+      this.headerRef.scrollLeft = offset;
+    }
   }
 
   public renderHeaderRow = (height: number, index: number) => {
     const { columns, headerRenderer: HeaderRenderer } = this.props;
-    if (height <= 0) return null;
+    if (height <= 0) {
+      return null;
+    }
 
     const style: React.CSSProperties = { width: '100%', height };
     const headerProps: IHeaderRendererCBParam = { style, columns, headerIndex: index };
@@ -41,16 +44,18 @@ class TableHeader extends React.PureComponent<TableHeaderProps> {
     // for frozen row the `rowIndex` is negative
     const rowIndex = -index - 1;
     const rowProps: IRowRendererCBParam = { style, columns, rowData, rowIndex };
-    return <RowRenderer {...rowProps}/>;
+    return <RowRenderer {...rowProps} />;
   }
 
   public render() {
     const { className, width, height, rowWidth, headerHeight, frozenData } = this.props;
-    if (height <= 0) return null;
+    if (height <= 0) {
+      return null;
+    }
 
-    const style: React.CSSProperties= {
+    const style: React.CSSProperties = {
       width,
-      height: height,
+      height,
       position: 'relative',
       overflow: 'hidden',
     };
@@ -62,8 +67,8 @@ class TableHeader extends React.PureComponent<TableHeaderProps> {
 
     const rowHeights = Array.isArray(headerHeight) ? headerHeight : [headerHeight];
     return (
-      <div role="grid" ref={this._setRef} className={className} style={style}>
-        <div role="rowgroup" style={innerStyle}>
+      <div role='grid' ref={this._setRef} className={className} style={style}>
+        <div role='rowgroup' style={innerStyle}>
           {rowHeights.map(this.renderHeaderRow)}
           {frozenData.map(this.renderFrozenRow)}
         </div>

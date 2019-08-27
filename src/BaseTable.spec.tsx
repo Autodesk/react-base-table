@@ -35,30 +35,30 @@ const data = [
 ];
 
 type DefaultPropsKeys = keyof typeof BaseTable.defaultProps;
-interface TableProps extends Partial<typeof BaseTable.defaultProps> {};
-interface MinusDefaultKeys extends Partial<Omit<IBaseTableProps<any>, DefaultPropsKeys>> {};
+interface TableProps extends Partial<typeof BaseTable.defaultProps> {}
+interface MinusDefaultKeys extends Partial<Omit<IBaseTableProps<any>, DefaultPropsKeys>> {}
 
-const Table: React.FunctionComponent<
-  TableProps &
-  MinusDefaultKeys> = ({width, height, data, columns, ...restProps}) => (
-  <BaseTable width={width} height={height} {...restProps} />
-);
+const Table: React.FunctionComponent<TableProps & MinusDefaultKeys> = ({
+  width,
+  height,
+  ...restProps
+}) => <BaseTable width={width} height={height} {...restProps} />;
 
 Table.defaultProps = {
   width: 100,
   height: 100,
   data,
-  columns
+  columns,
 };
 
-describe('Table', function() {
+describe('Table', () => {
   test('renders correctly', () => {
     const tree = renderer.create(<Table />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive className', () => {
-    const tree = renderer.create(<Table className="custom-class" />).toJSON();
+    const tree = renderer.create(<Table className='custom-class' />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -71,9 +71,9 @@ describe('Table', function() {
     const tree = renderer
       .create(
         <Table>
-          <BaseTable.Column key="code" dataKey="code" width={30} />
-          <BaseTable.Column key="name" dataKey="name" width={30} />
-        </Table>
+          <BaseTable.Column key='code' dataKey='code' width={30} />
+          <BaseTable.Column key='name' dataKey='name' width={30} />
+        </Table>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -85,7 +85,7 @@ describe('Table', function() {
   });
 
   test('table can specific a different rowKey', () => {
-    const tree = renderer.create(<Table rowKey="code" />).toJSON();
+    const tree = renderer.create(<Table rowKey='code' />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -145,27 +145,27 @@ describe('Table', function() {
   });
 
   test('table can receive headerClassName', () => {
-    const tree = renderer.create(<Table headerClassName="custom-class" />).toJSON();
+    const tree = renderer.create(<Table headerClassName='custom-class' />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive rowClassName', () => {
-    const tree = renderer.create(<Table rowClassName="custom-class" />).toJSON();
+    const tree = renderer.create(<Table rowClassName='custom-class' />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive expandColumnKey', () => {
-    const tree = renderer.create(<Table expandColumnKey="code" />).toJSON();
+    const tree = renderer.create(<Table expandColumnKey='code' />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive defaultExpandedRowKeys', () => {
-    const tree = renderer.create(<Table expandColumnKey="code" defaultExpandedRowKeys={['1']} />).toJSON();
+    const tree = renderer.create(<Table expandColumnKey='code' defaultExpandedRowKeys={['1']} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive expandedRowKeys', () => {
-    const tree = renderer.create(<Table expandColumnKey="code" expandedRowKeys={['1']} />).toJSON();
+    const tree = renderer.create(<Table expandColumnKey='code' expandedRowKeys={['1']} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

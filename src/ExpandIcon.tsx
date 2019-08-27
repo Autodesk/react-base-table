@@ -1,13 +1,19 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
 
 /**
  * default ExpandIcon for BaseTable
  */
 class ExpandIcon extends React.PureComponent<IExpandIconProps> {
-  render() {
+  public static defaultProps = {
+    depth: 0,
+    indentSize: 16,
+  };
+  public render() {
     const { expandable, expanded, indentSize, depth, onExpand, ...rest } = this.props;
-    if (!expandable && indentSize === 0) return null;
+    if (!expandable && indentSize === 0) {
+      return null;
+    }
 
     const cls = cn('BaseTable__expand-icon', {
       'BaseTable__expand-icon--expanded': expanded,
@@ -43,12 +49,7 @@ class ExpandIcon extends React.PureComponent<IExpandIconProps> {
     const { onExpand, expanded } = this.props;
     onExpand(!expanded);
   }
-  public static defaultProps = {
-    depth: 0,
-    indentSize: 16,
-  };
 }
-
 
 export interface IExpandIconProps {
   expandable?: boolean;

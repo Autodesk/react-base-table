@@ -1,13 +1,13 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
 
 import SortOrder from './SortOrder';
 
 export interface SortIndicatorProps {
-  sortOrder?: SortOrder.ASC |  SortOrder.DESC;
+  sortOrder?: SortOrder.ASC | SortOrder.DESC;
   className?: string;
   style?: React.CSSProperties;
-};
+}
 
 export type TSortIndicator = React.FunctionComponent<SortIndicatorProps>;
 

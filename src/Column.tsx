@@ -4,7 +4,7 @@ export enum Alignment {
   LEFT = 'left',
   CENTER = 'center',
   RIGHT = 'right',
-};
+}
 
 export const FrozenDirection = {
   LEFT: 'left',
@@ -17,8 +17,8 @@ export const FrozenDirection = {
  * Column for BaseTable
  */
 class Column extends React.Component<IColumnProps> {
-  static Alignment = Alignment;
-  static FrozenDirection = FrozenDirection;
+  public static Alignment = Alignment;
+  public static FrozenDirection = FrozenDirection;
 }
 
 export interface IColumnEssential {
@@ -27,8 +27,10 @@ export interface IColumnEssential {
   columnIndex?: number;
 }
 
-export type RowDataType = {[key: string]: any};
-export interface IRowEssential<T=RowDataType> {
+export interface RowDataType {
+  [key: string]: any;
+}
+export interface IRowEssential<T = RowDataType> {
   rowData?: T;
   rowIndex?: number;
 }
@@ -36,7 +38,7 @@ export interface IRowEssential<T=RowDataType> {
 export type IColumnCallback<T> = (param: T) => string;
 export type IColumnRenderCallback<T> = (param: T) => React.ReactElement;
 
-export interface IClassNameCBParam<T=RowDataType> extends IColumnEssential, IRowEssential<T> {
+export interface IClassNameCBParam<T = RowDataType> extends IColumnEssential, IRowEssential<T> {
   cellData: any;
 }
 
@@ -44,7 +46,7 @@ export interface IHeaderClassNameCBParam extends IColumnEssential {
   headerIndex: number;
 }
 
-export interface IDataGetterCBParam<T=RowDataType> extends IColumnEssential, IRowEssential<T> {}
+export interface IDataGetterCBParam<T = RowDataType> extends IColumnEssential, IRowEssential<T> {}
 
 export interface IHeaderRendererCBParam extends IColumnEssential {
   headerIndex?: number;
@@ -52,7 +54,7 @@ export interface IHeaderRendererCBParam extends IColumnEssential {
   style?: React.CSSProperties;
 }
 
-export interface ICellRendererCBParam<T=RowDataType> extends IColumnEssential, IRowEssential<T> {
+export interface ICellRendererCBParam<T = RowDataType> extends IColumnEssential, IRowEssential<T> {
   cellData?: any;
   container?: any;
   isScrolling?: boolean;
@@ -60,7 +62,7 @@ export interface ICellRendererCBParam<T=RowDataType> extends IColumnEssential, I
   expandIcon?: React.ReactNode;
 }
 
-export interface IColumnProps<T=any>  {
+export interface IColumnProps<T = any> {
   /**
    * Class name for the column cell, could be a callback to return the class name
    * The callback is of the shape of `({ cellData, columns, column, columnIndex, rowData, rowIndex }) => string`
@@ -91,7 +93,7 @@ export interface IColumnProps<T=any>  {
   /**
    * Alignment of the column cell
    */
-  align?:  Alignment.LEFT | Alignment.CENTER | Alignment.RIGHT;
+  align?: Alignment.LEFT | Alignment.CENTER | Alignment.RIGHT;
   /**
    * Flex grow style, defaults to 0
    */
@@ -115,7 +117,7 @@ export interface IColumnProps<T=any>  {
   /**
    * Whether the column is frozen and what's the frozen side
    */
-  frozen?: 'left'  | 'right' | boolean;
+  frozen?: 'left' | 'right' | boolean;
   /**
    * Whether the column is hidden
    */
@@ -146,7 +148,6 @@ export interface IColumnProps<T=any>  {
    * placeholder key
    */
   __placeholder__?: boolean;
-};
+}
 
 export default Column;
-

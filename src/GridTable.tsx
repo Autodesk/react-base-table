@@ -1,10 +1,10 @@
-import React from 'react';
 import cn from 'classnames';
-import { FixedSizeGrid as Grid, GridOnItemsRenderedProps, Align, FixedSizeGridProps } from 'react-window';
+import React from 'react';
+import { Align, FixedSizeGrid as Grid, FixedSizeGridProps, GridOnItemsRenderedProps } from 'react-window';
 
 import { IOnRowsRenderedParam, RendererArgs } from './BaseTable';
+import { IColumnProps } from './Column';
 import Header from './TableHeader';
-import { IColumnProps } from './Column'
 
 /**
  * A wrapper of the Grid for internal only
@@ -13,36 +13,36 @@ class GridTable extends React.PureComponent<GridTableProps> {
   private bodyRef?: Grid;
   private headerRef?: Header;
   public forceUpdateTable() {
-    this.headerRef && this.headerRef.forceUpdate();
-    this.bodyRef && this.bodyRef.forceUpdate();
+    if (this.headerRef) { this.headerRef.forceUpdate(); }
+    if (this.bodyRef) { this.bodyRef.forceUpdate(); }
   }
 
-  public scrollToPosition(args: {scrollLeft: number, scrollTop: number}) {
-    this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
-    this.bodyRef && this.bodyRef.scrollTo(args);
+  public scrollToPosition(args: { scrollLeft: number; scrollTop: number }) {
+    if (this.headerRef) { this.headerRef.scrollTo(args.scrollLeft); }
+    if (this.bodyRef) { this.bodyRef.scrollTo(args); }
   }
 
   public scrollToTop(scrollTop: number) {
-    this.bodyRef && this.bodyRef.scrollTo({ scrollTop, scrollLeft: 0 });
+    if (this.bodyRef) { this.bodyRef.scrollTo({ scrollTop, scrollLeft: 0 }); }
   }
 
   public scrollToLeft(scrollLeft: number) {
-    this.headerRef && this.headerRef.scrollTo(scrollLeft);
-    this.bodyRef && this.bodyRef.scrollTo({ scrollLeft, scrollTop: 0 });
+    if (this.headerRef) { this.headerRef.scrollTo(scrollLeft); }
+    if (this.bodyRef) { this.bodyRef.scrollTo({ scrollLeft, scrollTop: 0 }); }
   }
 
-  scrollToRow(rowIndex = 0, align: Align = 'auto') {
-    this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
+  public scrollToRow(rowIndex = 0, align: Align = 'auto') {
+    if (this.bodyRef) { this.bodyRef.scrollToItem({ rowIndex, align }); }
   }
 
   public renderRow: FixedSizeGridProps['children'] = (args) => {
     const { data, columns, rowRenderer: RowRenderer } = this.props;
     const rowData = data[args.rowIndex];
     const newProps: RendererArgs = { ...args, columns, rowData };
-    return <RowRenderer {...newProps}/>;
+    return <RowRenderer {...newProps} />;
   }
 
-  render() {
+  public render() {
     const {
       containerStyle,
       classPrefix,
@@ -69,7 +69,7 @@ class GridTable extends React.PureComponent<GridTableProps> {
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
     return (
-      <div role="table" className={cls} {...containerProps}>
+      <div role='table' className={cls} {...containerProps}>
         <Grid
           {...rest}
           className={`${classPrefix}__body`}
@@ -119,9 +119,7 @@ class GridTable extends React.PureComponent<GridTableProps> {
     this.bodyRef = ref;
   }
 
-  private _itemKey = ({ rowIndex }: {
-    rowIndex: number;
-  }): React.Key => {
+  private _itemKey = ({ rowIndex }: { rowIndex: number }): React.Key => {
     const { data, rowKey } = this.props;
     return data[rowIndex][rowKey];
   }
@@ -135,7 +133,10 @@ class GridTable extends React.PureComponent<GridTableProps> {
   }
 
   private _handleItemsRendered = ({
-    overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex
+    overscanRowStartIndex,
+    overscanRowStopIndex,
+    visibleRowStartIndex,
+    visibleRowStopIndex,
   }: GridOnItemsRenderedProps) => {
     this.props.onRowsRendered({
       overscanStartIndex: overscanRowStartIndex,
@@ -146,12 +147,14 @@ class GridTable extends React.PureComponent<GridTableProps> {
   }
 }
 
-type TBaseGridTableProps = Omit<FixedSizeGridProps, 'rowCount' | 'overscanColumnCount' | 'columnCount' | 'children' |
-  'columnWidth' | 'useIsScrolling'>;
+type TBaseGridTableProps = Omit<
+  FixedSizeGridProps,
+  'rowCount' | 'overscanColumnCount' | 'columnCount' | 'children' | 'columnWidth' | 'useIsScrolling'
+>;
 export interface GridTableProps<T = any> extends TBaseGridTableProps {
   containerStyle?: React.CSSProperties;
   classPrefix?: string;
-  headerHeight: number | number [];
+  headerHeight: number | number[];
   headerWidth: number;
   bodyWidth: number;
   columns: IColumnProps[];
@@ -160,12 +163,12 @@ export interface GridTableProps<T = any> extends TBaseGridTableProps {
   frozenData?: T[];
   useIsScrolling?: boolean;
   hoveredRowKey?: React.Key;
-  onScrollbarPresenceChange?: (params: IOnScrollbarPresenceChange)=> void;
+  onScrollbarPresenceChange?: (params: IOnScrollbarPresenceChange) => void;
   onRowsRendered?: (param: IOnRowsRenderedParam) => void;
   headerRenderer: React.ElementType<IHeaderRendererParam>;
   rowRenderer: React.ElementType<RendererArgs>;
-  children?: React.ReactElement<IColumnProps>[];
-};
+  children?: Array<React.ReactElement<IColumnProps>>;
+}
 
 interface IOnScrollbarPresenceChange {
   size: number;

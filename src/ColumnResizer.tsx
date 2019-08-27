@@ -1,13 +1,15 @@
 import React from 'react';
-import {IColumnProps} from './Column';
+import { IColumnProps } from './Column';
 
-import { noop, addClassName, removeClassName } from './utils';
+import { addClassName, noop, removeClassName } from './utils';
 
 const INVALID_VALUE: null = null;
 
 // copied from https://github.com/mzabriskie/react-draggable/blob/master/lib/utils/domFns.js
 export function addUserSelectStyles(doc: Document) {
-  if (!doc) return;
+  if (!doc) {
+    return;
+  }
   let styleEl = doc.getElementById('react-draggable-style-el') as IHTMLElementExtended;
   if (!styleEl) {
     styleEl = doc.createElement('style');
@@ -17,12 +19,16 @@ export function addUserSelectStyles(doc: Document) {
     styleEl.innerHTML += '.react-draggable-transparent-selection *::selection {background: transparent;}\n';
     doc.getElementsByTagName('head')[0].appendChild(styleEl);
   }
-  if (doc.body) addClassName(doc.body, 'react-draggable-transparent-selection');
+  if (doc.body) {
+    addClassName(doc.body, 'react-draggable-transparent-selection');
+  }
 }
 
 export function removeUserSelectStyles(doc: Document) {
   try {
-    if (doc && doc.body) removeClassName(doc.body, 'react-draggable-transparent-selection');
+    if (doc && doc.body) {
+      removeClassName(doc.body, 'react-draggable-transparent-selection');
+    }
     if ((doc as any).selection) {
       (doc as any).selection.empty();
     } else {
@@ -52,6 +58,12 @@ let dragEventFor = eventsFor.mouse;
  * ColumnResizer for BaseTable
  */
 class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
+  public static defaultProps = {
+    onResizeStart: noop,
+    onResize: noop,
+    onResizeStop: noop,
+    minWidth: 30,
+  };
   private isDragging = false;
   private lastX: number | typeof INVALID_VALUE = INVALID_VALUE;
   private width = 0;
@@ -123,7 +135,9 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
   }
 
   private _handleDragStart = (e: DragEvent) => {
-    if (typeof e.button === 'number' && e.button !== 0) return;
+    if (typeof e.button === 'number' && e.button !== 0) {
+      return;
+    }
 
     this.isDragging = true;
     this.lastX = INVALID_VALUE;
@@ -137,7 +151,9 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
   }
 
   private _handleDragStop = (e: TouchEvent | MouseEvent) => {
-    if (!this.isDragging) return;
+    if (!this.isDragging) {
+      return;
+    }
     this.isDragging = false;
 
     this.props.onResizeStop(this.props.column);
@@ -152,7 +168,9 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
     let clientX = e.clientX;
     if (e.type === eventsFor.touch.move) {
       e.preventDefault();
-      if (e.targetTouches && e.targetTouches[0]) clientX = e.targetTouches[0].clientX;
+      if (e.targetTouches && e.targetTouches[0]) {
+        clientX = e.targetTouches[0].clientX;
+      }
     }
 
     const { offsetParent } = this.handleRef;
@@ -167,7 +185,9 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
     const { column, minWidth: MIN_WIDTH } = this.props;
     const { width, maxWidth, minWidth = MIN_WIDTH } = column;
     const movedX = x - this.lastX;
-    if (!movedX) return;
+    if (!movedX) {
+      return;
+    }
 
     this.width = this.width + movedX;
     this.lastX = x;
@@ -179,25 +199,20 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
       newWidth = minWidth;
     }
 
-    if (newWidth === width) return;
+    if (newWidth === width) {
+      return;
+    }
     this.props.onResize(column, newWidth);
-  }
-
-  public static defaultProps = {
-    onResizeStart: noop,
-    onResize: noop,
-    onResizeStop: noop,
-    minWidth: 30,
   }
 }
 
 interface IHTMLElementExtended extends HTMLElement {
-  type?: string
-};
+  type?: string;
+}
 
 type IColumnResizerCallBack<T> = (param: T) => any;
 export interface IOnResizeStartCBParam {
-  column? : IColumnProps;
+  column?: IColumnProps;
   key?: React.Key;
 }
 export interface IColumnResizerProps {
@@ -233,6 +248,6 @@ export interface IColumnResizerProps {
    * Minimum width of the column could be resized to if the column's `minWidth` is not set
    */
   minWidth?: number;
-};
+}
 
 export default ColumnResizer;

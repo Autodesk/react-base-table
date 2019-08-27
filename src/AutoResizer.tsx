@@ -18,7 +18,7 @@ const AutoResizer: React.FunctionComponent<AutoResizerProps> = ({ className, wid
 
   return (
     <AutoSizer className={className} disableWidth={disableWidth} disableHeight={disableHeight} onResize={onResize}>
-      {size =>
+      {(size) =>
         children({
           width: disableWidth ? width : size.width,
           height: disableHeight ? height : size.height,
@@ -28,8 +28,10 @@ const AutoResizer: React.FunctionComponent<AutoResizerProps> = ({ className, wid
   );
 };
 
-
-type ChildrenArgs = {width: number, height: number};
+interface ChildrenArgs {
+  width: number;
+  height: number;
+}
 export interface AutoResizerProps {
   /**
    * Class name for the component
@@ -53,6 +55,6 @@ export interface AutoResizerProps {
    * The handler is of the shape of `({ width, height }) => *`
    */
   onResize?: (args: ChildrenArgs) => void;
-};
+}
 
 export default AutoResizer;

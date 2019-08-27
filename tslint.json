@@ -1,0 +1,24 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "no-console": false,
+    "max-classes-per-file": false,
+    "variable-name": ["allow-pascal-case"],
+    "quotemark": [true, "single", "avoid-escape"],
+    "no-bitwise": false,
+    "interface-name": false,
+    "object-literal-sort-keys": false
+  },
+  "jsRules": {
+    "no-console": false,
+    "max-classes-per-file": false,
+    "variable-name": ["allow-pascal-case"],
+    "quotemark": [true, "single", "avoid-escape"],
+    "no-bitwise": false,
+    "trailing-comma": false,
+    "object-literal-sort-keys": false
+  }
+}

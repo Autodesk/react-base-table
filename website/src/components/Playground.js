@@ -47,10 +47,7 @@ const Error = styled.div`
 `
 
 const Playground = ({ scope: _scope, language, type, ...rest }) => {
-  const scope = useMemo(() => ({ ...baseScope, ..._scope }), [
-    baseScope,
-    _scope,
-  ])
+  const scope = useMemo(() => ({ ...baseScope, ..._scope }), [_scope])
   const [sourceCode, setSourceCode] = useState(getCode)
   const { element, error, onChange } = useLiveRunner({
     sourceCode,
@@ -65,9 +62,10 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
     [onChange]
   )
 
+  const canUseDOM = typeof document !== 'undefined'
   useEffect(() => {
     setSourceCode(getCode)
-  }, [typeof document])
+  }, [canUseDOM])
 
   return (
     <Container {...rest}>

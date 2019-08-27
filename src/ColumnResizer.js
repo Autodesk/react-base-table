@@ -33,6 +33,21 @@ export function removeUserSelectStyles(doc) {
   }
 }
 
+const eventsFor = {
+  touch: {
+    start: 'touchstart',
+    move: 'touchmove',
+    stop: 'touchend',
+  },
+  mouse: {
+    start: 'mousedown',
+    move: 'mousemove',
+    stop: 'mouseup',
+  },
+};
+
+let dragEventFor = eventsFor.mouse;
+
 /**
  * ColumnResizer for BaseTable
  */
@@ -48,14 +63,20 @@ class ColumnResizer extends React.PureComponent {
     this._handleClick = this._handleClick.bind(this);
     this._handleMouseDown = this._handleMouseDown.bind(this);
     this._handleMouseUp = this._handleMouseUp.bind(this);
-    this._handleMouseMove = this._handleMouseMove.bind(this);
+    this._handleTouchStart = this._handleTouchStart.bind(this);
+    this._handleTouchEnd = this._handleTouchEnd.bind(this);
+    this._handleDragStart = this._handleDragStart.bind(this);
+    this._handleDragStop = this._handleDragStop.bind(this);
+    this._handleDrag = this._handleDrag.bind(this);
   }
 
   componentWillUnmount() {
     if (this.handleRef) {
       const { ownerDocument } = this.handleRef;
-      ownerDocument.removeEventListener('mousemove', this._handleMouseMove);
-      ownerDocument.removeEventListener('mouseup', this._handleMouseUp);
+      ownerDocument.removeEventListener(eventsFor.mouse.move, this._handleDrag);
+      ownerDocument.removeEventListener(eventsFor.mouse.stop, this._handleDragStop);
+      ownerDocument.removeEventListener(eventsFor.touch.move, this._handleDrag);
+      ownerDocument.removeEventListener(eventsFor.touch.stop, this._handleDragStop);
       removeUserSelectStyles(ownerDocument);
     }
   }
@@ -70,6 +91,8 @@ class ColumnResizer extends React.PureComponent {
         onClick={this._handleClick}
         onMouseDown={this._handleMouseDown}
         onMouseUp={this._handleMouseUp}
+        onTouchStart={this._handleTouchStart}
+        onTouchEnd={this._handleTouchEnd}
         style={{
           userSelect: 'none',
           touchAction: 'none',
@@ -93,6 +116,26 @@ class ColumnResizer extends React.PureComponent {
   }
 
   _handleMouseDown(e) {
+    dragEventFor = eventsFor.mouse;
+    this._handleDragStart(e);
+  }
+
+  _handleMouseUp(e) {
+    dragEventFor = eventsFor.mouse;
+    this._handleDragStop(e);
+  }
+
+  _handleTouchStart(e) {
+    dragEventFor = eventsFor.touch;
+    this._handleDragStart(e);
+  }
+
+  _handleTouchEnd(e) {
+    dragEventFor = eventsFor.touch;
+    this._handleDragStop(e);
+  }
+
+  _handleDragStart(e) {
     if (typeof e.button === 'number' && e.button !== 0) return;
 
     this.isDragging = true;
@@ -102,11 +145,11 @@ class ColumnResizer extends React.PureComponent {
 
     const { ownerDocument } = this.handleRef;
     addUserSelectStyles(ownerDocument);
-    ownerDocument.addEventListener('mousemove', this._handleMouseMove);
-    ownerDocument.addEventListener('mouseup', this._handleMouseUp);
+    ownerDocument.addEventListener(dragEventFor.move, this._handleDrag);
+    ownerDocument.addEventListener(dragEventFor.stop, this._handleDragStop);
   }
 
-  _handleMouseUp(e) {
+  _handleDragStop(e) {
     if (!this.isDragging) return;
     this.isDragging = false;
 
@@ -114,14 +157,20 @@ class ColumnResizer extends React.PureComponent {
 
     const { ownerDocument } = this.handleRef;
     removeUserSelectStyles(ownerDocument);
-    ownerDocument.removeEventListener('mousemove', this._handleMouseMove);
-    ownerDocument.addEventListener('mouseup', this._handleMouseUp);
+    ownerDocument.removeEventListener(dragEventFor.move, this._handleDrag);
+    ownerDocument.addEventListener(dragEventFor.stop, this._handleDragStop);
   }
 
-  _handleMouseMove(e) {
+  _handleDrag(e) {
+    let clientX = e.clientX;
+    if (e.type === eventsFor.touch.move) {
+      e.preventDefault();
+      if (e.targetTouches && e.targetTouches[0]) clientX = e.targetTouches[0].clientX;
+    }
+
     const { offsetParent } = this.handleRef;
     const offsetParentRect = offsetParent.getBoundingClientRect();
-    const x = e.clientX + offsetParent.scrollLeft - offsetParentRect.left;
+    const x = clientX + offsetParent.scrollLeft - offsetParentRect.left;
 
     if (this.lastX === INVALID_VALUE) {
       this.lastX = x;

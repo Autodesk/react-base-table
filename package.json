@@ -4,9 +4,11 @@
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "types": "typings/index.d.ts",
   "files": [
     "lib/",
     "es/",
+    "typings/",
     "styles.css"
   ],
   "author": "Neo Nie <nihgwu@live.com>",

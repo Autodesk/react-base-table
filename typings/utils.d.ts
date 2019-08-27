@@ -1,0 +1,11 @@
+export function renderElement(renderer: any, props: any): React.ReactElement;
+export function normalizeColumns(elements: any): any;
+export function isObjectEqual(objA?: any, objB?: any): boolean;
+export function callOrReturn<T = any>(funcOrValue: any, ...args: any[]): T;
+export function hasChildren(data: any): boolean;
+export function unflatten<T = any>(array: T[], rootId?: string, dataKey?: string, parentKey?: string): any;
+export function flattenOnKeys<T = any>(tree: T[], keys: string[], depthMap: {}, dataKey?: string): any;
+export function cloneArray<T = any>(array: T[]): T[];
+export function noop(): void;
+export function getScrollbarSize(recalculate: boolean): number;
+export function getValue<T = any>(object: any, path: string): T | null | undefined;

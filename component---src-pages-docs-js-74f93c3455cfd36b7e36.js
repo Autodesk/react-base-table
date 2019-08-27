@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{217:function(e,t,c){"use strict";c.r(t);var n=c(0),o=c.n(n),r=c(32),i=c(19),a=c(210);t.default=function(){return o.a.createElement(a.a,{title:"Docs"},o.a.createElement(r.Redirect,{from:Object(i.withPrefix)("/docs"),to:Object(i.withPrefix)("/docs/get-started"),noThrow:!0}))}}}]);
+//# sourceMappingURL=component---src-pages-docs-js-74f93c3455cfd36b7e36.js.map

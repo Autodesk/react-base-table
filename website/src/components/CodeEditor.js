@@ -34,11 +34,11 @@ const StyledEditor = styled(Editor)`
 
 const CodeEditor = ({ sourceCode, language, onChange, ...rest }) => {
   const [code, setCode] = useState(sourceCode)
-  const debouncedChange = useMemo(() => debounce(onChange, 300), [])
+  const debouncedChange = useMemo(() => debounce(onChange, 300), [onChange])
   const handleChange = useCallback(code => {
     setCode(code)
     debouncedChange(code)
-  })
+  }, [debouncedChange])
   useEffect(() => setCode(sourceCode), [sourceCode])
 
   return (

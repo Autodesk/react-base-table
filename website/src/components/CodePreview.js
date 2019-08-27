@@ -55,7 +55,6 @@ const CodePreview = ({
 }) => {
   const { action, channel } = useMemo(createActionChannel, [])
   const scope = useMemo(() => ({ ...baseScope, action, ..._scope }), [
-    baseScope,
     action,
     _scope,
   ])

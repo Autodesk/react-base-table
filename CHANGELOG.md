@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- chore: remove the use of `componentWillReceiveProps`
+
 ## v1.7.3 (2019-08-27)
 
 - fix: fix possible memory leak in `ColumnResizer`

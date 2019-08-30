@@ -2,7 +2,9 @@
 
 ## NEXT VERSION
 
-- chore: remove the use of `componentWillReceiveProps`
+## v1.8.0 (2019-08-30)
+
+- feat: remove deprecated lifecycles for concurrent mode ready
 
 ## v1.7.3 (2019-08-27)
 

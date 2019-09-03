@@ -76,7 +76,7 @@ class TableRow<T = any> extends React.PureComponent<ITableRowProps<T>> {
         rowIndex,
         expandIcon: column.key === expandColumnKey && expandIcon,
       };
-      return <CellRenderer {...cellProps} />;
+      return <CellRenderer {...cellProps} key={columnIndex}/>;
     });
 
     if (rowRenderer) {

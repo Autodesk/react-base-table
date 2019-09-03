@@ -35,7 +35,7 @@ class TableHeader extends React.PureComponent<TableHeaderProps> {
 
     const style: React.CSSProperties = { width: '100%', height };
     const headerProps: IHeaderRendererCBParam = { style, columns, headerIndex: index };
-    return <HeaderRenderer {...headerProps} />;
+    return <HeaderRenderer {...headerProps} key={index}/>;
   }
 
   public renderFrozenRow = (rowData: RowDataType, index: number) => {
@@ -44,7 +44,7 @@ class TableHeader extends React.PureComponent<TableHeaderProps> {
     // for frozen row the `rowIndex` is negative
     const rowIndex = -index - 1;
     const rowProps: IRowRendererCBParam = { style, columns, rowData, rowIndex };
-    return <RowRenderer {...rowProps} />;
+    return <RowRenderer {...rowProps} key={index}/>;
   }
 
   public render() {

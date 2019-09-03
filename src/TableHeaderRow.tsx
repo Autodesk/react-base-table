@@ -43,7 +43,7 @@ const TableHeaderRow: TTableHeaderRow = ({
       headerIndex,
       expandIcon: column.key === expandColumnKey && <ExpandIcon />,
     };
-    return <CellRenderer {...cellProps} />;
+    return <CellRenderer {...cellProps} key={columnIndex} />;
   });
 
   if (headerRenderer) {

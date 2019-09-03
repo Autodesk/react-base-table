@@ -1,7 +1,7 @@
 import React from 'react';
 import { IColumnProps } from './Column';
 
-import { addClassName, noop, removeClassName } from './utils';
+import { addClassName, noop, removeClassName, isMouseEvent, isTouchEvent, eventsFor } from './utils';
 
 const INVALID_VALUE: null = null;
 
@@ -38,19 +38,6 @@ export function removeUserSelectStyles(doc: Document) {
     // probably IE
   }
 }
-
-const eventsFor = {
-  touch: {
-    start: 'touchstart',
-    move: 'touchmove',
-    stop: 'touchend',
-  },
-  mouse: {
-    start: 'mousedown',
-    move: 'mousemove',
-    stop: 'mouseup',
-  },
-};
 
 let dragEventFor = eventsFor.mouse;
 
@@ -116,27 +103,30 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
 
   private _handleMouseDown = (e: React.MouseEvent) => {
     dragEventFor = eventsFor.mouse;
-    this._handleDragStart(e as any);
+    this._handleDragStart(e.nativeEvent);
   }
 
-  private _handleMouseUp = (e: React.TouchEvent | React.MouseEvent) => {
+  private _handleMouseUp = (e: React.MouseEvent) => {
     dragEventFor = eventsFor.mouse;
-    this._handleDragStop(e as any);
+    this._handleDragStop(e.nativeEvent);
+    
   }
 
   private _handleTouchStart = (e: React.TouchEvent) => {
     dragEventFor = eventsFor.touch;
-    this._handleDragStart(e as any);
+    this._handleDragStart(e.nativeEvent);
   }
 
   private _handleTouchEnd = (e: React.TouchEvent) => {
     dragEventFor = eventsFor.touch;
-    this._handleDragStop(e as any);
+    this._handleDragStop(e.nativeEvent);
   }
 
-  private _handleDragStart = (e: DragEvent) => {
-    if (typeof e.button === 'number' && e.button !== 0) {
-      return;
+  private _handleDragStart = (e: TouchEvent | MouseEvent) => {
+    if(isMouseEvent(e)) {
+      if (typeof e.button === 'number' && e.button !== 0) {
+        return;
+      }
     }
 
     this.isDragging = true;
@@ -164,13 +154,17 @@ class ColumnResizer extends React.PureComponent<IColumnResizerProps> {
     ownerDocument.removeEventListener(dragEventFor.stop, this._handleDragStop);
   }
 
-  private _handleDrag = (e: any) => {
-    let clientX = e.clientX;
-    if (e.type === eventsFor.touch.move) {
+  private _handleDrag = (e: TouchEvent | MouseEvent) => {
+    
+    let clientX;
+
+    if (isTouchEvent(e)) {
       e.preventDefault();
       if (e.targetTouches && e.targetTouches[0]) {
         clientX = e.targetTouches[0].clientX;
       }
+    } else if (isMouseEvent(e)){
+      clientX = e.clientX;
     }
 
     const { offsetParent } = this.handleRef;
@@ -215,6 +209,7 @@ export interface IOnResizeStartCBParam {
   column?: IColumnProps;
   key?: React.Key;
 }
+
 export interface IColumnResizerProps {
   /**
    * className

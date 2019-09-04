@@ -33,7 +33,11 @@ const data = [
   },
 ];
 
-const Table = props => <BaseTable width={100} height={100} data={data} columns={columns} {...props} />;
+type TestProps = Omit<import('./BaseTable').BaseTableProps, 'width' | 'height' | 'data' | 'columns'>;
+
+const Table: React.FC<TestProps> = props => (
+  <BaseTable width={100} height={100} data={data} columns={columns} {...props} />
+);
 
 describe('Table', function() {
   test('renders correctly', () => {

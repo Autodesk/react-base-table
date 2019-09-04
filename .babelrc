@@ -3,10 +3,10 @@
     [
       "@babel/preset-env",
       {
-        "modules": "commonjs",
-      },
+        "modules": "commonjs"
+      }
     ],
-    "@babel/preset-react",
+    "@babel/preset-react"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
@@ -20,10 +20,11 @@
           "@babel/preset-env",
           {
             "modules": false,
-            "loose": true,
-          },
+            "loose": true
+          }
         ],
-      ],
-    },
-  },
+        "@babel/preset-typescript"
+      ]
+    }
+  }
 }

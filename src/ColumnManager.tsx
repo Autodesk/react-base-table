@@ -1,29 +1,37 @@
 import { FrozenDirection } from './Column';
 
 export default class ColumnManager {
-  constructor(columns, fixed) {
+  static PlaceholderKey = '__placeholder__';
+
+  _origColumns: any[];
+  _cached: any;
+  _columns?: any[];
+  _fixed: any;
+  _columnStyles: any;
+
+  constructor(columns: any[], fixed: any) {
     this._origColumns = [];
     this.reset(columns, fixed);
   }
 
-  _cache(key, fn) {
+  _cache(key: string, fn: Function) {
     if (key in this._cached) return this._cached[key];
     this._cached[key] = fn();
     return this._cached[key];
   }
 
-  reset(columns, fixed) {
+  reset(columns: any[], fixed: boolean) {
     this._columns = columns.map(column => {
       let width = column.width;
       if (column.resizable) {
         // don't reset column's `width` if `width` prop doesn't change
         const idx = this._origColumns.findIndex(x => x.key === column.key);
         if (idx >= 0 && this._origColumns[idx].width === column.width) {
-          width = this._columns[idx].width;
+          width = this._columns![idx].width;
         }
       }
       return { ...column, width };
-    });
+    }) as any[];
     this._origColumns = columns;
     this._fixed = fixed;
     this._cached = {};
@@ -44,13 +52,13 @@ export default class ColumnManager {
 
   getVisibleColumns() {
     return this._cache('visibleColumns', () => {
-      return this._columns.filter(column => !column.hidden);
+      return this._columns!.filter(column => !column.hidden);
     });
   }
 
   hasFrozenColumns() {
     return this._cache('hasFrozenColumns', () => {
-      return this._fixed && this.getVisibleColumns().some(column => !!column.frozen);
+      return this._fixed && this.getVisibleColumns().some((column: { frozen: any }) => !!column.frozen);
     });
   }
 
@@ -58,14 +66,19 @@ export default class ColumnManager {
     return this._cache('hasLeftFrozenColumns', () => {
       return (
         this._fixed &&
-        this.getVisibleColumns().some(column => column.frozen === FrozenDirection.LEFT || column.frozen === true)
+        this.getVisibleColumns().some(
+          (column: { frozen: string | boolean }) => column.frozen === FrozenDirection.LEFT || column.frozen === true
+        )
       );
     });
   }
 
   hasRightFrozenColumns() {
     return this._cache('hasRightFrozenColumns', () => {
-      return this._fixed && this.getVisibleColumns().some(column => column.frozen === FrozenDirection.RIGHT);
+      return (
+        this._fixed &&
+        this.getVisibleColumns().some((column: { frozen: string }) => column.frozen === FrozenDirection.RIGHT)
+      );
     });
   }
 
@@ -74,15 +87,15 @@ export default class ColumnManager {
       const columns = this.getVisibleColumns();
       if (!this.hasFrozenColumns()) return columns;
 
-      const mainColumns = [];
-      this.getLeftFrozenColumns().forEach(column => {
+      const mainColumns: any[] = [];
+      this.getLeftFrozenColumns().forEach((column: any) => {
         //columns placeholder for the fixed table above them
         mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
       });
-      this.getVisibleColumns().forEach(column => {
+      this.getVisibleColumns().forEach((column: { frozen: any }) => {
         if (!column.frozen) mainColumns.push(column);
       });
-      this.getRightFrozenColumns().forEach(column => {
+      this.getRightFrozenColumns().forEach((column: any) => {
         mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
       });
 
@@ -94,7 +107,7 @@ export default class ColumnManager {
     return this._cache('leftFrozenColumns', () => {
       if (!this._fixed) return [];
       return this.getVisibleColumns().filter(
-        column => column.frozen === FrozenDirection.LEFT || column.frozen === true
+        (column: { frozen: string | boolean }) => column.frozen === FrozenDirection.LEFT || column.frozen === true
       );
     });
   }
@@ -102,13 +115,13 @@ export default class ColumnManager {
   getRightFrozenColumns() {
     return this._cache('rightFrozenColumns', () => {
       if (!this._fixed) return [];
-      return this.getVisibleColumns().filter(column => column.frozen === FrozenDirection.RIGHT);
+      return this.getVisibleColumns().filter((column: { frozen: string }) => column.frozen === FrozenDirection.RIGHT);
     });
   }
 
-  getColumn(key) {
-    const idx = this._columns.findIndex(column => column.key === key);
-    return this._columns[idx];
+  getColumn(key: any) {
+    const idx = this._columns!.findIndex(column => column.key === key);
+    return this._columns![idx];
   }
 
   getColumnsWidth() {
@@ -129,18 +142,18 @@ export default class ColumnManager {
     });
   }
 
-  recomputeColumnsWidth(columns) {
-    return columns.reduce((width, column) => width + column.width, 0);
+  recomputeColumnsWidth(columns: any[]) {
+    return columns.reduce((width: number, column: { width: number }) => width + column.width, 0);
   }
 
-  setColumnWidth(key, width) {
+  setColumnWidth(key: any, width: any) {
     const column = this.getColumn(key);
     column.width = width;
     this._cached = {};
     this._columnStyles[column.key] = this.recomputeColumnStyle(column);
   }
 
-  getColumnStyle(key) {
+  getColumnStyle(key: string | number) {
     return this._columnStyles[key];
   }
 
@@ -148,7 +161,14 @@ export default class ColumnManager {
     return this._columnStyles;
   }
 
-  recomputeColumnStyle(column) {
+  recomputeColumnStyle(column: {
+    flexGrow: number;
+    flexShrink: number;
+    style: any;
+    width: any;
+    maxWidth: any;
+    minWidth: any;
+  }) {
     let flexGrow = 0;
     let flexShrink = 0;
     if (!this._fixed) {
@@ -178,11 +198,9 @@ export default class ColumnManager {
   }
 
   recomputeColumnStyles() {
-    return this._columns.reduce((styles, column) => {
+    return this._columns!.reduce((styles, column) => {
       styles[column.key] = this.recomputeColumnStyle(column);
       return styles;
     }, {});
   }
 }
-
-ColumnManager.PlaceholderKey = '__placeholder__';

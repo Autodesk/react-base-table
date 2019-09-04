@@ -1,8 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class TableHeader extends React.PureComponent {
-  constructor(props) {
+import { fn } from './utils';
+
+export interface TableHeaderProps<T = any> {
+  className?: string;
+  width: number;
+  height: number;
+  headerHeight: number | number[];
+  rowWidth: number;
+  rowHeight: number;
+  columns: T[];
+  data: any[];
+  frozenData?: any[];
+  headerRenderer: fn;
+  rowRenderer: fn;
+}
+
+export default class TableHeader<T = any> extends React.PureComponent<TableHeaderProps<T>> {
+  static propTypes = {
+    className: PropTypes.string,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
+    rowWidth: PropTypes.number.isRequired,
+    rowHeight: PropTypes.number.isRequired,
+    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    frozenData: PropTypes.arrayOf(PropTypes.object),
+    headerRenderer: PropTypes.func.isRequired,
+    rowRenderer: PropTypes.func.isRequired,
+  };
+
+  headerRef: any;
+
+  constructor(props: Readonly<TableHeaderProps>) {
     super(props);
 
     this.renderHeaderRow = this.renderHeaderRow.bind(this);
@@ -10,11 +42,11 @@ class TableHeader extends React.PureComponent {
     this._setRef = this._setRef.bind(this);
   }
 
-  scrollTo(offset) {
+  scrollTo(offset: any) {
     if (this.headerRef) this.headerRef.scrollLeft = offset;
   }
 
-  renderHeaderRow(height, index) {
+  renderHeaderRow(height: number, index: any) {
     const { columns, headerRenderer } = this.props;
     if (height <= 0) return null;
 
@@ -22,7 +54,7 @@ class TableHeader extends React.PureComponent {
     return headerRenderer({ style, columns, headerIndex: index });
   }
 
-  renderFrozenRow(rowData, index) {
+  renderFrozenRow(rowData: any, index: number) {
     const { columns, rowHeight, rowRenderer } = this.props;
     const style = { width: '100%', height: rowHeight };
     // for frozen row the `rowIndex` is negative
@@ -34,7 +66,7 @@ class TableHeader extends React.PureComponent {
     const { className, width, height, rowWidth, headerHeight, frozenData } = this.props;
     if (height <= 0) return null;
 
-    const style = {
+    const style: React.CSSProperties = {
       width,
       height: height,
       position: 'relative',
@@ -51,29 +83,13 @@ class TableHeader extends React.PureComponent {
       <div role="grid" ref={this._setRef} className={className} style={style}>
         <div role="rowgroup" style={innerStyle}>
           {rowHeights.map(this.renderHeaderRow)}
-          {frozenData.map(this.renderFrozenRow)}
+          {frozenData!.map(this.renderFrozenRow)}
         </div>
       </div>
     );
   }
 
-  _setRef(ref) {
+  _setRef(ref: any) {
     this.headerRef = ref;
   }
 }
-
-TableHeader.propTypes = {
-  className: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
-  rowWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.number.isRequired,
-  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  frozenData: PropTypes.arrayOf(PropTypes.object),
-  headerRenderer: PropTypes.func.isRequired,
-  rowRenderer: PropTypes.func.isRequired,
-};
-
-export default TableHeader;

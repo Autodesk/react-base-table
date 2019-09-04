@@ -1,0 +1,28 @@
+{
+  "typeAcquisition": { "exclude": ["node"] },
+  "compilerOptions": {
+    // "baseUrl": "./",
+    // "rootDir": "./",
+    "target": "es5",
+    "declaration": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["src", "types"]
+}

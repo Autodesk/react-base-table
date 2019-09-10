@@ -34,6 +34,8 @@ import 'react-base-table/styles.css'
 
 Learn more at the [website](https://autodesk.github.io/react-base-table/)
 
+**Make sure each item in `data` is unique by a key, the default key is `id`, you can customize it via `rowKey`**
+
 **`width` and `height` are required to display the table properly**
 
 In the [examples](https://autodesk.github.io/react-base-table/examples)

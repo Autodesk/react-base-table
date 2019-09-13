@@ -262,3 +262,28 @@ export function removeClassName(el: HTMLElement, className: string) {
     el.className = el.className.replace(new RegExp(`(?:^|\\s)${className}(?!\\S)`, 'g'), '');
   }
 }
+
+
+export const eventsFor = {
+  touch: {
+    start: 'touchstart',
+    move: 'touchmove',
+    stop: 'touchend',
+  },
+  mouse: {
+    start: 'mousedown',
+    move: 'mousemove',
+    stop: 'mouseup',
+  },
+};
+
+
+export const isMouseEvent = (in_event: TouchEvent | MouseEvent): in_event is MouseEvent => {
+  return in_event.type === eventsFor.mouse.start || in_event.type === eventsFor.mouse.move ||
+    in_event.type === eventsFor.mouse.stop;
+}
+
+export const isTouchEvent = (in_event: TouchEvent | MouseEvent): in_event is TouchEvent => {
+  return in_event.type === eventsFor.touch.start || in_event.type === eventsFor.touch.move ||
+    in_event.type === eventsFor.touch.stop;
+}

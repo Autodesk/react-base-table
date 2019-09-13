@@ -12,7 +12,7 @@ export interface ITableHeaderRowProps<T = any> {
   style?: React.CSSProperties;
   columns: IColumnProps[];
   headerIndex?: number;
-  cellRenderer?: React.ElementType<ICellRendererCBParam<T>>;
+  cellRenderer?: (props: ICellRendererCBParam<T>) => React.ReactNode;
   headerRenderer?: React.ElementType<IHeaderRendererParam>;
   expandColumnKey?: string;
   expandIcon?: React.ElementType;
@@ -28,7 +28,7 @@ const TableHeaderRow: TTableHeaderRow = ({
   style,
   columns,
   headerIndex,
-  cellRenderer: CellRenderer,
+  cellRenderer,
   headerRenderer,
   expandColumnKey,
   expandIcon: ExpandIcon,
@@ -43,7 +43,7 @@ const TableHeaderRow: TTableHeaderRow = ({
       headerIndex,
       expandIcon: column.key === expandColumnKey && <ExpandIcon />,
     };
-    return <CellRenderer {...cellProps} />;
+    return cellRenderer({...cellProps});
   });
 
   if (headerRenderer) {

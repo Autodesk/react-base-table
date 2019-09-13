@@ -25,7 +25,7 @@ export interface ITableRowProps<T = RowDataType> {
   depth?: number;
   rowEventHandlers?: THandlerCollection;
   rowRenderer?: React.ElementType<IRowRendererCBParam> | React.ReactElement;
-  cellRenderer?: React.ElementType<ICellRendererCBParam<T>>;
+  cellRenderer?: (props: ICellRendererCBParam<T>) => React.ReactNode;
   expandIconRenderer?: React.ElementType<IRenderExpandIcon<T>>;
   onRowHover?: (args: IOnRowHover) => void;
   onRowExpand?: (args: IOnRowExpandCBParam) => any;
@@ -52,7 +52,7 @@ class TableRow<T = any> extends React.PureComponent<ITableRowProps<T>> {
       depth,
       rowEventHandlers,
       rowRenderer,
-      cellRenderer: CellRenderer,
+      cellRenderer,
       expandIconRenderer: ExpandIconRenderer,
       tagName: Tag,
       // omit the following from rest
@@ -76,7 +76,7 @@ class TableRow<T = any> extends React.PureComponent<ITableRowProps<T>> {
         rowIndex,
         expandIcon: column.key === expandColumnKey && expandIcon,
       };
-      return <CellRenderer {...cellProps} />;
+      return cellRenderer({...cellProps});
     });
 
     if (rowRenderer) {

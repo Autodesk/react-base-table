@@ -29,6 +29,8 @@ import {
   noop,
 } from './utils';
 
+const getColumns = memoize((columns, children) => columns || normalizeColumns(children));
+
 const getContainerStyle = (width, maxWidth, height) => ({
   width,
   maxWidth,
@@ -45,6 +47,9 @@ const DEFAULT_COMPONENTS = {
 
 const RESIZE_THROTTLE_WAIT = 50;
 
+// used for memoization
+const EMPTY_ARRAY = [];
+
 /**
  * React table component
  */
@@ -52,15 +57,15 @@ class BaseTable extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { columns, children, expandedRowKeys, defaultExpandedRowKeys } = props;
+    const { columns, children, defaultExpandedRowKeys } = props;
     this.state = {
       scrollbarSize: 0,
       hoveredRowKey: null,
       resizingKey: null,
       resizingWidth: 0,
-      expandedRowKeys: cloneArray(props.expandedRowKeys !== undefined ? expandedRowKeys : defaultExpandedRowKeys),
+      expandedRowKeys: cloneArray(defaultExpandedRowKeys),
     };
-    this.columnManager = new ColumnManager(columns || normalizeColumns(children), props.fixed);
+    this.columnManager = new ColumnManager(getColumns(columns, children), props.fixed);
 
     this._setContainerRef = this._setContainerRef.bind(this);
     this._setMainTableRef = this._setMainTableRef.bind(this);
@@ -89,6 +94,9 @@ class BaseTable extends React.PureComponent {
       this._depthMap = {};
       return flattenOnKeys(tree, keys, this._depthMap, dataKey);
     });
+    this._resetColumnManager = memoize((columns, fixed) => {
+      this.columnManager.reset(columns, fixed);
+    }, isObjectEqual);
 
     this._scroll = { scrollLeft: 0, scrollTop: 0 };
     this._scrollHeight = 0;
@@ -118,12 +126,20 @@ class BaseTable extends React.PureComponent {
   }
 
   /**
+   * Get internal `expandedRowKeys` state
+   */
+  getExpandedRowKeys() {
+    const { expandedRowKeys } = this.props;
+    return expandedRowKeys !== undefined ? expandedRowKeys || EMPTY_ARRAY : this.state.expandedRowKeys;
+  }
+
+  /**
    * Get the expanded state, fallback to normal state if not expandable.
    */
   getExpandedState() {
     return {
       expandedData: this._data,
-      expandedRowKeys: this.state.expandedRowKeys,
+      expandedRowKeys: this.getExpandedRowKeys(),
       expandedDepthMap: this._depthMap,
     };
   }
@@ -233,7 +249,7 @@ class BaseTable extends React.PureComponent {
     if (!expandColumnKey) return null;
 
     const expandable = rowIndex >= 0 && hasChildren(rowData);
-    const expanded = rowIndex >= 0 && this.state.expandedRowKeys.indexOf(rowData[rowKey]) >= 0;
+    const expanded = rowIndex >= 0 && this.getExpandedRowKeys().indexOf(rowData[rowKey]) >= 0;
     const extraProps = callOrReturn(expandIconProps, { rowData, rowIndex, depth, expandable, expanded });
     const ExpandIcon = this._getComponent('ExpandIcon');
 
@@ -250,7 +266,7 @@ class BaseTable extends React.PureComponent {
 
     const className = cn(this._prefixClass('row'), rowClass, {
       [this._prefixClass(`row--depth-${depth}`)]: !!expandColumnKey && rowIndex >= 0,
-      [this._prefixClass('row--expanded')]: !!expandColumnKey && this.state.expandedRowKeys.indexOf(rowKey) >= 0,
+      [this._prefixClass('row--expanded')]: !!expandColumnKey && this.getExpandedRowKeys().indexOf(rowKey) >= 0,
       [this._prefixClass('row--hovered')]: !isScrolling && rowKey === this.state.hoveredRowKey,
       [this._prefixClass('row--frozen')]: depth === 0 && rowIndex < 0,
       [this._prefixClass('row--customized')]: rowRenderer,
@@ -582,7 +598,8 @@ class BaseTable extends React.PureComponent {
 
   render() {
     const {
-      classPrefix,
+      columns,
+      children,
       width,
       fixed,
       data,
@@ -592,10 +609,13 @@ class BaseTable extends React.PureComponent {
       className,
       style,
       footerHeight,
+      classPrefix,
     } = this.props;
 
+    this._resetColumnManager(getColumns(columns, children), fixed);
+
     if (expandColumnKey) {
-      this._data = this._flattenOnKeys(data, this.state.expandedRowKeys, this.props.rowKey);
+      this._data = this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey);
     } else {
       this._data = data;
     }
@@ -629,34 +649,6 @@ class BaseTable extends React.PureComponent {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextColumns = nextProps.columns || normalizeColumns(nextProps.children);
-    const columns = this.columnManager.getOriginalColumns();
-    if (!isObjectEqual(nextColumns, columns) || nextProps.fixed !== this.props.fixed) {
-      this.columnManager.reset(nextColumns, nextProps.fixed);
-    }
-
-    if (nextProps.data !== this.props.data) {
-      this._lastScannedRowIndex = -1;
-      this._hasDataChangedSinceEndReached = true;
-    }
-
-    if (nextProps.maxHeight !== this.props.maxHeight || nextProps.height !== this.props.height) {
-      this._maybeCallOnEndReached();
-    }
-
-    // if `expandedRowKeys` is controlled
-    if (
-      nextProps.expandColumnKey &&
-      nextProps.expandedRowKeys !== undefined &&
-      nextProps.expandedRowKeys !== this.props.expandedRowKeys
-    ) {
-      this.setState({
-        expandedRowKeys: cloneArray(nextProps.expandedRowKeys),
-      });
-    }
-  }
-
   componentDidMount() {
     const scrollbarSize = this.props.getScrollbarSize();
     if (scrollbarSize > 0) {
@@ -665,6 +657,15 @@ class BaseTable extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { data, height, maxHeight } = this.props;
+    if (data !== prevProps.data) {
+      this._lastScannedRowIndex = -1;
+      this._hasDataChangedSinceEndReached = true;
+    }
+
+    if (maxHeight !== prevProps.maxHeight || height !== prevProps.height) {
+      this._maybeCallOnEndReached();
+    }
     this._maybeScrollbarPresenceChange();
   }
 
@@ -839,7 +840,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleRowExpand({ expanded, rowData, rowIndex, rowKey }) {
-    const expandedRowKeys = cloneArray(this.state.expandedRowKeys);
+    const expandedRowKeys = cloneArray(this.getExpandedRowKeys());
     if (expanded) {
       if (!expandedRowKeys.indexOf(rowKey) >= 0) expandedRowKeys.push(rowKey);
     } else {

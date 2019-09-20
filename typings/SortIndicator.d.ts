@@ -1,14 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import { SortOrderValue } from './SortOrder';
-
-export interface ISortIndicatorProps {
-  sortOrder?: SortOrderValue;
-  className?: string;
-  style?: React.CSSProperties;
+export interface SortIndicatorProps {
+    sortOrder?: SortOrderValue;
+    className?: string;
+    style?: React.CSSProperties;
 }
-
 /**
  * default SortIndicator for BaseTable
  */
-declare const SortIndicator: React.FC<ISortIndicatorProps>;
+declare const SortIndicator: React.FC<SortIndicatorProps>;
 export default SortIndicator;

@@ -1,15 +1,14 @@
-import * as React from 'react';
-
-export interface ITableCellProps {
-  className?: string;
-  cellData?: any;
-  column?: any;
-  columnIndex?: number;
-  rowData?: any;
-  rowIndex?: number;
+import React from 'react';
+export interface TableCellProps<T = any> {
+    className?: string;
+    cellData?: any;
+    column?: T;
+    columnIndex?: number;
+    rowData?: object;
+    rowIndex?: number;
 }
 /**
  * Cell component for BaseTable
  */
-declare const TableCell: React.FC<ITableCellProps>;
+declare const TableCell: React.FC<TableCellProps>;
 export default TableCell;

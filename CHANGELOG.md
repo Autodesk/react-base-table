@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: `unflatten` should not override the existing children
+
 ## v1.8.0 (2019-08-30)
 
 - feat: remove deprecated lifecycles for concurrent mode ready

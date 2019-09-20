@@ -1,6 +1,6 @@
 import React from 'react';
 
-type lit = string | number | boolean;
+type Literal = string | number | boolean;
 export type fn = (...args: any) => any;
 export type Values<T> = T[keyof T];
 
@@ -57,7 +57,7 @@ export function isObjectEqual(objA: any, objB: any) {
   return true;
 }
 
-export function callOrReturn<T extends lit | object>(funcOrValue: T, ...args: any[]): T;
+export function callOrReturn<T extends Literal | object>(funcOrValue: T, ...args: any[]): T;
 export function callOrReturn<T extends fn>(funcOrValue: T, ...args: Parameters<T>): ReturnType<T>;
 export function callOrReturn(funcOrValue: any, ...args: any[]) {
   return typeof funcOrValue === 'function' ? funcOrValue(...args) : funcOrValue;

@@ -1,19 +1,15 @@
 {
-  "typeAcquisition": { "exclude": ["node"] },
   "compilerOptions": {
-    // "baseUrl": "./",
-    // "rootDir": "./",
+    "rootDir": "./",
     "target": "es5",
-    "declaration": true,
-    "esModuleInterop": true,
-    "importHelpers": true,
-    "jsx": "react",
-    "lib": ["dom", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
+    "lib": ["dom", "esnext"],
+    "importHelpers": true,
+    "declaration": true,
     "sourceMap": true,
-    "alwaysStrict": true,
     "strict": true,
+    "alwaysStrict": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
@@ -22,7 +18,14 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*", "node_modules/*"]
+    },
+    "jsx": "react",
+    "esModuleInterop": true
   },
-  "include": ["src", "types"]
+  "include": ["src", "types"],
+  "exclude": ["node_modules", "**/__snapshots__/**", "**/*.spec.*"]
 }

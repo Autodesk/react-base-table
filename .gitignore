@@ -16,3 +16,7 @@ styles.css
 es/
 lib/
 coverage/
+
+# build artifacts
+.rts2_cache_*
+dist/

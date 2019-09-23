@@ -870,13 +870,14 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleColumnResizeStop() {
+    const { resizingKey, resizingWidth = 0 } = this.state;
+
+    if (!resizingKey || !resizingWidth) return;
+
+    const column = this.columnManager.getColumn(resizingKey);
+    this.props.onColumnResizeEnd({ column, width: resizingWidth });
+
     this.setState({ resizingKey: null });
-
-    this.columnManager.setColumnWidth(key, width);
-    this.setState({ resizingWidth: width });
-
-    const column = this.columnManager.getColumn(key);
-    this.props.onEndColumnResize({ column, width });
   }
 
   _handleColumnSort(event) {
@@ -921,7 +922,7 @@ BaseTable.defaultProps = {
   onExpandedRowsChange: noop,
   onColumnSort: noop,
   onColumnResize: noop,
-  onEndColumnResize: noop,
+  onColumnResizeEnd: noop,
 };
 
 BaseTable.propTypes = {
@@ -1108,7 +1109,7 @@ BaseTable.propTypes = {
    * A callback function when resizing the column width ends
    * The handler is of the shape of `({ column, width }) => *`
    */
-  onEndColumnResize: PropTypes.func,
+  onColumnResizeEnd: PropTypes.func,
   /**
    * Adds an additional isScrolling parameter to the row renderer.
    * This parameter can be used to show a placeholder row while scrolling.

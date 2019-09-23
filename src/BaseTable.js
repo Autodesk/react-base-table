@@ -870,14 +870,13 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleColumnResizeStop() {
-    const { resizingKey, resizingWidth = 0 } = this.state;
+    const { resizingKey, resizingWidth } = this.state;
+    this.setState({ resizingKey: null, resizingWidth: 0 });
 
     if (!resizingKey || !resizingWidth) return;
 
     const column = this.columnManager.getColumn(resizingKey);
     this.props.onColumnResizeEnd({ column, width: resizingWidth });
-
-    this.setState({ resizingKey: null });
   }
 
   _handleColumnSort(event) {

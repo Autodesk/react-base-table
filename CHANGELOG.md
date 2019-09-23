@@ -2,6 +2,10 @@
 
 ## NEXT VERSION
 
+## v1.9.0 (2019-09-23)
+
+- feat: Added onColumnResizeEnd prop to BaseTable
+
 ## v1.8.1 (2019-09-23)
 
 - fix: `unflatten` should not override the existing children

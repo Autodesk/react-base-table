@@ -2,7 +2,9 @@
 
 ## NEXT VERSION
 
-- feat: Added `onColumnResizeEnd` prop to `BaseTable`
+## v1.9.0 (2019-09-24)
+
+- feat: add `onColumnResizeEnd` prop to `BaseTable`
 
 ## v1.8.1 (2019-09-23)
 

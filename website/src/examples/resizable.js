@@ -43,5 +43,6 @@ export default () => (
     frozenData={frozenData}
     expandColumnKey={expandColumnKey}
     onColumnResize={action('onColumnResize')}
+    onColumnResizeEnd={action('onColumnResizeEnd')}
   />
 )

@@ -2,6 +2,14 @@
 
 ## NEXT VERSION
 
+## v1.9.0 (2019-09-24)
+
+- feat: add `onColumnResizeEnd` prop to `BaseTable`
+
+## v1.8.1 (2019-09-23)
+
+- fix: `unflatten` should not override the existing children
+
 ## v1.8.0 (2019-08-30)
 
 - feat: remove deprecated lifecycles for concurrent mode ready

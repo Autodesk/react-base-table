@@ -188,12 +188,12 @@ export default class Column extends React.Component<BaseColumnProps> {
          * Custom column cell renderer
          * The renderer receives props `{ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }`
          */
-        cellRenderer: PropTypes.Requireable<string | PropTypes.ReactElementLike | ((props: any, context?: any) => any) | (new (props: any, context?: any) => any)>;
+        cellRenderer: PropTypes.Requireable<string | ((props: any, context?: any) => any) | (new (props: any, context?: any) => any) | PropTypes.ReactElementLike>;
         /**
          * Custom column header renderer
          * The renderer receives props `{ columns, column, columnIndex, headerIndex, container }`
          */
-        headerRenderer: PropTypes.Requireable<string | PropTypes.ReactElementLike | ((props: any, context?: any) => any) | (new (props: any, context?: any) => any)>;
+        headerRenderer: PropTypes.Requireable<string | ((props: any, context?: any) => any) | (new (props: any, context?: any) => any) | PropTypes.ReactElementLike>;
     };
 }
 export {};

@@ -37,7 +37,7 @@ export default class TableRow extends React.PureComponent<TableRowProps> {
         expandColumnKey: PropTypes.Requireable<string>;
         depth: PropTypes.Requireable<number>;
         rowEventHandlers: PropTypes.Requireable<object>;
-        rowRenderer: PropTypes.Requireable<string | PropTypes.ReactElementLike | ((props: any, context?: any) => any) | (new (props: any, context?: any) => any)>;
+        rowRenderer: PropTypes.Requireable<string | ((props: any, context?: any) => any) | (new (props: any, context?: any) => any) | PropTypes.ReactElementLike>;
         cellRenderer: PropTypes.Requireable<(...args: any[]) => any>;
         expandIconRenderer: PropTypes.Requireable<(...args: any[]) => any>;
         onRowHover: PropTypes.Requireable<(...args: any[]) => any>;

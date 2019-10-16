@@ -208,5 +208,9 @@ module.exports = {
       title: 'Scroll Methods',
       path: '/examples/scroll-to',
     },
+    {
+      title: 'Column Hovering',
+      path: '/examples/column-hovering',
+    },
   ],
 }

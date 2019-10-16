@@ -1,12 +1,17 @@
 import React from 'react';
 
 export function renderElement(renderer, props) {
-  if (!renderer) return null;
-
   if (React.isValidElement(renderer)) {
     return React.cloneElement(renderer, props);
+  } else if (typeof renderer === 'function') {
+    if (renderer.prototype && renderer.prototype.isReactComponent) {
+      return React.createElement(renderer, props);
+    } else if (renderer.defaultProps) {
+      return renderer({ ...renderer.defaultProps, ...props });
+    }
+    return renderer(props);
   } else {
-    return React.createElement(renderer, props);
+    return null;
   }
 }
 

@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.9.1 (2019-10-17)
+
 - reverted #80, now custom renderer doesn't support top level hooks, see #109
 
 ## v1.9.0 (2019-09-24)

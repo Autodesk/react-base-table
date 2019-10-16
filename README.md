@@ -36,7 +36,9 @@ Learn more at the [website](https://autodesk.github.io/react-base-table/)
 
 **Make sure each item in `data` is unique by a key, the default key is `id`, you can customize it via `rowKey`**
 
-**`width` and `height` are required to display the table properly**
+**`key` is required for column definition or the column will be ignored**
+
+**`width` and `height`(or `maxHeight`) are required to display the table properly**
 
 In the [examples](https://autodesk.github.io/react-base-table/examples)
 we are using a wrapper `const Table = props => <BaseTable width={700} height={400} {...props} />` to do that

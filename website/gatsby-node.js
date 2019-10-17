@@ -1,6 +1,7 @@
 const path = require('path')
+const fs = require('fs')
 const _ = require('lodash')
-
+const { findFileWithExtension } = require('./utilsNode')
 const siteConfig = require('./siteConfig')
 
 exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
@@ -16,6 +17,8 @@ exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
     'react-base-table/styles.css': path.resolve(__dirname, '../styles.css'),
     'react-base-table': path.resolve(__dirname, '../build'),
   }
+
+  config.devtool = `source-map`
 
   actions.replaceWebpackConfig(config)
 }
@@ -69,7 +72,6 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
 
 exports.createPages = async ({ graphql, actions, getNode }) => {
   const { createPage } = actions
-
   const docPage = path.resolve('src/templates/doc.js')
   const apiPage = path.resolve('src/templates/api.js')
   const examplePage = path.resolve('src/templates/example.js')
@@ -123,12 +125,24 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
     })
   })
 
+  const docDisplayNames = findFileWithExtension('tsx').map(item => {
+    return path.basename(item).replace('.tsx', '')
+  })
+
   result.data.allComponentMetadata.edges.forEach(edge => {
     const node = edge.node
     const fileNode = getNode(node.parent.id)
     if (fileNode.sourceInstanceName !== 'api') return
     const { displayName: name, docblock } = node
-    if (!docblock) return
+    if (!docblock) {
+      const currentDisplayNameMatch = docDisplayNames.find(displayNameItem => {
+        return displayNameItem === name
+      })
+
+      if (!currentDisplayNameMatch) {
+        return
+      }
+    }
     createPage({
       path: `/api/${name.toLowerCase()}`,
       component: apiPage,

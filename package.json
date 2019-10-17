@@ -26,6 +26,7 @@
     "build:css": "node-sass src/_BaseTable.scss ./styles.css --output-style expanded",
     "build": "npm run build:js && npm run build:es && npm run build:css",
     "build:typescript": "tsc",
+    "postinstall": "npm run build:typescript",
     "format": "prettier --write 'src/**/*.{js,scss}'",
     "prebuild": "npm run clean",
     "precommit": "lint-staged",

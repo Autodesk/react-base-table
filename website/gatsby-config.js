@@ -66,7 +66,7 @@ module.exports = {
       options: {
         name: 'api',
         ignore: ['**/*.snap', '**/*.scss'],
-        path: `${__dirname}/../build`,
+        path: `${__dirname}/../src`,
       },
     },
     {
@@ -75,6 +75,6 @@ module.exports = {
         plugins: ['gatsby-remark-copy-linked-files'],
       },
     },
-    'gatsby-transformer-react-docgen',
+    'gatsby-transformer-react-docgen-typescript',
   ],
 }

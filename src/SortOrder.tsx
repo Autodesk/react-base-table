@@ -1,6 +1,4 @@
-import { Values } from './utils';
-
-export type SortOrderValue = Values<typeof SortOrder>;
+import { Values } from './type-utils';
 
 /**
  * Sort order for BaseTable
@@ -16,4 +14,5 @@ const SortOrder = {
   DESC: 'desc',
 } as const;
 
+export type SortOrderValue = Values<typeof SortOrder>;
 export default SortOrder;

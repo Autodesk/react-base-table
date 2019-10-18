@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { renderElement, fn } from './utils';
+import { renderElement } from './utils';
+import { MaybeElement, ReactElementType } from './type-utils';
 
 export interface TableHeaderRowProps<T = any> {
   isScrolling?: boolean;
@@ -9,11 +10,11 @@ export interface TableHeaderRowProps<T = any> {
   style?: React.CSSProperties;
   columns: T[];
   headerIndex?: number;
-  cellRenderer?: fn;
-  headerRenderer?: Parameters<typeof renderElement>[0];
+  cellRenderer?: (...args: any) => MaybeElement;
+  headerRenderer?: ReactElementType;
   expandColumnKey?: string;
-  expandIcon?: fn;
-  tagName?: PropTypes.ReactComponentLike;
+  expandIcon?: ReactElementType;
+  tagName?: ReactElementType;
 }
 
 /**
@@ -66,7 +67,7 @@ TableHeaderRow.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   headerIndex: PropTypes.number,
   cellRenderer: PropTypes.func,
-  headerRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
+  headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.elementType]),
   expandColumnKey: PropTypes.string,
   expandIcon: PropTypes.func,
   tagName: PropTypes.elementType,

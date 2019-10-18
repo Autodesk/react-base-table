@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import { fn } from './utils';
-
 export interface ExpandIconProps {
   expandable?: boolean;
   expanded?: boolean;
   indentSize?: number;
   depth?: number;
-  onExpand?: fn;
+  onExpand?: (...args: any[]) => void;
 }
 
 /**

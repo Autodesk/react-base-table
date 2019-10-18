@@ -1,37 +1,40 @@
-import { FrozenDirection } from './Column';
+import { FrozenDirection, ColumnProps } from './Column';
+import { RowKey } from './TableRow';
+
+type ManagedColumn = Partial<ColumnProps> & { key: RowKey };
 
 export default class ColumnManager {
-  static PlaceholderKey = '__placeholder__';
+  public static readonly PlaceholderKey = '__placeholder__';
 
-  _origColumns: any[];
-  _cached: any;
-  _columns?: any[];
-  _fixed: any;
-  _columnStyles: any;
+  private _origColumns: ManagedColumn[];
+  private _cached: any;
+  private _columns: ManagedColumn[] = [];
+  private _fixed: any;
+  private _columnStyles: any;
 
-  constructor(columns: any[], fixed: any) {
+  constructor(columns: any, fixed?: boolean) {
     this._origColumns = [];
     this.reset(columns, fixed);
   }
 
-  _cache(key: string, fn: Function) {
+  _cache(key: string, fn: any) {
     if (key in this._cached) return this._cached[key];
     this._cached[key] = fn();
     return this._cached[key];
   }
 
-  reset(columns: any[], fixed: boolean) {
-    this._columns = columns.map(column => {
+  reset(columns: any[], fixed: boolean | undefined) {
+    this._columns = columns.map<ManagedColumn>(column => {
       let width = column.width;
       if (column.resizable) {
         // don't reset column's `width` if `width` prop doesn't change
-        const idx = this._origColumns.findIndex(x => x.key === column.key);
+        const idx = this._origColumns.findIndex((x: { key: any }) => x.key === column.key);
         if (idx >= 0 && this._origColumns[idx].width === column.width) {
-          width = this._columns![idx].width;
+          width = this._columns[idx].width;
         }
       }
       return { ...column, width };
-    }) as any[];
+    });
     this._origColumns = columns;
     this._fixed = fixed;
     this._cached = {};
@@ -52,7 +55,7 @@ export default class ColumnManager {
 
   getVisibleColumns() {
     return this._cache('visibleColumns', () => {
-      return this._columns!.filter(column => !column.hidden);
+      return this._columns.filter(column => !column.hidden);
     });
   }
 
@@ -119,9 +122,9 @@ export default class ColumnManager {
     });
   }
 
-  getColumn(key: any) {
-    const idx = this._columns!.findIndex(column => column.key === key);
-    return this._columns![idx];
+  getColumn(key: null) {
+    const idx = this._columns.findIndex((column: { key: any }) => column.key === key);
+    return this._columns[idx];
   }
 
   getColumnsWidth() {
@@ -143,7 +146,7 @@ export default class ColumnManager {
   }
 
   recomputeColumnsWidth(columns: any[]) {
-    return columns.reduce((width: number, column: { width: number }) => width + column.width, 0);
+    return columns.reduce((width: any, column: { width: any }) => width + column.width, 0);
   }
 
   setColumnWidth(key: any, width: any) {
@@ -161,14 +164,7 @@ export default class ColumnManager {
     return this._columnStyles;
   }
 
-  recomputeColumnStyle(column: {
-    flexGrow: number;
-    flexShrink: number;
-    style: any;
-    width: any;
-    maxWidth: any;
-    minWidth: any;
-  }) {
+  recomputeColumnStyle(column: ManagedColumn) {
     let flexGrow = 0;
     let flexShrink = 0;
     if (!this._fixed) {
@@ -178,7 +174,7 @@ export default class ColumnManager {
     // workaround for Flex bug on IE: https://github.com/philipwalton/flexbugs#flexbug-7
     const flexValue = `${flexGrow} ${flexShrink} auto`;
 
-    const style = {
+    const style: React.CSSProperties = {
       ...column.style,
       flex: flexValue,
       msFlex: flexValue,
@@ -198,7 +194,7 @@ export default class ColumnManager {
   }
 
   recomputeColumnStyles() {
-    return this._columns!.reduce((styles, column) => {
+    return this._columns.reduce((styles: { [x: string]: any }, column: { key: string | number }) => {
       styles[column.key] = this.recomputeColumnStyle(column);
       return styles;
     }, {});

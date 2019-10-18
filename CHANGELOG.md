@@ -2,6 +2,18 @@
 
 ## NEXT VERSION
 
+## v1.9.1 (2019-10-17)
+
+- reverted #80, now custom renderer doesn't support top level hooks, see #109
+
+## v1.9.0 (2019-09-24)
+
+- feat: add `onColumnResizeEnd` prop to `BaseTable`
+
+## v1.8.1 (2019-09-23)
+
+- fix: `unflatten` should not override the existing children
+
 ## v1.8.0 (2019-08-30)
 
 - feat: remove deprecated lifecycles for concurrent mode ready
@@ -13,7 +25,7 @@
 
 ## v1.7.2 (2019-08-26)
 
-- fix: custom renderers should support function component with hooks
+- ~~fix: custom renderers should support function component with hooks~~
 
 ## v1.7.1 (2019-08-22)
 

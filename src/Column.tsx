@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Values, renderElement } from './utils';
-
-export type AlignmentValue = Values<typeof Alignment>;
-export type FrozenDirectionValue = Values<typeof FrozenDirection>;
-
-type ClassNameFunc<T = any> = ((args: T) => string) | string;
+import { Values } from './type-utils';
 
 export const Alignment = {
   LEFT: 'left',
   CENTER: 'center',
   RIGHT: 'right',
 } as const;
+
+export type AlignmentValue = Values<typeof Alignment>;
 
 export const FrozenDirection = {
   LEFT: 'left',
@@ -21,24 +18,35 @@ export const FrozenDirection = {
   NONE: false,
 } as const;
 
-export interface BaseColumnProps {
+export type FrozenDirectionValue = Values<typeof FrozenDirection>;
+
+export interface ColumnCellProps {
+  cellData: any;
+  columns: any[];
+  column: any;
+  columnIndex: number;
+  rowData: any;
+  rowIndex: number;
+}
+
+export interface ColumnHeaderProps {
+  columns: any[];
+  column: any;
+  columnIndex: number;
+  headerIndex: number;
+}
+
+export interface ColumnProps {
   /**
    * Class name for the column cell, could be a callback to return the class name
    * The callback is of the shape of `({ cellData, columns, column, columnIndex, rowData, rowIndex }) => string`
    */
-  className?: ClassNameFunc<{
-    cellData: any;
-    columns: any[];
-    column: any;
-    columnIndex: number;
-    rowData: any;
-    rowIndex: number;
-  }>;
+  className?: ((args: ColumnCellProps) => string) | string;
   /**
    * Class name for the column header, could be a callback to return the class name
    * The callback is of the shape of `({ columns, column, columnIndex, headerIndex }) => string`
    */
-  headerClassName?: ClassNameFunc<any>;
+  headerClassName?: ((args: ColumnHeaderProps) => string) | string;
   /**
    * Custom style for the column cell, including the header cells
    */
@@ -48,18 +56,18 @@ export interface BaseColumnProps {
    */
   title?: string;
   /**
-   * Data key for the column cell, could be "a.b.c"
+   * Data key for the column cell, could be `a.b.c`
    */
   dataKey?: string;
   /**
    * Custom cell data getter
    * The handler is of the shape of `({ columns, column, columnIndex, rowData, rowIndex }) => node`
    */
-  dataGetter?: ({ columns, column, columnIndex, rowData, rowIndex }: any) => any;
+  dataGetter?(args: Omit<ColumnCellProps, 'cellData'>): any;
   /**
    * Alignment of the column cell
    */
-  align?: AlignmentValue; // PropTypes.oneOf(['left', 'center', 'right']),
+  align?: AlignmentValue;
   /**
    * Flex grow style, defaults to 0
    */
@@ -83,7 +91,7 @@ export interface BaseColumnProps {
   /**
    * Whether the column is frozen and what's the frozen side
    */
-  frozen?: FrozenDirectionValue; // PropTypes.oneOf(['left', 'right', true, false]),
+  frozen?: FrozenDirectionValue;
   /**
    * Whether the column is hidden
    */
@@ -100,98 +108,39 @@ export interface BaseColumnProps {
    * Custom column cell renderer
    * The renderer receives props `{ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }`
    */
-  cellRenderer?: Parameters<typeof renderElement>[0]; // PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
+  cellRenderer?: React.ElementType<ColumnCellProps & { container: any; isScrolling: boolean }>;
   /**
    * Custom column header renderer
    * The renderer receives props `{ columns, column, columnIndex, headerIndex, container }`
    */
-  headerRenderer?: Parameters<typeof renderElement>[0];
+  headerRenderer?: React.ElementType<ColumnHeaderProps & { container: any }>;
 }
 
 /**
  * Column for BaseTable
  */
-export default class Column extends React.Component<BaseColumnProps> {
+export default class Column extends React.Component<ColumnProps> {
   public static readonly Alignment = Alignment;
   public static readonly FrozenDirection = FrozenDirection;
 
   static propTypes = {
-    /**
-     * Class name for the column cell, could be a callback to return the class name
-     * The callback is of the shape of `({ cellData, columns, column, columnIndex, rowData, rowIndex }) => string`
-     */
     className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * Class name for the column header, could be a callback to return the class name
-     * The callback is of the shape of `({ columns, column, columnIndex, headerIndex }) => string`
-     */
     headerClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * Custom style for the column cell, including the header cells
-     */
     style: PropTypes.object,
-    /**
-     * Title for the column header
-     */
     title: PropTypes.string,
-    /**
-     * Data key for the column cell, could be "a.b.c"
-     */
     dataKey: PropTypes.string,
-    /**
-     * Custom cell data getter
-     * The handler is of the shape of `({ columns, column, columnIndex, rowData, rowIndex }) => node`
-     */
     dataGetter: PropTypes.func,
-    /**
-     * Alignment of the column cell
-     */
     align: PropTypes.oneOf(['left', 'center', 'right']),
-    /**
-     * Flex grow style, defaults to 0
-     */
     flexGrow: PropTypes.number,
-    /**
-     * Flex shrink style, defaults to 1 for flexible table and 0 for fixed table
-     */
     flexShrink: PropTypes.number,
-    /**
-     * The width of the column, gutter width is not included
-     */
     width: PropTypes.number.isRequired,
-    /**
-     * Maximum width of the column, used if the column is resizable
-     */
     maxWidth: PropTypes.number,
-    /**
-     * Minimum width of the column, used if the column is resizable
-     */
     minWidth: PropTypes.number,
-    /**
-     * Whether the column is frozen and what's the frozen side
-     */
     frozen: PropTypes.oneOf(['left', 'right', true, false]),
-    /**
-     * Whether the column is hidden
-     */
     hidden: PropTypes.bool,
-    /**
-     * Whether the column is resizable, defaults to true
-     */
     resizable: PropTypes.bool,
-    /**
-     * Whether the column is sortable, defaults to true
-     */
     sortable: PropTypes.bool,
-    /**
-     * Custom column cell renderer
-     * The renderer receives props `{ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }`
-     */
-    cellRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
-    /**
-     * Custom column header renderer
-     * The renderer receives props `{ columns, column, columnIndex, headerIndex, container }`
-     */
-    headerRenderer: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
+    cellRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+    headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   };
 }

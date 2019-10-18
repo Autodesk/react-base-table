@@ -1,6 +1,6 @@
 {
   "name": "react-base-table",
-  "version": "1.8.0",
+  "version": "1.9.1",
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "dist/index.js",
   "module": "dist/react-base-table.esm.js",
@@ -28,7 +28,8 @@
     "prepublish": "run-s build test",
     "test": "jest",
     "tsdx:watch": "tsdx watch",
-    "tsdx:build": "tsdx build"
+    "tsdx:build": "tsdx build",
+    "type-check": "tsc -p tsconfig.json --noEmit --watch"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -60,9 +61,9 @@
     "react-dom": "^16.9.0",
     "react-test-renderer": "^16.9.0",
     "rimraf": "^3.0.0",
-    "tsdx": "^0.9.2",
+    "tsdx": "^0.10.5",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.4"
   },
   "husky": {
     "hooks": {
@@ -80,7 +81,6 @@
     "roots": [
       "<rootDir>/src"
     ],
-    "testRegex": ".*.spec\\.tsx?$",
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/"
     ]

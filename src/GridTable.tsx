@@ -1,40 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { FixedSizeGrid as Grid, GridOnScrollProps } from 'react-window';
+import { FixedSizeGrid as Grid, FixedSizeGridProps, GridOnItemsRenderedProps, Align } from 'react-window';
 
 import Header from './TableHeader';
-import { fn } from './utils';
+import { fn } from './type-utils';
+import { RowKey } from './TableRow';
 
-export interface GridTableProps<T = any> {
+export type PickProps = Pick<
+  FixedSizeGridProps,
+  'className' | 'width' | 'height' | 'rowHeight' | 'useIsScrolling' | 'overscanRowCount' | 'style' | 'onScroll'
+>;
+
+export interface GridTableProps<T = any> extends PickProps {
   containerStyle?: React.CSSProperties;
   classPrefix?: string;
-  className?: string;
-  width: number;
-  height: number;
-  headerHeight: number | number[]; // PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
+  headerHeight: number | number[];
   headerWidth: number;
   bodyWidth: number;
-  rowHeight: number;
-  columns: T[]; // PropTypes.arrayOf(PropTypes.object).isRequired,
-  data: any[]; // PropTypes.arrayOf(PropTypes.object).isRequired,
-  rowKey: string | number; // PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  columns: T[];
+  data: any[];
+  rowKey: RowKey;
   frozenData?: any[];
-  useIsScrolling?: boolean;
   overscanRowCount?: number;
-  hoveredRowKey?: string | number; // PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  style?: React.CSSProperties; // PropTypes.object,
+  hoveredRowKey?: RowKey | null;
   onScrollbarPresenceChange?: fn;
-  onScroll?: fn;
-  onRowsRendered?: fn;
-  headerRenderer: fn; // PropTypes.func.isRequired,
-  rowRenderer: fn; // PropTypes.func.isRequired,
+  onRowsRendered?: (p: {
+    overscanStartIndex: number;
+    overscanStopIndex: number;
+    startIndex: number;
+    stopIndex: number;
+  }) => void;
+  headerRenderer: fn;
+  rowRenderer: fn;
 }
 
 /**
  * A wrapper of the Grid for internal only
  */
-export default class GridTable extends React.PureComponent<GridTableProps> {
+export default class GridTable<T = any> extends React.PureComponent<GridTableProps<T>> {
   static propTypes = {
     containerStyle: PropTypes.object,
     classPrefix: PropTypes.string,
@@ -54,17 +58,16 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
     hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     style: PropTypes.object,
     onScrollbarPresenceChange: PropTypes.func,
-
     onScroll: PropTypes.func,
     onRowsRendered: PropTypes.func,
     headerRenderer: PropTypes.func.isRequired,
     rowRenderer: PropTypes.func.isRequired,
   };
 
-  headerRef: any;
-  bodyRef: any;
+  headerRef?: Header | null;
+  bodyRef?: Grid | null;
 
-  constructor(props: Readonly<GridTableProps>) {
+  constructor(props: Readonly<GridTableProps<T>>) {
     super(props);
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
@@ -80,25 +83,25 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
     this.bodyRef && this.bodyRef.forceUpdate();
   }
 
-  scrollToPosition(args: { scrollLeft: any }) {
+  scrollToPosition(args: { scrollLeft: number; scrollTop: number }) {
     this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
     this.bodyRef && this.bodyRef.scrollTo(args);
   }
 
-  scrollToTop(scrollTop: any) {
-    this.bodyRef && this.bodyRef.scrollTo({ scrollTop });
+  scrollToTop(scrollTop: number) {
+    this.bodyRef && this.bodyRef.scrollTo({ scrollTop } as any);
   }
 
-  scrollToLeft(scrollLeft: any) {
+  scrollToLeft(scrollLeft: number) {
     this.headerRef && this.headerRef.scrollTo(scrollLeft);
-    this.bodyRef && this.bodyRef.scrollToPosition({ scrollLeft });
+    this.bodyRef && (this.bodyRef as any).scrollToPosition({ scrollLeft });
   }
 
-  scrollToRow(rowIndex = 0, align = 'auto') {
+  scrollToRow(rowIndex = 0, align: Align = 'auto') {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  renderRow(args: any) {
+  renderRow(args: { rowIndex: number }) {
     const { data, columns, rowRenderer } = this.props;
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
@@ -130,13 +133,10 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
     const frozenRowsHeight = rowHeight * frozenRowCount;
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
-
     return (
       <div role="table" className={cls} {...containerProps}>
         <Grid
-          {
-            ...(rest as any) // TODO: proper typings
-          }
+          {...(rest as any)}
           className={`${classPrefix}__body`}
           ref={this._setBodyRef}
           data={data}
@@ -152,7 +152,7 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
           overscanColumnCount={0}
           useIsScrolling={useIsScrolling}
           hoveredRowKey={hoveredRowKey}
-          onScroll={onScroll as ((props: GridOnScrollProps) => any) | undefined}
+          onScroll={onScroll}
           onItemsRendered={this._handleItemsRendered}
           children={this.renderRow}
         />
@@ -160,9 +160,7 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
           // put header after body and reverse the display order via css
           // to prevent header's shadow being covered by body
           <Header
-            {
-              ...(rest as any) // TODO: proper typings
-            }
+            {...rest}
             className={`${classPrefix}__header`}
             ref={this._setHeaderRef}
             data={data}
@@ -181,20 +179,20 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
     );
   }
 
-  _setHeaderRef(ref: any) {
+  private _setHeaderRef(ref: Header | null) {
     this.headerRef = ref;
   }
 
-  _setBodyRef(ref: any) {
+  private _setBodyRef(ref: Grid | null) {
     this.bodyRef = ref;
   }
 
-  _itemKey({ rowIndex }: any) {
+  private _itemKey({ rowIndex }: { rowIndex: number }) {
     const { data, rowKey } = this.props;
-    return (data[rowIndex] as any)[rowKey];
+    return data[rowIndex][rowKey];
   }
 
-  _getHeaderHeight() {
+  private _getHeaderHeight() {
     const { headerHeight } = this.props;
     if (Array.isArray(headerHeight)) {
       return headerHeight.reduce((sum, height) => sum + height, 0);
@@ -202,13 +200,13 @@ export default class GridTable extends React.PureComponent<GridTableProps> {
     return headerHeight;
   }
 
-  _handleItemsRendered({
+  private _handleItemsRendered({
     overscanRowStartIndex,
     overscanRowStopIndex,
     visibleRowStartIndex,
     visibleRowStopIndex,
-  }: any) {
-    this.props.onRowsRendered!({
+  }: GridOnItemsRenderedProps) {
+    (this.props as any).onRowsRendered({
       overscanStartIndex: overscanRowStartIndex,
       overscanStopIndex: overscanRowStopIndex,
       startIndex: visibleRowStartIndex,

@@ -1,4 +1,4 @@
-export { default, BaseTableProps } from './BaseTable';
+export { default, BaseTableProps, OnRowRenderProps, OnScrollProps } from './BaseTable';
 
 export {
   default as Column,
@@ -6,12 +6,15 @@ export {
   FrozenDirection,
   AlignmentValue,
   FrozenDirectionValue,
-  BaseColumnProps as ColumnProps,
+  ColumnProps,
+  ColumnCellProps,
+  ColumnHeaderProps,
 } from './Column';
+
 export { default as SortOrder, SortOrderValue } from './SortOrder';
 export { default as AutoResizer, AutoResizerProps } from './AutoResizer';
 export { default as TableHeader, TableHeaderProps } from './TableHeader';
-export { default as TableRow, TableRowProps } from './TableRow';
+export { default as TableRow, TableRowProps, RowKey, RowRendererProps } from './TableRow';
 
 export {
   renderElement,
@@ -24,3 +27,5 @@ export {
   getScrollbarSize,
   getValue,
 } from './utils';
+
+export * from './type-utils';

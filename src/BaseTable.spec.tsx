@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import BaseTable from './BaseTable';
+import BaseTable, { BaseTableProps } from './BaseTable';
 
 const RENDERER = () => null;
 
@@ -33,9 +33,7 @@ const data = [
   },
 ];
 
-type TestProps = Omit<import('./BaseTable').BaseTableProps, 'width' | 'height' | 'data' | 'columns'>;
-
-const Table: React.FC<TestProps> = props => (
+const Table: React.FC<Partial<BaseTableProps>> = props => (
   <BaseTable width={100} height={100} data={data} columns={columns} {...props} />
 );
 

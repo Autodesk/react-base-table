@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
     "target": "es5",
     "module": "esnext",
     "moduleResolution": "node",
@@ -19,13 +18,10 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "baseUrl": "./",
-    "paths": {
-      "*": ["src/*", "node_modules/*"]
-    },
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src", "types"],
-  "exclude": ["node_modules", "**/__snapshots__/**", "**/*.spec.*"]
+  "exclude": ["**/__snapshots__/**", "**/*.spec.*"]
 }

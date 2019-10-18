@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { fn } from './utils';
+import { fn } from './type-utils';
+import { RowKey } from './TableRow';
 
 export interface TableHeaderProps<T = any> {
   className?: string;
@@ -15,14 +16,15 @@ export interface TableHeaderProps<T = any> {
   frozenData?: any[];
   headerRenderer: fn;
   rowRenderer: fn;
+  hoveredRowKey?: RowKey | null;
 }
 
 export default class TableHeader<T = any> extends React.PureComponent<TableHeaderProps<T>> {
-  static propTypes = {
+  static propTypes: React.WeakValidationMap<TableHeaderProps<any>> = {
     className: PropTypes.string,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
+    headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired as any,
     rowWidth: PropTypes.number.isRequired,
     rowHeight: PropTypes.number.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -32,9 +34,9 @@ export default class TableHeader<T = any> extends React.PureComponent<TableHeade
     rowRenderer: PropTypes.func.isRequired,
   };
 
-  headerRef: any;
+  headerRef?: HTMLDivElement | null;
 
-  constructor(props: Readonly<TableHeaderProps>) {
+  constructor(props: Readonly<TableHeaderProps<T>>) {
     super(props);
 
     this.renderHeaderRow = this.renderHeaderRow.bind(this);
@@ -42,7 +44,7 @@ export default class TableHeader<T = any> extends React.PureComponent<TableHeade
     this._setRef = this._setRef.bind(this);
   }
 
-  scrollTo(offset: any) {
+  scrollTo(offset: number) {
     if (this.headerRef) this.headerRef.scrollLeft = offset;
   }
 
@@ -68,7 +70,7 @@ export default class TableHeader<T = any> extends React.PureComponent<TableHeade
 
     const style: React.CSSProperties = {
       width,
-      height: height,
+      height,
       position: 'relative',
       overflow: 'hidden',
     };
@@ -89,7 +91,7 @@ export default class TableHeader<T = any> extends React.PureComponent<TableHeade
     );
   }
 
-  _setRef(ref: any) {
+  _setRef(ref: HTMLDivElement | null) {
     this.headerRef = ref;
   }
 }

@@ -2,11 +2,11 @@
   "name": "react-base-table",
   "version": "1.9.1",
   "description": "a react table component to display large data set with high performance and flexibility",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "dist/index.js",
+  "module": "dist/react-base-table.esm.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "lib/",
-    "es/",
+    "dist",
     "styles.css"
   ],
   "author": "Neo Nie <nihgwu@live.com>",
@@ -18,35 +18,24 @@
   "scripts": {
     "start": "cd website && npm start",
     "deploy": "cd website && npm run deploy",
-    "lint": "eslint ./src/**/*.js",
-    "clean": "rimraf lib es styles.css",
-    "build:js": "cross-env NODE_ENV=production babel src -d lib --ignore '**/*.spec.js','__snapshots__' --copy-files --source-maps",
-    "build:es": "cross-env BABEL_ENV=es NODE_ENV=production babel src -d es --ignore '**/*.spec.js','__snapshots__' --copy-files --source-maps",
+    "lint": "eslint ./src/**/*.{ts,tsx}",
+    "clean": "rimraf '.rts2_cache_*' dist styles.css typings",
+    "build": "run-s tsdx:build build:css",
+    "build:types": "rimraf typings && tsc -p tsconfig.json --emitDeclarationOnly --declarationDir typings --rootDir src",
     "build:css": "node-sass src/_BaseTable.scss ./styles.css --output-style expanded",
-    "build": "npm run build:js && npm run build:es && npm run build:css",
-    "format": "prettier --write 'src/**/*.{js,scss}'",
-    "prebuild": "npm run clean",
-    "precommit": "lint-staged",
-    "prepush": "npm run test",
-    "prepublish": "npm run build && npm run test",
-    "test": "jest"
-  },
-  "lint-staged": {
-    "packages/**/*.scss": [
-      "prettier --write",
-      "git add"
-    ],
-    "packages/**/*.js": [
-      "prettier --write",
-      "eslint -c .eslintrc",
-      "git add"
-    ]
+    "format": "pretty-quick --pattern 'src/**/*.{ts,tsx,scss}' --ignore-pattern '**/__snapshots__/**'",
+    "prebuild": "run-s clean",
+    "prepublish": "run-s build test",
+    "test": "jest",
+    "tsdx:watch": "tsdx watch",
+    "tsdx:build": "tsdx build",
+    "type-check": "tsc -p tsconfig.json --noEmit --watch"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "classnames": "^2.2.5",
     "memoize-one": "^5.0.0",
-    "prop-types": "^15.7.0",
+    "prop-types": "^15.7.2",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.2"
   },
@@ -55,45 +44,43 @@
     "react-dom": "^16.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.4.2",
-    "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
-    "cross-env": "^5.2.0",
-    "eslint": "^5.6.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-config-react-app": "^3.0.8",
-    "eslint-plugin-flowtype": "^3.4.2",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.11.1",
-    "husky": "^0.14.3",
-    "jest": "^23.5.0",
-    "lerna": "^3.2.1",
-    "lint-staged": "^7.2.2",
-    "node-sass": "^4.9.3",
-    "prettier": "^1.14.2",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-test-renderer": "^16.4.2",
-    "rimraf": "^2.6.2"
+    "@types/classnames": "^2.2.9",
+    "@types/jest": "^24.0.18",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-test-renderer": "^16.9.0",
+    "@types/react-virtualized-auto-sizer": "^1.0.0",
+    "@types/react-window": "^1.8.1",
+    "cross-env": "^6.0.0",
+    "husky": "^3.0.5",
+    "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-test-renderer": "^16.9.0",
+    "rimraf": "^3.0.0",
+    "tsdx": "^0.10.5",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "run-s test"
+    }
   },
   "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "packageJson": "package.json"
+      }
+    },
     "roots": [
       "<rootDir>/src"
     ],
-    "testRegex": ".*.spec\\.js$",
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/"
     ]

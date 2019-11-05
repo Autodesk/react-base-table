@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import SortOrder from './SortOrder';
+import SortOrder, { SortOrderValue } from './SortOrder';
+
+export interface SortIndicatorProps {
+  sortOrder?: SortOrderValue;
+  className?: string;
+  style?: React.CSSProperties;
+}
 
 /**
  * default SortIndicator for BaseTable
  */
-const SortIndicator = ({ sortOrder, className, style }) => {
+const SortIndicator: React.FC<SortIndicatorProps> = ({ sortOrder, className, style }) => {
   const cls = cn('BaseTable__sort-indicator', className, {
     'BaseTable__sort-indicator--descending': sortOrder === SortOrder.DESC,
   });

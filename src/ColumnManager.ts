@@ -1,23 +1,34 @@
-import { FrozenDirection } from './Column';
+import { FrozenDirection, ColumnProps } from './Column';
+import { RowKey } from './TableRow';
+
+type ManagedColumn = Partial<ColumnProps> & { key: RowKey };
 
 export default class ColumnManager {
-  constructor(columns, fixed) {
+  public static readonly PlaceholderKey = '__placeholder__';
+
+  private _origColumns: ManagedColumn[];
+  private _cached: any;
+  private _columns: ManagedColumn[] = [];
+  private _fixed: any;
+  private _columnStyles: any;
+
+  constructor(columns: any, fixed?: boolean) {
     this._origColumns = [];
     this.reset(columns, fixed);
   }
 
-  _cache(key, fn) {
+  _cache(key: string, fn: any) {
     if (key in this._cached) return this._cached[key];
     this._cached[key] = fn();
     return this._cached[key];
   }
 
-  reset(columns, fixed) {
-    this._columns = columns.map(column => {
+  reset(columns: any[], fixed: boolean | undefined) {
+    this._columns = columns.map<ManagedColumn>(column => {
       let width = column.width;
       if (column.resizable) {
         // don't reset column's `width` if `width` prop doesn't change
-        const idx = this._origColumns.findIndex(x => x.key === column.key);
+        const idx = this._origColumns.findIndex((x: { key: any }) => x.key === column.key);
         if (idx >= 0 && this._origColumns[idx].width === column.width) {
           width = this._columns[idx].width;
         }
@@ -50,7 +61,7 @@ export default class ColumnManager {
 
   hasFrozenColumns() {
     return this._cache('hasFrozenColumns', () => {
-      return this._fixed && this.getVisibleColumns().some(column => !!column.frozen);
+      return this._fixed && this.getVisibleColumns().some((column: { frozen: any }) => !!column.frozen);
     });
   }
 
@@ -58,14 +69,19 @@ export default class ColumnManager {
     return this._cache('hasLeftFrozenColumns', () => {
       return (
         this._fixed &&
-        this.getVisibleColumns().some(column => column.frozen === FrozenDirection.LEFT || column.frozen === true)
+        this.getVisibleColumns().some(
+          (column: { frozen: string | boolean }) => column.frozen === FrozenDirection.LEFT || column.frozen === true
+        )
       );
     });
   }
 
   hasRightFrozenColumns() {
     return this._cache('hasRightFrozenColumns', () => {
-      return this._fixed && this.getVisibleColumns().some(column => column.frozen === FrozenDirection.RIGHT);
+      return (
+        this._fixed &&
+        this.getVisibleColumns().some((column: { frozen: string }) => column.frozen === FrozenDirection.RIGHT)
+      );
     });
   }
 
@@ -74,15 +90,15 @@ export default class ColumnManager {
       const columns = this.getVisibleColumns();
       if (!this.hasFrozenColumns()) return columns;
 
-      const mainColumns = [];
-      this.getLeftFrozenColumns().forEach(column => {
+      const mainColumns: any[] = [];
+      this.getLeftFrozenColumns().forEach((column: any) => {
         //columns placeholder for the fixed table above them
         mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
       });
-      this.getVisibleColumns().forEach(column => {
+      this.getVisibleColumns().forEach((column: { frozen: any }) => {
         if (!column.frozen) mainColumns.push(column);
       });
-      this.getRightFrozenColumns().forEach(column => {
+      this.getRightFrozenColumns().forEach((column: any) => {
         mainColumns.push({ ...column, [ColumnManager.PlaceholderKey]: true });
       });
 
@@ -94,7 +110,7 @@ export default class ColumnManager {
     return this._cache('leftFrozenColumns', () => {
       if (!this._fixed) return [];
       return this.getVisibleColumns().filter(
-        column => column.frozen === FrozenDirection.LEFT || column.frozen === true
+        (column: { frozen: string | boolean }) => column.frozen === FrozenDirection.LEFT || column.frozen === true
       );
     });
   }
@@ -102,12 +118,12 @@ export default class ColumnManager {
   getRightFrozenColumns() {
     return this._cache('rightFrozenColumns', () => {
       if (!this._fixed) return [];
-      return this.getVisibleColumns().filter(column => column.frozen === FrozenDirection.RIGHT);
+      return this.getVisibleColumns().filter((column: { frozen: string }) => column.frozen === FrozenDirection.RIGHT);
     });
   }
 
-  getColumn(key) {
-    const idx = this._columns.findIndex(column => column.key === key);
+  getColumn(key: null) {
+    const idx = this._columns.findIndex((column: { key: any }) => column.key === key);
     return this._columns[idx];
   }
 
@@ -129,18 +145,18 @@ export default class ColumnManager {
     });
   }
 
-  recomputeColumnsWidth(columns) {
-    return columns.reduce((width, column) => width + column.width, 0);
+  recomputeColumnsWidth(columns: any[]) {
+    return columns.reduce((width: any, column: { width: any }) => width + column.width, 0);
   }
 
-  setColumnWidth(key, width) {
+  setColumnWidth(key: any, width: any) {
     const column = this.getColumn(key);
     column.width = width;
     this._cached = {};
     this._columnStyles[column.key] = this.recomputeColumnStyle(column);
   }
 
-  getColumnStyle(key) {
+  getColumnStyle(key: string | number) {
     return this._columnStyles[key];
   }
 
@@ -148,7 +164,7 @@ export default class ColumnManager {
     return this._columnStyles;
   }
 
-  recomputeColumnStyle(column) {
+  recomputeColumnStyle(column: ManagedColumn) {
     let flexGrow = 0;
     let flexShrink = 0;
     if (!this._fixed) {
@@ -158,7 +174,7 @@ export default class ColumnManager {
     // workaround for Flex bug on IE: https://github.com/philipwalton/flexbugs#flexbug-7
     const flexValue = `${flexGrow} ${flexShrink} auto`;
 
-    const style = {
+    const style: React.CSSProperties = {
       ...column.style,
       flex: flexValue,
       msFlex: flexValue,
@@ -178,11 +194,9 @@ export default class ColumnManager {
   }
 
   recomputeColumnStyles() {
-    return this._columns.reduce((styles, column) => {
+    return this._columns.reduce((styles: { [x: string]: any }, column: { key: string | number }) => {
       styles[column.key] = this.recomputeColumnStyle(column);
       return styles;
     }, {});
   }
 }
-
-ColumnManager.PlaceholderKey = '__placeholder__';

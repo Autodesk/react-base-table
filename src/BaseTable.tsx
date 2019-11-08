@@ -453,6 +453,11 @@ export default class BaseTable extends React.PureComponent<BaseTableProps, BaseT
      */
     rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
     /**
+     * Custom row component
+     * The component receives props `{ columns, rowData, rowIndex, isScrolling, className, style, rowKey, expandColumnKey, depth, rowEventHandlers, rowRenderer, cellRenderer, expandIconRenderer, onRowHover, onRowExpand?, tagName }`
+     */
+    rowComponent: PropTypes.element,
+    /**
      * Class name for the table header, could be a callback to return the class name
      * The callback is of the shape of `({ columns, headerIndex }) => string`
      */
@@ -834,7 +839,13 @@ export default class BaseTable extends React.PureComponent<BaseTableProps, BaseT
   }
 
   renderRow({ isScrolling, columns, rowData, rowIndex, style }: any) {
-    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey } = this.props;
+    const {
+      rowClassName,
+      rowRenderer,
+      rowEventHandlers,
+      expandColumnKey,
+      rowComponent: RowComponent = TableRow,
+    } = this.props;
 
     const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
     const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
@@ -871,7 +882,7 @@ export default class BaseTable extends React.PureComponent<BaseTableProps, BaseT
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
     };
 
-    return <TableRow {...rowProps} />;
+    return <RowComponent {...rowProps} />;
   }
 
   renderRowCell({ isScrolling, columns, column, columnIndex, rowData, rowIndex, expandIcon }: any) {

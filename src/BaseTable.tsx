@@ -889,7 +889,7 @@ export default class BaseTable extends React.PureComponent<BaseTableProps, BaseT
     const TableCell = this._getComponent('TableCell');
 
     const cellData = dataGetter
-      ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
+      ? dataGetter({ columns, column, columnIndex, rowData, rowIndex, container: this })
       : getValue(rowData, dataKey);
     const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
     const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, cellProps);

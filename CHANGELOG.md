@@ -2,6 +2,10 @@
 
 ## NEXT VERSION
 
+## v1.9.2 (2020-04-22)
+
+- fix: frozen data not shown with empty data
+
 ## v1.9.1 (2019-10-17)
 
 - reverted #80, now custom renderer doesn't support top level hooks, see #109

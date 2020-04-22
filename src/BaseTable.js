@@ -579,9 +579,9 @@ class BaseTable extends React.PureComponent {
   }
 
   renderEmptyLayer() {
-    const { data, footerHeight, emptyRenderer } = this.props;
+    const { data, frozenData, footerHeight, emptyRenderer } = this.props;
 
-    if (data && data.length) return null;
+    if ((data && data.length) || (frozenData && frozenData.length)) return null;
     const headerHeight = this._getHeaderHeight();
     return (
       <div className={this._prefixClass('empty-layer')} style={{ top: headerHeight, bottom: footerHeight }}>

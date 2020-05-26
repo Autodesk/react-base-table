@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: wrong description for Column props
+
 ## v1.9.2 (2020-04-22)
 
 - fix: frozen data not shown with empty data

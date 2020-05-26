@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.9.2 (2020-05-26)
+
 - fix: wrong description for Column props
 
 ## v1.9.2 (2020-04-22)

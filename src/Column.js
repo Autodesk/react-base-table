@@ -80,11 +80,11 @@ Column.propTypes = {
    */
   hidden: PropTypes.bool,
   /**
-   * Whether the column is resizable, defaults to true
+   * Whether the column is resizable, defaults to false
    */
   resizable: PropTypes.bool,
   /**
-   * Whether the column is sortable, defaults to true
+   * Whether the column is sortable, defaults to false
    */
   sortable: PropTypes.bool,
   /**

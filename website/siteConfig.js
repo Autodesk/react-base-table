@@ -97,6 +97,10 @@ module.exports = {
       path: '/examples/draggable-rows',
     },
     {
+      title: 'Draggable Rows with frozen columns',
+      path: '/examples/draggable-rows-frozen',
+    },
+    {
       title: 'Multi Header',
       path: '/examples/multi-header',
     },

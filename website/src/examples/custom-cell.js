@@ -50,95 +50,6 @@ const Attachment = styled.div`
   color: gray;
 `
 
-const ScoreToggle = styled.div`
-  cursor: pointer;
-  outline: none;
-  padding: 5px 14px;
-  color: #0696d7;
-`
-
-const currentYear = new Date().getFullYear()
-
-const columns = [
-  {
-    key: 'name',
-    title: 'Name',
-    dataKey: 'name',
-    width: 150,
-    resizable: true,
-    sortable: true,
-    frozen: Column.FrozenDirection.LEFT,
-  },
-  {
-    key: 'score',
-    title: 'Score',
-    dataKey: 'score.math',
-    width: 60,
-    align: Column.Alignment.CENTER,
-    sortable: false,
-  },
-  {
-    key: 'gender',
-    title: '♂♀',
-    dataKey: 'gender',
-    cellRenderer: ({ cellData: gender }) => <Gender gender={gender} />,
-    width: 60,
-    align: Column.Alignment.CENTER,
-    sortable: true,
-  },
-  {
-    key: 'birthday',
-    title: 'Birthday',
-    dataKey: 'birthday',
-    dataGetter: ({ column, rowData }) =>
-      rowData[column.dataKey].toLocaleDateString(),
-    width: 100,
-    align: Column.Alignment.RIGHT,
-    sortable: true,
-  },
-  {
-    key: 'attachments',
-    title: 'Attachments',
-    dataKey: 'attachments',
-    width: 60,
-    align: Column.Alignment.CENTER,
-    headerRenderer: () => <Attachment>?</Attachment>,
-    cellRenderer: ({ cellData }) => <Attachment>{cellData}</Attachment>,
-  },
-  {
-    key: 'description',
-    title: 'Description',
-    dataKey: 'description',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    cellRenderer: ({ cellData }) => <ReactTexty>{cellData}</ReactTexty>,
-  },
-  {
-    key: 'email',
-    title: 'Email',
-    dataKey: 'email',
-    width: 200,
-    resizable: true,
-    sortable: true,
-  },
-  {
-    key: 'country',
-    title: 'Country',
-    dataKey: 'country',
-    width: 100,
-    resizable: true,
-    sortable: true,
-  },
-  {
-    key: 'address',
-    title: 'Address',
-    dataKey: 'address.street',
-    width: 200,
-    resizable: true,
-  },
-]
-
 const defaultData = new Array(5000)
   .fill(0)
   .map(dataGenerator)
@@ -151,6 +62,103 @@ export default class App extends React.Component {
     data: defaultData,
     sortBy: defaultSort,
   }
+
+  columns = [
+    {
+      key: 'name',
+      title: 'Name',
+      dataKey: 'name',
+      width: 150,
+      resizable: true,
+      sortable: true,
+      frozen: Column.FrozenDirection.LEFT,
+    },
+    {
+      key: 'score',
+      title: 'Score',
+      dataKey: 'score.math',
+      width: 60,
+      align: Column.Alignment.CENTER,
+      sortable: false,
+    },
+    {
+      key: 'gender',
+      title: '♂♀',
+      dataKey: 'gender',
+      cellRenderer: ({ cellData: gender }) => <Gender gender={gender} />,
+      width: 60,
+      align: Column.Alignment.CENTER,
+      sortable: true,
+    },
+    {
+      key: 'birthday',
+      title: 'Birthday',
+      dataKey: 'birthday',
+      dataGetter: ({ column, rowData }) =>
+        rowData[column.dataKey].toLocaleDateString(),
+      width: 100,
+      align: Column.Alignment.RIGHT,
+      sortable: true,
+    },
+    {
+      key: 'attachments',
+      title: 'Attachments',
+      dataKey: 'attachments',
+      width: 60,
+      align: Column.Alignment.CENTER,
+      headerRenderer: () => <Attachment>?</Attachment>,
+      cellRenderer: ({ cellData }) => <Attachment>{cellData}</Attachment>,
+    },
+    {
+      key: 'description',
+      title: 'Description',
+      dataKey: 'description',
+      width: 200,
+      resizable: true,
+      sortable: true,
+      cellRenderer: ({ cellData }) => <ReactTexty>{cellData}</ReactTexty>,
+    },
+    {
+      key: 'email',
+      title: 'Email',
+      dataKey: 'email',
+      width: 200,
+      resizable: true,
+      sortable: true,
+    },
+    {
+      key: 'country',
+      title: 'Country',
+      dataKey: 'country',
+      width: 100,
+      resizable: true,
+      sortable: true,
+    },
+    {
+      key: 'address',
+      title: 'Address',
+      dataKey: 'address.street',
+      width: 200,
+      resizable: true,
+    },
+    {
+      key: 'action',
+      width: 100,
+      align: Column.Alignment.CENTER,
+      frozen: Column.FrozenDirection.RIGHT,
+      cellRenderer: ({ rowData }) => (
+        <button
+          onClick={() => {
+            this.setState({
+              data: this.state.data.filter(x => x.id !== rowData.id),
+            })
+          }}
+        >
+          Remove
+        </button>
+      ),
+    },
+  ]
 
   onColumnSort = sortBy => {
     const order = sortBy.order === SortOrder.ASC ? 1 : -1
@@ -168,7 +176,7 @@ export default class App extends React.Component {
       <Table
         fixed
         selectable
-        columns={columns}
+        columns={this.columns}
         data={data}
         sortBy={sortBy}
         onColumnSort={this.onColumnSort}

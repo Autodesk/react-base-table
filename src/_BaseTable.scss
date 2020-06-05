@@ -190,6 +190,10 @@ $table-prefix: BaseTable !default;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      &-dynamic {
+        white-space: normal;
+      }
     }
   }
 
@@ -251,7 +255,11 @@ $table-prefix: BaseTable !default;
     &-text {
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: normal;
+      white-space: nowrap;
+
+      &-dynamic {
+        white-space: normal;
+      }
     }
   }
 

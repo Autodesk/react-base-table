@@ -24,20 +24,17 @@ const generateColumns = (count = 10, prefix = 'column-', props) =>
     dataKey: `${prefix}${columnIndex}`,
     title: `Column ${columnIndex}`,
     width: 150,
-    cellRenderer: (args) => {
-      // console.log('args', args);
-      return args.cellData;
-    }
   }))
 
   const isEven = num => num % 2 === 0;
+  const randomBool = num => isEven(Math.floor(Math.random() * num));
 
 const generateData = (columns, count = 200, prefix = 'row-') =>
   new Array(count).fill(0).map((row, rowIndex) => {
     return columns.reduce(
       (rowData, column, columnIndex) => {
-        const val = `Row ${rowIndex} - Col ${columnIndex} Row ${rowIndex} - Col ${columnIndex} Row ${rowIndex} - Col ${columnIndex} Row ${rowIndex} - Col ${columnIndex}`;
-        rowData[column.dataKey] = isEven(columnIndex) ? val : isEven(rowIndex) ? val.concat(val) : val.concat(val.concat(val));
+        const val = `Row ${rowIndex} - Col ${columnIndex} Row ${rowIndex} - Col ${columnIndex}`;
+        rowData[column.dataKey] = randomBool(rowIndex) ? val : randomBool(rowIndex) ? val.concat(val) : val.concat(val.concat(val));
         return rowData
       },
       {

@@ -6,6 +6,7 @@ import memoize from 'memoize-one';
 import GridTable from './GridTable';
 import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
+import DynamicTableRow from './DynamicTableRow';
 import TableHeaderCell from './TableHeaderCell';
 import TableCell from './TableCell';
 import Column, { Alignment, FrozenDirection } from './Column';
@@ -257,7 +258,13 @@ class BaseTable extends React.PureComponent {
   }
 
   renderRow({ isScrolling, columns, rowData, rowIndex, style }) {
-    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey } = this.props;
+    const {
+      rowClassName,
+      rowRenderer,
+      rowEventHandlers,
+      expandColumnKey,
+      useDynamicRowHeight_EXPERIMENTAL,
+    } = this.props;
 
     const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
     const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
@@ -293,6 +300,11 @@ class BaseTable extends React.PureComponent {
       // for fixed table, we need to sync the hover state across the inner tables
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
     };
+
+    if (useDynamicRowHeight_EXPERIMENTAL) {
+      // console.log('rendering dynamic table row')
+      return <DynamicTableRow {...rowProps} />;
+    }
 
     return <TableRow {...rowProps} />;
   }
@@ -446,7 +458,8 @@ class BaseTable extends React.PureComponent {
   }
 
   renderMainTable() {
-    const { width, headerHeight, rowHeight, fixed, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight_EXPERIMENTAL, ...rest } = this.props;
+    // console.log('renderMainTable', useDynamicRowHeight_EXPERIMENTAL);
     const height = this._getTableHeight();
 
     let tableWidth = width - this._verticalScrollbarSize;
@@ -473,6 +486,7 @@ class BaseTable extends React.PureComponent {
         rowRenderer={this.renderRow}
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
+        useVariableRowHeight__EXPERIMENTAL={useDynamicRowHeight_EXPERIMENTAL}
       />
     );
   }
@@ -1168,6 +1182,7 @@ BaseTable.propTypes = {
     ExpandIcon: PropTypes.func,
     SortIndicator: PropTypes.func,
   }),
+  useDynamicRowHeight_EXPERIMENTAL: PropTypes.bool,
 };
 
 export default BaseTable;

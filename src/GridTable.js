@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { FixedSizeGrid as Grid } from 'react-window';
+import { FixedSizeGrid, VariableSizeGrid } from 'react-window';
 
 import Header from './TableHeader';
 
 /**
  * A wrapper of the Grid for internal only
  */
+export const RowSizeContext = React.createContext({});
 class GridTable extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ class GridTable extends React.PureComponent {
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
+    this.rowSizeMap = {};
   }
 
   forceUpdateTable() {
@@ -44,13 +46,25 @@ class GridTable extends React.PureComponent {
   }
 
   renderRow(args) {
-    const { data, columns, rowRenderer } = this.props;
+    // console.log('renderRow', args);
+    const { data, columns, rowRenderer, useVariableRowHeight__EXPERIMENTAL } = this.props;
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
   }
 
+  getRowSize = index => {
+    console.log('getrowSize', index, this.rowSizeMap[index]);
+    return this.rowSizeMap[index];
+  };
+
+  setRowSizeMap = (index, size) => {
+    this.rowSizeMap[index] = size;
+  };
+
   render() {
     const {
+      useVariableRowHeight__EXPERIMENTAL,
+      columnWidth,
       containerStyle,
       classPrefix,
       className,
@@ -70,35 +84,45 @@ class GridTable extends React.PureComponent {
       onScrollbarPresenceChange,
       ...rest
     } = this.props;
+    console.log('rowSizeMap', this.rowSizeMap)
     const headerHeight = this._getHeaderHeight();
     const frozenRowCount = frozenData.length;
-    const frozenRowsHeight = rowHeight * frozenRowCount;
+    const frozenRowsHeight = () => {
+      if (!useVariableRowHeight__EXPERIMENTAL) {
+        return rowHeight * frozenRowCount;
+      }
+
+      return frozenData.reduce((acc, _, i) => (acc += rowHeight(i)), 0);
+    };
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
+    const Grid = useVariableRowHeight__EXPERIMENTAL ? VariableSizeGrid : FixedSizeGrid;
     return (
       <div role="table" className={cls} {...containerProps}>
-        <Grid
-          {...rest}
-          className={`${classPrefix}__body`}
-          ref={this._setBodyRef}
-          data={data}
-          itemKey={this._itemKey}
-          frozenData={frozenData}
-          width={width}
-          height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
-          rowHeight={rowHeight}
-          rowCount={data.length}
-          overscanRowCount={overscanRowCount}
-          columnWidth={bodyWidth}
-          columnCount={1}
-          overscanColumnCount={0}
-          useIsScrolling={useIsScrolling}
-          hoveredRowKey={hoveredRowKey}
-          onScroll={onScroll}
-          onItemsRendered={this._handleItemsRendered}
-          children={this.renderRow}
-        />
-        {headerHeight + frozenRowsHeight > 0 && (
+        <RowSizeContext.Provider value={{ setSizeMap: this.setRowSizeMap }}>
+          <Grid
+            {...rest}
+            className={`${classPrefix}__body`}
+            ref={this._setBodyRef}
+            data={data}
+            itemKey={this._itemKey}
+            frozenData={frozenData}
+            width={width}
+            height={Math.max(height - headerHeight - frozenRowsHeight(), 0)}
+            rowHeight={this.getRowSize}
+            rowCount={data.length}
+            overscanRowCount={overscanRowCount}
+            columnWidth={index => bodyWidth}
+            columnCount={1}
+            overscanColumnCount={0}
+            useIsScrolling={useIsScrolling}
+            hoveredRowKey={hoveredRowKey}
+            onScroll={onScroll}
+            onItemsRendered={this._handleItemsRendered}
+            children={this.renderRow}
+          />
+        </RowSizeContext.Provider>
+        {headerHeight + frozenRowsHeight() > 0 && (
           // put header after body and reverse the display order via css
           // to prevent header's shadow being covered by body
           <Header
@@ -108,7 +132,7 @@ class GridTable extends React.PureComponent {
             data={data}
             frozenData={frozenData}
             width={width}
-            height={Math.min(headerHeight + frozenRowsHeight, height)}
+            height={Math.min(headerHeight + frozenRowsHeight(), height)}
             rowWidth={headerWidth}
             rowHeight={rowHeight}
             headerHeight={this.props.headerHeight}
@@ -153,6 +177,7 @@ class GridTable extends React.PureComponent {
 }
 
 GridTable.propTypes = {
+  useVariableRowHeight__EXPERIMENTAL: PropTypes.bool,
   containerStyle: PropTypes.object,
   classPrefix: PropTypes.string,
   className: PropTypes.string,
@@ -161,7 +186,8 @@ GridTable.propTypes = {
   headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.number.isRequired,
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
+  columnWidth: PropTypes.number,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

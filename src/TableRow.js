@@ -33,6 +33,7 @@ class TableRow extends React.PureComponent {
       rowKey,
       onRowHover,
       onRowExpand,
+      innerRef,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -55,9 +56,9 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
-
+console.log('tableRow Style', style)
     return (
-      <Tag {...rest} className={className} style={style} {...eventHandlers}>
+      <Tag {...rest} className={className} style={style} {...eventHandlers} ref={innerRef}>
         {cells}
       </Tag>
     );
@@ -131,6 +132,8 @@ TableRow.propTypes = {
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,
   tagName: PropTypes.elementType,
+  innerRef: PropTypes.object,
 };
 
+// export const ExperimentalTableRow = React.forwardRef((props, ref) => <TableRow {...props} innerRef={ref} />);
 export default TableRow;

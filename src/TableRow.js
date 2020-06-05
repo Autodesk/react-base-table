@@ -17,8 +17,10 @@ class TableRow extends React.Component {
   }
 
   componentDidMount() {
-    const height = this.ref.current.getBoundingClientRect().height;
-    this.context.setSizeMap(this.props.rowIndex, height);
+    if (this.props.useDynamicRowHeight) {
+      const height = this.ref.current.getBoundingClientRect().height;
+      this.context.setSizeMap(this.props.rowIndex, height);
+    }
   }
 
   render() {
@@ -41,6 +43,7 @@ class TableRow extends React.Component {
       rowKey,
       onRowHover,
       onRowExpand,
+      useDynamicRowHeight,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -63,12 +66,29 @@ class TableRow extends React.Component {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
+    if (!useDynamicRowHeight) {
+      return (
+        <div {...rest} style={style} className={className} {...eventHandlers} ref={this.ref}>
+          {cells}
+        </div>
+      );
+    }
+
     return (
       <RowSizeContext.Consumer>
         {context => {
           this.context = context;
+          if (useDynamicRowHeight) {
+            return (
+              <div style={style}>
+                <div {...rest} className={className} {...eventHandlers} ref={this.ref}>
+                  {cells}
+                </div>
+              </div>
+            );
+          }
           return (
-            <div {...rest} className={className} {...eventHandlers} ref={this.ref}>
+            <div {...rest} style={style} className={className} {...eventHandlers} ref={this.ref}>
               {cells}
             </div>
           );
@@ -146,6 +166,7 @@ TableRow.propTypes = {
   onRowExpand: PropTypes.func,
   tagName: PropTypes.elementType,
   innerRef: PropTypes.object,
+  useDynamicRowHeight: PropTypes.bool,
 };
 
 // export const ExperimentalTableRow = React.forwardRef((props, ref) => <TableRow {...props} innerRef={ref} />);

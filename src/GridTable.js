@@ -9,7 +9,7 @@ import Header from './TableHeader';
  * A wrapper of the Grid for internal only
  */
 export const RowSizeContext = React.createContext({});
-class GridTable extends React.PureComponent {
+class GridTable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -45,20 +45,18 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
+  setRowSizeMap = (index, size) => {
+    this.rowSizeMap[index] = size;
+  };
+
   renderRow(args) {
-    // console.log('renderRow', args);
     const { data, columns, rowRenderer, useVariableRowHeight__EXPERIMENTAL } = this.props;
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
   }
 
   getRowSize = index => {
-    console.log('getrowSize', index, this.rowSizeMap[index]);
-    return this.rowSizeMap[index];
-  };
-
-  setRowSizeMap = (index, size) => {
-    this.rowSizeMap[index] = size;
+    return this.rowSizeMap[index] || 50;
   };
 
   render() {
@@ -82,9 +80,9 @@ class GridTable extends React.PureComponent {
       // omit from rest
       style,
       onScrollbarPresenceChange,
+      gridRef,
       ...rest
     } = this.props;
-    console.log('rowSizeMap', this.rowSizeMap)
     const headerHeight = this._getHeaderHeight();
     const frozenRowCount = frozenData.length;
     const frozenRowsHeight = () => {
@@ -98,7 +96,7 @@ class GridTable extends React.PureComponent {
     const containerProps = containerStyle ? { style: containerStyle } : null;
     const Grid = useVariableRowHeight__EXPERIMENTAL ? VariableSizeGrid : FixedSizeGrid;
     return (
-      <div role="table" className={cls} {...containerProps}>
+      <div role="table" className={cls} {...containerProps} ref={gridRef}>
         <RowSizeContext.Provider value={{ setSizeMap: this.setRowSizeMap }}>
           <Grid
             {...rest}
@@ -120,6 +118,7 @@ class GridTable extends React.PureComponent {
             onScroll={onScroll}
             onItemsRendered={this._handleItemsRendered}
             children={this.renderRow}
+            rowSizeMap={this.rowSizeMap}
           />
         </RowSizeContext.Provider>
         {headerHeight + frozenRowsHeight() > 0 && (
@@ -202,6 +201,7 @@ GridTable.propTypes = {
   onRowsRendered: PropTypes.func,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
+  gridRef: PropTypes.object,
 };
 
 export default GridTable;

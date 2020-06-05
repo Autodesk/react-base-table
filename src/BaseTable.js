@@ -6,7 +6,7 @@ import memoize from 'memoize-one';
 import GridTable from './GridTable';
 import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
-import DynamicTableRow from './DynamicTableRow';
+// import DynamicTableRow from './DynamicTableRow';
 import TableHeaderCell from './TableHeaderCell';
 import TableCell from './TableCell';
 import Column, { Alignment, FrozenDirection } from './Column';
@@ -54,7 +54,7 @@ const EMPTY_ARRAY = [];
 /**
  * React table component
  */
-class BaseTable extends React.PureComponent {
+class BaseTable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -301,10 +301,10 @@ class BaseTable extends React.PureComponent {
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
     };
 
-    if (useDynamicRowHeight_EXPERIMENTAL) {
-      // console.log('rendering dynamic table row')
-      return <DynamicTableRow {...rowProps} />;
-    }
+    // if (useDynamicRowHeight_EXPERIMENTAL) {
+    //   // console.log('rendering dynamic table row')
+    //   return <DynamicTableRow {...rowProps} />;
+    // }
 
     return <TableRow {...rowProps} />;
   }
@@ -459,7 +459,6 @@ class BaseTable extends React.PureComponent {
 
   renderMainTable() {
     const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight_EXPERIMENTAL, ...rest } = this.props;
-    // console.log('renderMainTable', useDynamicRowHeight_EXPERIMENTAL);
     const height = this._getTableHeight();
 
     let tableWidth = width - this._verticalScrollbarSize;
@@ -625,7 +624,6 @@ class BaseTable extends React.PureComponent {
       footerHeight,
       classPrefix,
     } = this.props;
-
     this._resetColumnManager(getColumns(columns, children), fixed);
 
     if (expandColumnKey) {
@@ -722,6 +720,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _getTableHeight() {
+    // console.log('this.state.listheight', this.state.listHeight)
     const { height, maxHeight, footerHeight } = this.props;
     let tableHeight = height - footerHeight;
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { RowSizeContext } from './GridTable';
+
 import PropTypes from 'prop-types';
 
 import { renderElement } from './utils';
@@ -6,11 +8,17 @@ import { renderElement } from './utils';
 /**
  * Row component for BaseTable
  */
-class TableRow extends React.PureComponent {
+class TableRow extends React.Component {
   constructor(props) {
     super(props);
 
     this._handleExpand = this._handleExpand.bind(this);
+    this.ref = React.createRef();
+  }
+
+  componentDidMount() {
+    const height = this.ref.current.getBoundingClientRect().height;
+    this.context.setSizeMap(this.props.rowIndex, height);
   }
 
   render() {
@@ -33,7 +41,6 @@ class TableRow extends React.PureComponent {
       rowKey,
       onRowHover,
       onRowExpand,
-      innerRef,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -56,11 +63,17 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
-console.log('tableRow Style', style)
     return (
-      <Tag {...rest} className={className} style={style} {...eventHandlers} ref={innerRef}>
-        {cells}
-      </Tag>
+      <RowSizeContext.Consumer>
+        {context => {
+          this.context = context;
+          return (
+            <div {...rest} className={className} {...eventHandlers} ref={this.ref}>
+              {cells}
+            </div>
+          );
+        }}
+      </RowSizeContext.Consumer>
     );
   }
 

@@ -12,6 +12,7 @@ export const RowSizeContext = React.createContext({});
 class GridTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { rowSizeMap: {} };
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
     this._setBodyRef = this._setBodyRef.bind(this);
@@ -46,22 +47,33 @@ class GridTable extends React.Component {
   }
 
   setRowSizeMap = (index, size) => {
+    if (!this.props.useDynamicRowHeight) {
+      return;
+    }
+
     this.rowSizeMap[index] = size;
+    this.setState({ rowSizeMap: this.rowSizeMap }, () => {
+      if (this.bodyRef) {
+        // Recalculate row heights after initial measure
+        this.bodyRef.resetAfterRowIndex(0);
+      }
+    });
   };
 
   renderRow(args) {
-    const { data, columns, rowRenderer, useVariableRowHeight__EXPERIMENTAL } = this.props;
+    const { data, columns, rowRenderer } = this.props;
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
   }
 
   getRowSize = index => {
-    return this.rowSizeMap[index] || 50;
+    const { rowSizeMap } = this.state;
+    return rowSizeMap[index] || 60;
   };
 
   render() {
     const {
-      useVariableRowHeight__EXPERIMENTAL,
+      useDynamicRowHeight,
       columnWidth,
       containerStyle,
       classPrefix,
@@ -86,7 +98,7 @@ class GridTable extends React.Component {
     const headerHeight = this._getHeaderHeight();
     const frozenRowCount = frozenData.length;
     const frozenRowsHeight = () => {
-      if (!useVariableRowHeight__EXPERIMENTAL) {
+      if (!useDynamicRowHeight) {
         return rowHeight * frozenRowCount;
       }
 
@@ -94,7 +106,7 @@ class GridTable extends React.Component {
     };
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
-    const Grid = useVariableRowHeight__EXPERIMENTAL ? VariableSizeGrid : FixedSizeGrid;
+    const Grid = useDynamicRowHeight ? VariableSizeGrid : FixedSizeGrid;
     return (
       <div role="table" className={cls} {...containerProps} ref={gridRef}>
         <RowSizeContext.Provider value={{ setSizeMap: this.setRowSizeMap }}>
@@ -107,10 +119,10 @@ class GridTable extends React.Component {
             frozenData={frozenData}
             width={width}
             height={Math.max(height - headerHeight - frozenRowsHeight(), 0)}
-            rowHeight={this.getRowSize}
+            rowHeight={useDynamicRowHeight ? this.getRowSize : this.props.rowHeight}
             rowCount={data.length}
             overscanRowCount={overscanRowCount}
-            columnWidth={index => bodyWidth}
+            columnWidth={useDynamicRowHeight ? _ => bodyWidth : bodyWidth}
             columnCount={1}
             overscanColumnCount={0}
             useIsScrolling={useIsScrolling}
@@ -118,7 +130,6 @@ class GridTable extends React.Component {
             onScroll={onScroll}
             onItemsRendered={this._handleItemsRendered}
             children={this.renderRow}
-            rowSizeMap={this.rowSizeMap}
           />
         </RowSizeContext.Provider>
         {headerHeight + frozenRowsHeight() > 0 && (
@@ -176,7 +187,7 @@ class GridTable extends React.Component {
 }
 
 GridTable.propTypes = {
-  useVariableRowHeight__EXPERIMENTAL: PropTypes.bool,
+  useDynamicRowHeight: PropTypes.bool,
   containerStyle: PropTypes.object,
   classPrefix: PropTypes.string,
   className: PropTypes.string,

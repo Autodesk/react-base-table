@@ -1,5 +1,3 @@
-const sizeContext = React.createContext({});
-
 const columns = generateColumns(10)
 const data = generateData(columns, 10000)
 
@@ -11,4 +9,4 @@ const fixedColumns = columns.map((column, columnIndex) => {
 });
 
 
-export default () => <Table fixed columns={columns} data={data} useDynamicRowHeight_EXPERIMENTAL />
+export default () => <Table fixed columns={columns} data={data} useDynamicRowHeight />

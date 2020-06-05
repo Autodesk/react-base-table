@@ -6,7 +6,6 @@ import memoize from 'memoize-one';
 import GridTable from './GridTable';
 import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
-// import DynamicTableRow from './DynamicTableRow';
 import TableHeaderCell from './TableHeaderCell';
 import TableCell from './TableCell';
 import Column, { Alignment, FrozenDirection } from './Column';
@@ -258,13 +257,7 @@ class BaseTable extends React.Component {
   }
 
   renderRow({ isScrolling, columns, rowData, rowIndex, style }) {
-    const {
-      rowClassName,
-      rowRenderer,
-      rowEventHandlers,
-      expandColumnKey,
-      useDynamicRowHeight_EXPERIMENTAL,
-    } = this.props;
+    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey, useDynamicRowHeight } = this.props;
 
     const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
     const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
@@ -301,12 +294,7 @@ class BaseTable extends React.Component {
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
     };
 
-    // if (useDynamicRowHeight_EXPERIMENTAL) {
-    //   // console.log('rendering dynamic table row')
-    //   return <DynamicTableRow {...rowProps} />;
-    // }
-
-    return <TableRow {...rowProps} />;
+    return <TableRow {...rowProps} useDynamicRowHeight={useDynamicRowHeight} />;
   }
 
   renderRowCell({ isScrolling, columns, column, columnIndex, rowData, rowIndex, expandIcon }) {
@@ -327,7 +315,10 @@ class BaseTable extends React.Component {
       ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
       : getValue(rowData, dataKey);
     const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
-    const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, cellProps);
+    const cellClasses = cn(this._prefixClass('row-cell-text'), {
+      [this._prefixClass('row-cell-text-dynamic')]: this.props.useDynamicRowHeight,
+    });
+    const cell = renderElement(cellRenderer || <TableCell className={cellClasses} />, cellProps);
 
     const cellCls = callOrReturn(className, { cellData, columns, column, columnIndex, rowData, rowIndex });
     const cls = cn(this._prefixClass('row-cell'), cellCls, {
@@ -458,7 +449,7 @@ class BaseTable extends React.Component {
   }
 
   renderMainTable() {
-    const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight_EXPERIMENTAL, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight, ...rest } = this.props;
     const height = this._getTableHeight();
 
     let tableWidth = width - this._verticalScrollbarSize;
@@ -485,7 +476,7 @@ class BaseTable extends React.Component {
         rowRenderer={this.renderRow}
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
-        useVariableRowHeight__EXPERIMENTAL={useDynamicRowHeight_EXPERIMENTAL}
+        useDynamicRowHeight={useDynamicRowHeight}
       />
     );
   }
@@ -1181,7 +1172,7 @@ BaseTable.propTypes = {
     ExpandIcon: PropTypes.func,
     SortIndicator: PropTypes.func,
   }),
-  useDynamicRowHeight_EXPERIMENTAL: PropTypes.bool,
+  useDynamicRowHeight: PropTypes.bool,
 };
 
 export default BaseTable;

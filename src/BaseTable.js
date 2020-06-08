@@ -736,7 +736,6 @@ class BaseTable extends React.PureComponent {
   }
 
   _getTableHeight() {
-    // console.log('this.state.listheight', this.state.listHeight)
     const { height, maxHeight, footerHeight } = this.props;
     let tableHeight = height - footerHeight;
 

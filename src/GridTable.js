@@ -9,7 +9,7 @@ import Header from './TableHeader';
  * A wrapper of the Grid for internal only
  */
 export const RowHeightContext = React.createContext({});
-class GridTable extends React.PureComponent {
+class GridTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = { rowHeightMap: {} };
@@ -102,7 +102,6 @@ class GridTable extends React.PureComponent {
       // omit from rest
       style,
       onScrollbarPresenceChange,
-      gridRef,
       rowHeightMap,
       ...rest
     } = this.props;
@@ -119,7 +118,7 @@ class GridTable extends React.PureComponent {
     const containerProps = containerStyle ? { style: containerStyle } : null;
     const Grid = useDynamicRowHeight ? VariableSizeGrid : FixedSizeGrid;
     return (
-      <div role="table" className={cls} {...containerProps} ref={gridRef}>
+      <div role="table" className={cls} {...containerProps}>
         <RowHeightContext.Provider value={{ setRowHeightMap: this.setRowHeightMap }}>
           <Grid
             {...rest}
@@ -225,7 +224,6 @@ GridTable.propTypes = {
   onRowsRendered: PropTypes.func,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
-  gridRef: PropTypes.object,
   setRowHeight: PropTypes.func,
   rowHeightMap: PropTypes.object,
 };

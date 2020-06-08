@@ -71,9 +71,9 @@ class TableRow extends React.PureComponent {
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
     if (!useDynamicRowHeight) {
       return (
-        <div {...rest} style={style} className={className} {...eventHandlers}>
+        <Tag {...rest} style={style} className={className} {...eventHandlers}>
           {cells}
-        </div>
+        </Tag>
       );
     }
     const rowStyle = { height: '100%' };
@@ -82,7 +82,7 @@ class TableRow extends React.PureComponent {
         {context => {
           this.context = context;
           return (
-            <div style={style}>
+            <Tag style={style}>
               <div
                 {...rest}
                 style={this.mounted ? rowStyle : null}
@@ -92,7 +92,7 @@ class TableRow extends React.PureComponent {
               >
                 {cells}
               </div>
-            </div>
+            </Tag>
           );
         }}
       </RowHeightContext.Consumer>
@@ -171,5 +171,4 @@ TableRow.propTypes = {
   useDynamicRowHeight: PropTypes.bool,
 };
 
-// export const ExperimentalTableRow = React.forwardRef((props, ref) => <TableRow {...props} innerRef={ref} />);
 export default TableRow;

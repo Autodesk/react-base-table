@@ -450,16 +450,24 @@ class BaseTable extends React.PureComponent {
   }
 
   setRowHeight = (index, size) => {
-    const { rowHeightMap } = this.state;
+    this.setState(prev => {
+      const newHeightMap = {
+        ...prev.rowHeightMap,
+      };
 
-    if (rowHeightMap.hasOwnProperty(index)) {
-      if (size > rowHeightMap[index]) {
-        rowHeightMap[index] = size;
+      if (newHeightMap.hasOwnProperty(index)) {
+        if (size > newHeightMap[index]) {
+          newHeightMap[index] = size;
+        }
+      } else {
+        newHeightMap[index] = size;
       }
-    } else {
-      rowHeightMap[index] = size;
-    }
-    this.setState({ rowHeightMap });
+
+      return {
+        ...prev,
+        rowHeightMap: newHeightMap,
+      };
+    });
   };
 
   renderMainTable() {

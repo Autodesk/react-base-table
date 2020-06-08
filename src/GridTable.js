@@ -65,14 +65,15 @@ class GridTable extends React.Component {
 
   setRowHeightMap = (index, size) => {
     const { useDynamicRowHeight } = this.props;
-    const { rowHeightMap } = this.state;
 
     if (!useDynamicRowHeight) {
       return;
     }
 
-    rowHeightMap[index] = size;
-    this.setState({ rowHeightMap }, () => this.clearRowHeightCache(index, size));
+    this.setState(
+      ({ rowHeightMap }) => ({ rowHeightMap: { ...rowHeightMap, [index]: size } }),
+      () => this.clearRowHeightCache(index, size)
+    );
   };
 
   renderRow(args) {

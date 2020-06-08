@@ -8,7 +8,7 @@ import { renderElement } from './utils';
 /**
  * Row component for BaseTable
  */
-class TableRow extends React.Component {
+class TableRow extends React.PureComponent {
   constructor(props) {
     super(props);
 

@@ -53,7 +53,7 @@ const EMPTY_ARRAY = [];
 /**
  * React table component
  */
-class BaseTable extends React.Component {
+class BaseTable extends React.PureComponent {
   constructor(props) {
     super(props);
 

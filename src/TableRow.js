@@ -26,6 +26,14 @@ class TableRow extends React.PureComponent {
     this.mounted = true;
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.useDynamicRowHeight && prevProps.rowData !== this.props.rowData) {
+      const { rowIndex } = this.props;
+      const height = this.ref.current.getBoundingClientRect().height;
+      this.context.setRowHeightMap(rowIndex, height);
+    }
+  }
+
   render() {
     /* eslint-disable no-unused-vars */
     const {

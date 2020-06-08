@@ -8,6 +8,7 @@ class TableHeader extends React.PureComponent {
     this.renderHeaderRow = this.renderHeaderRow.bind(this);
     this.renderFrozenRow = this.renderFrozenRow.bind(this);
     this._setRef = this._setRef.bind(this);
+    this.ref = React.createRef();
   }
 
   scrollTo(offset) {
@@ -24,10 +25,11 @@ class TableHeader extends React.PureComponent {
 
   renderFrozenRow(rowData, index) {
     const { columns, rowHeight, rowRenderer } = this.props;
-    const height = typeof rowHeight === 'function' ? rowHeight(index) : rowHeight;
-    const style = { width: '100%', height };
     // for frozen row the `rowIndex` is negative
     const rowIndex = -index - 1;
+    const height = typeof rowHeight === 'function' ? rowHeight(rowIndex) : rowHeight;
+    const style = { width: '100%', height };
+
     return rowRenderer({ style, columns, rowData, rowIndex });
   }
 
@@ -75,6 +77,7 @@ TableHeader.propTypes = {
   frozenData: PropTypes.arrayOf(PropTypes.object),
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
+  useDynamicRowHeight: PropTypes.bool,
 };
 
 export default TableHeader;

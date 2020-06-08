@@ -1,5 +1,5 @@
 import React from 'react';
-import { RowSizeContext } from './GridTable';
+import { RowHeightContext } from './GridTable';
 
 import PropTypes from 'prop-types';
 
@@ -14,13 +14,16 @@ class TableRow extends React.Component {
 
     this._handleExpand = this._handleExpand.bind(this);
     this.ref = React.createRef();
+    this.mounted = false;
   }
 
   componentDidMount() {
     if (this.props.useDynamicRowHeight) {
+      const { rowIndex } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
-      this.context.setSizeMap(this.props.rowIndex, height);
+      this.context.setRowHeightMap(rowIndex, height);
     }
+    this.mounted = true;
   }
 
   render() {
@@ -68,32 +71,31 @@ class TableRow extends React.Component {
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
     if (!useDynamicRowHeight) {
       return (
-        <div {...rest} style={style} className={className} {...eventHandlers} ref={this.ref}>
+        <div {...rest} style={style} className={className} {...eventHandlers}>
           {cells}
         </div>
       );
     }
-
+    const rowStyle = { height: '100%' };
     return (
-      <RowSizeContext.Consumer>
+      <RowHeightContext.Consumer>
         {context => {
           this.context = context;
-          if (useDynamicRowHeight) {
-            return (
-              <div style={style}>
-                <div {...rest} className={className} {...eventHandlers} ref={this.ref}>
-                  {cells}
-                </div>
-              </div>
-            );
-          }
           return (
-            <div {...rest} style={style} className={className} {...eventHandlers} ref={this.ref}>
-              {cells}
+            <div style={style}>
+              <div
+                {...rest}
+                style={this.mounted ? rowStyle : null}
+                className={className}
+                {...eventHandlers}
+                ref={this.ref}
+              >
+                {cells}
+              </div>
             </div>
           );
         }}
-      </RowSizeContext.Consumer>
+      </RowHeightContext.Consumer>
     );
   }
 

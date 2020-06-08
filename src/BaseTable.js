@@ -64,6 +64,7 @@ class BaseTable extends React.Component {
       resizingKey: null,
       resizingWidth: 0,
       expandedRowKeys: cloneArray(defaultExpandedRowKeys),
+      rowHeightMap: {},
     };
     this.columnManager = new ColumnManager(getColumns(columns, children), props.fixed);
 
@@ -448,8 +449,22 @@ class BaseTable extends React.Component {
     );
   }
 
+  setRowHeight = (index, size) => {
+    const { rowHeightMap } = this.state;
+
+    if (rowHeightMap.hasOwnProperty(index)) {
+      if (size > rowHeightMap[index]) {
+        rowHeightMap[index] = size;
+      }
+    } else {
+      rowHeightMap[index] = size;
+    }
+    this.setState({ rowHeightMap });
+  };
+
   renderMainTable() {
     const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight, ...rest } = this.props;
+    const { rowHeightMap } = this.state;
     const height = this._getTableHeight();
 
     let tableWidth = width - this._verticalScrollbarSize;
@@ -477,6 +492,8 @@ class BaseTable extends React.Component {
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
         useDynamicRowHeight={useDynamicRowHeight}
+        setRowHeight={this.setRowHeight}
+        rowHeightMap={rowHeightMap}
       />
     );
   }
@@ -484,7 +501,8 @@ class BaseTable extends React.Component {
   renderLeftTable() {
     if (!this.columnManager.hasLeftFrozenColumns()) return null;
 
-    const { width, headerHeight, rowHeight, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, useDynamicRowHeight, ...rest } = this.props;
+    const { rowHeightMap } = this.state;
 
     const containerHeight = this._getFrozenContainerHeight();
     const offset = this._verticalScrollbarSize || 20;
@@ -508,6 +526,9 @@ class BaseTable extends React.Component {
         rowRenderer={this.renderRow}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
+        setRowHeight={this.setRowHeight}
+        useDynamicRowHeight={useDynamicRowHeight}
+        rowHeightMap={rowHeightMap}
       />
     );
   }
@@ -515,7 +536,8 @@ class BaseTable extends React.Component {
   renderRightTable() {
     if (!this.columnManager.hasRightFrozenColumns()) return null;
 
-    const { width, headerHeight, rowHeight, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, useDynamicRowHeight, ...rest } = this.props;
+    const { rowHeightMap } = this.state;
 
     const containerHeight = this._getFrozenContainerHeight();
     const columnsWidth = this.columnManager.getRightFrozenColumnsWidth();
@@ -539,6 +561,9 @@ class BaseTable extends React.Component {
         rowRenderer={this.renderRow}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
+        setRowHeight={this.setRowHeight}
+        useDynamicRowHeight={useDynamicRowHeight}
+        rowHeightMap={rowHeightMap}
       />
     );
   }

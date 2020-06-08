@@ -8,11 +8,11 @@ import Header from './TableHeader';
 /**
  * A wrapper of the Grid for internal only
  */
-export const RowSizeContext = React.createContext({});
+export const RowHeightContext = React.createContext({});
 class GridTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { rowSizeMap: {} };
+    this.state = { rowHeightMap: {} };
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
     this._setBodyRef = this._setBodyRef.bind(this);
@@ -20,7 +20,6 @@ class GridTable extends React.Component {
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
-    this.rowSizeMap = {};
   }
 
   forceUpdateTable() {
@@ -46,18 +45,34 @@ class GridTable extends React.Component {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  setRowSizeMap = (index, size) => {
+  clearRowHeightCache = (index, size) => {
+    if (this.props.setRowHeight) {
+      this.props.setRowHeight(index, size);
+    }
+
+    if (this.bodyRef) {
+      this.bodyRef.resetAfterRowIndex(0);
+    }
+  };
+
+  getRowHeight = index => {
     if (!this.props.useDynamicRowHeight) {
+      return this.props.rowHeight;
+    }
+
+    return this.props.rowHeightMap[index] || 60;
+  };
+
+  setRowHeightMap = (index, size) => {
+    const { useDynamicRowHeight } = this.props;
+    const { rowHeightMap } = this.state;
+
+    if (!useDynamicRowHeight) {
       return;
     }
 
-    this.rowSizeMap[index] = size;
-    this.setState({ rowSizeMap: this.rowSizeMap }, () => {
-      if (this.bodyRef) {
-        // Recalculate row heights after initial measure
-        this.bodyRef.resetAfterRowIndex(0);
-      }
-    });
+    rowHeightMap[index] = size;
+    this.setState({ rowHeightMap }, () => this.clearRowHeightCache(index, size));
   };
 
   renderRow(args) {
@@ -65,11 +80,6 @@ class GridTable extends React.Component {
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
   }
-
-  getRowSize = index => {
-    const { rowSizeMap } = this.state;
-    return rowSizeMap[index] || 60;
-  };
 
   render() {
     const {
@@ -93,6 +103,7 @@ class GridTable extends React.Component {
       style,
       onScrollbarPresenceChange,
       gridRef,
+      rowHeightMap,
       ...rest
     } = this.props;
     const headerHeight = this._getHeaderHeight();
@@ -102,14 +113,14 @@ class GridTable extends React.Component {
         return rowHeight * frozenRowCount;
       }
 
-      return frozenData.reduce((acc, _, i) => (acc += rowHeight(i)), 0);
+      return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || 60), 0);
     };
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
     const Grid = useDynamicRowHeight ? VariableSizeGrid : FixedSizeGrid;
     return (
       <div role="table" className={cls} {...containerProps} ref={gridRef}>
-        <RowSizeContext.Provider value={{ setSizeMap: this.setRowSizeMap }}>
+        <RowHeightContext.Provider value={{ setRowHeightMap: this.setRowHeightMap }}>
           <Grid
             {...rest}
             className={`${classPrefix}__body`}
@@ -119,7 +130,7 @@ class GridTable extends React.Component {
             frozenData={frozenData}
             width={width}
             height={Math.max(height - headerHeight - frozenRowsHeight(), 0)}
-            rowHeight={useDynamicRowHeight ? this.getRowSize : this.props.rowHeight}
+            rowHeight={useDynamicRowHeight ? this.getRowHeight : rowHeight}
             rowCount={data.length}
             overscanRowCount={overscanRowCount}
             columnWidth={useDynamicRowHeight ? _ => bodyWidth : bodyWidth}
@@ -131,26 +142,28 @@ class GridTable extends React.Component {
             onItemsRendered={this._handleItemsRendered}
             children={this.renderRow}
           />
-        </RowSizeContext.Provider>
-        {headerHeight + frozenRowsHeight() > 0 && (
-          // put header after body and reverse the display order via css
-          // to prevent header's shadow being covered by body
-          <Header
-            {...rest}
-            className={`${classPrefix}__header`}
-            ref={this._setHeaderRef}
-            data={data}
-            frozenData={frozenData}
-            width={width}
-            height={Math.min(headerHeight + frozenRowsHeight(), height)}
-            rowWidth={headerWidth}
-            rowHeight={rowHeight}
-            headerHeight={this.props.headerHeight}
-            headerRenderer={this.props.headerRenderer}
-            rowRenderer={this.props.rowRenderer}
-            hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
-          />
-        )}
+          {headerHeight + frozenRowsHeight() > 0 && (
+            // put header after body and reverse the display order via css
+            // to prevent header's shadow being covered by body
+            <Header
+              {...rest}
+              className={`${classPrefix}__header`}
+              ref={this._setHeaderRef}
+              data={data}
+              frozenData={frozenData}
+              width={width}
+              height={Math.min(headerHeight + frozenRowsHeight(), height)}
+              rowWidth={headerWidth}
+              rowHeight={this.getRowHeight}
+              headerHeight={this.props.headerHeight}
+              headerRenderer={this.props.headerRenderer}
+              rowRenderer={this.props.rowRenderer}
+              hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
+              useDynamicRowHeight={useDynamicRowHeight}
+              rowHeightMap={this.state.rowHeightMap}
+            />
+          )}
+        </RowHeightContext.Provider>
       </div>
     );
   }
@@ -213,6 +226,8 @@ GridTable.propTypes = {
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
   gridRef: PropTypes.object,
+  setRowHeight: PropTypes.func,
+  rowHeightMap: PropTypes.object,
 };
 
 export default GridTable;

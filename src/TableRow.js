@@ -27,9 +27,10 @@ class TableRow extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { estimatedRowHeight, onRowHeightChange } = this.props;
     if (typeof estimatedRowHeight === 'number' && prevProps.rowData !== this.props.rowData) {
-      const { rowIndex } = this.props;
+      const { rowIndex, depth } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
-      onRowHeightChange(rowIndex, height);
+      const rowKey = `${rowIndex}-${depth}`;
+      onRowHeightChange(rowKey, height);
     }
   }
 

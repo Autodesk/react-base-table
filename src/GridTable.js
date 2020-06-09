@@ -45,9 +45,9 @@ class GridTable extends React.Component {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  clearRowHeightCache = (index, size) => {
+  clearRowHeightCache = (rowKey, size) => {
     if (this.props.setRowHeight) {
-      this.props.setRowHeight(index, size);
+      this.props.setRowHeight(rowKey, size);
     }
 
     if (this.bodyRef) {
@@ -55,15 +55,15 @@ class GridTable extends React.Component {
     }
   };
 
-  getRowHeight = index => {
+  getRowHeight = rowKey => {
     if (!this.props.useDynamicRowHeight) {
       return this.props.rowHeight;
     }
 
-    return this.props.rowHeightMap[index] || 60;
+    return this.props.rowHeightMap[rowKey] || 60;
   };
 
-  setRowHeightMap = (index, size) => {
+  setRowHeightMap = (rowKey, size) => {
     const { useDynamicRowHeight } = this.props;
 
     if (!useDynamicRowHeight) {
@@ -71,8 +71,8 @@ class GridTable extends React.Component {
     }
 
     this.setState(
-      ({ rowHeightMap }) => ({ rowHeightMap: { ...rowHeightMap, [index]: size } }),
-      () => this.clearRowHeightCache(index, size)
+      ({ rowHeightMap }) => ({ rowHeightMap: { ...rowHeightMap, [rowKey]: size } }),
+      () => this.clearRowHeightCache(rowKey, size)
     );
   };
 

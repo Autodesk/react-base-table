@@ -152,12 +152,19 @@ class BaseTable extends React.PureComponent {
   getTotalRowsHeight() {
     const { rowHeight, estimatedRowHeight } = this.props;
     if (typeof estimatedRowHeight === 'number') {
-      const headerHeight = this._getHeaderHeight();
-      const tableHeight =
-        (this.tableNode && this.tableNode.getBoundingClientRect().height) || this._data.length * estimatedRowHeight;
+      const { rowKey } = this.props;
+      const { rowHeightMap } = this.state;
 
-      return tableHeight - headerHeight;
+      const tableHeight = this._data.reduce((acc, cur) => {
+        const key = cur[rowKey].split('-')[1];
+        acc += rowHeightMap[key < 0 ? Math.abs(key + 1) : key] || estimatedRowHeight;
+
+        return acc;
+      }, 0);
+
+      return tableHeight;
     }
+
     return this._data.length * rowHeight;
   }
 

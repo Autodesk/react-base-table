@@ -9,7 +9,7 @@ import Header from './TableHeader';
  * A wrapper of the Grid for internal only
  */
 export const RowHeightContext = React.createContext({});
-class GridTable extends React.Component {
+class GridTable extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { rowHeightMap: {} };
@@ -54,7 +54,7 @@ class GridTable extends React.Component {
     }
 
     if (this.bodyRef) {
-      this.bodyRef.resetAfterRowIndex(0);
+      this.bodyRef.resetAfterRowIndex(rowKey);
     }
   }
 

@@ -1,5 +1,6 @@
 const columns = generateColumns(10)
 const data = generateData(columns, 10000)
+const frozenData = generateData(columns, 3, 'frozen-row-')
 
 const fixedColumns = columns.map((column, columnIndex) => {
   let frozen
@@ -9,4 +10,4 @@ const fixedColumns = columns.map((column, columnIndex) => {
 });
 
 
-export default () => <Table fixed columns={columns} data={data} useDynamicRowHeight />
+export default () => <Table fixed columns={fixedColumns} frozenData={frozenData} data={data} estimatedRowHeight={60} />

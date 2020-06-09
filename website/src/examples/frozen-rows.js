@@ -42,6 +42,5 @@ export default () => (
     data={treeData}
     frozenData={frozenData}
     expandColumnKey={expandColumnKey}
-    useDynamicRowHeight
   />
 )

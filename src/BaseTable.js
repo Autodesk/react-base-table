@@ -513,7 +513,6 @@ class BaseTable extends React.PureComponent {
         rowRenderer={this.renderRow}
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
-        setRowHeight={this.setRowHeight}
         rowHeightMap={rowHeightMap}
         estimatedRowHeight={estimatedRowHeight}
       />
@@ -548,7 +547,6 @@ class BaseTable extends React.PureComponent {
         rowRenderer={this.renderRow}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
-        setRowHeight={this.setRowHeight}
         rowHeightMap={rowHeightMap}
         estimatedRowHeight={estimatedRowHeight}
       />
@@ -583,7 +581,6 @@ class BaseTable extends React.PureComponent {
         rowRenderer={this.renderRow}
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
-        setRowHeight={this.setRowHeight}
         rowHeightMap={rowHeightMap}
         estimatedRowHeight={estimatedRowHeight}
       />

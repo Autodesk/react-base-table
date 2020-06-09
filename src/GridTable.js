@@ -205,7 +205,6 @@ GridTable.propTypes = {
   onRowsRendered: PropTypes.func,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
-  setRowHeight: PropTypes.func,
   rowHeightMap: PropTypes.object,
   estimatedRowHeight: PropTypes.number,
 };

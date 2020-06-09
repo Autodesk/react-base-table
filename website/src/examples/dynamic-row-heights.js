@@ -10,4 +10,4 @@ const fixedColumns = columns.map((column, columnIndex) => {
 });
 
 
-export default () => <Table fixed columns={fixedColumns} frozenData={frozenData} data={data} estimatedRowHeight={60} />
+export default () => <Table fixed columns={fixedColumns} data={data} estimatedRowHeight={60} />

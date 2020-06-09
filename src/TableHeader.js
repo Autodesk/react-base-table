@@ -25,10 +25,9 @@ class TableHeader extends React.PureComponent {
 
   renderFrozenRow(rowData, index) {
     const { columns, rowHeight, rowRenderer } = this.props;
+    const style = { width: '100%', height: rowHeight };
     // for frozen row the `rowIndex` is negative
     const rowIndex = -index - 1;
-    const style = { width: '100%', height: rowHeight };
-
     return rowRenderer({ style, columns, rowData, rowIndex });
   }
 

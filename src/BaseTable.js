@@ -755,9 +755,6 @@ class BaseTable extends React.PureComponent {
     if (typeof estimatedRowHeight === 'number') {
       return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || estimatedRowHeight), 0);
     }
-    if (typeof rowHeight === 'function') {
-      return frozenData.reduce((acc, _, i) => (acc += rowHeight(i) || 60), 0);
-    }
 
     return frozenData.length * rowHeight;
   }
@@ -1028,7 +1025,7 @@ BaseTable.propTypes = {
   /**
    * The height of each table row
    */
-  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  rowHeight: PropTypes.number,
   /**
    * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
    */

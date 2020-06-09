@@ -54,22 +54,21 @@ class GridTable extends React.PureComponent {
     }
 
     if (this.bodyRef) {
-      this.bodyRef.resetAfterRowIndex(rowKey);
+      const index = rowKey < 0 ? Math.abs(rowKey + 1) : rowKey;
+      this.bodyRef.resetAfterRowIndex(index);
     }
   }
 
   getRowHeight(rowKey) {
-    if (!this.props.useDynamicRowHeight) {
-      return this.props.rowHeight;
+    if (typeof this.props.estimatedRowHeight === 'number') {
+      return this.props.rowHeightMap[rowKey] || this.props.estimatedRowHeight;
     }
-
-    return this.props.rowHeightMap[rowKey] || 60;
+    return this.props.rowHeight;
   }
 
   setRowHeightMap(rowKey, size) {
-    const { useDynamicRowHeight } = this.props;
-
-    if (!useDynamicRowHeight) {
+    const { estimatedRowHeight } = this.props;
+    if (typeof estimatedRowHeight !== 'number') {
       return;
     }
 
@@ -105,17 +104,21 @@ class GridTable extends React.PureComponent {
       style,
       onScrollbarPresenceChange,
       rowHeightMap,
-      useDynamicRowHeight,
+      estimatedRowHeight,
       ...rest
     } = this.props;
+    const useDynamicRowHeight = typeof estimatedRowHeight === 'number';
     const headerHeight = this._getHeaderHeight();
     const frozenRowCount = frozenData.length;
     const frozenRowsHeight = () => {
-      if (!useDynamicRowHeight) {
-        return rowHeight * frozenRowCount;
+      if (useDynamicRowHeight) {
+        return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || estimatedRowHeight), 0);
+      }
+      if (typeof rowHeight === 'function') {
+        return frozenData.reduce((acc, _, i) => (acc += rowHeight(i) || 0), 0);
       }
 
-      return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || 60), 0);
+      return rowHeight * frozenRowCount;
     };
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
@@ -161,7 +164,6 @@ class GridTable extends React.PureComponent {
               headerRenderer={this.props.headerRenderer}
               rowRenderer={this.props.rowRenderer}
               hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
-              useDynamicRowHeight={useDynamicRowHeight}
               rowHeightMap={this.state.rowHeightMap}
             />
           )}
@@ -227,7 +229,7 @@ GridTable.propTypes = {
   rowRenderer: PropTypes.func.isRequired,
   setRowHeight: PropTypes.func,
   rowHeightMap: PropTypes.object,
-  useDynamicRowHeight: PropTypes.bool,
+  estimatedRowHeight: PropTypes.number,
 };
 
 export default GridTable;

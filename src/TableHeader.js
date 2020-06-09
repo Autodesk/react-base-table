@@ -77,7 +77,6 @@ TableHeader.propTypes = {
   frozenData: PropTypes.arrayOf(PropTypes.object),
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
-  useDynamicRowHeight: PropTypes.bool,
 };
 
 export default TableHeader;

@@ -18,7 +18,7 @@ class TableRow extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.useDynamicRowHeight) {
+    if (typeof this.props.estimatedRowHeight === 'number') {
       const { rowIndex } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
       this.context.setRowHeightMap(rowIndex, height);
@@ -27,7 +27,7 @@ class TableRow extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.useDynamicRowHeight && prevProps.rowData !== this.props.rowData) {
+    if (typeof this.props.estimatedRowHeight === 'number' && prevProps.rowData !== this.props.rowData) {
       const { rowIndex } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
       this.context.setRowHeightMap(rowIndex, height);
@@ -54,7 +54,7 @@ class TableRow extends React.PureComponent {
       rowKey,
       onRowHover,
       onRowExpand,
-      useDynamicRowHeight,
+      estimatedRowHeight,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -77,7 +77,7 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
-    if (!useDynamicRowHeight) {
+    if (typeof estimatedRowHeight !== 'number') {
       return (
         <Tag {...rest} style={style} className={className} {...eventHandlers}>
           {cells}
@@ -176,7 +176,7 @@ TableRow.propTypes = {
   onRowExpand: PropTypes.func,
   tagName: PropTypes.elementType,
   innerRef: PropTypes.object,
-  useDynamicRowHeight: PropTypes.bool,
+  estimatedRowHeight: PropTypes.number,
 };
 
 export default TableRow;

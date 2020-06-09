@@ -325,9 +325,7 @@ class BaseTable extends React.PureComponent {
       ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
       : getValue(rowData, dataKey);
     const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
-    const cellClasses = cn(this._prefixClass('row-cell-text'), {
-      [this._prefixClass('row-cell-text-dynamic')]: typeof this.props.estimatedRowHeight === 'number',
-    });
+    const cellClasses = cn({ [this._prefixClass('row-cell-text')]: typeof this.props.estimatedRowHeight !== 'number' });
     const cell = renderElement(cellRenderer || <TableCell className={cellClasses} />, cellProps);
 
     const cellCls = callOrReturn(className, { cellData, columns, column, columnIndex, rowData, rowIndex });

@@ -88,6 +88,7 @@ class BaseTable extends React.PureComponent {
     this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
     this._handleColumnResizeStop = this._handleColumnResizeStop.bind(this);
     this._handleColumnSort = this._handleColumnSort.bind(this);
+    this.setRowHeight = this.setRowHeight.bind(this);
 
     this._getLeftTableContainerStyle = memoize(getContainerStyle);
     this._getRightTableContainerStyle = memoize(getContainerStyle);
@@ -449,7 +450,7 @@ class BaseTable extends React.PureComponent {
     );
   }
 
-  setRowHeight = (index, size) => {
+  setRowHeight(index, size) {
     this.setState(prev => {
       const newHeightMap = {
         ...prev.rowHeightMap,
@@ -468,7 +469,7 @@ class BaseTable extends React.PureComponent {
         rowHeightMap: newHeightMap,
       };
     });
-  };
+  }
 
   renderMainTable() {
     const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight, ...rest } = this.props;

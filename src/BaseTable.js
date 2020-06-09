@@ -259,7 +259,7 @@ class BaseTable extends React.PureComponent {
   }
 
   renderRow({ isScrolling, columns, rowData, rowIndex, style }) {
-    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey, useDynamicRowHeight } = this.props;
+    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey, rowHeight } = this.props;
 
     const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
     const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
@@ -296,7 +296,12 @@ class BaseTable extends React.PureComponent {
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
     };
 
-    return <TableRow {...rowProps} useDynamicRowHeight={useDynamicRowHeight} />;
+    return (
+      <TableRow
+        {...rowProps}
+        useDynamicRowHeight={!(typeof rowHeight === 'number' || typeof rowHeight === 'function')}
+      />
+    );
   }
 
   renderRowCell({ isScrolling, columns, column, columnIndex, rowData, rowIndex, expandIcon }) {
@@ -310,6 +315,7 @@ class BaseTable extends React.PureComponent {
       );
     }
 
+    const { rowHeight } = this.props;
     const { className, dataKey, dataGetter, cellRenderer } = column;
     const TableCell = this._getComponent('TableCell');
 
@@ -318,7 +324,7 @@ class BaseTable extends React.PureComponent {
       : getValue(rowData, dataKey);
     const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
     const cellClasses = cn(this._prefixClass('row-cell-text'), {
-      [this._prefixClass('row-cell-text-dynamic')]: this.props.useDynamicRowHeight,
+      [this._prefixClass('row-cell-text-dynamic')]: !(typeof rowHeight === 'number' || typeof rowHeight === 'function'),
     });
     const cell = renderElement(cellRenderer || <TableCell className={cellClasses} />, cellProps);
 
@@ -472,7 +478,7 @@ class BaseTable extends React.PureComponent {
   }
 
   renderMainTable() {
-    const { width, headerHeight, rowHeight, fixed, useDynamicRowHeight, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, fixed, ...rest } = this.props;
     const { rowHeightMap } = this.state;
     const height = this._getTableHeight();
 
@@ -500,9 +506,9 @@ class BaseTable extends React.PureComponent {
         rowRenderer={this.renderRow}
         onScroll={this._handleScroll}
         onRowsRendered={this._handleRowsRendered}
-        useDynamicRowHeight={useDynamicRowHeight}
         setRowHeight={this.setRowHeight}
         rowHeightMap={rowHeightMap}
+        useDynamicRowHeight={!(typeof rowHeight === 'number' || typeof rowHeight === 'function')}
       />
     );
   }
@@ -510,7 +516,7 @@ class BaseTable extends React.PureComponent {
   renderLeftTable() {
     if (!this.columnManager.hasLeftFrozenColumns()) return null;
 
-    const { width, headerHeight, rowHeight, useDynamicRowHeight, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, ...rest } = this.props;
     const { rowHeightMap } = this.state;
 
     const containerHeight = this._getFrozenContainerHeight();
@@ -536,8 +542,8 @@ class BaseTable extends React.PureComponent {
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
         setRowHeight={this.setRowHeight}
-        useDynamicRowHeight={useDynamicRowHeight}
         rowHeightMap={rowHeightMap}
+        useDynamicRowHeight={!(typeof rowHeight === 'number' || typeof rowHeight === 'function')}
       />
     );
   }
@@ -545,7 +551,7 @@ class BaseTable extends React.PureComponent {
   renderRightTable() {
     if (!this.columnManager.hasRightFrozenColumns()) return null;
 
-    const { width, headerHeight, rowHeight, useDynamicRowHeight, ...rest } = this.props;
+    const { width, headerHeight, rowHeight, ...rest } = this.props;
     const { rowHeightMap } = this.state;
 
     const containerHeight = this._getFrozenContainerHeight();
@@ -571,8 +577,8 @@ class BaseTable extends React.PureComponent {
         onScroll={this._handleVerticalScroll}
         onRowsRendered={noop}
         setRowHeight={this.setRowHeight}
-        useDynamicRowHeight={useDynamicRowHeight}
         rowHeightMap={rowHeightMap}
+        useDynamicRowHeight={!(typeof rowHeight === 'number' || typeof rowHeight === 'function')}
       />
     );
   }
@@ -942,7 +948,6 @@ BaseTable.defaultProps = {
   frozenData: [],
   fixed: false,
   headerHeight: 50,
-  rowHeight: 50,
   footerHeight: 0,
   defaultExpandedRowKeys: [],
   sortBy: {},
@@ -1010,7 +1015,7 @@ BaseTable.propTypes = {
   /**
    * The height of each table row
    */
-  rowHeight: PropTypes.number.isRequired,
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   /**
    * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
    */
@@ -1205,7 +1210,6 @@ BaseTable.propTypes = {
     ExpandIcon: PropTypes.func,
     SortIndicator: PropTypes.func,
   }),
-  useDynamicRowHeight: PropTypes.bool,
 };
 
 export default BaseTable;

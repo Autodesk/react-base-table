@@ -87,7 +87,6 @@ class GridTable extends React.PureComponent {
 
   render() {
     const {
-      useDynamicRowHeight,
       containerStyle,
       classPrefix,
       className,
@@ -106,6 +105,7 @@ class GridTable extends React.PureComponent {
       style,
       onScrollbarPresenceChange,
       rowHeightMap,
+      useDynamicRowHeight,
       ...rest
     } = this.props;
     const headerHeight = this._getHeaderHeight();
@@ -202,7 +202,6 @@ class GridTable extends React.PureComponent {
 }
 
 GridTable.propTypes = {
-  useDynamicRowHeight: PropTypes.bool,
   containerStyle: PropTypes.object,
   classPrefix: PropTypes.string,
   className: PropTypes.string,
@@ -211,7 +210,7 @@ GridTable.propTypes = {
   headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -228,6 +227,7 @@ GridTable.propTypes = {
   rowRenderer: PropTypes.func.isRequired,
   setRowHeight: PropTypes.func,
   rowHeightMap: PropTypes.object,
+  useDynamicRowHeight: PropTypes.bool,
 };
 
 export default GridTable;

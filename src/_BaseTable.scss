@@ -255,11 +255,7 @@ $table-prefix: BaseTable !default;
     &-text {
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
-
-      &-dynamic {
-        white-space: normal;
-      }
+      white-space: normal;
     }
   }
 

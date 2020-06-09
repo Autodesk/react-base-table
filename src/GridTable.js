@@ -20,6 +20,9 @@ class GridTable extends React.Component {
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
+    this.clearRowHeightCache = this.clearRowHeightCache.bind(this);
+    this.getRowHeight = this.getRowHeight.bind(this);
+    this.setRowHeightMap = this.setRowHeightMap.bind(this);
   }
 
   forceUpdateTable() {
@@ -45,7 +48,7 @@ class GridTable extends React.Component {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  clearRowHeightCache = (rowKey, size) => {
+  clearRowHeightCache(rowKey, size) {
     if (this.props.setRowHeight) {
       this.props.setRowHeight(rowKey, size);
     }
@@ -53,17 +56,17 @@ class GridTable extends React.Component {
     if (this.bodyRef) {
       this.bodyRef.resetAfterRowIndex(0);
     }
-  };
+  }
 
-  getRowHeight = rowKey => {
+  getRowHeight(rowKey) {
     if (!this.props.useDynamicRowHeight) {
       return this.props.rowHeight;
     }
 
     return this.props.rowHeightMap[rowKey] || 60;
-  };
+  }
 
-  setRowHeightMap = (rowKey, size) => {
+  setRowHeightMap(rowKey, size) {
     const { useDynamicRowHeight } = this.props;
 
     if (!useDynamicRowHeight) {
@@ -74,7 +77,7 @@ class GridTable extends React.Component {
       ({ rowHeightMap }) => ({ rowHeightMap: { ...rowHeightMap, [rowKey]: size } }),
       () => this.clearRowHeightCache(rowKey, size)
     );
-  };
+  }
 
   renderRow(args) {
     const { data, columns, rowRenderer } = this.props;

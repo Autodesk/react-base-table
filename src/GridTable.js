@@ -8,11 +8,9 @@ import Header from './TableHeader';
 /**
  * A wrapper of the Grid for internal only
  */
-export const RowHeightContext = React.createContext({});
 class GridTable extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { rowHeightMap: {} };
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
     this._setBodyRef = this._setBodyRef.bind(this);
@@ -20,9 +18,15 @@ class GridTable extends React.PureComponent {
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
-    this.clearRowHeightCache = this.clearRowHeightCache.bind(this);
     this.getRowHeight = this.getRowHeight.bind(this);
-    this.setRowHeightMap = this.setRowHeightMap.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.rowHeightMap !== this.props.rowHeightMap) {
+      if (this.bodyRef) {
+        this.bodyRef.resetAfterRowIndex(0);
+      }
+    }
   }
 
   forceUpdateTable() {
@@ -48,34 +52,11 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  clearRowHeightCache(rowKey, size) {
-    if (this.props.setRowHeight) {
-      this.props.setRowHeight(rowKey, size);
-    }
-
-    if (this.bodyRef) {
-      const index = rowKey < 0 ? Math.abs(rowKey + 1) : rowKey;
-      this.bodyRef.resetAfterRowIndex(index);
-    }
-  }
-
   getRowHeight(rowKey) {
     if (typeof this.props.estimatedRowHeight === 'number') {
       return this.props.rowHeightMap[rowKey] || this.props.estimatedRowHeight;
     }
     return this.props.rowHeight;
-  }
-
-  setRowHeightMap(rowKey, size) {
-    const { estimatedRowHeight } = this.props;
-    if (typeof estimatedRowHeight !== 'number') {
-      return;
-    }
-
-    this.setState(
-      ({ rowHeightMap }) => ({ rowHeightMap: { ...rowHeightMap, [rowKey]: size } }),
-      () => this.clearRowHeightCache(rowKey, size)
-    );
   }
 
   renderRow(args) {
@@ -125,49 +106,46 @@ class GridTable extends React.PureComponent {
     const Grid = useDynamicRowHeight ? VariableSizeGrid : FixedSizeGrid;
     return (
       <div role="table" className={cls} {...containerProps}>
-        <RowHeightContext.Provider value={{ setRowHeightMap: this.setRowHeightMap }}>
-          <Grid
+        <Grid
+          {...rest}
+          className={`${classPrefix}__body`}
+          ref={this._setBodyRef}
+          data={data}
+          itemKey={this._itemKey}
+          frozenData={frozenData}
+          width={width}
+          height={Math.max(height - headerHeight - frozenRowsHeight(), 0)}
+          rowHeight={useDynamicRowHeight ? this.getRowHeight : rowHeight}
+          rowCount={data.length}
+          overscanRowCount={overscanRowCount}
+          columnWidth={useDynamicRowHeight ? _ => bodyWidth : bodyWidth}
+          columnCount={1}
+          overscanColumnCount={0}
+          useIsScrolling={useIsScrolling}
+          hoveredRowKey={hoveredRowKey}
+          onScroll={onScroll}
+          onItemsRendered={this._handleItemsRendered}
+          children={this.renderRow}
+        />
+        {headerHeight + frozenRowsHeight() > 0 && (
+          // put header after body and reverse the display order via css
+          // to prevent header's shadow being covered by body
+          <Header
             {...rest}
-            className={`${classPrefix}__body`}
-            ref={this._setBodyRef}
+            className={`${classPrefix}__header`}
+            ref={this._setHeaderRef}
             data={data}
-            itemKey={this._itemKey}
             frozenData={frozenData}
             width={width}
-            height={Math.max(height - headerHeight - frozenRowsHeight(), 0)}
-            rowHeight={useDynamicRowHeight ? this.getRowHeight : rowHeight}
-            rowCount={data.length}
-            overscanRowCount={overscanRowCount}
-            columnWidth={useDynamicRowHeight ? _ => bodyWidth : bodyWidth}
-            columnCount={1}
-            overscanColumnCount={0}
-            useIsScrolling={useIsScrolling}
-            hoveredRowKey={hoveredRowKey}
-            onScroll={onScroll}
-            onItemsRendered={this._handleItemsRendered}
-            children={this.renderRow}
+            height={Math.min(headerHeight + frozenRowsHeight(), height)}
+            rowWidth={headerWidth}
+            rowHeight={this.getRowHeight}
+            headerHeight={this.props.headerHeight}
+            headerRenderer={this.props.headerRenderer}
+            rowRenderer={this.props.rowRenderer}
+            hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
           />
-          {headerHeight + frozenRowsHeight() > 0 && (
-            // put header after body and reverse the display order via css
-            // to prevent header's shadow being covered by body
-            <Header
-              {...rest}
-              className={`${classPrefix}__header`}
-              ref={this._setHeaderRef}
-              data={data}
-              frozenData={frozenData}
-              width={width}
-              height={Math.min(headerHeight + frozenRowsHeight(), height)}
-              rowWidth={headerWidth}
-              rowHeight={this.getRowHeight}
-              headerHeight={this.props.headerHeight}
-              headerRenderer={this.props.headerRenderer}
-              rowRenderer={this.props.rowRenderer}
-              hoveredRowKey={frozenRowCount > 0 ? hoveredRowKey : null}
-              rowHeightMap={this.state.rowHeightMap}
-            />
-          )}
-        </RowHeightContext.Provider>
+        )}
       </div>
     );
   }

@@ -304,7 +304,7 @@ class BaseTable extends React.PureComponent {
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
     };
 
-    return <TableRow {...rowProps} estimatedRowHeight={estimatedRowHeight} />;
+    return <TableRow {...rowProps} estimatedRowHeight={estimatedRowHeight} onRowHeightChange={this.setRowHeight} />;
   }
 
   renderRowCell({ isScrolling, columns, column, columnIndex, rowData, rowIndex, expandIcon }) {

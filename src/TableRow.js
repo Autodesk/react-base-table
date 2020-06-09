@@ -1,6 +1,4 @@
 import React from 'react';
-import { RowHeightContext } from './GridTable';
-
 import PropTypes from 'prop-types';
 
 import { renderElement } from './utils';
@@ -19,18 +17,19 @@ class TableRow extends React.PureComponent {
 
   componentDidMount() {
     if (typeof this.props.estimatedRowHeight === 'number') {
-      const { rowIndex } = this.props;
+      const { rowIndex, onRowHeightChange } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
-      this.context.setRowHeightMap(rowIndex, height);
+      onRowHeightChange(rowIndex, height);
     }
     this.mounted = true;
   }
 
   componentDidUpdate(prevProps) {
-    if (typeof this.props.estimatedRowHeight === 'number' && prevProps.rowData !== this.props.rowData) {
+    const { estimatedRowHeight, onRowHeightChange } = this.props;
+    if (typeof estimatedRowHeight === 'number' && prevProps.rowData !== this.props.rowData) {
       const { rowIndex } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
-      this.context.setRowHeightMap(rowIndex, height);
+      onRowHeightChange(rowIndex, height);
     }
   }
 
@@ -55,6 +54,7 @@ class TableRow extends React.PureComponent {
       onRowHover,
       onRowExpand,
       estimatedRowHeight,
+      onRowHeightChange,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -86,24 +86,11 @@ class TableRow extends React.PureComponent {
     }
     const rowStyle = { height: '100%' };
     return (
-      <RowHeightContext.Consumer>
-        {context => {
-          this.context = context;
-          return (
-            <Tag style={style}>
-              <div
-                {...rest}
-                style={this.mounted ? rowStyle : null}
-                className={className}
-                {...eventHandlers}
-                ref={this.ref}
-              >
-                {cells}
-              </div>
-            </Tag>
-          );
-        }}
-      </RowHeightContext.Consumer>
+      <Tag style={style}>
+        <div {...rest} style={this.mounted ? rowStyle : null} className={className} {...eventHandlers} ref={this.ref}>
+          {cells}
+        </div>
+      </Tag>
     );
   }
 
@@ -177,6 +164,7 @@ TableRow.propTypes = {
   tagName: PropTypes.elementType,
   innerRef: PropTypes.object,
   estimatedRowHeight: PropTypes.number,
+  onRowHeightChange: PropTypes.func,
 };
 
 export default TableRow;

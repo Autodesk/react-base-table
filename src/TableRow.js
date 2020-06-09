@@ -11,26 +11,27 @@ class TableRow extends React.PureComponent {
     super(props);
 
     this._handleExpand = this._handleExpand.bind(this);
+    this.handleMeasureRow = this.handleMeasureRow.bind(this);
     this.ref = React.createRef();
     this.mounted = false;
   }
 
-  componentDidMount() {
+  handleMeasureRow() {
     if (typeof this.props.estimatedRowHeight === 'number') {
       const { rowIndex, onRowHeightChange } = this.props;
       const height = this.ref.current.getBoundingClientRect().height;
       onRowHeightChange(rowIndex, height);
     }
+  }
+
+  componentDidMount() {
+    this.handleMeasureRow();
     this.mounted = true;
   }
 
   componentDidUpdate(prevProps) {
-    const { estimatedRowHeight, onRowHeightChange } = this.props;
-    if (typeof estimatedRowHeight === 'number' && prevProps.rowData !== this.props.rowData) {
-      const { rowIndex, depth } = this.props;
-      const height = this.ref.current.getBoundingClientRect().height;
-      const rowKey = `${rowIndex}-${depth}`;
-      onRowHeightChange(rowKey, height);
+    if (prevProps.rowData !== this.props.rowData || prevProps.style.height !== this.props.style.height) {
+      this.handleMeasureRow();
     }
   }
 

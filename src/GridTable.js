@@ -95,9 +95,6 @@ class GridTable extends React.PureComponent {
       if (useDynamicRowHeight) {
         return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || estimatedRowHeight), 0);
       }
-      if (typeof rowHeight === 'function') {
-        return frozenData.reduce((acc, _, i) => (acc += rowHeight(i) || 0), 0);
-      }
 
       return rowHeight * frozenRowCount;
     };
@@ -190,7 +187,7 @@ GridTable.propTypes = {
   headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  rowHeight: PropTypes.number,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

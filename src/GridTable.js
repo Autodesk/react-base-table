@@ -85,7 +85,6 @@ class GridTable extends React.Component {
   render() {
     const {
       useDynamicRowHeight,
-      columnWidth,
       containerStyle,
       classPrefix,
       className,
@@ -210,7 +209,6 @@ GridTable.propTypes = {
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
   rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
-  columnWidth: PropTypes.number,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

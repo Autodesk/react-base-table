@@ -86,6 +86,7 @@ class GridTable extends React.PureComponent {
       onScrollbarPresenceChange,
       rowHeightMap,
       estimatedRowHeight,
+      innerRef,
       ...rest
     } = this.props;
     const useDynamicRowHeight = typeof estimatedRowHeight === 'number';
@@ -107,6 +108,7 @@ class GridTable extends React.PureComponent {
           {...rest}
           className={`${classPrefix}__body`}
           ref={this._setBodyRef}
+          innerRef={innerRef}
           data={data}
           itemKey={this._itemKey}
           frozenData={frozenData}
@@ -204,6 +206,7 @@ GridTable.propTypes = {
   rowRenderer: PropTypes.func.isRequired,
   rowHeightMap: PropTypes.object,
   estimatedRowHeight: PropTypes.number,
+  innerRef: PropTypes.func,
 };
 
 export default GridTable;

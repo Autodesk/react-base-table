@@ -12,14 +12,15 @@ class TableRow extends React.PureComponent {
 
     this._handleExpand = this._handleExpand.bind(this);
     this.handleMeasureRow = this.handleMeasureRow.bind(this);
-    this.ref = React.createRef();
+    this._setRef = this._setRef.bind(this);
+
     this.mounted = false;
   }
 
   handleMeasureRow() {
-    if (typeof this.props.estimatedRowHeight === 'number') {
+    if (typeof this.props.estimatedRowHeight === 'number' && this.ref) {
       const { rowIndex, onRowHeightChange } = this.props;
-      const height = this.ref.current.getBoundingClientRect().height;
+      const height = this.ref.getBoundingClientRect().height;
       onRowHeightChange(rowIndex, height);
     }
   }
@@ -88,10 +89,14 @@ class TableRow extends React.PureComponent {
     }
 
     return (
-      <Tag {...rest} style={this.mounted ? style : null} className={className} {...eventHandlers} ref={this.ref}>
+      <Tag {...rest} style={this.mounted ? style : null} className={className} {...eventHandlers} ref={this._setRef}>
         {cells}
       </Tag>
     );
+  }
+
+  _setRef(ref) {
+    this.ref = ref;
   }
 
   _handleExpand(expanded) {
@@ -162,7 +167,6 @@ TableRow.propTypes = {
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,
   tagName: PropTypes.elementType,
-  innerRef: PropTypes.object,
   estimatedRowHeight: PropTypes.number,
   onRowHeightChange: PropTypes.func,
 };

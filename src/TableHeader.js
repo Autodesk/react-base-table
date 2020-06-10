@@ -8,7 +8,6 @@ class TableHeader extends React.PureComponent {
     this.renderHeaderRow = this.renderHeaderRow.bind(this);
     this.renderFrozenRow = this.renderFrozenRow.bind(this);
     this._setRef = this._setRef.bind(this);
-    this.ref = React.createRef();
   }
 
   scrollTo(offset) {

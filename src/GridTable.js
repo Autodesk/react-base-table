@@ -14,8 +14,10 @@ class GridTable extends React.PureComponent {
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
     this._setBodyRef = this._setBodyRef.bind(this);
+    this._setInnerRef = this._setInnerRef.bind(this);
     this._itemKey = this._itemKey.bind(this);
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
+    this._getTotalRowsHeight = this._getTotalRowsHeight.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
     this.getRowHeight = this.getRowHeight.bind(this);
@@ -86,7 +88,6 @@ class GridTable extends React.PureComponent {
       onScrollbarPresenceChange,
       rowHeightMap,
       estimatedRowHeight,
-      innerRef,
       ...rest
     } = this.props;
     const useDynamicRowHeight = typeof estimatedRowHeight === 'number';
@@ -108,7 +109,7 @@ class GridTable extends React.PureComponent {
           {...rest}
           className={`${classPrefix}__body`}
           ref={this._setBodyRef}
-          innerRef={innerRef}
+          innerRef={this._setInnerRef}
           data={data}
           itemKey={this._itemKey}
           frozenData={frozenData}
@@ -124,6 +125,7 @@ class GridTable extends React.PureComponent {
           hoveredRowKey={hoveredRowKey}
           onScroll={onScroll}
           onItemsRendered={this._handleItemsRendered}
+          estimatedRowHeight={estimatedRowHeight}
           children={this.renderRow}
         />
         {headerHeight + frozenRowsHeight() > 0 && (
@@ -155,6 +157,14 @@ class GridTable extends React.PureComponent {
 
   _setBodyRef(ref) {
     this.bodyRef = ref;
+  }
+
+  _setInnerRef(ref) {
+    this.innerRef = ref;
+  }
+
+  _getTotalRowsHeight() {
+    return (this.innerRef && this.innerRef.clientHeight) || this.props.data * this.props.estimatedRowHeight;
   }
 
   _itemKey({ rowIndex }) {
@@ -206,7 +216,6 @@ GridTable.propTypes = {
   rowRenderer: PropTypes.func.isRequired,
   rowHeightMap: PropTypes.object,
   estimatedRowHeight: PropTypes.number,
-  innerRef: PropTypes.func,
 };
 
 export default GridTable;

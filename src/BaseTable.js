@@ -70,11 +70,8 @@ class BaseTable extends React.PureComponent {
 
     this._setContainerRef = this._setContainerRef.bind(this);
     this._setMainTableRef = this._setMainTableRef.bind(this);
-    this._setMainTableInnerRef = this._setMainTableInnerRef.bind(this);
     this._setLeftTableRef = this._setLeftTableRef.bind(this);
-    this._setLeftTableInnerRef = this._setLeftTableInnerRef.bind(this);
     this._setRightTableRef = this._setRightTableRef.bind(this);
-    this._setRightTableInnerRef = this._setRightTableInnerRef.bind(this);
 
     this.renderExpandIcon = this.renderExpandIcon.bind(this);
     this.renderRow = this.renderRow.bind(this);
@@ -155,11 +152,8 @@ class BaseTable extends React.PureComponent {
   getTotalRowsHeight() {
     const { rowHeight, estimatedRowHeight } = this.props;
     if (typeof estimatedRowHeight === 'number') {
-      const tableHeight = (this.innerTable && this.innerTable.clientHeight) || 0;
-      const leftHeight = (this.innerLeftTable && this.innerLeftTable.clientHeight) || 0;
-      const rightHeight = (this.innerRightTable && this.innerRightTable.clientHeight) || 0;
-
-      return Math.max(tableHeight, leftHeight, rightHeight);
+      const height = this.table && this.table._getTotalRowsHeight();
+      return height || 0;
     }
 
     return this._data.length * rowHeight;
@@ -516,7 +510,6 @@ class BaseTable extends React.PureComponent {
         onRowsRendered={this._handleRowsRendered}
         rowHeightMap={rowHeightMap}
         estimatedRowHeight={estimatedRowHeight}
-        innerRef={this._setMainTableInnerRef}
       />
     );
   }
@@ -554,7 +547,6 @@ class BaseTable extends React.PureComponent {
         onRowsRendered={noop}
         rowHeightMap={rowHeightMap}
         estimatedRowHeight={estimatedRowHeight}
-        innerRef={this._setLeftTableInnerRef}
       />
     );
   }
@@ -592,7 +584,6 @@ class BaseTable extends React.PureComponent {
         onRowsRendered={noop}
         rowHeightMap={rowHeightMap}
         estimatedRowHeight={estimatedRowHeight}
-        innerRef={this._setRightTableInnerRef}
       />
     );
   }
@@ -738,24 +729,12 @@ class BaseTable extends React.PureComponent {
     this.table = ref;
   }
 
-  _setMainTableInnerRef(ref) {
-    this.innerTable = ref;
-  }
-
   _setLeftTableRef(ref) {
     this.leftTable = ref;
   }
 
-  _setLeftTableInnerRef(ref) {
-    this.innerLeftTable = ref;
-  }
-
   _setRightTableRef(ref) {
     this.rightTable = ref;
-  }
-
-  _setRightTableInnerRef(ref) {
-    this.innerRightTable = ref;
   }
 
   _getComponent(name) {

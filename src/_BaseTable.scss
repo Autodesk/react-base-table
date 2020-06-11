@@ -130,6 +130,14 @@ $table-prefix: BaseTable !default;
         overflow-y: auto !important;
       }
     }
+
+    &:not(.#{$table-prefix}__table--dynamic) {
+      .#{$table-prefix}__row-cell-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
   }
 
   &__header {
@@ -184,12 +192,6 @@ $table-prefix: BaseTable !default;
     &--align-right {
       justify-content: flex-end;
       text-align: right;
-    }
-
-    &-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 

@@ -331,8 +331,7 @@ class BaseTable extends React.PureComponent {
       ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
       : getValue(rowData, dataKey);
     const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
-    const cellClasses = cn({ [this._prefixClass('row-cell-text')]: typeof this.props.estimatedRowHeight !== 'number' });
-    const cell = renderElement(cellRenderer || <TableCell className={cellClasses} />, cellProps);
+    const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, cellProps);
 
     const cellCls = callOrReturn(className, { cellData, columns, column, columnIndex, rowData, rowIndex });
     const cls = cn(this._prefixClass('row-cell'), cellCls, {
@@ -494,11 +493,14 @@ class BaseTable extends React.PureComponent {
       // make sure `scrollLeft` is always integer to fix a sync bug when scrolling to end horizontally
       tableWidth = Math.max(Math.round(columnsWidth), tableWidth);
     }
+    const cls = cn(this._prefixClass('table-main'), {
+      [this._prefixClass('table--dynamic')]: typeof estimatedRowHeight === 'number',
+    });
     return (
       <GridTable
         {...rest}
         {...this.state}
-        className={this._prefixClass('table-main')}
+        className={cls}
         ref={this._setMainTableRef}
         data={this._data}
         columns={this.columnManager.getMainColumns()}
@@ -528,12 +530,15 @@ class BaseTable extends React.PureComponent {
     const containerHeight = this._getFrozenContainerHeight();
     const offset = this._verticalScrollbarSize || 20;
     const columnsWidth = this.columnManager.getLeftFrozenColumnsWidth();
+    const cls = cn(this._prefixClass('table-frozen-left'), {
+      [this._prefixClass('table--dynamic')]: typeof estimatedRowHeight === 'number',
+    });
     return (
       <GridTable
         {...rest}
         {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth, width, containerHeight)}
-        className={this._prefixClass('table-frozen-left')}
+        className={cls}
         ref={this._setLeftTableRef}
         data={this._data}
         columns={this.columnManager.getLeftFrozenColumns()}
@@ -563,12 +568,15 @@ class BaseTable extends React.PureComponent {
     const containerHeight = this._getFrozenContainerHeight();
     const columnsWidth = this.columnManager.getRightFrozenColumnsWidth();
     const scrollbarWidth = this._verticalScrollbarSize;
+    const cls = cn(this._prefixClass('table-frozen-right'), {
+      [this._prefixClass('table--dynamic')]: typeof estimatedRowHeight === 'number',
+    });
     return (
       <GridTable
         {...rest}
         {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
-        className={this._prefixClass('table-frozen-right')}
+        className={cls}
         ref={this._setRightTableRef}
         data={this._data}
         columns={this.columnManager.getRightFrozenColumns()}

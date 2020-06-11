@@ -60,6 +60,14 @@ $table-prefix: BaseTable !default;
     pointer-events: none;
   }
 
+  &:not(.#{$table-prefix}--dynamic) {
+    .#{$table-prefix}__row-cell-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
   @if ($show-frozen-rows-shadow) {
     &--has-frozen-rows {
       .#{$table-prefix}__header {
@@ -128,14 +136,6 @@ $table-prefix: BaseTable !default;
 
       .#{$table-prefix}__body {
         overflow-y: auto !important;
-      }
-    }
-
-    &:not(.#{$table-prefix}__table--dynamic) {
-      .#{$table-prefix}__row-cell-text {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
     }
   }

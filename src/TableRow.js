@@ -31,7 +31,7 @@ class TableRow extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.rowData !== this.props.rowData || prevProps.style.height !== this.props.style.height) {
+    if (prevProps.rowData !== this.props.rowData) {
       this.handleMeasureRow();
     }
   }

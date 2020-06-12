@@ -4,6 +4,7 @@ import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import * as ReactSortableHoc from 'react-sortable-hoc'
 import * as ReactOverlays from 'react-overlays'
 import ReactTexty from 'react-texty'
+import faker from 'faker';
 
 import BaseTable, {
   Column,
@@ -61,6 +62,7 @@ export default {
   ReactSortableHoc,
   ReactOverlays,
   ReactTexty,
+  faker,
 
   BaseTable,
   Column,

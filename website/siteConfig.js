@@ -53,6 +53,10 @@ module.exports = {
       path: '/examples/jsx-column',
     },
     {
+      title: 'Custom Cell',
+      path: '/examples/custom-cell',
+    },
+    {
       title: 'Tooltip Cell',
       path: '/examples/tooltip-cell',
     },

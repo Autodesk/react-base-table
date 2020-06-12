@@ -19,15 +19,11 @@ class GridTable extends React.PureComponent {
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
-    this.getRowHeight = this.getRowHeight.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.rowHeightMap !== this.props.rowHeightMap) {
-      if (this.bodyRef) {
-        this.bodyRef.resetAfterRowIndex(0);
-      }
-    }
+  resetAfterRowIndex(rowIndex) {
+    if (!this.props.estimatedRowHeight) return;
+    this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex);
   }
 
   forceUpdateTable() {
@@ -53,14 +49,6 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  getRowHeight(rowIndex) {
-    const { data, rowHeight, estimatedRowHeight, rowHeightMap, rowKey } = this.props;
-    if (estimatedRowHeight) {
-      return rowHeightMap[data[rowIndex][rowKey]] || estimatedRowHeight;
-    }
-    return rowHeight;
-  }
-
   getHeaderHeight() {
     const { headerHeight } = this.props;
     if (Array.isArray(headerHeight)) {
@@ -70,9 +58,9 @@ class GridTable extends React.PureComponent {
   }
 
   getFrozenRowsHeight() {
-    const { frozenData, rowHeight, estimatedRowHeight, rowHeightMap, rowKey } = this.props;
+    const { frozenData, rowHeight, estimatedRowHeight } = this.props;
     if (estimatedRowHeight) {
-      return frozenData.reduce((height, rowData) => (height += rowHeightMap[rowData[rowKey]] || estimatedRowHeight), 0);
+      return frozenData.reduce((height, rowData, index) => (height += rowHeight(-index - 1)), 0);
     }
 
     return frozenData.length * rowHeight;
@@ -108,7 +96,6 @@ class GridTable extends React.PureComponent {
       // omit from rest
       style,
       onScrollbarPresenceChange,
-      rowHeightMap,
       ...rest
     } = this.props;
     const headerHeight = this.getHeaderHeight();
@@ -129,7 +116,8 @@ class GridTable extends React.PureComponent {
           frozenData={frozenData}
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
-          rowHeight={estimatedRowHeight ? this.getRowHeight : rowHeight}
+          rowHeight={rowHeight}
+          estimatedRowHeight={estimatedRowHeight}
           rowCount={data.length}
           overscanRowCount={overscanRowCount}
           columnWidth={estimatedRowHeight ? () => bodyWidth : bodyWidth}
@@ -139,7 +127,6 @@ class GridTable extends React.PureComponent {
           hoveredRowKey={hoveredRowKey}
           onScroll={onScroll}
           onItemsRendered={this._handleItemsRendered}
-          estimatedRowHeight={estimatedRowHeight}
           children={this.renderRow}
         />
         {headerHeight + frozenRowsHeight > 0 && (
@@ -154,7 +141,7 @@ class GridTable extends React.PureComponent {
             width={width}
             height={Math.min(headerHeight + frozenRowsHeight, height)}
             rowWidth={headerWidth}
-            rowHeight={this.getRowHeight}
+            rowHeight={rowHeight}
             headerHeight={this.props.headerHeight}
             headerRenderer={this.props.headerRenderer}
             rowRenderer={this.props.rowRenderer}
@@ -201,7 +188,7 @@ GridTable.propTypes = {
   headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.number,
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -210,14 +197,12 @@ GridTable.propTypes = {
   overscanRowCount: PropTypes.number,
   hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: PropTypes.object,
+  estimatedRowHeight: PropTypes.number,
   onScrollbarPresenceChange: PropTypes.func,
-
   onScroll: PropTypes.func,
   onRowsRendered: PropTypes.func,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
-  rowHeightMap: PropTypes.object,
-  estimatedRowHeight: PropTypes.number,
 };
 
 export default GridTable;

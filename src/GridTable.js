@@ -53,11 +53,29 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  getRowHeight(rowKey) {
-    if (typeof this.props.estimatedRowHeight === 'number') {
-      return this.props.rowHeightMap[rowKey] || this.props.estimatedRowHeight;
+  getRowHeight(rowIndex) {
+    const { data, rowHeight, estimatedRowHeight, rowHeightMap, rowKey } = this.props;
+    if (estimatedRowHeight) {
+      return rowHeightMap[data[rowIndex][rowKey]] || estimatedRowHeight;
     }
-    return this.props.rowHeight;
+    return rowHeight;
+  }
+
+  getHeaderHeight() {
+    const { headerHeight } = this.props;
+    if (Array.isArray(headerHeight)) {
+      return headerHeight.reduce((sum, height) => sum + height, 0);
+    }
+    return headerHeight;
+  }
+
+  getFrozenRowsHeight() {
+    const { frozenData, rowHeight, estimatedRowHeight, rowHeightMap, rowKey } = this.props;
+    if (estimatedRowHeight) {
+      return frozenData.reduce((height, rowData) => (height += rowHeightMap[rowData[rowKey]] || estimatedRowHeight), 0);
+    }
+
+    return frozenData.length * rowHeight;
   }
 
   getTotalRowsHeight() {
@@ -80,6 +98,7 @@ class GridTable extends React.PureComponent {
       width,
       height,
       rowHeight,
+      estimatedRowHeight,
       headerWidth,
       bodyWidth,
       useIsScrolling,
@@ -90,22 +109,14 @@ class GridTable extends React.PureComponent {
       style,
       onScrollbarPresenceChange,
       rowHeightMap,
-      estimatedRowHeight,
       ...rest
     } = this.props;
-    const useDynamicRowHeight = typeof estimatedRowHeight === 'number';
-    const headerHeight = this._getHeaderHeight();
+    const headerHeight = this.getHeaderHeight();
+    const frozenRowsHeight = this.getFrozenRowsHeight();
     const frozenRowCount = frozenData.length;
-    const frozenRowsHeight = () => {
-      if (useDynamicRowHeight) {
-        return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || estimatedRowHeight), 0);
-      }
-
-      return rowHeight * frozenRowCount;
-    };
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
-    const Grid = useDynamicRowHeight ? VariableSizeGrid : FixedSizeGrid;
+    const Grid = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
     return (
       <div role="table" className={cls} {...containerProps}>
         <Grid
@@ -117,11 +128,11 @@ class GridTable extends React.PureComponent {
           itemKey={this._itemKey}
           frozenData={frozenData}
           width={width}
-          height={Math.max(height - headerHeight - frozenRowsHeight(), 0)}
-          rowHeight={useDynamicRowHeight ? this.getRowHeight : rowHeight}
+          height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
+          rowHeight={estimatedRowHeight ? this.getRowHeight : rowHeight}
           rowCount={data.length}
           overscanRowCount={overscanRowCount}
-          columnWidth={useDynamicRowHeight ? _ => bodyWidth : bodyWidth}
+          columnWidth={estimatedRowHeight ? () => bodyWidth : bodyWidth}
           columnCount={1}
           overscanColumnCount={0}
           useIsScrolling={useIsScrolling}
@@ -131,7 +142,7 @@ class GridTable extends React.PureComponent {
           estimatedRowHeight={estimatedRowHeight}
           children={this.renderRow}
         />
-        {headerHeight + frozenRowsHeight() > 0 && (
+        {headerHeight + frozenRowsHeight > 0 && (
           // put header after body and reverse the display order via css
           // to prevent header's shadow being covered by body
           <Header
@@ -141,7 +152,7 @@ class GridTable extends React.PureComponent {
             data={data}
             frozenData={frozenData}
             width={width}
-            height={Math.min(headerHeight + frozenRowsHeight(), height)}
+            height={Math.min(headerHeight + frozenRowsHeight, height)}
             rowWidth={headerWidth}
             rowHeight={this.getRowHeight}
             headerHeight={this.props.headerHeight}
@@ -169,14 +180,6 @@ class GridTable extends React.PureComponent {
   _itemKey({ rowIndex }) {
     const { data, rowKey } = this.props;
     return data[rowIndex][rowKey];
-  }
-
-  _getHeaderHeight() {
-    const { headerHeight } = this.props;
-    if (Array.isArray(headerHeight)) {
-      return headerHeight.reduce((sum, height) => sum + height, 0);
-    }
-    return headerHeight;
   }
 
   _handleItemsRendered({ overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex }) {

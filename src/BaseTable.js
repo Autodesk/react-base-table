@@ -88,7 +88,7 @@ class BaseTable extends React.PureComponent {
     this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
     this._handleColumnResizeStop = this._handleColumnResizeStop.bind(this);
     this._handleColumnSort = this._handleColumnSort.bind(this);
-    this.setRowHeight = this.setRowHeight.bind(this);
+    this._handleRowHeightChange = this._handleRowHeightChange.bind(this);
 
     this._getLeftTableContainerStyle = memoize(getContainerStyle);
     this._getRightTableContainerStyle = memoize(getContainerStyle);
@@ -147,15 +147,28 @@ class BaseTable extends React.PureComponent {
   }
 
   /**
+   * Get the height of header
+   */
+  getHeaderHeight() {
+    const { headerHeight } = this.props;
+    if (Array.isArray(headerHeight)) {
+      return headerHeight.reduce((sum, height) => sum + height, 0);
+    }
+    return headerHeight;
+  }
+
+  /**
+   * Get the total height of all frozen rows,
+   */
+  getFrozenRowsHeight() {
+    return this.table ? this.table.getFrozenRowsHeight() : 0;
+  }
+
+  /**
    * Get the total height of all rows, including expanded rows.
    */
   getTotalRowsHeight() {
-    const { rowHeight, estimatedRowHeight } = this.props;
-    if (estimatedRowHeight) {
-      return this.table ? this.table.getTotalRowsHeight() : this._data.length * estimatedRowHeight;
-    }
-
-    return this._data.length * rowHeight;
+    return this.table ? this.table.getTotalRowsHeight() : 0;
   }
 
   /**
@@ -294,13 +307,13 @@ class BaseTable extends React.PureComponent {
       depth,
       rowEventHandlers,
       rowRenderer,
+      estimatedRowHeight,
       cellRenderer: this.renderRowCell,
       expandIconRenderer: this.renderExpandIcon,
       onRowExpand: this._handleRowExpand,
       // for fixed table, we need to sync the hover state across the inner tables
       onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
-      estimatedRowHeight,
-      onRowHeightChange: this.setRowHeight,
+      onRowHeightChange: this._handleRowHeightChange,
     };
 
     return <TableRow {...rowProps} />;
@@ -454,13 +467,6 @@ class BaseTable extends React.PureComponent {
     );
   }
 
-  setRowHeight(rowKey, size) {
-    const { rowHeightMap } = this.state;
-    if (!rowHeightMap[rowKey] || rowHeightMap[rowKey] < size) {
-      this.setState(({ rowHeightMap }) => ({ rowHeightMap: { ...rowHeightMap, [rowKey]: size } }));
-    }
-  }
-
   renderMainTable() {
     const { width, headerHeight, rowHeight, fixed, estimatedRowHeight, ...rest } = this.props;
     const { rowHeightMap } = this.state;
@@ -607,7 +613,7 @@ class BaseTable extends React.PureComponent {
     const { data, frozenData, footerHeight, emptyRenderer } = this.props;
 
     if ((data && data.length) || (frozenData && frozenData.length)) return null;
-    const headerHeight = this._getHeaderHeight();
+    const headerHeight = this.getHeaderHeight();
     return (
       <div className={this._prefixClass('empty-layer')} style={{ top: headerHeight, bottom: footerHeight }}>
         {renderElement(emptyRenderer)}
@@ -720,32 +726,14 @@ class BaseTable extends React.PureComponent {
     return DEFAULT_COMPONENTS[name];
   }
 
-  _getHeaderHeight() {
-    const { headerHeight } = this.props;
-    if (Array.isArray(headerHeight)) {
-      return headerHeight.reduce((sum, height) => sum + height, 0);
-    }
-    return headerHeight;
-  }
-
-  _getFrozenRowsHeight() {
-    const { frozenData, rowHeight, estimatedRowHeight } = this.props;
-    const { rowHeightMap } = this.state;
-    if (estimatedRowHeight) {
-      return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || estimatedRowHeight), 0);
-    }
-
-    return frozenData.length * rowHeight;
-  }
-
   _getTableHeight() {
     const { height, maxHeight, footerHeight } = this.props;
     let tableHeight = height - footerHeight;
 
     if (maxHeight > 0) {
-      const frozenRowsHeight = this._getFrozenRowsHeight();
+      const frozenRowsHeight = this.getFrozenRowsHeight();
       const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this._getHeaderHeight();
+      const headerHeight = this.getHeaderHeight();
       const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
       tableHeight = Math.min(totalHeight, maxHeight - footerHeight);
     }
@@ -754,7 +742,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _getBodyHeight() {
-    return this._getTableHeight() - this._getHeaderHeight() - this._getFrozenRowsHeight();
+    return this._getTableHeight() - this.getHeaderHeight() - this.getFrozenRowsHeight();
   }
 
   _getFrozenContainerHeight() {
@@ -764,7 +752,7 @@ class BaseTable extends React.PureComponent {
     // in auto height mode tableHeight = totalHeight
     if (maxHeight > 0) return tableHeight;
 
-    const totalHeight = this.getTotalRowsHeight() + this._getHeaderHeight() + this._getFrozenRowsHeight();
+    const totalHeight = this.getTotalRowsHeight() + this.getHeaderHeight() + this.getFrozenRowsHeight();
     return Math.min(tableHeight, totalHeight);
   }
 
@@ -923,6 +911,15 @@ class BaseTable extends React.PureComponent {
 
     const column = this.columnManager.getColumn(key);
     onColumnSort({ column, key, order });
+  }
+
+  _handleRowHeightChange(rowKey, size) {
+    const { rowHeightMap } = this.state;
+
+    if (!rowHeightMap[rowKey] || rowHeightMap[rowKey] < size) {
+      rowHeightMap[rowKey] = size;
+      this.setState({ rowHeightMap: { ...rowHeightMap } });
+    }
   }
 }
 

@@ -10,29 +10,21 @@ class TableRow extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._handleExpand = this._handleExpand.bind(this);
-    this.handleMeasureRow = this.handleMeasureRow.bind(this);
     this._setRef = this._setRef.bind(this);
+    this._handleExpand = this._handleExpand.bind(this);
+    this._measureHeight = this._measureHeight.bind(this);
 
     this.mounted = false;
   }
 
-  handleMeasureRow() {
-    if (typeof this.props.estimatedRowHeight === 'number' && this.ref) {
-      const { rowIndex, onRowHeightChange } = this.props;
-      const height = this.ref.getBoundingClientRect().height;
-      onRowHeightChange(rowIndex, height);
-    }
-  }
-
   componentDidMount() {
-    this.handleMeasureRow();
     this.mounted = true;
+    this._measureHeight();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.rowData !== this.props.rowData) {
-      this.handleMeasureRow();
+      this._measureHeight();
     }
   }
 
@@ -80,7 +72,7 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
-    if (typeof estimatedRowHeight !== 'number') {
+    if (!estimatedRowHeight) {
       return (
         <Tag {...rest} style={style} className={className} {...eventHandlers}>
           {cells}
@@ -109,6 +101,17 @@ class TableRow extends React.PureComponent {
   _handleExpand(expanded) {
     const { onRowExpand, rowData, rowIndex, rowKey } = this.props;
     onRowExpand && onRowExpand({ expanded, rowData, rowIndex, rowKey });
+  }
+
+  _measureHeight() {
+    if (typeof this.props.estimatedRowHeight === 'number' && this.ref) {
+      const { rowKey, onRowHeightChange } = this.props;
+      const height = this.ref.getBoundingClientRect().height;
+      if (height !== this.props.style.height) {
+        this.forceUpdate();
+      }
+      onRowHeightChange(rowKey, height);
+    }
   }
 
   _getEventHandlers(handlers = {}) {

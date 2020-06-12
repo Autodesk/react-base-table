@@ -17,7 +17,6 @@ class GridTable extends React.PureComponent {
     this._setInnerRef = this._setInnerRef.bind(this);
     this._itemKey = this._itemKey.bind(this);
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
-    this._getTotalRowsHeight = this._getTotalRowsHeight.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
     this.getRowHeight = this.getRowHeight.bind(this);
@@ -59,6 +58,10 @@ class GridTable extends React.PureComponent {
       return this.props.rowHeightMap[rowKey] || this.props.estimatedRowHeight;
     }
     return this.props.rowHeight;
+  }
+
+  getTotalRowsHeight() {
+    return (this.innerRef && this.innerRef.clientHeight) || this.props.data * this.props.estimatedRowHeight;
   }
 
   renderRow(args) {
@@ -161,10 +164,6 @@ class GridTable extends React.PureComponent {
 
   _setInnerRef(ref) {
     this.innerRef = ref;
-  }
-
-  _getTotalRowsHeight() {
-    return (this.innerRef && this.innerRef.clientHeight) || this.props.data * this.props.estimatedRowHeight;
   }
 
   _itemKey({ rowIndex }) {

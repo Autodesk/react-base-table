@@ -151,9 +151,8 @@ class BaseTable extends React.PureComponent {
    */
   getTotalRowsHeight() {
     const { rowHeight, estimatedRowHeight } = this.props;
-    if (typeof estimatedRowHeight === 'number') {
-      const height = this.table && this.table._getTotalRowsHeight();
-      return height || 0;
+    if (estimatedRowHeight) {
+      return this.table ? this.table.getTotalRowsHeight() : this._data.length * estimatedRowHeight;
     }
 
     return this._data.length * rowHeight;
@@ -661,7 +660,7 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0,
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
       [`${classPrefix}--disabled`]: disabled,
-      [`${classPrefix}--dynamic`]: typeof estimatedRowHeight === 'number',
+      [`${classPrefix}--dynamic`]: estimatedRowHeight > 0,
     });
     return (
       <div ref={this._setContainerRef} className={cls} style={containerStyle}>
@@ -732,7 +731,7 @@ class BaseTable extends React.PureComponent {
   _getFrozenRowsHeight() {
     const { frozenData, rowHeight, estimatedRowHeight } = this.props;
     const { rowHeightMap } = this.state;
-    if (typeof estimatedRowHeight === 'number') {
+    if (estimatedRowHeight) {
       return frozenData.reduce((acc, _, i) => (acc += rowHeightMap[-i - 1] || estimatedRowHeight), 0);
     }
 
@@ -1003,9 +1002,13 @@ BaseTable.propTypes = {
    */
   maxHeight: PropTypes.number,
   /**
-   * The height of each table row
+   * The height of each table row, will be ignored if `estimatedRowHeight` is set
    */
   rowHeight: PropTypes.number,
+  /**
+   * Estimated row height, the real height will be measure dynamically according to the content
+   */
+  estimatedRowHeight: PropTypes.number,
   /**
    * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
    */
@@ -1200,10 +1203,6 @@ BaseTable.propTypes = {
     ExpandIcon: PropTypes.func,
     SortIndicator: PropTypes.func,
   }),
-  /**
-   * Default row height used prior to dynamic row height measurement
-   */
-  estimatedRowHeight: PropTypes.number,
 };
 
 export default BaseTable;

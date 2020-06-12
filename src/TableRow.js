@@ -88,8 +88,15 @@ class TableRow extends React.PureComponent {
       );
     }
 
+    const { height, ...otherStyles } = style;
     return (
-      <Tag {...rest} style={this.mounted ? style : null} className={className} {...eventHandlers} ref={this._setRef}>
+      <Tag
+        {...rest}
+        style={this.mounted ? style : otherStyles}
+        className={className}
+        {...eventHandlers}
+        ref={this._setRef}
+      >
         {cells}
       </Tag>
     );

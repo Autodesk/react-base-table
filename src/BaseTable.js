@@ -165,10 +165,12 @@ class BaseTable extends React.PureComponent {
    * Get the total height of all frozen rows,
    */
   getFrozenRowsHeight() {
-    const { rowHeight, estimatedRowHeight } = this.props;
-    return this.table
-      ? this.table.getFrozenRowsHeight()
-      : this.props.frozenData.length * (estimatedRowHeight || rowHeight);
+    const { frozenData, rowHeight, estimatedRowHeight } = this.props;
+    if (estimatedRowHeight) {
+      return frozenData.reduce((height, rowData, index) => (height += this._getRowHeight(-index - 1)), 0);
+    }
+
+    return frozenData.length * rowHeight;
   }
 
   /**
@@ -498,6 +500,7 @@ class BaseTable extends React.PureComponent {
         headerHeight={headerHeight}
         rowHeight={estimatedRowHeight ? this._getRowHeight : rowHeight}
         estimatedRowHeight={estimatedRowHeight}
+        frozenRowsHeight={this.getFrozenRowsHeight()}
         headerWidth={tableWidth + (fixed ? this._verticalScrollbarSize : 0)}
         bodyWidth={tableWidth}
         headerRenderer={this.renderHeader}
@@ -530,6 +533,7 @@ class BaseTable extends React.PureComponent {
         headerHeight={headerHeight}
         rowHeight={estimatedRowHeight ? this._getRowHeight : rowHeight}
         estimatedRowHeight={estimatedRowHeight}
+        frozenRowsHeight={this.getFrozenRowsHeight()}
         headerWidth={columnsWidth + offset}
         bodyWidth={columnsWidth + offset}
         headerRenderer={this.renderHeader}
@@ -562,6 +566,7 @@ class BaseTable extends React.PureComponent {
         headerHeight={headerHeight}
         rowHeight={estimatedRowHeight ? this._getRowHeight : rowHeight}
         estimatedRowHeight={estimatedRowHeight}
+        frozenRowsHeight={this.getFrozenRowsHeight()}
         headerWidth={columnsWidth + scrollbarWidth}
         bodyWidth={columnsWidth}
         headerRenderer={this.renderHeader}
@@ -729,10 +734,11 @@ class BaseTable extends React.PureComponent {
   }
 
   _getRowHeight(rowIndex) {
-    const { rowHeight, estimatedRowHeight, rowKey } = this.props;
+    const { frozenData, rowHeight, estimatedRowHeight, rowKey } = this.props;
 
     if (estimatedRowHeight) {
-      return this._rowHeightMap[this._data[rowIndex][rowKey]] || estimatedRowHeight;
+      const rowData = rowIndex < 0 ? frozenData[-rowIndex - 1] : this._data[rowIndex];
+      return this._rowHeightMap[rowData[rowKey]] || estimatedRowHeight;
     }
     return rowHeight;
   }
@@ -936,6 +942,7 @@ class BaseTable extends React.PureComponent {
     this.table && this.table.resetAfterRowIndex(rowIndex);
     this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex);
     this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex);
+    this.props.frozenData && this.forceUpdate();
   }
 }
 

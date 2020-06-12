@@ -23,6 +23,7 @@ class GridTable extends React.PureComponent {
 
   resetAfterRowIndex(rowIndex = 0) {
     if (!this.props.estimatedRowHeight) return;
+
     this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex);
   }
 
@@ -57,17 +58,9 @@ class GridTable extends React.PureComponent {
     return headerHeight;
   }
 
-  getFrozenRowsHeight() {
-    const { frozenData, rowHeight, estimatedRowHeight } = this.props;
-    if (estimatedRowHeight) {
-      return frozenData.reduce((height, rowData, index) => (height += rowHeight(-index - 1)), 0);
-    }
-
-    return frozenData.length * rowHeight;
-  }
-
   getTotalRowsHeight() {
-    return (this.innerRef && this.innerRef.clientHeight) || this.props.data * this.props.estimatedRowHeight;
+    const { data, rowHeight, estimatedRowHeight } = this.props;
+    return (this.innerRef && this.innerRef.clientHeight) || data.length * (estimatedRowHeight || rowHeight);
   }
 
   renderRow(args) {
@@ -87,6 +80,7 @@ class GridTable extends React.PureComponent {
       height,
       rowHeight,
       estimatedRowHeight,
+      frozenRowsHeight,
       headerWidth,
       bodyWidth,
       useIsScrolling,
@@ -99,7 +93,6 @@ class GridTable extends React.PureComponent {
       ...rest
     } = this.props;
     const headerHeight = this.getHeaderHeight();
-    const frozenRowsHeight = this.getFrozenRowsHeight();
     const frozenRowCount = frozenData.length;
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
@@ -111,8 +104,8 @@ class GridTable extends React.PureComponent {
           className={`${classPrefix}__body`}
           ref={this._setBodyRef}
           innerRef={this._setInnerRef}
-          data={data}
           itemKey={this._itemKey}
+          data={data}
           frozenData={frozenData}
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
@@ -189,6 +182,8 @@ GridTable.propTypes = {
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
   rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
+  estimatedRowHeight: PropTypes.number,
+  frozenRowsHeight: PropTypes.number,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -197,7 +192,6 @@ GridTable.propTypes = {
   overscanRowCount: PropTypes.number,
   hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: PropTypes.object,
-  estimatedRowHeight: PropTypes.number,
   onScrollbarPresenceChange: PropTypes.func,
   onScroll: PropTypes.func,
   onRowsRendered: PropTypes.func,

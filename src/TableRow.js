@@ -10,21 +10,21 @@ class TableRow extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.state = {
+      measured: false,
+    };
+
     this._setRef = this._setRef.bind(this);
     this._handleExpand = this._handleExpand.bind(this);
-    this._measureHeight = this._measureHeight.bind(this);
-
-    this.mounted = false;
   }
 
   componentDidMount() {
-    this.mounted = true;
-    this._measureHeight();
+    this.props.estimatedRowHeight && this._measureHeight();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.rowData !== this.props.rowData) {
-      this._measureHeight();
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.estimatedRowHeight && this.state.measured === prevState.measured) {
+      this.setState({ measured: false }, this._measureHeight);
     }
   }
 
@@ -43,12 +43,12 @@ class TableRow extends React.PureComponent {
       rowRenderer,
       cellRenderer,
       expandIconRenderer,
+      estimatedRowHeight,
       tagName: Tag,
       // omit the following from rest
       rowKey,
       onRowHover,
       onRowExpand,
-      estimatedRowHeight,
       onRowHeightChange,
       ...rest
     } = this.props;
@@ -72,6 +72,7 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
+
     if (!estimatedRowHeight) {
       return (
         <Tag {...rest} style={style} className={className} {...eventHandlers}>
@@ -84,7 +85,7 @@ class TableRow extends React.PureComponent {
     return (
       <Tag
         {...rest}
-        style={this.mounted ? style : otherStyles}
+        style={this.state.measured ? style : otherStyles}
         className={className}
         {...eventHandlers}
         ref={this._setRef}
@@ -104,13 +105,14 @@ class TableRow extends React.PureComponent {
   }
 
   _measureHeight() {
-    if (typeof this.props.estimatedRowHeight === 'number' && this.ref) {
-      const { rowKey, onRowHeightChange } = this.props;
+    if (this.props.estimatedRowHeight && this.ref) {
+      const { style, rowKey, onRowHeightChange } = this.props;
       const height = this.ref.getBoundingClientRect().height;
-      if (height !== this.props.style.height) {
-        this.forceUpdate();
-      }
-      onRowHeightChange(rowKey, height);
+      this.setState({ measured: true }, () => {
+        if (height !== style.height) {
+          onRowHeightChange(rowKey, height);
+        }
+      });
     }
   }
 

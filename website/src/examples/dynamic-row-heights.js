@@ -12,6 +12,19 @@ const data = new Array(1000).fill(0).map((row, rowIndex) => {
   )
 })
 
+const frozenData = new Array(2).fill(0).map((row, rowIndex) => {
+  return columns.reduce(
+    (rowData, column, columnIndex) => {
+      rowData[column.dataKey] = faker.random.words()
+      return rowData
+    },
+    {
+      id: `frozen-row-${rowIndex}`,
+      parentId: null,
+    }
+  )
+})
+
 const fixedColumns = columns.map((column, columnIndex) => {
   let frozen
   if (columnIndex < 2) frozen = Column.FrozenDirection.LEFT
@@ -53,6 +66,7 @@ export default () => (
     fixed
     columns={fixedColumns}
     data={treeData}
+    frozenData={frozenData}
     estimatedRowHeight={60}
     expandColumnKey={expandColumnKey}
   />

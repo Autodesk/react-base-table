@@ -24,9 +24,10 @@ class TableHeader extends React.PureComponent {
 
   renderFrozenRow(rowData, index) {
     const { columns, rowHeight, rowRenderer } = this.props;
-    const style = { width: '100%', height: rowHeight };
     // for frozen row the `rowIndex` is negative
     const rowIndex = -index - 1;
+    const height = typeof rowHeight === 'function' ? rowHeight(rowIndex) : rowHeight;
+    const style = { width: '100%', height };
     return rowRenderer({ style, columns, rowData, rowIndex });
   }
 
@@ -68,7 +69,7 @@ TableHeader.propTypes = {
   height: PropTypes.number.isRequired,
   headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
   rowWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.number.isRequired,
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   frozenData: PropTypes.arrayOf(PropTypes.object),

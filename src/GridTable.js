@@ -140,7 +140,7 @@ class GridTable extends React.PureComponent {
             width={width}
             height={Math.min(headerHeight + frozenRowsHeight(), height)}
             rowWidth={headerWidth}
-            rowHeight={this.getRowHeight()}
+            rowHeight={this.getRowHeight}
             headerHeight={this.props.headerHeight}
             headerRenderer={this.props.headerRenderer}
             rowRenderer={this.props.rowRenderer}

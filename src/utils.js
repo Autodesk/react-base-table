@@ -171,8 +171,17 @@ export function getValue(object, path, defaultValue) {
   return object;
 }
 
-// copied from https://30secondsofcode.org/function#throttle
-export function throttle(fn, wait) {
+// copied from https://www.30secondsofcode.org/js/s/debounce
+export const debounce = (fn, ms = 0) => {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  };
+};
+
+// copied from https://www.30secondsofcode.org/js/s/throttle
+export const throttle = (fn, wait) => {
   let inThrottle, lastFn, lastTime;
   return function() {
     const context = this,
@@ -191,7 +200,7 @@ export function throttle(fn, wait) {
       }, Math.max(wait - (Date.now() - lastTime), 0));
     }
   };
-}
+};
 
 // copied from https://github.com/react-bootstrap/dom-helpers
 let scrollbarSize;

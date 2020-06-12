@@ -26,6 +26,7 @@ import {
   cloneArray,
   getValue,
   throttle,
+  debounce,
   noop,
 } from './utils';
 
@@ -67,6 +68,7 @@ class BaseTable extends React.PureComponent {
       rowHeightMap: {},
     };
     this.columnManager = new ColumnManager(getColumns(columns, children), props.fixed);
+    this.debouncedSetState = debounce(this.setState, 0);
 
     this._setContainerRef = this._setContainerRef.bind(this);
     this._setMainTableRef = this._setMainTableRef.bind(this);
@@ -918,8 +920,8 @@ class BaseTable extends React.PureComponent {
 
     if (!rowHeightMap[rowKey] || rowHeightMap[rowKey] < size) {
       rowHeightMap[rowKey] = size;
-      this.setState({ rowHeightMap: { ...rowHeightMap } });
     }
+    this.debouncedSetState({ rowHeightMap: { ...rowHeightMap } });
   }
 }
 

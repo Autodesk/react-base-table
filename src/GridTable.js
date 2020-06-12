@@ -21,7 +21,7 @@ class GridTable extends React.PureComponent {
     this.renderRow = this.renderRow.bind(this);
   }
 
-  resetAfterRowIndex(rowIndex) {
+  resetAfterRowIndex(rowIndex = 0) {
     if (!this.props.estimatedRowHeight) return;
     this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex);
   }

@@ -65,7 +65,6 @@ class BaseTable extends React.PureComponent {
       resizingKey: null,
       resizingWidth: 0,
       expandedRowKeys: cloneArray(defaultExpandedRowKeys),
-      rowHeightMap: {},
     };
     this.columnManager = new ColumnManager(getColumns(columns, children), props.fixed);
 
@@ -101,11 +100,9 @@ class BaseTable extends React.PureComponent {
       this.columnManager.reset(columns, fixed);
     }, isObjectEqual);
 
+    this._rowHeightMap = {};
     this._getRowHeight = this._getRowHeight.bind(this);
-    this._updateRowHeightMap = debounce(rowHeightMap => {
-      this._resetAfterRowIndex(0);
-      this.setState({ rowHeightMap });
-    });
+    this._debouncedResetAfterRowIndex = debounce(this._resetAfterRowIndex, 0);
 
     this._scroll = { scrollLeft: 0, scrollTop: 0 };
     this._scrollHeight = 0;
@@ -168,14 +165,18 @@ class BaseTable extends React.PureComponent {
    * Get the total height of all frozen rows,
    */
   getFrozenRowsHeight() {
-    return this.table ? this.table.getFrozenRowsHeight() : 0;
+    const { rowHeight, estimatedRowHeight } = this.props;
+    return this.table
+      ? this.table.getFrozenRowsHeight()
+      : this.props.frozenData.length * (estimatedRowHeight || rowHeight);
   }
 
   /**
    * Get the total height of all rows, including expanded rows.
    */
   getTotalRowsHeight() {
-    return this.table ? this.table.getTotalRowsHeight() : 0;
+    const { rowHeight, estimatedRowHeight } = this.props;
+    return this.table ? this.table.getTotalRowsHeight() : this._data.length * (estimatedRowHeight || rowHeight);
   }
 
   /**
@@ -728,11 +729,10 @@ class BaseTable extends React.PureComponent {
   }
 
   _getRowHeight(rowIndex) {
-    const { data, rowHeight, estimatedRowHeight, rowKey } = this.props;
-    const { rowHeightMap } = this.state;
+    const { rowHeight, estimatedRowHeight, rowKey } = this.props;
 
     if (estimatedRowHeight) {
-      return rowHeightMap[data[rowIndex][rowKey]] || estimatedRowHeight;
+      return this._rowHeightMap[this._data[rowIndex][rowKey]] || estimatedRowHeight;
     }
     return rowHeight;
   }
@@ -925,13 +925,11 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleRowHeightChange(rowKey, size) {
-    const { rowHeightMap } = this.state;
-
-    if (!rowHeightMap[rowKey] || rowHeightMap[rowKey] < size) {
-      rowHeightMap[rowKey] = size;
+    if (!this._rowHeightMap[rowKey] || this._rowHeightMap[rowKey] < size) {
+      this._rowHeightMap[rowKey] = size;
     }
 
-    this._updateRowHeightMap({ ...rowHeightMap });
+    this._debouncedResetAfterRowIndex();
   }
 
   _resetAfterRowIndex(rowIndex) {

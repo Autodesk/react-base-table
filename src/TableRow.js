@@ -23,7 +23,11 @@ class TableRow extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.estimatedRowHeight && this.state.measured === prevState.measured) {
+    if (
+      this.props.estimatedRowHeight &&
+      this.props.style === prevProps.style &&
+      this.state.measured === prevState.measured
+    ) {
       this.setState({ measured: false }, this._measureHeight);
     }
   }
@@ -106,12 +110,10 @@ class TableRow extends React.PureComponent {
 
   _measureHeight() {
     if (this.props.estimatedRowHeight && this.ref) {
-      const { style, rowKey, onRowHeightChange } = this.props;
+      const { rowKey, onRowHeightChange, rowIndex } = this.props;
       const height = this.ref.getBoundingClientRect().height;
       this.setState({ measured: true }, () => {
-        if (height !== style.height) {
-          onRowHeightChange(rowKey, height);
-        }
+        onRowHeightChange(rowKey, height, rowIndex);
       });
     }
   }

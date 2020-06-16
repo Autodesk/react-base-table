@@ -100,13 +100,15 @@ class BaseTable extends React.PureComponent {
       this.columnManager.reset(columns, fixed);
     }, isObjectEqual);
 
+    this._resetIndex = null;
     this._rowHeightMap = {};
     this._rowHeightMapBuffer = {};
     this._getRowHeight = this._getRowHeight.bind(this);
-    this._updateRowHeights = debounce(() => {
+    this._updateRowHeights = debounce(index => {
       this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
-      this._resetAfterRowIndex();
+      this._resetAfterRowIndex(index);
       this._rowHeightMapBuffer = {};
+      this._resetIndex = null;
     });
 
     this._scroll = { scrollLeft: 0, scrollTop: 0 };
@@ -935,19 +937,20 @@ class BaseTable extends React.PureComponent {
     onColumnSort({ column, key, order });
   }
 
-  _handleRowHeightChange(rowKey, size) {
+  _handleRowHeightChange(rowKey, size, rowIndex) {
+    if (this._resetIndex === null) this._resetIndex = rowIndex;
     if (!this._rowHeightMapBuffer[rowKey] || this._rowHeightMapBuffer[rowKey] < size) {
       this._rowHeightMapBuffer[rowKey] = size;
     }
 
-    this._updateRowHeights();
+    this._updateRowHeights(this._resetIndex);
   }
 
   _resetAfterRowIndex(rowIndex) {
     this.table && this.table.resetAfterRowIndex(rowIndex);
     this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex);
     this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex);
-    this.props.frozenData && this.forceUpdate();
+    // this.props.frozenData && this.forceUpdate();
   }
 }
 

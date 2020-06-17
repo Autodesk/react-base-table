@@ -29,7 +29,7 @@ const fixedColumns = columns.map((column, columnIndex) => {
   let frozen
   if (columnIndex < 2) frozen = Column.FrozenDirection.LEFT
   if (columnIndex > 8) frozen = Column.FrozenDirection.RIGHT
-  return { ...column, frozen }
+  return { ...column, frozen, resizable: true }
 })
 
 const expandColumnKey = 'column-0'
@@ -66,6 +66,7 @@ export default () => (
     fixed
     columns={fixedColumns}
     data={treeData}
+    frozenData={frozenData}
     estimatedRowHeight={60}
     expandColumnKey={expandColumnKey}
   />

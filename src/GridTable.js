@@ -23,7 +23,6 @@ class GridTable extends React.PureComponent {
 
   resetAfterRowIndex(rowIndex = 0) {
     if (!this.props.estimatedRowHeight) return;
-
     this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex);
   }
 
@@ -58,6 +57,12 @@ class GridTable extends React.PureComponent {
     return headerHeight;
   }
 
+  getFrozenRowsHeight() {
+    const { frozenData, rowHeight } = this.props;
+    const height = typeof rowHeight === 'function' ? rowHeight(-1) : rowHeight;
+    return frozenData.length * height;
+  }
+
   getTotalRowsHeight() {
     const { data, rowHeight, estimatedRowHeight } = this.props;
     return (this.innerRef && this.innerRef.clientHeight) || data.length * (estimatedRowHeight || rowHeight);
@@ -80,7 +85,6 @@ class GridTable extends React.PureComponent {
       height,
       rowHeight,
       estimatedRowHeight,
-      frozenRowsHeight,
       headerWidth,
       bodyWidth,
       useIsScrolling,
@@ -93,6 +97,7 @@ class GridTable extends React.PureComponent {
       ...rest
     } = this.props;
     const headerHeight = this.getHeaderHeight();
+    const frozenRowsHeight = this.getFrozenRowsHeight();
     const frozenRowCount = frozenData.length;
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
@@ -183,7 +188,6 @@ GridTable.propTypes = {
   bodyWidth: PropTypes.number.isRequired,
   rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
   estimatedRowHeight: PropTypes.number,
-  frozenRowsHeight: PropTypes.number,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

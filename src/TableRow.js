@@ -16,6 +16,7 @@ class TableRow extends React.PureComponent {
 
     this._setRef = this._setRef.bind(this);
     this._handleExpand = this._handleExpand.bind(this);
+    this._measureHeight = this._measureHeight.bind(this);
   }
 
   componentDidMount() {
@@ -47,13 +48,13 @@ class TableRow extends React.PureComponent {
       rowRenderer,
       cellRenderer,
       expandIconRenderer,
-      estimatedRowHeight,
       tagName: Tag,
       // omit the following from rest
       rowKey,
+      estimatedRowHeight,
       onRowHover,
       onRowExpand,
-      onRowHeightChange,
+      onRowHeightMeasured,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -76,7 +77,6 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
-
     if (!estimatedRowHeight) {
       return (
         <Tag {...rest} style={style} className={className} {...eventHandlers}>
@@ -110,10 +110,10 @@ class TableRow extends React.PureComponent {
 
   _measureHeight() {
     if (this.props.estimatedRowHeight && this.ref) {
-      const { rowKey, onRowHeightChange, rowIndex } = this.props;
+      const { rowKey, onRowHeightMeasured, rowIndex } = this.props;
       const height = this.ref.getBoundingClientRect().height;
       this.setState({ measured: true }, () => {
-        onRowHeightChange(rowKey, height, rowIndex);
+        onRowHeightMeasured(rowKey, height, rowIndex);
       });
     }
   }
@@ -182,7 +182,7 @@ TableRow.propTypes = {
   onRowExpand: PropTypes.func,
   tagName: PropTypes.elementType,
   estimatedRowHeight: PropTypes.number,
-  onRowHeightChange: PropTypes.func,
+  onRowHeightMeasured: PropTypes.func,
 };
 
 export default TableRow;

@@ -21,15 +21,14 @@ class GridTable extends React.PureComponent {
     this.renderRow = this.renderRow.bind(this);
   }
 
-  resetAfterRowIndex(rowIndex = 0) {
+  resetAfterRowIndex(rowIndex = 0, shouldForceUpdate) {
     if (!this.props.estimatedRowHeight) return;
-    this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex);
+    this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex, shouldForceUpdate);
   }
 
-  resetAfterColumnIndex(columnIndex = 0) {
+  resetAfterColumnIndex(columnIndex = 0, shouldForceUpdate) {
     if (!this.props.estimatedRowHeight) return;
-
-    this.bodyRef && this.bodyRef.resetAfterColumnIndex(columnIndex);
+    this.bodyRef && this.bodyRef.resetAfterColumnIndex(columnIndex, shouldForceUpdate);
   }
 
   forceUpdateTable() {

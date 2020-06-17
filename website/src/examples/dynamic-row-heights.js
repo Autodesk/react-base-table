@@ -67,7 +67,7 @@ export default () => (
     columns={fixedColumns}
     data={treeData}
     frozenData={frozenData}
-    estimatedRowHeight={60}
+    estimatedRowHeight={50}
     expandColumnKey={expandColumnKey}
   />
 )

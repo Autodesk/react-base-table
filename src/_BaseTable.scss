@@ -60,7 +60,8 @@ $table-prefix: BaseTable !default;
     pointer-events: none;
   }
 
-  &:not(.#{$table-prefix}--dynamic) {
+  &:not(.#{$table-prefix}--dynamic),
+  .#{$table-prefix}__row--frozen {
     .#{$table-prefix}__row-cell-text {
       overflow: hidden;
       text-overflow: ellipsis;

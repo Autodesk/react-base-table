@@ -895,6 +895,12 @@ class BaseTable extends React.PureComponent {
     this.columnManager.setColumnWidth(key, width);
     this.setState({ resizingWidth: width });
 
+    if (this.props.estimatedRowHeight && this.props.fixed) {
+      this.table && this.table.resetAfterColumnIndex(0, false);
+      this.leftTable && this.leftTable.resetAfterColumnIndex(0, false);
+      this.rightTable && this.rightTable.resetAfterColumnIndex(0, false);
+    }
+
     const column = this.columnManager.getColumn(key);
     this.props.onColumnResize({ column, width });
   }
@@ -908,11 +914,6 @@ class BaseTable extends React.PureComponent {
     this.setState({ resizingKey: null, resizingWidth: 0 });
 
     if (!resizingKey || !resizingWidth) return;
-
-    if (this.props.estimatedRowHeight) {
-      this.leftTable && this.leftTable.resetAfterColumnIndex();
-      this.rightTable && this.rightTable.resetAfterColumnIndex();
-    }
 
     const column = this.columnManager.getColumn(resizingKey);
     this.props.onColumnResizeEnd({ column, width: resizingWidth });

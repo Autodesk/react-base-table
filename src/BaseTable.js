@@ -918,6 +918,11 @@ class BaseTable extends React.PureComponent {
 
     if (!resizingKey || !resizingWidth) return;
 
+    if (this.props.estimatedRowHeight) {
+      this.leftTable && this.leftTable.resetAfterColumnIndex();
+      this.rightTable && this.rightTable.resetAfterColumnIndex();
+    }
+
     const column = this.columnManager.getColumn(resizingKey);
     this.props.onColumnResizeEnd({ column, width: resizingWidth });
   }

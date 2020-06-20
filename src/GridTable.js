@@ -16,6 +16,7 @@ class GridTable extends React.PureComponent {
     this._setBodyRef = this._setBodyRef.bind(this);
     this._setInnerRef = this._setInnerRef.bind(this);
     this._itemKey = this._itemKey.bind(this);
+    this._getBodyWidth = this._getBodyWidth.bind(this);
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
@@ -64,8 +65,7 @@ class GridTable extends React.PureComponent {
 
   getFrozenRowsHeight() {
     const { frozenData, rowHeight } = this.props;
-    const height = typeof rowHeight === 'function' ? rowHeight(-1) : rowHeight;
-    return frozenData.length * height;
+    return frozenData.length * rowHeight;
   }
 
   getTotalRowsHeight() {
@@ -90,6 +90,7 @@ class GridTable extends React.PureComponent {
       height,
       rowHeight,
       estimatedRowHeight,
+      getRowHeight,
       headerWidth,
       bodyWidth,
       useIsScrolling,
@@ -119,11 +120,11 @@ class GridTable extends React.PureComponent {
           frozenData={frozenData}
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
-          rowHeight={rowHeight}
+          rowHeight={estimatedRowHeight ? getRowHeight : rowHeight}
           estimatedRowHeight={estimatedRowHeight}
           rowCount={data.length}
           overscanRowCount={overscanRowCount}
-          columnWidth={estimatedRowHeight ? () => bodyWidth : bodyWidth}
+          columnWidth={estimatedRowHeight ? this._getBodyWidth : bodyWidth}
           columnCount={1}
           overscanColumnCount={0}
           useIsScrolling={useIsScrolling}
@@ -172,6 +173,10 @@ class GridTable extends React.PureComponent {
     return data[rowIndex][rowKey];
   }
 
+  _getBodyWidth() {
+    return this.props.bodyWidth;
+  }
+
   _handleItemsRendered({ overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex }) {
     this.props.onRowsRendered({
       overscanStartIndex: overscanRowStartIndex,
@@ -191,8 +196,9 @@ GridTable.propTypes = {
   headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]).isRequired,
+  rowHeight: PropTypes.number.isRequired,
   estimatedRowHeight: PropTypes.number,
+  getRowHeight: PropTypes.func,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

@@ -20,14 +20,16 @@ class TableRow extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.estimatedRowHeight && this._measureHeight();
+    this.props.estimatedRowHeight && this.props.rowIndex >= 0 && this._measureHeight();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.estimatedRowHeight &&
+      this.props.rowIndex >= 0 &&
       this.props.style === prevProps.style &&
-      this.state.measured === prevState.measured
+      this.state.measured === prevState.measured &&
+      this.state.measured === true
     ) {
       this.setState({ measured: false }, this._measureHeight);
     }
@@ -45,13 +47,13 @@ class TableRow extends React.PureComponent {
       expandColumnKey,
       depth,
       rowEventHandlers,
+      estimatedRowHeight,
       rowRenderer,
       cellRenderer,
       expandIconRenderer,
       tagName: Tag,
       // omit the following from rest
       rowKey,
-      estimatedRowHeight,
       onRowHover,
       onRowExpand,
       onRowHeightMeasured,
@@ -77,23 +79,24 @@ class TableRow extends React.PureComponent {
     }
 
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
-    if (!estimatedRowHeight) {
+
+    if (estimatedRowHeight && rowIndex >= 0) {
+      const { height, ...otherStyles } = style;
       return (
-        <Tag {...rest} style={style} className={className} {...eventHandlers}>
+        <Tag
+          {...rest}
+          ref={this._setRef}
+          className={className}
+          style={this.state.measured ? style : otherStyles}
+          {...(this.state.measured && eventHandlers)}
+        >
           {cells}
         </Tag>
       );
     }
 
-    const { height, ...otherStyles } = style;
     return (
-      <Tag
-        {...rest}
-        style={this.state.measured ? style : otherStyles}
-        className={className}
-        {...eventHandlers}
-        ref={this._setRef}
-      >
+      <Tag {...rest} className={className} style={style} {...eventHandlers}>
         {cells}
       </Tag>
     );
@@ -109,7 +112,7 @@ class TableRow extends React.PureComponent {
   }
 
   _measureHeight() {
-    if (this.props.estimatedRowHeight && this.ref) {
+    if (this.ref) {
       const { rowKey, onRowHeightMeasured, rowIndex } = this.props;
       const height = this.ref.getBoundingClientRect().height;
       this.setState({ measured: true }, () => {

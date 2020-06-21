@@ -70,8 +70,8 @@ TableHeader.propTypes = {
   rowWidth: PropTypes.number.isRequired,
   rowHeight: PropTypes.number.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  frozenData: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.array.isRequired,
+  frozenData: PropTypes.array,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,
 };

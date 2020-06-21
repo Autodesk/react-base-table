@@ -105,11 +105,18 @@ class BaseTable extends React.PureComponent {
     this._rowHeightMapBuffer = {};
     this._getRowHeight = this._getRowHeight.bind(this);
     this._updateRowHeights = debounce(() => {
-      this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
-      this.resetAfterRowIndex(this._resetIndex, false);
-      this._rowHeightMapBuffer = {};
-      this._resetIndex = null;
-      this.forceUpdateTable();
+      if (
+        Object.keys(this._rowHeightMapBuffer).some(key => this._rowHeightMapBuffer[key] !== this._rowHeightMap[key])
+      ) {
+        this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
+        this.resetAfterRowIndex(this._resetIndex, false);
+        this._rowHeightMapBuffer = {};
+        this._resetIndex = null;
+        this.forceUpdateTable();
+      } else {
+        this._rowHeightMapBuffer = {};
+        this._resetIndex = null;
+      }
     }, 0);
 
     this._scroll = { scrollLeft: 0, scrollTop: 0 };

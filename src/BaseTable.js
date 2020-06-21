@@ -876,8 +876,8 @@ class BaseTable extends React.PureComponent {
 
   _handleVerticalScroll({ scrollTop }) {
     const lastScrollTop = this._scroll.scrollTop;
-    this.scrollToTop(scrollTop);
 
+    if (scrollTop !== lastScrollTop) this.scrollToTop(scrollTop);
     if (scrollTop > lastScrollTop) this._maybeCallOnEndReached();
   }
 

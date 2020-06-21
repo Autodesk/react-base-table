@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- chore: loosen prop type check for `data`
+
 ## v1.9.2 (2020-05-26)
 
 - fix: wrong description for Column props

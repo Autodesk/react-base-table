@@ -948,11 +948,11 @@ BaseTable.propTypes = {
   /**
    * The data for the table
    */
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.array.isRequired,
   /**
    * The data be frozen to top, `rowIndex` is negative and started from `-1`
    */
-  frozenData: PropTypes.arrayOf(PropTypes.object),
+  frozenData: PropTypes.array,
   /**
    * The key field of each data item
    */

@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.0 (2020-06-22)
+
 - feat: add `estimatedRowHeight` to support dynamic row height
 
 ## v1.9.4 (2020-06-22)

@@ -220,5 +220,9 @@ module.exports = {
       title: 'Column Hovering',
       path: '/examples/column-hovering',
     },
+    {
+      title: 'Dynamic Row Heights',
+      path: '/examples/dynamic-row-heights'
+    }
   ],
 }

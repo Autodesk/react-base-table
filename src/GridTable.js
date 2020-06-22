@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { FixedSizeGrid, VariableSizeGrid } from 'react-window';
+import { FixedSizeList as FixedSizeGrid, VariableSizeList as VariableSizeGrid } from 'react-window';
 
 import Header from './TableHeader';
 
@@ -14,22 +14,21 @@ class GridTable extends React.PureComponent {
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
     this._setBodyRef = this._setBodyRef.bind(this);
+    this._setOuterRef = this._setOuterRef.bind(this);
     this._setInnerRef = this._setInnerRef.bind(this);
     this._itemKey = this._itemKey.bind(this);
-    this._getBodyWidth = this._getBodyWidth.bind(this);
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
+    this._handleHorizontalScroll = this._handleHorizontalScroll.bind(this);
+    this._handleScroll = this._handleScroll.bind(this);
 
     this.renderRow = this.renderRow.bind(this);
+
+    this._scrollLeft = 0;
   }
 
   resetAfterRowIndex(rowIndex = 0, shouldForceUpdate) {
     if (!this.props.estimatedRowHeight) return;
-    this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-  }
-
-  resetAfterColumnIndex(columnIndex = 0, shouldForceUpdate) {
-    if (!this.props.estimatedRowHeight) return;
-    this.bodyRef && this.bodyRef.resetAfterColumnIndex(columnIndex, shouldForceUpdate);
+    this.bodyRef && this.bodyRef.resetAfterIndex(rowIndex, shouldForceUpdate);
   }
 
   forceUpdateTable() {
@@ -39,20 +38,21 @@ class GridTable extends React.PureComponent {
 
   scrollToPosition(args) {
     this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
-    this.bodyRef && this.bodyRef.scrollTo(args);
+    this.bodyRef && this.bodyRef.scrollTo(args.scrollTop);
+    this.outerRef && (this.outerRef.scrollLeft = args.scrollLeft);
   }
 
   scrollToTop(scrollTop) {
-    this.bodyRef && this.bodyRef.scrollTo({ scrollTop });
+    this.bodyRef && this.bodyRef.scrollTo(scrollTop);
   }
 
   scrollToLeft(scrollLeft) {
     this.headerRef && this.headerRef.scrollTo(scrollLeft);
-    this.bodyRef && this.bodyRef.scrollToPosition({ scrollLeft });
+    this.outerRef && (this.outerRef.scrollLeft = scrollLeft);
   }
 
   scrollToRow(rowIndex = 0, align = 'auto') {
-    this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
+    this.bodyRef && this.bodyRef.scrollToItem(rowIndex, align);
   }
 
   getHeaderHeight() {
@@ -73,10 +73,30 @@ class GridTable extends React.PureComponent {
     return (this.innerRef && this.innerRef.clientHeight) || data.length * (estimatedRowHeight || rowHeight);
   }
 
-  renderRow(args) {
+  renderRow({ index, ...rest }) {
     const { data, columns, rowRenderer } = this.props;
-    const rowData = data[args.rowIndex];
-    return rowRenderer({ ...args, columns, rowData });
+    const rowData = data[index];
+    return rowRenderer({ ...rest, columns, rowData, rowIndex: index });
+  }
+
+  componentDidMount() {
+    this.innerRef.style.position = 'relative';
+    this.innerRef.style.width = `${this.props.bodyWidth}px`;
+
+    this.outerRef.addEventListener('scroll', this._handleHorizontalScroll);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.bodyWidth !== prevProps.bodyWidth) {
+      if (this.innerRef) {
+        this.innerRef.style.position = 'relative';
+        this.innerRef.style.width = `${this.props.bodyWidth}px`;
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.outerRef.removeEventListener('scroll', this._handleHorizontalScroll);
   }
 
   render() {
@@ -94,12 +114,12 @@ class GridTable extends React.PureComponent {
       headerWidth,
       bodyWidth,
       useIsScrolling,
-      onScroll,
       hoveredRowKey,
       overscanRowCount,
       // omit from rest
       style,
       onScrollbarPresenceChange,
+      onScroll,
       ...rest
     } = this.props;
     const headerHeight = this.getHeaderHeight();
@@ -114,22 +134,20 @@ class GridTable extends React.PureComponent {
           {...rest}
           className={`${classPrefix}__body`}
           ref={this._setBodyRef}
+          outerRef={this._setOuterRef}
           innerRef={this._setInnerRef}
           itemKey={this._itemKey}
           data={data}
           frozenData={frozenData}
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
-          rowHeight={estimatedRowHeight ? getRowHeight : rowHeight}
-          estimatedRowHeight={estimatedRowHeight}
-          rowCount={data.length}
-          overscanRowCount={overscanRowCount}
-          columnWidth={estimatedRowHeight ? this._getBodyWidth : bodyWidth}
-          columnCount={1}
-          overscanColumnCount={0}
+          itemSize={estimatedRowHeight ? getRowHeight : rowHeight}
+          estimatedItemSize={estimatedRowHeight}
+          itemCount={data.length}
+          overscanCount={overscanRowCount}
           useIsScrolling={useIsScrolling}
           hoveredRowKey={hoveredRowKey}
-          onScroll={onScroll}
+          onScroll={this._handleScroll}
           onItemsRendered={this._handleItemsRendered}
           children={this.renderRow}
         />
@@ -164,26 +182,39 @@ class GridTable extends React.PureComponent {
     this.bodyRef = ref;
   }
 
+  _setOuterRef(ref) {
+    this.outerRef = ref;
+  }
+
   _setInnerRef(ref) {
     this.innerRef = ref;
   }
 
-  _itemKey({ rowIndex }) {
+  _itemKey(rowIndex) {
     const { data, rowKey } = this.props;
     return data[rowIndex][rowKey];
   }
 
-  _getBodyWidth() {
-    return this.props.bodyWidth;
+  _handleItemsRendered({ overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex }) {
+    this.props.onRowsRendered({
+      overscanStartIndex: overscanStartIndex,
+      overscanStopIndex: overscanStopIndex,
+      startIndex: visibleStartIndex,
+      stopIndex: visibleStopIndex,
+    });
   }
 
-  _handleItemsRendered({ overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex }) {
-    this.props.onRowsRendered({
-      overscanStartIndex: overscanRowStartIndex,
-      overscanStopIndex: overscanRowStopIndex,
-      startIndex: visibleRowStartIndex,
-      stopIndex: visibleRowStopIndex,
-    });
+  _handleHorizontalScroll(e) {
+    const scrollLeft = e.currentTarget.scrollLeft;
+    if (scrollLeft !== this._scrollLeft) {
+      this.headerRef && this.headerRef.scrollTo(scrollLeft);
+      this._scrollLeft = scrollLeft;
+      this.props.onHorizontalScroll && this.props.onHorizontalScroll(scrollLeft);
+    }
+  }
+
+  _handleScroll({ scrollOffset: scrollTop, ...rest }) {
+    this.props.onScroll && this.props.onScroll({ ...rest, scrollTop });
   }
 }
 
@@ -209,6 +240,7 @@ GridTable.propTypes = {
   style: PropTypes.object,
   onScrollbarPresenceChange: PropTypes.func,
   onScroll: PropTypes.func,
+  onHorizontalScroll: PropTypes.func,
   onRowsRendered: PropTypes.func,
   headerRenderer: PropTypes.func.isRequired,
   rowRenderer: PropTypes.func.isRequired,

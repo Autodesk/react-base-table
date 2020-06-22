@@ -222,15 +222,6 @@ class BaseTable extends React.PureComponent {
   }
 
   /**
-   * Reset cached column width, should be used only in dynamic mode(estimatedRowHeight is provided)
-   */
-  resetColumnWidthCache(shouldForceUpdate = true) {
-    this.table && this.table.resetAfterColumnIndex(0, shouldForceUpdate);
-    this.leftTable && this.leftTable.resetAfterColumnIndex(0, shouldForceUpdate);
-    this.rightTable && this.rightTable.resetAfterColumnIndex(0, shouldForceUpdate);
-  }
-
-  /**
    * Scroll to the specified offset.
    * Useful for animating position changes.
    *
@@ -922,10 +913,6 @@ class BaseTable extends React.PureComponent {
   _handleColumnResize({ key }, width) {
     this.columnManager.setColumnWidth(key, width);
     this.setState({ resizingWidth: width });
-
-    if (this.props.estimatedRowHeight && this.props.fixed) {
-      this.resetColumnWidthCache(false);
-    }
 
     const column = this.columnManager.getColumn(key);
     this.props.onColumnResize({ column, width });

@@ -2,7 +2,8 @@
 
 ## NEXT VERSION
 
-- fix: rowHeight is not calculated correctly with frozen columns
+- fix: dynamic rowHeight is not calculated correctly with frozen columns
+- fix: dynamic rowHeight is not updated when resizing column
 
 ## v1.10.0 (2020-06-22)
 

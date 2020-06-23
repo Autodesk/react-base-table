@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: rowHeight is not calculated correctly with frozen columns
+
 ## v1.10.0 (2020-06-22)
 
 - feat: add `estimatedRowHeight` to support dynamic row height

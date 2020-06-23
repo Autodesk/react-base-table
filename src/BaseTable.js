@@ -939,7 +939,7 @@ class BaseTable extends React.PureComponent {
     this.setState({ resizingWidth: width });
 
     if (this.props.estimatedRowHeight && this.props.fixed) {
-      this.resetColumnWidthCache(false);
+      this.resetColumnWidthCache();
     }
 
     const column = this.columnManager.getColumn(key);

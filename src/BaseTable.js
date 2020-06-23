@@ -103,6 +103,9 @@ class BaseTable extends React.PureComponent {
     this._resetIndex = null;
     this._rowHeightMap = {};
     this._rowHeightMapBuffer = {};
+    this._mainRowHeightMap = {};
+    this._leftRowHeightMap = {};
+    this._rightRowHeightMap = {};
     this._getRowHeight = this._getRowHeight.bind(this);
     this._updateRowHeights = debounce(() => {
       if (
@@ -228,6 +231,18 @@ class BaseTable extends React.PureComponent {
     this.table && this.table.resetAfterColumnIndex(0, shouldForceUpdate);
     this.leftTable && this.leftTable.resetAfterColumnIndex(0, shouldForceUpdate);
     this.rightTable && this.rightTable.resetAfterColumnIndex(0, shouldForceUpdate);
+  }
+
+  /**
+   * Reset cached row heights, should be used only in dynamic mode(estimatedRowHeight is provided)
+   */
+  resetRowHeightCache() {
+    this._resetIndex = null;
+    this._rowHeightMap = {};
+    this._rowHeightMapBuffer = {};
+    this._mainRowHeightMap = {};
+    this._leftRowHeightMap = {};
+    this._rightRowHeightMap = {};
   }
 
   /**
@@ -960,12 +975,28 @@ class BaseTable extends React.PureComponent {
     onColumnSort({ column, key, order });
   }
 
-  _handleRowHeightMeasured(rowKey, size, rowIndex) {
+  _handleRowHeightMeasured(rowKey, size, rowIndex, frozen) {
     if (this._resetIndex === null) this._resetIndex = rowIndex;
     else if (this._resetIndex > rowIndex) this._resetIndex = rowIndex;
 
-    if (!this._rowHeightMapBuffer[rowKey] || this._rowHeightMapBuffer[rowKey] < size) {
-      this._rowHeightMapBuffer[rowKey] = size;
+    if (this.columnManager.hasFrozenColumns()) {
+      if (!frozen) {
+        this._mainRowHeightMap[rowKey] = size;
+      } else if (frozen === FrozenDirection.RIGHT) {
+        this._rightRowHeightMap[rowKey] = size;
+      } else {
+        this._leftRowHeightMap[rowKey] = size;
+      }
+
+      this._rowHeightMapBuffer[rowKey] = Math.max(
+        this._mainRowHeightMap[rowKey] || 0,
+        this._leftRowHeightMap[rowKey] || 0,
+        this._rightRowHeightMap[rowKey] || 0
+      );
+    } else {
+      if (!this._rowHeightMap[rowKey] || this._rowHeightMap[rowKey] !== size) {
+        this._rowHeightMapBuffer[rowKey] = size;
+      }
     }
 
     this._updateRowHeights();

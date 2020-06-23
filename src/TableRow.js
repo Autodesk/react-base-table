@@ -113,10 +113,10 @@ class TableRow extends React.PureComponent {
 
   _measureHeight() {
     if (this.ref) {
-      const { rowKey, onRowHeightMeasured, rowIndex } = this.props;
+      const { rowKey, onRowHeightMeasured, rowIndex, columns } = this.props;
       const height = this.ref.getBoundingClientRect().height;
       this.setState({ measured: true }, () => {
-        onRowHeightMeasured(rowKey, height, rowIndex);
+        onRowHeightMeasured(rowKey, height, rowIndex, !columns[0].__placeholder__ && columns[0].frozen);
       });
     }
   }

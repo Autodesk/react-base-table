@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.2 (2020-06-26)
+
 - fix: regression of expansion with frozen columns
 - fix: dynamic rowHeight is not updated when `data` or `columns` changed
 

@@ -57,6 +57,10 @@ module.exports = {
       path: '/examples/custom-cell',
     },
     {
+      title: 'Dynamic Row Height',
+      path: '/examples/dynamic-row-heights',
+    },
+    {
       title: 'Tooltip Cell',
       path: '/examples/tooltip-cell',
     },
@@ -220,9 +224,5 @@ module.exports = {
       title: 'Column Hovering',
       path: '/examples/column-hovering',
     },
-    {
-      title: 'Dynamic Row Heights',
-      path: '/examples/dynamic-row-heights'
-    }
   ],
 }

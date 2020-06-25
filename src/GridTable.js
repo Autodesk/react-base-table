@@ -55,22 +55,13 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
   }
 
-  getHeaderHeight() {
-    const { headerHeight } = this.props;
-    if (Array.isArray(headerHeight)) {
-      return headerHeight.reduce((sum, height) => sum + height, 0);
-    }
-    return headerHeight;
-  }
-
-  getFrozenRowsHeight() {
-    const { frozenData, rowHeight } = this.props;
-    return frozenData.length * rowHeight;
-  }
-
   getTotalRowsHeight() {
     const { data, rowHeight, estimatedRowHeight } = this.props;
-    return (this.innerRef && this.innerRef.clientHeight) || data.length * (estimatedRowHeight || rowHeight);
+
+    if (estimatedRowHeight) {
+      return (this.innerRef && this.innerRef.clientHeight) || data.length * estimatedRowHeight;
+    }
+    return data.length * rowHeight;
   }
 
   renderRow(args) {
@@ -102,9 +93,9 @@ class GridTable extends React.PureComponent {
       onScrollbarPresenceChange,
       ...rest
     } = this.props;
-    const headerHeight = this.getHeaderHeight();
-    const frozenRowsHeight = this.getFrozenRowsHeight();
+    const headerHeight = this._getHeaderHeight();
     const frozenRowCount = frozenData.length;
+    const frozenRowsHeight = rowHeight * frozenRowCount;
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
     const Grid = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
@@ -171,6 +162,14 @@ class GridTable extends React.PureComponent {
   _itemKey({ rowIndex }) {
     const { data, rowKey } = this.props;
     return data[rowIndex][rowKey];
+  }
+
+  _getHeaderHeight() {
+    const { headerHeight } = this.props;
+    if (Array.isArray(headerHeight)) {
+      return headerHeight.reduce((sum, height) => sum + height, 0);
+    }
+    return headerHeight;
   }
 
   _getBodyWidth() {

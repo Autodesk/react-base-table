@@ -169,30 +169,15 @@ class BaseTable extends React.PureComponent {
   }
 
   /**
-   * Get the height of header
-   */
-  getHeaderHeight() {
-    const { headerHeight } = this.props;
-    if (Array.isArray(headerHeight)) {
-      return headerHeight.reduce((sum, height) => sum + height, 0);
-    }
-    return headerHeight;
-  }
-
-  /**
-   * Get the total height of all frozen rows,
-   */
-  getFrozenRowsHeight() {
-    const { frozenData, rowHeight } = this.props;
-    return frozenData.length * rowHeight;
-  }
-
-  /**
    * Get the total height of all rows, including expanded rows.
    */
   getTotalRowsHeight() {
     const { rowHeight, estimatedRowHeight } = this.props;
-    return this.table ? this.table.getTotalRowsHeight() : this._data.length * (estimatedRowHeight || rowHeight);
+
+    if (estimatedRowHeight) {
+      return this.table ? this.table.getTotalRowsHeight() : this._data.length * estimatedRowHeight;
+    }
+    return this._data.length * rowHeight;
   }
 
   /**
@@ -665,7 +650,7 @@ class BaseTable extends React.PureComponent {
     const { data, frozenData, footerHeight, emptyRenderer } = this.props;
 
     if ((data && data.length) || (frozenData && frozenData.length)) return null;
-    const headerHeight = this.getHeaderHeight();
+    const headerHeight = this._getHeaderHeight();
     return (
       <div className={this._prefixClass('empty-layer')} style={{ top: headerHeight, bottom: footerHeight }}>
         {renderElement(emptyRenderer)}
@@ -784,14 +769,27 @@ class BaseTable extends React.PureComponent {
     return this._rowHeightMap[this._data[rowIndex][rowKey]] || estimatedRowHeight;
   }
 
+  _getHeaderHeight() {
+    const { headerHeight } = this.props;
+    if (Array.isArray(headerHeight)) {
+      return headerHeight.reduce((sum, height) => sum + height, 0);
+    }
+    return headerHeight;
+  }
+
+  _getFrozenRowsHeight() {
+    const { frozenData, rowHeight } = this.props;
+    return frozenData.length * rowHeight;
+  }
+
   _getTableHeight() {
     const { height, maxHeight, footerHeight } = this.props;
     let tableHeight = height - footerHeight;
 
     if (maxHeight > 0) {
-      const frozenRowsHeight = this.getFrozenRowsHeight();
+      const frozenRowsHeight = this._getFrozenRowsHeight();
       const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this.getHeaderHeight();
+      const headerHeight = this._getHeaderHeight();
       const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
       tableHeight = Math.min(totalHeight, maxHeight - footerHeight);
     }
@@ -800,7 +798,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _getBodyHeight() {
-    return this._getTableHeight() - this.getHeaderHeight() - this.getFrozenRowsHeight();
+    return this._getTableHeight() - this._getHeaderHeight() - this._getFrozenRowsHeight();
   }
 
   _getFrozenContainerHeight() {
@@ -810,7 +808,7 @@ class BaseTable extends React.PureComponent {
     // in auto height mode tableHeight = totalHeight
     if (maxHeight > 0) return tableHeight;
 
-    const totalHeight = this.getTotalRowsHeight() + this.getHeaderHeight() + this.getFrozenRowsHeight();
+    const totalHeight = this.getTotalRowsHeight() + this._getHeaderHeight() + this._getFrozenRowsHeight();
     return Math.min(tableHeight, totalHeight);
   }
 

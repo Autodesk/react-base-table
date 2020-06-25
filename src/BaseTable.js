@@ -744,7 +744,10 @@ class BaseTable extends React.PureComponent {
     const { data, height, maxHeight, columns, estimatedRowHeight } = this.props;
     if (
       estimatedRowHeight &&
-      columns.some(col => col.hidden !== prevProps.columns.find(x => x.key === col.key).hidden)
+      columns.some(col => {
+        const prevCol = prevProps.columns.find(x => x.key === col.key);
+        return prevCol && prevCol.hidden !== col.hidden;
+      })
     ) {
       this.resetColumnWidthCache();
     }

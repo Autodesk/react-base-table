@@ -98,8 +98,20 @@ class BaseTable extends React.PureComponent {
     });
     this._resetColumnManager = memoize((columns, fixed) => {
       this.columnManager.reset(columns, fixed);
+
+      if (this.props.estimatedRowHeight && fixed) {
+        this.resetColumnWidthCache(false);
+
+        if (!this.columnManager.hasLeftFrozenColumns()) {
+          this._leftRowHeightMap = {};
+        }
+        if (!this.columnManager.hasRightFrozenColumns()) {
+          this._rightRowHeightMap = {};
+        }
+      }
     }, isObjectEqual);
 
+    this._isResetting = false;
     this._resetIndex = null;
     this._rowHeightMap = {};
     this._rowHeightMapBuffer = {};
@@ -111,11 +123,13 @@ class BaseTable extends React.PureComponent {
       if (
         Object.keys(this._rowHeightMapBuffer).some(key => this._rowHeightMapBuffer[key] !== this._rowHeightMap[key])
       ) {
+        this._isResetting = true;
         this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
         this.resetAfterRowIndex(this._resetIndex, false);
         this._rowHeightMapBuffer = {};
         this._resetIndex = null;
         this.forceUpdateTable();
+        this._isResetting = false;
       } else {
         this._rowHeightMapBuffer = {};
         this._resetIndex = null;
@@ -348,6 +362,7 @@ class BaseTable extends React.PureComponent {
       rowRenderer,
       // for frozen rows we use fixed rowHeight
       estimatedRowHeight: rowIndex >= 0 ? estimatedRowHeight : undefined,
+      getIsResetting: this._getIsResetting,
       cellRenderer: this.renderRowCell,
       expandIconRenderer: this.renderExpandIcon,
       onRowExpand: this._handleRowExpand,
@@ -682,10 +697,10 @@ class BaseTable extends React.PureComponent {
     } = this.props;
     this._resetColumnManager(getColumns(columns, children), fixed);
 
-    if (expandColumnKey) {
-      this._data = this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey);
-    } else {
-      this._data = data;
+    const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
+    if (this._data !== _data) {
+      this.resetRowHeightCache();
+      this._data = _data;
     }
     // should be after `this._data` assigned
     this._calcScrollbarSizes();
@@ -767,6 +782,10 @@ class BaseTable extends React.PureComponent {
   _getRowHeight(rowIndex) {
     const { estimatedRowHeight, rowKey } = this.props;
     return this._rowHeightMap[this._data[rowIndex][rowKey]] || estimatedRowHeight;
+  }
+
+  _getIsResetting() {
+    return this._isResetting;
   }
 
   _getHeaderHeight() {

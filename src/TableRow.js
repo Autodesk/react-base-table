@@ -27,9 +27,10 @@ class TableRow extends React.PureComponent {
     if (
       this.props.estimatedRowHeight &&
       this.props.rowIndex >= 0 &&
-      this.props.style === prevProps.style &&
-      this.state.measured === prevState.measured &&
-      this.state.measured === true
+      // should not re-measure if it's updated after measured and reset
+      !this.props.getIsResetting() &&
+      this.state.measured &&
+      prevState.measured
     ) {
       this.setState({ measured: false }, this._measureHeight);
     }
@@ -54,6 +55,7 @@ class TableRow extends React.PureComponent {
       tagName: Tag,
       // omit the following from rest
       rowKey,
+      getIsResetting,
       onRowHover,
       onRowExpand,
       onRowHeightMeasured,
@@ -116,7 +118,7 @@ class TableRow extends React.PureComponent {
       const { rowKey, onRowHeightMeasured, rowIndex, columns } = this.props;
       const height = this.ref.getBoundingClientRect().height;
       this.setState({ measured: true }, () => {
-        onRowHeightMeasured(rowKey, height, rowIndex, !columns[0].__placeholder__ && columns[0].frozen);
+        onRowHeightMeasured(rowKey, height, rowIndex, columns[0] && !columns[0].__placeholder__ && columns[0].frozen);
       });
     }
   }
@@ -181,11 +183,12 @@ TableRow.propTypes = {
   rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   cellRenderer: PropTypes.func,
   expandIconRenderer: PropTypes.func,
+  estimatedRowHeight: PropTypes.number,
+  getIsResetting: PropTypes.func,
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,
-  tagName: PropTypes.elementType,
-  estimatedRowHeight: PropTypes.number,
   onRowHeightMeasured: PropTypes.func,
+  tagName: PropTypes.elementType,
 };
 
 export default TableRow;

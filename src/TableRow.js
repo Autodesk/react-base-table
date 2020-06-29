@@ -16,11 +16,10 @@ class TableRow extends React.PureComponent {
 
     this._setRef = this._setRef.bind(this);
     this._handleExpand = this._handleExpand.bind(this);
-    this._measureHeight = this._measureHeight.bind(this);
   }
 
   componentDidMount() {
-    this.props.estimatedRowHeight && this.props.rowIndex >= 0 && this._measureHeight();
+    this.props.estimatedRowHeight && this.props.rowIndex >= 0 && this._measureHeight(true);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -32,7 +31,7 @@ class TableRow extends React.PureComponent {
       this.state.measured &&
       prevState.measured
     ) {
-      this.setState({ measured: false }, this._measureHeight);
+      this.setState({ measured: false }, () => this._measureHeight());
     }
   }
 
@@ -58,7 +57,7 @@ class TableRow extends React.PureComponent {
       getIsResetting,
       onRowHover,
       onRowExpand,
-      onRowHeightMeasured,
+      onRowHeightChange,
       ...rest
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -113,14 +112,15 @@ class TableRow extends React.PureComponent {
     onRowExpand && onRowExpand({ expanded, rowData, rowIndex, rowKey });
   }
 
-  _measureHeight() {
-    if (this.ref) {
-      const { rowKey, onRowHeightMeasured, rowIndex, columns } = this.props;
-      const height = this.ref.getBoundingClientRect().height;
-      this.setState({ measured: true }, () => {
-        onRowHeightMeasured(rowKey, height, rowIndex, columns[0] && !columns[0].__placeholder__ && columns[0].frozen);
-      });
-    }
+  _measureHeight(initialMeasure) {
+    if (!this.ref) return;
+
+    const { style, rowKey, onRowHeightChange, rowIndex, columns } = this.props;
+    const height = this.ref.getBoundingClientRect().height;
+    this.setState({ measured: true }, () => {
+      if (initialMeasure || height !== style.height)
+        onRowHeightChange(rowKey, height, rowIndex, columns[0] && !columns[0].__placeholder__ && columns[0].frozen);
+    });
   }
 
   _getEventHandlers(handlers = {}) {
@@ -187,7 +187,7 @@ TableRow.propTypes = {
   getIsResetting: PropTypes.func,
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,
-  onRowHeightMeasured: PropTypes.func,
+  onRowHeightChange: PropTypes.func,
   tagName: PropTypes.elementType,
 };
 

@@ -2,6 +2,9 @@
 
 ## NEXT VERSION
 
+- fix: horizontal scrollbar in flex mode with dynamic row height
+- chore: tweak row height measurement
+
 ## v1.10.2 (2020-06-26)
 
 - fix: regression of expansion with frozen columns

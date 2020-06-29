@@ -88,7 +88,8 @@ class BaseTable extends React.PureComponent {
     this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
     this._handleColumnResizeStop = this._handleColumnResizeStop.bind(this);
     this._handleColumnSort = this._handleColumnSort.bind(this);
-    this._handleRowHeightMeasured = this._handleRowHeightMeasured.bind(this);
+    this._handleFrozenRowHeightChange = this._handleFrozenRowHeightChange.bind(this);
+    this._handleRowHeightChange = this._handleRowHeightChange.bind(this);
 
     this._getLeftTableContainerStyle = memoize(getContainerStyle);
     this._getRightTableContainerStyle = memoize(getContainerStyle);
@@ -118,20 +119,13 @@ class BaseTable extends React.PureComponent {
     this._rightRowHeightMap = {};
     this._getRowHeight = this._getRowHeight.bind(this);
     this._updateRowHeights = debounce(() => {
-      if (
-        Object.keys(this._rowHeightMapBuffer).some(key => this._rowHeightMapBuffer[key] !== this._rowHeightMap[key])
-      ) {
-        this._isResetting = true;
-        this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
-        this.resetAfterRowIndex(this._resetIndex, false);
-        this._rowHeightMapBuffer = {};
-        this._resetIndex = null;
-        this.forceUpdateTable();
-        this._isResetting = false;
-      } else {
-        this._rowHeightMapBuffer = {};
-        this._resetIndex = null;
-      }
+      this._isResetting = true;
+      this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
+      this.resetAfterRowIndex(this._resetIndex, false);
+      this._rowHeightMapBuffer = {};
+      this._resetIndex = null;
+      this.forceUpdateTable();
+      this._isResetting = false;
     }, 0);
 
     this._scroll = { scrollLeft: 0, scrollTop: 0 };
@@ -216,21 +210,11 @@ class BaseTable extends React.PureComponent {
    * Reset cached row heights after a specific rowIndex, should be used only in dynamic mode(estimatedRowHeight is provided)
    */
   resetAfterRowIndex(rowIndex = 0, shouldForceUpdate = true) {
+    if (!this.props.estimatedRowHeight) return;
+
     this.table && this.table.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-  }
-
-  /**
-   * Reset cached row heights, should be used only in dynamic mode(estimatedRowHeight is provided)
-   */
-  resetRowHeightCache() {
-    this._resetIndex = null;
-    this._rowHeightMap = {};
-    this._rowHeightMapBuffer = {};
-    this._mainRowHeightMap = {};
-    this._leftRowHeightMap = {};
-    this._rightRowHeightMap = {};
   }
 
   /**
@@ -334,6 +318,7 @@ class BaseTable extends React.PureComponent {
       [this._prefixClass('row--customized')]: rowRenderer,
     });
 
+    const hasFrozenColumns = this.columnManager.hasFrozenColumns();
     const rowProps = {
       ...extraProps,
       role: 'row',
@@ -356,8 +341,8 @@ class BaseTable extends React.PureComponent {
       expandIconRenderer: this.renderExpandIcon,
       onRowExpand: this._handleRowExpand,
       // for fixed table, we need to sync the hover state across the inner tables
-      onRowHover: this.columnManager.hasFrozenColumns() ? this._handleRowHover : null,
-      onRowHeightMeasured: this._handleRowHeightMeasured,
+      onRowHover: hasFrozenColumns ? this._handleRowHover : null,
+      onRowHeightChange: hasFrozenColumns ? this._handleFrozenRowHeightChange : this._handleRowHeightChange,
     };
 
     return <TableRow {...rowProps} />;
@@ -688,7 +673,7 @@ class BaseTable extends React.PureComponent {
 
     const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
     if (this._data !== _data) {
-      this.resetRowHeightCache();
+      this._resetRowHeightCache();
       this._data = _data;
     }
     // should be after `this._data` assigned
@@ -977,31 +962,43 @@ class BaseTable extends React.PureComponent {
     onColumnSort({ column, key, order });
   }
 
-  _handleRowHeightMeasured(rowKey, size, rowIndex, frozen) {
+  _handleFrozenRowHeightChange(rowKey, size, rowIndex, frozen) {
+    if (!frozen) {
+      this._mainRowHeightMap[rowKey] = size;
+    } else if (frozen === FrozenDirection.RIGHT) {
+      this._rightRowHeightMap[rowKey] = size;
+    } else {
+      this._leftRowHeightMap[rowKey] = size;
+    }
+
+    const height = Math.max(
+      this._mainRowHeightMap[rowKey] || 0,
+      this._leftRowHeightMap[rowKey] || 0,
+      this._rightRowHeightMap[rowKey] || 0
+    );
+
+    if (this._rowHeightMap[rowKey] !== height) {
+      this._handleRowHeightChange(rowKey, height, rowIndex);
+    }
+  }
+
+  _handleRowHeightChange(rowKey, size, rowIndex) {
     if (this._resetIndex === null) this._resetIndex = rowIndex;
     else if (this._resetIndex > rowIndex) this._resetIndex = rowIndex;
 
-    if (this.columnManager.hasFrozenColumns()) {
-      if (!frozen) {
-        this._mainRowHeightMap[rowKey] = size;
-      } else if (frozen === FrozenDirection.RIGHT) {
-        this._rightRowHeightMap[rowKey] = size;
-      } else {
-        this._leftRowHeightMap[rowKey] = size;
-      }
-
-      this._rowHeightMapBuffer[rowKey] = Math.max(
-        this._mainRowHeightMap[rowKey] || 0,
-        this._leftRowHeightMap[rowKey] || 0,
-        this._rightRowHeightMap[rowKey] || 0
-      );
-    } else {
-      if (!this._rowHeightMap[rowKey] || this._rowHeightMap[rowKey] !== size) {
-        this._rowHeightMapBuffer[rowKey] = size;
-      }
-    }
-
+    this._rowHeightMapBuffer[rowKey] = size;
     this._updateRowHeights();
+  }
+
+  _resetRowHeightCache() {
+    if (!this.props.estimatedRowHeight) return;
+
+    this._resetIndex = null;
+    this._rowHeightMapBuffer = {};
+    this._rowHeightMap = {};
+    this._mainRowHeightMap = {};
+    this._leftRowHeightMap = {};
+    this._rightRowHeightMap = {};
   }
 }
 

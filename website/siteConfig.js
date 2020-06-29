@@ -193,6 +193,10 @@ module.exports = {
       path: '/examples/expand-controlled',
     },
     {
+      title: 'Detail View',
+      path: '/examples/detail-view',
+    },
+    {
       title: 'Use IsScrolling',
       path: '/examples/is-scrolling',
     },

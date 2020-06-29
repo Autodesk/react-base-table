@@ -100,8 +100,6 @@ class BaseTable extends React.PureComponent {
       this.columnManager.reset(columns, fixed);
 
       if (this.props.estimatedRowHeight && fixed) {
-        this.resetColumnWidthCache(false);
-
         if (!this.columnManager.hasLeftFrozenColumns()) {
           this._leftRowHeightMap = {};
         }
@@ -221,15 +219,6 @@ class BaseTable extends React.PureComponent {
     this.table && this.table.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-  }
-
-  /**
-   * Reset cached column width, should be used only in dynamic mode(estimatedRowHeight is provided)
-   */
-  resetColumnWidthCache(shouldForceUpdate = true) {
-    this.table && this.table.resetAfterColumnIndex(0, shouldForceUpdate);
-    this.leftTable && this.leftTable.resetAfterColumnIndex(0, shouldForceUpdate);
-    this.rightTable && this.rightTable.resetAfterColumnIndex(0, shouldForceUpdate);
   }
 
   /**
@@ -954,10 +943,6 @@ class BaseTable extends React.PureComponent {
   _handleColumnResize({ key }, width) {
     this.columnManager.setColumnWidth(key, width);
     this.setState({ resizingWidth: width });
-
-    if (this.props.estimatedRowHeight && this.props.fixed) {
-      this.resetColumnWidthCache();
-    }
 
     const column = this.columnManager.getColumn(key);
     this.props.onColumnResize({ column, width });

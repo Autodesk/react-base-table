@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { FixedSizeGrid, VariableSizeGrid } from 'react-window';
+import memoize from 'memoize-one';
 
 import Header from './TableHeader';
 
@@ -18,6 +19,10 @@ class GridTable extends React.PureComponent {
     this._itemKey = this._itemKey.bind(this);
     this._getBodyWidth = this._getBodyWidth.bind(this);
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
+    this._resetColumnWidthCache = memoize(bodyWidth => {
+      if (!this.props.estimatedRowHeight) return;
+      this.bodyRef && this.bodyRef.resetAfterColumnIndex(0, false);
+    });
 
     this.renderRow = this.renderRow.bind(this);
   }
@@ -25,11 +30,6 @@ class GridTable extends React.PureComponent {
   resetAfterRowIndex(rowIndex = 0, shouldForceUpdate) {
     if (!this.props.estimatedRowHeight) return;
     this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-  }
-
-  resetAfterColumnIndex(columnIndex = 0, shouldForceUpdate) {
-    if (!this.props.estimatedRowHeight) return;
-    this.bodyRef && this.bodyRef.resetAfterColumnIndex(columnIndex, shouldForceUpdate);
   }
 
   forceUpdateTable() {
@@ -99,6 +99,8 @@ class GridTable extends React.PureComponent {
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
     const Grid = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
+
+    this._resetColumnWidthCache(bodyWidth);
     return (
       <div role="table" className={cls} {...containerProps}>
         <Grid

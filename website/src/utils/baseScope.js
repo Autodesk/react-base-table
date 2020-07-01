@@ -49,6 +49,7 @@ const Table = React.forwardRef((props, ref) => (
   <BaseTable ref={ref} width={700} height={400} {...props} />
 ))
 Table.Column = Column
+Table.PlaceholderKey = BaseTable.PlaceholderKey
 
 export default {
   React,

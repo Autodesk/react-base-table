@@ -60,6 +60,13 @@ $table-prefix: BaseTable !default;
     pointer-events: none;
   }
 
+  &--dynamic {
+    .#{$table-prefix}__row {
+      overflow: hidden;
+      align-items: stretch;
+    }
+  }
+
   &:not(.#{$table-prefix}--dynamic),
   .#{$table-prefix}__row--frozen {
     .#{$table-prefix}__row-cell-text {

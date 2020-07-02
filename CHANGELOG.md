@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: flicker on expanding in dynamic mode
+
 ## v1.10.3 (2020-06-30)
 
 - fix: horizontal scrollbar in flex mode with dynamic row height

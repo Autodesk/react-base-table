@@ -1,6 +1,6 @@
 {
   "name": "react-base-table",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.4 (2020-07-02)
+
 - fix: flicker on expanding in dynamic mode
 
 ## v1.10.3 (2020-06-30)

@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.5 (2020-07-10)
+
 - chore: do not clear row height cache automatically
 
 ## v1.10.4 (2020-07-02)

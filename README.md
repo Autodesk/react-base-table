@@ -117,6 +117,8 @@ We are using a advanced table component based on `BaseTable` internally, with mu
 
 ![AdvanceTable](screenshots/advance-table.png)
 
+[In real products](https://blogs.autodesk.com/bim360-release-notes/2019/11/18/bim-360-cost-management-update-november-2019/)
+
 ## Contributing
 
 Please check [guidelines](CONTRIBUTING.md) for more details

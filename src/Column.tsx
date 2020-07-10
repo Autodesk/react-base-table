@@ -97,11 +97,11 @@ export interface ColumnProps {
    */
   hidden?: boolean;
   /**
-   * Whether the column is resizable, defaults to true
+   * Whether the column is resizable, defaults to false
    */
   resizable?: boolean;
   /**
-   * Whether the column is sortable, defaults to true
+   * Whether the column is sortable, defaults to false
    */
   sortable?: boolean;
   /**

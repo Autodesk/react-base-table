@@ -184,7 +184,18 @@ export function getValue(object: any, path: string, defaultValue?: any) {
   return object;
 }
 
-// copied from https://30secondsofcode.org/function#throttle
+// copied from https://www.30secondsofcode.org/js/s/debounce
+export function debounce<T extends fn>(fn: T, ms: number): T;
+export function debounce<T extends fn>(fn: T, ms: number): (...args: Parameters<T>) => void;
+export function debounce(fn: Function, ms: number = 0): Function {
+  let timeoutId: number;
+  return function(...args: any) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout((() => fn(...args)) as TimerHandler, ms);
+  };
+}
+
+// copied from https://www.30secondsofcode.org/js/s/throttle
 export function throttle<T extends fn>(fn: T, wait: number): T;
 export function throttle<T extends fn>(fn: T, wait: number): (...args: Parameters<T>) => void;
 export function throttle(fn: Function, wait: number): Function {
@@ -192,7 +203,7 @@ export function throttle(fn: Function, wait: number): Function {
   let lastFn: number;
   let lastTime: number;
 
-  return (...args: any) => {
+  return function(...args: any) {
     if (!inThrottle) {
       fn(...args);
       lastTime = Date.now();

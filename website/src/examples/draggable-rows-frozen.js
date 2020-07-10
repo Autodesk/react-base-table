@@ -22,16 +22,22 @@ const Handle = styled.div`
   }
 `
 
-const Row = ({ key, index, children, ...rest }) => (
-  <DraggableElement key={key} index={index}>
-    <div {...rest}>
-      <DraggableHandle>
-        <Handle />
-      </DraggableHandle>
-      {children}
-    </div>
-  </DraggableElement>
-)
+const Row = ({ key, index, children, ...rest }) => {
+  // if the children's length is not equal the columns' length, then it's rendering row for frozen table
+  if (children.length !== 10)
+    return (
+      <DraggableElement key={key} index={index}>
+        <div {...rest}>
+          <DraggableHandle>
+            <Handle />
+          </DraggableHandle>
+          {children}
+        </div>
+      </DraggableElement>
+    )
+
+  return <div {...rest}>{children}</div>
+}
 
 const rowProps = ({ rowIndex }) => ({
   tagName: Row,
@@ -46,11 +52,16 @@ class DraggableTable extends React.PureComponent {
   table = React.createRef()
 
   getContainer = () => {
-    return this.table.current.getDOMNode().querySelector('.BaseTable__body')
+    // for fixed table with frozen columns, the drag handle is in the left frozen table
+    return this.table.current
+      .getDOMNode()
+      .querySelector('.BaseTable__table-frozen-left .BaseTable__body')
   }
 
   getHelperContainer = () => {
-    return this.table.current.getDOMNode().querySelector('.BaseTable__table')
+    return this.table.current
+      .getDOMNode()
+      .querySelector('.BaseTable__table-frozen-left')
   }
 
   rowProps = args => {
@@ -82,7 +93,7 @@ class DraggableTable extends React.PureComponent {
           {...this.props}
           ref={this.table}
           data={this.state.data}
-          fixed={false}
+          fixed={true}
           rowProps={this.rowProps}
         />
       </DraggableContainer>
@@ -100,10 +111,11 @@ const Hint = styled.div`
 const columns = generateColumns(10)
 const data = generateData(columns, 200)
 columns[0].minWidth = 150
+columns[0].frozen = true
 
 export default () => (
   <>
-    <Hint>Drag the dots, only works in flex mode(fixed=false)</Hint>
+    <Hint>Drag the dots, only works in fixed mode(fixed=true)</Hint>
     <DraggableTable columns={columns} data={data} />
   </>
 )

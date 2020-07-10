@@ -1,4 +1,4 @@
-const columns = generateColumns(10)
+const columns = generateColumns(15)
 const data = generateData(columns, 200)
 
 const GroupCell = styled.div`
@@ -12,9 +12,12 @@ const GroupCell = styled.div`
   }
 `
 
-columns[0].frozen = Column.FrozenDirection.LEFT
-columns[1].frozen = Column.FrozenDirection.LEFT
-columns[2].frozen = Column.FrozenDirection.RIGHT
+const fixedColumns = columns.map((column, columnIndex) => {
+  let frozen
+  if (columnIndex < 3) frozen = Column.FrozenDirection.LEFT
+  if (columnIndex > 12) frozen = Column.FrozenDirection.RIGHT
+  return { ...column, frozen, width: 100 }
+})
 
 const headerRenderer = ({ cells, columns, headerIndex }) => {
   if (headerIndex === 2) return cells
@@ -34,7 +37,7 @@ const headerRenderer = ({ cells, columns, headerIndex }) => {
       if (
         columnIndex === columns.length - 1 ||
         nextColumn[Table.PlaceholderKey] ||
-        idx === 3 - headerIndex
+        idx === (headerIndex === 0 ? 4 : 2)
       ) {
         groupCells.push(
           <GroupCell
@@ -55,7 +58,7 @@ const headerRenderer = ({ cells, columns, headerIndex }) => {
 export default () => (
   <Table
     fixed
-    columns={columns}
+    columns={fixedColumns}
     data={data}
     headerHeight={[30, 40, 50]}
     headerRenderer={headerRenderer}

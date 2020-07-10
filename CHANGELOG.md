@@ -2,6 +2,41 @@
 
 ## NEXT VERSION
 
+## v1.10.4 (2020-07-02)
+
+- fix: flicker on expanding in dynamic mode
+
+## v1.10.3 (2020-06-30)
+
+- fix: horizontal scrollbar in flex mode with dynamic row height
+- chore: tweak row height measurement
+
+## v1.10.2 (2020-06-26)
+
+- fix: regression of expansion with frozen columns
+- fix: dynamic rowHeight is not updated when `data` or `columns` changed
+
+## v1.10.1 (2020-06-24)
+
+- fix: dynamic rowHeight is not calculated correctly with frozen columns
+- fix: dynamic rowHeight is not updated when resizing column
+
+## v1.10.0 (2020-06-22)
+
+- feat: add `estimatedRowHeight` to support dynamic row height
+
+## v1.9.4 (2020-06-22)
+
+- chore: loosen prop type check for `data`
+
+## v1.9.3 (2020-05-26)
+
+- fix: wrong description for Column props
+
+## v1.9.2 (2020-04-22)
+
+- fix: frozen data not shown with empty data
+
 ## v1.9.1 (2019-10-17)
 
 - reverted #80, now custom renderer doesn't support top level hooks, see #109

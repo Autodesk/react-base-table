@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- chore: do not clear row height cache automatically
+
 ## v1.10.4 (2020-07-02)
 
 - fix: flicker on expanding in dynamic mode

@@ -60,6 +60,22 @@ $table-prefix: BaseTable !default;
     pointer-events: none;
   }
 
+  &--dynamic {
+    .#{$table-prefix}__row {
+      overflow: hidden;
+      align-items: stretch;
+    }
+  }
+
+  &:not(.#{$table-prefix}--dynamic),
+  .#{$table-prefix}__row--frozen {
+    .#{$table-prefix}__row-cell-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
   @if ($show-frozen-rows-shadow) {
     &--has-frozen-rows {
       .#{$table-prefix}__header {
@@ -184,12 +200,6 @@ $table-prefix: BaseTable !default;
     &--align-right {
       justify-content: flex-end;
       text-align: right;
-    }
-
-    &-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 

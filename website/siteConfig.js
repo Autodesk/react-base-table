@@ -53,6 +53,14 @@ module.exports = {
       path: '/examples/jsx-column',
     },
     {
+      title: 'Custom Cell',
+      path: '/examples/custom-cell',
+    },
+    {
+      title: 'Dynamic Row Height',
+      path: '/examples/dynamic-row-heights',
+    },
+    {
       title: 'Tooltip Cell',
       path: '/examples/tooltip-cell',
     },
@@ -95,6 +103,10 @@ module.exports = {
     {
       title: 'Draggable Rows',
       path: '/examples/draggable-rows',
+    },
+    {
+      title: 'Draggable Rows with frozen columns',
+      path: '/examples/draggable-rows-frozen',
     },
     {
       title: 'Multi Header',
@@ -179,6 +191,10 @@ module.exports = {
     {
       title: 'Expand - Controlled',
       path: '/examples/expand-controlled',
+    },
+    {
+      title: 'Detail View',
+      path: '/examples/detail-view',
     },
     {
       title: 'Use IsScrolling',

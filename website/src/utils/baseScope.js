@@ -4,6 +4,7 @@ import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import * as ReactSortableHoc from 'react-sortable-hoc'
 import * as ReactOverlays from 'react-overlays'
 import ReactTexty from 'react-texty'
+import faker from 'faker'
 
 import BaseTable, {
   Column,
@@ -48,6 +49,7 @@ const Table = React.forwardRef((props, ref) => (
   <BaseTable ref={ref} width={700} height={400} {...props} />
 ))
 Table.Column = Column
+Table.PlaceholderKey = BaseTable.PlaceholderKey
 
 export default {
   React,
@@ -61,6 +63,7 @@ export default {
   ReactSortableHoc,
   ReactOverlays,
   ReactTexty,
+  faker,
 
   BaseTable,
   Column,

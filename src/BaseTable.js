@@ -207,7 +207,7 @@ class BaseTable extends React.PureComponent {
   }
 
   /**
-   * Reset cached row heights after a specific rowIndex, should be used only in dynamic mode(estimatedRowHeight is provided)
+   * Reset cached offsets for positioning after a specific rowIndex, should be used only in dynamic mode(estimatedRowHeight is provided)
    */
   resetAfterRowIndex(rowIndex = 0, shouldForceUpdate = true) {
     if (!this.props.estimatedRowHeight) return;
@@ -215,6 +215,20 @@ class BaseTable extends React.PureComponent {
     this.table && this.table.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
+  }
+
+  /**
+   * Reset row height cache, useful if `data` changed entirely, should be used only in dynamic mode(estimatedRowHeight is provided)
+   */
+  resetRowHeightCache() {
+    if (!this.props.estimatedRowHeight) return;
+
+    this._resetIndex = null;
+    this._rowHeightMapBuffer = {};
+    this._rowHeightMap = {};
+    this._mainRowHeightMap = {};
+    this._leftRowHeightMap = {};
+    this._rightRowHeightMap = {};
   }
 
   /**
@@ -673,7 +687,7 @@ class BaseTable extends React.PureComponent {
 
     const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
     if (this._data !== _data) {
-      this._resetRowHeightCache();
+      this.resetAfterRowIndex(0, false);
       this._data = _data;
     }
     // should be after `this._data` assigned
@@ -988,17 +1002,6 @@ class BaseTable extends React.PureComponent {
 
     this._rowHeightMapBuffer[rowKey] = size;
     this._updateRowHeights();
-  }
-
-  _resetRowHeightCache() {
-    if (!this.props.estimatedRowHeight) return;
-
-    this._resetIndex = null;
-    this._rowHeightMapBuffer = {};
-    this._rowHeightMap = {};
-    this._mainRowHeightMap = {};
-    this._leftRowHeightMap = {};
-    this._rightRowHeightMap = {};
   }
 }
 

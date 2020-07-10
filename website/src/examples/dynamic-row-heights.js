@@ -182,6 +182,15 @@ export default class App extends React.Component {
         >
           Toggle columns
         </button>
+        <button
+          onClick={() => {
+            this.setState({
+              data: [dataGenerator(), ...data],
+            })
+          }}
+        >
+          Add item to top
+        </button>
         <Table
           fixed
           selectable

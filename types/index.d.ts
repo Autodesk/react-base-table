@@ -12,7 +12,7 @@ declare module 'react-base-table' {
 
   export type FrozenDirection = 'left' | 'right' | true | false;
 
-  export interface IColumn {
+  export interface Column {
     /**
      * Class name for the column cell
      */
@@ -86,15 +86,15 @@ declare module 'react-base-table' {
       headerIndex,
       container,
     }: {
-      columns: Omit<IColumn, 'cellRenderer'>[];
-      column: Omit<IColumn, 'cellRenderer'>;
+      columns: Omit<Column, 'cellRenderer'>[];
+      column: Omit<Column, 'cellRenderer'>;
       columnIndex: number;
       headerIndex: number;
       container: React.ReactInstance;
     }) => React.ReactNode;
   }
 
-  export interface IColumnProps extends IColumn {
+  export interface ColumnProps extends Column {
     /**
      * Custom style for the column cell, including header cells
      */
@@ -106,12 +106,12 @@ declare module 'react-base-table' {
     dataGetter?: ({
       columns,
       column,
-      columIndex,
+      columnIndex,
       rowData,
       rowIndex,
     }: {
-      columns: IColumn[];
-      column: IColumn;
+      columns: Column[];
+      column: Column;
       columnIndex: number;
       rowData: any;
       rowIndex: number;
@@ -138,10 +138,10 @@ declare module 'react-base-table' {
     hidden?: boolean;
   }
 
-  export interface ICellRendererProps<T> {
+  export interface CellRendererProps<T> {
     cellData: string | boolean | { [key: string]: any } | { [key: string]: any }[];
-    columns: Omit<IColumn, 'headerRenderer'>[];
-    column: Omit<IColumn, 'headerRenderer'>;
+    columns: Omit<Column, 'headerRenderer'>[];
+    column: Omit<Column, 'headerRenderer'>;
     columnIndex: number;
     rowData: T;
     rowIndex: number;
@@ -149,7 +149,7 @@ declare module 'react-base-table' {
     isScrolling: boolean | undefined;
   }
 
-  export const Column: React.FC<IColumnProps>;
+  export const Column: React.FC<ColumnProps>;
 
   export interface AutoResizerProps {
     /**
@@ -178,7 +178,7 @@ declare module 'react-base-table' {
 
   export const AutoResizer: React.FC<AutoResizerProps>;
 
-  export interface ISortByParams {
+  export interface SortByParams {
     /**
      * Sort key
      */
@@ -186,12 +186,12 @@ declare module 'react-base-table' {
     /**
      * Sort order
      */
-    order: SortOrder.ASC | SortOrder.DESC | undefined;
+    order: SortOrder | undefined;
     /**
      * Column being sorted
      */
     column:
-      | Pick<IColumnProps, 'key' | 'dataKey' | 'frozen' | 'sortable' | 'title' | 'width'>
+      | Pick<ColumnProps, 'dataKey' | 'frozen' | 'sortable' | 'title' | 'width'>
       | undefined;
   }
 
@@ -211,11 +211,11 @@ declare module 'react-base-table' {
     /**
      * A collection of Column
      */
-    children: IColumn | IColumn[] | null;
+    children: Column | Column[] | null;
     /**
      * Columns for the table
      */
-    columns?: IColumnProps[];
+    columns?: ColumnProps[];
     /**
      * The data for the table
      */
@@ -289,7 +289,7 @@ declare module 'react-base-table' {
           headerIndex
         }: {
           cells: React.ReactNode[];
-          columns: Omit<IColumn, 'headerRenderer'>;
+          columns: Omit<Column, 'headerRenderer'>;
           headerIndex: number;
         }) => React.ReactNode);
     /**
@@ -308,7 +308,7 @@ declare module 'react-base-table' {
         }: {
           isScrolling: boolean | undefined;
           cells: React.ReactNode[];
-          columns: Omit<IColumn, 'rowRenderer'>;
+          columns: Omit<Column, 'rowRenderer'>;
           rowData: any;
           rowIndex: number;
           depth: number;
@@ -319,7 +319,7 @@ declare module 'react-base-table' {
      */
     headerClassName?:
       | string
-      | (({ columns, headerIndex }: { columns: IColumn[]; headerIndex: number }) => string);
+      | (({ columns, headerIndex }: { columns: Column[]; headerIndex: number }) => string);
     /**
      * Class name for the table row, could be a callback to return the class name
      * The callback is of the shape of `({ columns, rowData, rowIndex }) => string`
@@ -331,7 +331,7 @@ declare module 'react-base-table' {
           rowData,
           rowIndex
         }: {
-          columns: IColumn[];
+          columns: Column[];
           rowData: any;
           rowIndex: number;
         }) => string | undefined);
@@ -341,7 +341,7 @@ declare module 'react-base-table' {
      */
     headerProps?:
       | object
-      | (({ columns, headerIndex }: { columns: IColumn[]; headerIndex: number }) => object);
+      | (({ columns, headerIndex }: { columns: Column[]; headerIndex: number }) => object);
     /**
      * Extra props applied to header cell element
      * The handler is of the shape of `({ columns, column, columnIndex, headerIndex }) => object`
@@ -354,8 +354,8 @@ declare module 'react-base-table' {
           columnIndex,
           headerIndex
         }: {
-          columns: IColumn[];
-          column: IColumn;
+          columns: Column[];
+          column: Column;
           columnIndex: number;
           headerIndex: number;
         }) => object);
@@ -370,7 +370,7 @@ declare module 'react-base-table' {
           rowData,
           rowIndex
         }: {
-          columns: IColumn[];
+          columns: Column[];
           rowData: any;
           rowIndex: number;
         }) => object);
@@ -387,8 +387,8 @@ declare module 'react-base-table' {
           rowData,
           rowIndex
         }: {
-          columns: IColumn[];
-          column: IColumn;
+          columns: Column[];
+          column: Column;
           columnIndex: number;
           rowData: any;
           rowIndex: number;
@@ -437,7 +437,7 @@ declare module 'react-base-table' {
     /**
      * The sort state for the table, will be ignored if `sortState` is set
      */
-    sortBy?: ISortByParams;
+    sortBy?: SortByParams;
     /**
      * Multiple columns sort state for the table
      *
@@ -449,22 +449,22 @@ declare module 'react-base-table' {
      * }
      * ```
      */
-    sortState?: { [key: string]: SortOrder.ASC | SortOrder.DESC | undefined };
+    sortState?: { [key: string]: SortOrder| undefined };
     /**
      * A callback function for the header cell click event
      * The handler is of the shape of `({ column, key, order }) => *`
      */
-    onColumnSort?: ({ column, key, order }: ISortByParams) => void;
+    onColumnSort?: ({ column, key, order }: SortByParams) => void;
     /**
      * A callback function when resizing the column width
      * The handler is of the shape of `({ column, width }) => *`
      */
-    onColumnResize?: ({ column, width }: { column: IColumnProps; width: number }) => void;
+    onColumnResize?: ({ column, width }: { column: ColumnProps; width: number }) => void;
     /**
      * A callback function when resizing the column width ends
      * The handler is of the shape of `({ column, width }) => *`
      */
-    onColumnResizeEnd?: ({ column, width }: { column: IColumnProps; width: number }) => void;
+    onColumnResizeEnd?: ({ column, width }: { column: ColumnProps; width: number }) => void;
     /**
      * Adds an additional isScrolling parameter to the row renderer.
      * This parameter can be used to show a placeholder row while scrolling.
@@ -545,7 +545,7 @@ declare module 'react-base-table' {
      * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => object`
      */
     rowEventHandlers?: {
-      [key: React.MouseEvent | React.KeyboardEvent]: ({
+      [key: string]: ({
         rowData,
         rowIndex,
         rowKey,
@@ -564,10 +564,10 @@ declare module 'react-base-table' {
   }
 
   export interface ITableComponents {
-    TableCell?: React.ComponentType<any> | (() => React.JSXElement);
-    TableHeaderCell?: React.ComponentType<any> | (() => React.JSXElement);
-    ExpandIcon?: React.ComponentType<any> | (() => React.JSXElement);
-    SortIndicator?: React.ComponentType<any> | (() => React.JSXElement);
+    TableCell?: React.ComponentType<any> | (() => React.ReactElement);
+    TableHeaderCell?: React.ComponentType<any> | (() => React.ReactElement);
+    ExpandIcon?: React.ComponentType<any> | (() => React.ReactElement);
+    SortIndicator?: React.ComponentType<any> | (() => React.ReactElement);
   }
 
   export default class BaseTable extends React.Component<IBaseTableProps, any> {}

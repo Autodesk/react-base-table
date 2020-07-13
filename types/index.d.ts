@@ -1,18 +1,11 @@
 declare module 'react-base-table' {
-  export enum SortOrder {
-    ASC,
-    DESC,
-  }
+  export type SortOrder = 'asc' | 'desc';
 
-  export enum Alignment {
-    LEFT,
-    RIGHT,
-    CENTER,
-  }
+  export type Alignment = 'left' | 'right' | 'center';
 
   export type FrozenDirection = 'left' | 'right' | true | false;
 
-  export interface Column {
+  export interface Column<T = unknown> {
     /**
      * Class name for the column cell
      */
@@ -28,7 +21,7 @@ declare module 'react-base-table' {
     /**
      * Key used to retreive cell value from each data object
      */
-    dataKey: string;
+    dataKey?: string;
     /**
      * Alignment of the column cell
      */
@@ -66,14 +59,14 @@ declare module 'react-base-table' {
           container,
           isScrolling,
         }: {
-          cellData: string | boolean | { [key: string]: any };
-          columns: Omit<Column, 'headerRenderer'>[];
-          column: Omit<Column, 'headerRenderer'>;
+          cellData: unknown;
+          columns: Omit<Column<T>, 'headerRenderer'>[];
+          column: Omit<Column<T>, 'headerRenderer'>;
           columnIndex: number;
-          rowData: any;
+          rowData: T;
           rowIndex: number;
           container?: React.ReactInstance;
-          isScrolling: boolean | undefined;
+          isScrolling?: boolean;
         }) => React.ReactNode);
     /**
      * Custom column header renderer
@@ -86,15 +79,15 @@ declare module 'react-base-table' {
       headerIndex,
       container,
     }: {
-      columns: Omit<Column, 'cellRenderer'>[];
-      column: Omit<Column, 'cellRenderer'>;
+      columns: Omit<Column<T>, 'cellRenderer'>[];
+      column: Omit<Column<T>, 'cellRenderer'>;
       columnIndex: number;
       headerIndex: number;
       container: React.ReactInstance;
     }) => React.ReactNode;
   }
 
-  export interface ColumnProps extends Column {
+  export interface ColumnProps<T = unknown> extends Column<T> {
     /**
      * Custom style for the column cell, including header cells
      */
@@ -110,10 +103,10 @@ declare module 'react-base-table' {
       rowData,
       rowIndex,
     }: {
-      columns: Column[];
-      column: Column;
+      columns: Column<T>[];
+      column: Column<T>;
       columnIndex: number;
-      rowData: any;
+      rowData: T;
       rowIndex: number;
     }) => React.ReactNode;
     /**
@@ -140,8 +133,8 @@ declare module 'react-base-table' {
 
   export interface CellRendererProps<T> {
     cellData: string | boolean | { [key: string]: any } | { [key: string]: any }[];
-    columns: Omit<Column, 'headerRenderer'>[];
-    column: Omit<Column, 'headerRenderer'>;
+    columns: Omit<Column<T>, 'headerRenderer'>[];
+    column: Omit<Column<T>, 'headerRenderer'>;
     columnIndex: number;
     rowData: T;
     rowIndex: number;
@@ -149,7 +142,7 @@ declare module 'react-base-table' {
     isScrolling: boolean | undefined;
   }
 
-  export const Column: React.FC<ColumnProps>;
+  export function Column<T = unknown>(props: ColumnProps<T>): React.ReactElement<ColumnProps<T>>;
 
   export interface AutoResizerProps {
     /**
@@ -195,7 +188,9 @@ declare module 'react-base-table' {
       | undefined;
   }
 
-  export interface IBaseTableProps {
+  type RowKey = string | number;
+
+  export interface BaseTableProps<T = unknown> {
     /**
      * Prefix for table's inner className
      */
@@ -211,11 +206,11 @@ declare module 'react-base-table' {
     /**
      * A collection of Column
      */
-    children: Column | Column[] | null;
+    children: React.ReactElement<T> | React.ReactElement<T>[] | null;
     /**
      * Columns for the table
      */
-    columns?: ColumnProps[];
+    columns?: ColumnProps<T>[];
     /**
      * The data for the table
      */
@@ -227,7 +222,7 @@ declare module 'react-base-table' {
     /**
      * The key field of each data item
      */
-    rowKey?: string | number;
+    rowKey?: RowKey;
     /**
      * The width of the table
      */
@@ -289,7 +284,7 @@ declare module 'react-base-table' {
           headerIndex
         }: {
           cells: React.ReactNode[];
-          columns: Omit<Column, 'headerRenderer'>;
+          columns: Omit<Column<T>, 'headerRenderer'>;
           headerIndex: number;
         }) => React.ReactNode);
     /**
@@ -308,8 +303,8 @@ declare module 'react-base-table' {
         }: {
           isScrolling: boolean | undefined;
           cells: React.ReactNode[];
-          columns: Omit<Column, 'rowRenderer'>;
-          rowData: any;
+          columns: Omit<Column<T>, 'rowRenderer'>;
+          rowData: T;
           rowIndex: number;
           depth: number;
         }) => React.ReactNode);
@@ -319,7 +314,7 @@ declare module 'react-base-table' {
      */
     headerClassName?:
       | string
-      | (({ columns, headerIndex }: { columns: Column[]; headerIndex: number }) => string);
+      | (({ columns, headerIndex }: { columns: Column<T>[]; headerIndex: number }) => string);
     /**
      * Class name for the table row, could be a callback to return the class name
      * The callback is of the shape of `({ columns, rowData, rowIndex }) => string`
@@ -331,8 +326,8 @@ declare module 'react-base-table' {
           rowData,
           rowIndex
         }: {
-          columns: Column[];
-          rowData: any;
+          columns: Column<T>[];
+          rowData: T;
           rowIndex: number;
         }) => string | undefined);
     /**
@@ -341,7 +336,7 @@ declare module 'react-base-table' {
      */
     headerProps?:
       | object
-      | (({ columns, headerIndex }: { columns: Column[]; headerIndex: number }) => object);
+      | (({ columns, headerIndex }: { columns: Column<T>[]; headerIndex: number }) => object);
     /**
      * Extra props applied to header cell element
      * The handler is of the shape of `({ columns, column, columnIndex, headerIndex }) => object`
@@ -354,8 +349,8 @@ declare module 'react-base-table' {
           columnIndex,
           headerIndex
         }: {
-          columns: Column[];
-          column: Column;
+          columns: Column<T>[];
+          column: Column<T>;
           columnIndex: number;
           headerIndex: number;
         }) => object);
@@ -370,8 +365,8 @@ declare module 'react-base-table' {
           rowData,
           rowIndex
         }: {
-          columns: Column[];
-          rowData: any;
+          columns: Column<T>[];
+          rowData: T;
           rowIndex: number;
         }) => object);
     /**
@@ -387,10 +382,10 @@ declare module 'react-base-table' {
           rowData,
           rowIndex
         }: {
-          columns: Column[];
-          column: Column;
+          columns: Column<T>[];
+          column: Column<T>;
           columnIndex: number;
-          rowData: any;
+          rowData: T;
           rowIndex: number;
         }) => object);
     /**
@@ -406,7 +401,7 @@ declare module 'react-base-table' {
           expandable,
           expanded
         }: {
-          rowData: any;
+          rowData: T;
           rowIndex: number;
           depth: number;
           expandable: boolean;
@@ -449,7 +444,7 @@ declare module 'react-base-table' {
      * }
      * ```
      */
-    sortState?: { [key: string]: SortOrder| undefined };
+    sortState?: { [key: string]: SortOrder };
     /**
      * A callback function for the header cell click event
      * The handler is of the shape of `({ column, key, order }) => *`
@@ -551,9 +546,9 @@ declare module 'react-base-table' {
         rowKey,
         event
       }: {
-        rowData: any;
+        rowData: T;
         rowIndex: number;
-        rowKey: string;
+        rowKey: RowKey;
         event: React.MouseEvent | React.KeyboardEvent;
       }) => object;
     };
@@ -570,7 +565,7 @@ declare module 'react-base-table' {
     SortIndicator?: React.ComponentType<any> | (() => React.ReactElement);
   }
 
-  export default class BaseTable extends React.Component<IBaseTableProps, any> {}
+  export default class BaseTable<T = unknown> extends React.Component<BaseTableProps<T>, any> {}
 
   export interface RowExpandEvent {
     expanded: boolean
@@ -579,7 +574,7 @@ declare module 'react-base-table' {
       parentId?: string
     } & { [key: string]: any }
     rowIndex: number
-    rowKey: string
+    rowKey: RowKey
   }
   export interface ExpandIconBaseProps {
     expandable: boolean

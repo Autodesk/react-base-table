@@ -132,7 +132,7 @@ declare module 'react-base-table' {
   }
 
   export interface CellRendererProps<T> {
-    cellData: string | boolean | { [key: string]: any } | { [key: string]: any }[];
+    cellData: unknown;
     columns: Omit<Column<T>, 'headerRenderer'>[];
     column: Omit<Column<T>, 'headerRenderer'>;
     columnIndex: number;

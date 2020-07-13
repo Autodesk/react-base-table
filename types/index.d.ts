@@ -214,7 +214,7 @@ declare module 'react-base-table' {
     /**
      * The data for the table
      */
-    data: { [key: string]: any }[] | undefined;
+    data: T[] | undefined;
     /**
      * The data to be frozen to top, `rowIndex` is negative and starts from `-1`
      */

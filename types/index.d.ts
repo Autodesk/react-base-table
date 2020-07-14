@@ -205,7 +205,7 @@ declare module 'react-base-table' {
     /**
      * The data for the table
      */
-    data: T[] | undefined;
+    data?: T[];
     /**
      * The data to be frozen to top, `rowIndex` is negative and starts from `-1`
      */
@@ -492,10 +492,10 @@ declare module 'react-base-table' {
     /**
      * A object for the custom components, like `ExpandIcon` and `SortIndicator`
      */
-    components?: ITableComponents;
+    components?: TableComponents;
   }
 
-  export interface ITableComponents {
+  export interface TableComponents {
     TableCell?: CallOrReturn<React.ReactNode, {
       className: string,
       cellData: unknown,

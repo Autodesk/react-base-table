@@ -5,15 +5,17 @@ declare module 'react-base-table' {
 
   export type FrozenDirection = 'left' | 'right' | true | false;
 
+  type CallOrReturn<T, P = any[]> = T | (P extends any[] ? ((...p: P) => T) : ((p: P) => T));
+
   export interface Column<T = unknown> {
     /**
      * Class name for the column cell
      */
-    className?: string | (() => string);
+    className?: CallOrReturn<string>;
     /**
      * Class name for the column header
      */
-    headerClassName?: string | (() => string);
+    headerClassName?: CallOrReturn<string>;
     /**
      * Title of the column header
      */
@@ -47,27 +49,16 @@ declare module 'react-base-table' {
      * Custom column cell renderer
      * The renderer receives props `{ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }`
      */
-    cellRenderer?:
-      | React.ReactNode
-      | (({
-          cellData,
-          columns,
-          column,
-          columnIndex,
-          rowData,
-          rowIndex,
-          container,
-          isScrolling,
-        }: {
-          cellData: unknown;
-          columns: Column<T>[];
-          column: Column<T>;
-          columnIndex: number;
-          rowData: T;
-          rowIndex: number;
-          container?: React.ReactInstance;
-          isScrolling?: boolean;
-        }) => React.ReactNode);
+    cellRenderer?: CallOrReturn<React.ReactNode, {
+      cellData: unknown;
+      columns: Column<T>[];
+      column: Column<T>;
+      columnIndex: number;
+      rowData: T;
+      rowIndex: number;
+      container?: React.ReactInstance;
+      isScrolling?: boolean;
+    }>;
     /**
      * Custom column header renderer
      * The renderer receives props `{ columns, column, columnIndex, headerIndex, container }`
@@ -263,150 +254,96 @@ declare module 'react-base-table' {
     /**
      * Custom renderer on top of the table component
      */
-    overlayRenderer?: React.ReactNode | (() => React.ReactNode);
+    overlayRenderer?: CallOrReturn<React.ReactNode>;
     /**
      * Custom renderer when the length of data is 0
      */
-    emptyRenderer?: React.ReactNode | (() => React.ReactNode);
+    emptyRenderer?: CallOrReturn<React.ReactNode>;
     /**
      * Custom footer renderer, available only if `footerHeight` is larger then 0
      */
-    footerRenderer?: React.ReactNode | (() => React.ReactNode);
+    footerRenderer?: CallOrReturn<React.ReactNode>;
     /**
      * Custom header renderer
      * The renderer receives props `{ cells, columns, headerIndex }`
      */
-    headerRenderer?:
-      | React.ReactNode
-      | (({
-          cells,
-          columns,
-          headerIndex
-        }: {
-          cells: React.ReactNode[];
-          columns: Column<T>;
-          headerIndex: number;
-        }) => React.ReactNode);
+    headerRenderer?: CallOrReturn<React.ReactNode, {
+      cells: React.ReactNode[];
+      columns: Column<T>;
+      headerIndex: number;
+    }>;
     /**
      * Custom row renderer
      * The renderer receives props `{ isScrolling, cells, columns, rowData, rowIndex, depth }`
      */
-    rowRenderer?:
-      | React.ReactNode
-      | (({
-          isScrolling,
-          cells,
-          columns,
-          rowData,
-          rowIndex,
-          depth
-        }: {
-          isScrolling: boolean | undefined;
-          cells: React.ReactNode[];
-          columns: Column<T>;
-          rowData: T;
-          rowIndex: number;
-          depth: number;
-        }) => React.ReactNode);
+    rowRenderer?: CallOrReturn<React.ReactNode, {
+      isScrolling: boolean | undefined;
+      cells: React.ReactNode[];
+      columns: Column<T>;
+      rowData: T;
+      rowIndex: number;
+      depth: number;
+    }>;
     /**
      * Class name for the table header, could be a callback to return the class name
      * The callback is of the shape of `({ columns, headerIndex }) => string`
      */
-    headerClassName?:
-      | string
-      | (({ columns, headerIndex }: { columns: Column<T>[]; headerIndex: number }) => string);
+    headerClassName?: CallOrReturn<string, { columns: Column<T>[]; headerIndex: number }>;
     /**
      * Class name for the table row, could be a callback to return the class name
      * The callback is of the shape of `({ columns, rowData, rowIndex }) => string`
      */
-    rowClassName?:
-      | string
-      | (({
-          columns,
-          rowData,
-          rowIndex
-        }: {
-          columns: Column<T>[];
-          rowData: T;
-          rowIndex: number;
-        }) => string | undefined);
+    rowClassName?: CallOrReturn<string, {
+      columns: Column<T>[];
+      rowData: T;
+      rowIndex: number;
+    }>;
     /**
      * Extra props applied to header element
      * The handler is of the shape of `({ columns, headerIndex }) object`
      */
-    headerProps?:
-      | object
-      | (({ columns, headerIndex }: { columns: Column<T>[]; headerIndex: number }) => object);
+    headerProps?: CallOrReturn<object, { columns: Column<T>[]; headerIndex: number }>;
     /**
      * Extra props applied to header cell element
      * The handler is of the shape of `({ columns, column, columnIndex, headerIndex }) => object`
      */
-    headerCellProps?:
-      | object
-      | (({
-          columns,
-          column,
-          columnIndex,
-          headerIndex
-        }: {
-          columns: Column<T>[];
-          column: Column<T>;
-          columnIndex: number;
-          headerIndex: number;
-        }) => object);
+    headerCellProps?: CallOrReturn<object, {
+      columns: Column<T>[];
+      column: Column<T>;
+      columnIndex: number;
+      headerIndex: number;
+    }>;
     /**
      * Extra props applied to row element
      * The handler is of the shape of `({ columns, rowData, rowIndex }) => object`
      */
-    rowProps?:
-      | object
-      | (({
-          columns,
-          rowData,
-          rowIndex
-        }: {
-          columns: Column<T>[];
-          rowData: T;
-          rowIndex: number;
-        }) => object);
+    rowProps?: CallOrReturn<object, {
+      columns: Column<T>[];
+      rowData: T;
+      rowIndex: number;
+    } >;
     /**
      * Extra props applied to row cell element
      * The handler is of the shape of `({ columns, column, columnIndex, rowData, rowIndex }) => object`
      */
-    cellProps?:
-      | object
-      | (({
-          columns,
-          column,
-          columnIndex,
-          rowData,
-          rowIndex
-        }: {
-          columns: Column<T>[];
-          column: Column<T>;
-          columnIndex: number;
-          rowData: T;
-          rowIndex: number;
-        }) => object);
+    cellProps?: CallOrReturn<object, {
+      columns: Column<T>[];
+      column: Column<T>;
+      columnIndex: number;
+      rowData: T;
+      rowIndex: number;
+    }>;
     /**
      * Extra props applied to ExpandIcon component
      * The handler is of the shape of `({ rowData, rowIndex, depth, expandable, expanded }) => object`
      */
-    expandIconProps?:
-      | object
-      | (({
-          rowData,
-          rowIndex,
-          depth,
-          expandable,
-          expanded
-        }: {
-          rowData: T;
-          rowIndex: number;
-          depth: number;
-          expandable: boolean;
-          expanded: boolean;
-        }) => object);
+    expandIconProps?: CallOrReturn<object, {
+      rowData: T;
+      rowIndex: number;
+      depth: number;
+      expandable: boolean;
+      expanded: boolean;
+    }>;
     /**
      * The key for the expand column which render the expand icon if the data is a tree
      */
@@ -559,10 +496,31 @@ declare module 'react-base-table' {
   }
 
   export interface ITableComponents {
-    TableCell?: React.ComponentType<any> | (() => React.ReactElement);
-    TableHeaderCell?: React.ComponentType<any> | (() => React.ReactElement);
-    ExpandIcon?: React.ComponentType<any> | (() => React.ReactElement);
-    SortIndicator?: React.ComponentType<any> | (() => React.ReactElement);
+    TableCell?: CallOrReturn<React.ReactNode, {
+      className: string,
+      cellData: unknown,
+      column: Column,
+      columnIndex: number,
+      rowData: unknown,
+      rowIndex: number,
+    }>;
+    TableHeaderCell?: CallOrReturn<React.ReactNode, {
+      className: string,
+      column: Column,
+      columnIndex: number,
+    }>
+    ExpandIcon?: CallOrReturn<React.ReactNode, {
+      expandable: boolean,
+      expanded: boolean,
+      indentSize: number,
+      depth: number,
+      onExpand: (expandEvent: RowExpandEvent) => void,
+    }>;
+    SortIndicator?: CallOrReturn<React.ReactNode, {
+      sortOrder: SortOrder,
+      className: string,
+      style: React.CSSProperties,
+    }>;
   }
 
   export default class BaseTable<T = unknown> extends React.Component<BaseTableProps<T>, any> {}

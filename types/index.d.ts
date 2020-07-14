@@ -60,8 +60,8 @@ declare module 'react-base-table' {
           isScrolling,
         }: {
           cellData: unknown;
-          columns: Omit<Column<T>, 'headerRenderer'>[];
-          column: Omit<Column<T>, 'headerRenderer'>;
+          columns: Column<T>[];
+          column: Column<T>;
           columnIndex: number;
           rowData: T;
           rowIndex: number;
@@ -79,8 +79,8 @@ declare module 'react-base-table' {
       headerIndex,
       container,
     }: {
-      columns: Omit<Column<T>, 'cellRenderer'>[];
-      column: Omit<Column<T>, 'cellRenderer'>;
+      columns: Column<T>[];
+      column: Column<T>;
       columnIndex: number;
       headerIndex: number;
       container: React.ReactInstance;
@@ -133,8 +133,8 @@ declare module 'react-base-table' {
 
   export interface CellRendererProps<T> {
     cellData: unknown;
-    columns: Omit<Column<T>, 'headerRenderer'>[];
-    column: Omit<Column<T>, 'headerRenderer'>;
+    columns: Column<T>[];
+    column: Column<T>;
     columnIndex: number;
     rowData: T;
     rowIndex: number;
@@ -284,7 +284,7 @@ declare module 'react-base-table' {
           headerIndex
         }: {
           cells: React.ReactNode[];
-          columns: Omit<Column<T>, 'headerRenderer'>;
+          columns: Column<T>;
           headerIndex: number;
         }) => React.ReactNode);
     /**
@@ -303,7 +303,7 @@ declare module 'react-base-table' {
         }: {
           isScrolling: boolean | undefined;
           cells: React.ReactNode[];
-          columns: Omit<Column<T>, 'rowRenderer'>;
+          columns: Column<T>;
           rowData: T;
           rowIndex: number;
           depth: number;

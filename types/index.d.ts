@@ -524,30 +524,4 @@ declare module 'react-base-table' {
   }
 
   export default class BaseTable<T = unknown> extends React.Component<BaseTableProps<T>, any> {}
-
-  export interface RowExpandEvent {
-    expanded: boolean
-    rowData: {
-      id: string
-      parentId?: string
-    } & { [key: string]: any }
-    rowIndex: number
-    rowKey: RowKey
-  }
-  export interface ExpandIconBaseProps {
-    expandable: boolean
-    expanded: boolean
-    depth?: number
-    onExpand: (expanded: boolean) => void
-  }
-  export const unflatten: any;
-  export interface BaseColumnInfo {
-    key: string
-    width: number
-  }
-
-  export interface FrozenColumnInfo extends BaseColumnInfo {
-    frozen: true
-    label: string
-  }
 }

@@ -741,11 +741,13 @@ class BaseTable extends React.PureComponent {
     }
     this._maybeScrollbarPresenceChange();
 
-    setTimeout(() => {
-      if (estimatedRowHeight && this.getTotalRowsHeight() !== this._totalRowsHeight) {
-        this.forceUpdate();
-      }
-    });
+    if (estimatedRowHeight) {
+      setTimeout(() => {
+        if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
+          this.forceUpdate();
+        }
+      });
+    }
   }
 
   _prefixClass(className) {

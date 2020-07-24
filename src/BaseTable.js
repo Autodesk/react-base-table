@@ -742,6 +742,7 @@ class BaseTable extends React.PureComponent {
     this._maybeScrollbarPresenceChange();
 
     if (estimatedRowHeight) {
+      // have to wrap with setTimeout or we would still get the previous value
       setTimeout(() => {
         if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
           this.forceUpdate();

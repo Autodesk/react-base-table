@@ -119,6 +119,10 @@ We are using a advanced table component based on `BaseTable` internally, with mu
 
 [In real products](https://blogs.autodesk.com/bim360-release-notes/2019/11/18/bim-360-cost-management-update-november-2019/) 
 
+## Development
+
+We use `Yarn` as the package manager, checkout this repo and run `yarn` under both root folder and `website` folder in install packages, then run `yarn start` to start the demo site powered by `Gatsby`
+
 ## Contributing
 
 Please check [guidelines](CONTRIBUTING.md) for more details

@@ -53,6 +53,10 @@ module.exports = {
       path: '/examples/jsx-column',
     },
     {
+      title: 'Flex Column(column width in ratio)',
+      path: '/examples/flex-column',
+    },
+    {
       title: 'Custom Cell',
       path: '/examples/custom-cell',
     },

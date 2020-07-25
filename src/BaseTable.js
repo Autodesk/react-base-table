@@ -692,6 +692,7 @@ class BaseTable extends React.PureComponent {
     }
     // should be after `this._data` assigned
     this._calcScrollbarSizes();
+    this._totalRowsHeight = this.getTotalRowsHeight();
 
     const containerStyle = {
       ...style,
@@ -729,7 +730,7 @@ class BaseTable extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { data, height, maxHeight } = this.props;
+    const { data, height, maxHeight, estimatedRowHeight } = this.props;
     if (data !== prevProps.data) {
       this._lastScannedRowIndex = -1;
       this._hasDataChangedSinceEndReached = true;
@@ -739,6 +740,17 @@ class BaseTable extends React.PureComponent {
       this._maybeCallOnEndReached();
     }
     this._maybeScrollbarPresenceChange();
+
+    if (estimatedRowHeight) {
+      // we have to wrap with setTimeout or we would still get the previous value,
+      // as we reset the inner components directly instead of update the table itself after row heights measured,
+      // so `componentDidUpdate` won't be invoked after that
+      setTimeout(() => {
+        if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
+          this.forceUpdate();
+        }
+      });
+    }
   }
 
   _prefixClass(className) {

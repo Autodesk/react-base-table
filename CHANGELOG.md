@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.6 (2020-07-25)
+
 - fix: `getTotalRowsHeight` could be different before/after render in dynamic mode
 
 ## v1.10.5 (2020-07-10)

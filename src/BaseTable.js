@@ -125,6 +125,7 @@ class BaseTable extends React.PureComponent {
       this._rowHeightMapBuffer = {};
       this._resetIndex = null;
       this.forceUpdateTable();
+      this.forceUpdate();
       this._isResetting = false;
     }, 0);
 
@@ -742,14 +743,9 @@ class BaseTable extends React.PureComponent {
     this._maybeScrollbarPresenceChange();
 
     if (estimatedRowHeight) {
-      // we have to wrap with setTimeout or we would still get the previous value,
-      // as we reset the inner components directly instead of update the table itself after row heights measured,
-      // so `componentDidUpdate` won't be invoked after that
-      setTimeout(() => {
-        if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
-          this.forceUpdate();
-        }
-      });
+      if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
+        this.forceUpdate();
+      }
     }
   }
 

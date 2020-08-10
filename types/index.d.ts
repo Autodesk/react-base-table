@@ -141,8 +141,17 @@ declare module 'react-base-table' {
   }
 
   export class Column<T = unknown> extends React.Component<ColumnShape<T>> {
-    static readonly Alignment: Alignment;
-    static readonly FrozenDirection: FrozenDirection;
+    static readonly Alignment: {
+      readonly LEFT: 'left';
+      readonly CENTER: 'center';
+      readonly RIGHT: 'right';
+    };
+    static readonly FrozenDirection: {
+      readonly LEFT: 'left';
+      readonly RIGHT: 'right';
+      readonly DEFAULT: true;
+      readonly NONE: false;
+    };
   }
 
   export interface BaseTableProps<T = unknown> {

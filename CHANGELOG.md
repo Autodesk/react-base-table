@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.8 (2020-08-11)
+
 - fix: scroll position would be reset to top if column becomes frozen
 
 ## v1.10.7 (2020-07-28)

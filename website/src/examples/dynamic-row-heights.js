@@ -193,7 +193,6 @@ export default class App extends React.Component {
         </button>
         <Table
           fixed
-          selectable
           columns={
             !!this.state.toggle ? this.columns.slice(0, 4) : this.columns
           }

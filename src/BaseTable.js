@@ -562,6 +562,7 @@ class BaseTable extends React.PureComponent {
         ref={this._setLeftTableRef}
         data={this._data}
         columns={this.columnManager.getLeftFrozenColumns()}
+        initialScrollTop={this._scroll.scrollTop}
         width={columnsWidth + offset}
         height={containerHeight}
         headerHeight={headerHeight}
@@ -595,6 +596,7 @@ class BaseTable extends React.PureComponent {
         ref={this._setRightTableRef}
         data={this._data}
         columns={this.columnManager.getRightFrozenColumns()}
+        initialScrollTop={this._scroll.scrollTop}
         width={columnsWidth + scrollbarWidth}
         height={containerHeight}
         headerHeight={headerHeight}

@@ -175,7 +175,6 @@ export default class App extends React.Component {
     return (
       <Table
         fixed
-        selectable
         columns={this.columns}
         data={data}
         sortBy={sortBy}

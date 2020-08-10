@@ -97,7 +97,7 @@ declare module 'react-base-table' {
     /**
      * Whether the column is hidden
      */
-    hidden?: bool;
+    hidden?: boolean;
     /**
      * Whether the column is resizable, defaults to false
      */

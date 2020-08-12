@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: input loses focus on unmount
+
 ## v1.10.8 (2020-08-11)
 
 - fix: scroll position would be reset to top if column becomes frozen

@@ -13,20 +13,26 @@ export function addUserSelectStyles(doc) {
     styleEl = doc.createElement('style');
     styleEl.type = 'text/css';
     styleEl.id = 'react-draggable-style-el';
-    styleEl.innerHTML = '.react-draggable-transparent-selection *::-moz-selection {background: transparent;}\n';
-    styleEl.innerHTML += '.react-draggable-transparent-selection *::selection {background: transparent;}\n';
+    styleEl.innerHTML = '.react-draggable-transparent-selection *::-moz-selection {all: inherit;}\n';
+    styleEl.innerHTML += '.react-draggable-transparent-selection *::selection {all: inherit;}\n';
     doc.getElementsByTagName('head')[0].appendChild(styleEl);
   }
   if (doc.body) addClassName(doc.body, 'react-draggable-transparent-selection');
 }
 
 export function removeUserSelectStyles(doc) {
+  if (!doc) return;
   try {
-    if (doc && doc.body) removeClassName(doc.body, 'react-draggable-transparent-selection');
+    if (doc.body) removeClassName(doc.body, 'react-draggable-transparent-selection');
     if (doc.selection) {
       doc.selection.empty();
     } else {
-      window.getSelection().removeAllRanges(); // remove selection caused by scroll
+      // Remove selection caused by scroll, unless it's a focused input
+      // (we use doc.defaultView in case we're in an iframe)
+      const selection = (doc.defaultView || window).getSelection();
+      if (selection && selection.type !== 'Caret') {
+        selection.removeAllRanges();
+      }
     }
   } catch (e) {
     // probably IE

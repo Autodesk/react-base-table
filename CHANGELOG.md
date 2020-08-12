@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.10.9 (2020-08-13)
+
 - fix: input loses focus on unmount
 
 ## v1.10.8 (2020-08-11)

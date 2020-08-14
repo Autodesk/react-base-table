@@ -170,7 +170,7 @@ declare module 'react-base-table' {
     /**
      * A collection of Column
      */
-    children?: React.ReactElement<T> | React.ReactElement<T>[] | null;
+    children?: React.ReactNode;
     /**
      * Columns for the table
      */
@@ -543,9 +543,26 @@ declare module 'react-base-table' {
 
   export const AutoResizer: React.FC<AutoResizerProps>;
 
-  export type getScrollbarSize = (recalculate?: boolean) => number;
-  export type isObjectEqual = (objA: object, objB: object) => boolean;
-  export type hasChildren = (data: { children: any[] | undefined }) => boolean;
-  export type getValue = (obj: object, path: string, defaultValue: any) => any;
-  export type normalizeColumns = (elements: React.ReactElement[]) => React.ReactElement[];
+  export function renderElement(renderer: React.ReactElement | function, props?: object): React.ReactNode;
+
+  export function normalizeColumns(elements: React.ReactNode[]): ColumnShape<any>[];
+
+  export function isObjectEqual(objA: any, objB: any, ignoreFunction?: boolean): boolean;
+
+  export function callOrReturn<T, P = any[]>(funcOrValue: CallOrReturn<T, P>, ...args: P): T;
+
+  export function hasChildren(data: object): boolean;
+
+  export function unflatten<T = any>(array: T[], rootId?: any, dataKey?: string, parentKey?: string): T[];
+
+  export function flattenOnKeys<T = any>(
+    tree: T[],
+    keys?: RowKey[],
+    depthMap?: { [key: RowKey]: number },
+    dataKey?: string
+  ): T[];
+
+  export function getValue(object: any, path?: string, defaultValue?: any): any;
+
+  export function getScrollbarSize(recalculate?: boolean): number;
 }

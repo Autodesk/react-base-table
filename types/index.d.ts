@@ -542,4 +542,10 @@ declare module 'react-base-table' {
   }
 
   export const AutoResizer: React.FC<AutoResizerProps>;
+
+  export type getScrollbarSize = (recalculate?: boolean) => number;
+  export type isObjectEqual = (objA: object, objB: object) => boolean;
+  export type hasChildren = (data: { children: any[] | undefined }) => boolean;
+  export type getValue = (obj: object, path: string, defaultValue: any) => any;
+  export type normalizeColumns = (elements: React.ReactElement) => React.ReactElement[];
 }

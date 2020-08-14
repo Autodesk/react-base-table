@@ -119,7 +119,7 @@ declare module 'react-base-table' {
         columnIndex: number;
         rowData: T;
         rowIndex: number;
-        container: any;
+        container: BaseTable<T>;
         isScrolling?: boolean;
       }
     >;
@@ -134,7 +134,7 @@ declare module 'react-base-table' {
         column: ColumnShape<T>;
         columnIndex: number;
         headerIndex: number;
-        container: any;
+        container: BaseTable<T>;
       }
     >;
     [key: string]: any;
@@ -402,12 +402,12 @@ declare module 'react-base-table' {
      * A callback function when resizing the column width
      * The handler is of the shape of `({ column, width }) => *`
      */
-    onColumnResize?: (args: { column: ColumnShape; width: number }) => void;
+    onColumnResize?: (args: { column: ColumnShape<T>; width: number }) => void;
     /**
      * A callback function when resizing the column width ends
      * The handler is of the shape of `({ column, width }) => *`
      */
-    onColumnResizeEnd?: (args: { column: ColumnShape; width: number }) => void;
+    onColumnResizeEnd?: (args: { column: ColumnShape<T>; width: number }) => void;
     /**
      * Adds an additional isScrolling parameter to the row renderer.
      * This parameter can be used to show a placeholder row while scrolling.
@@ -482,25 +482,25 @@ declare module 'react-base-table' {
     [key: string]: any;
   }
 
-  export interface TableComponents {
+  export interface TableComponents<T = any> {
     TableCell?: React.ElementType<{
       className: string;
       isScrolling?: boolean;
       cellData: any;
-      columns: ColumnShape[];
-      column: ColumnShape;
+      columns: ColumnShape<T>[];
+      column: ColumnShape<T>;
       columnIndex: number;
-      rowData: any;
+      rowData: T;
       rowIndex: number;
-      container: any;
+      container: BaseTable<T>;
     }>;
     TableHeaderCell?: React.ElementType<{
       className: string;
-      columns: ColumnShape[];
-      column: ColumnShape;
+      columns: ColumnShape<T>[];
+      column: ColumnShape<T>;
       columnIndex: number;
       headerIndex: number;
-      container: any;
+      container: BaseTable<T>;
     }>;
     ExpandIcon?: React.ElementType<{
       depth: number;
@@ -518,6 +518,81 @@ declare module 'react-base-table' {
   export default class BaseTable<T = unknown> extends React.Component<BaseTableProps<T>, any> {
     static readonly Column: typeof Column;
     static readonly PlaceholderKey = '__placeholder__';
+
+    /**
+     * Get the DOM node of the table
+     */
+    getDOMNode(): HTMLDivElement | null;
+    /**
+     * Get the column manager
+     */
+    getColumnManager(): any;
+    /**
+     * Get internal `expandedRowKeys` state
+     */
+    getExpandedRowKeys(): RowKey[];
+    /**
+     * Get the expanded state, fallback to normal state if not expandable.
+     */
+    getExpandedState(): {
+      expandedData: T[];
+      expandedRowKeys: RowKey[];
+      expandedDepthMap: { [key: RowKey]: number };
+    };
+    /**
+     * Get the total height of all rows, including expanded rows.
+     */
+    getTotalRowsHeight(): number;
+    /**
+     * Get the total width of all columns.
+     */
+    getTotalColumnsWidth(): number;
+    /**
+     * Forcefully re-render the inner Grid component.
+     *
+     * Calling `forceUpdate` on `Table` may not re-render the inner Grid since it uses `shallowCompare` as a performance optimization.
+     * Use this method if you want to manually trigger a re-render.
+     * This may be appropriate if the underlying row data has changed but the row sizes themselves have not.
+     */
+    forceUpdateTable(): void;
+    /**
+     * Reset cached offsets for positioning after a specific rowIndex, should be used only in dynamic mode(estimatedRowHeight is provided)
+     */
+    resetAfterRowIndex(rowIndex?: number, shouldForceUpdate?: boolean): void;
+    /**
+     * Reset row height cache, useful if `data` changed entirely, should be used only in dynamic mode(estimatedRowHeight is provided)
+     */
+    resetRowHeightCache(): void;
+    /**
+     * Scroll to the specified offset.
+     * Useful for animating position changes.
+     */
+    scrollToPosition(offset: { scrollLeft: number; scrollTop: number }): void;
+    /**
+     * Scroll to the specified offset vertically.
+     */
+    scrollToTop(scrollTop: number): void;
+    /**
+     * Scroll to the specified offset horizontally.
+     */
+    scrollToLeft(scrollLeft: number): void;
+    /**
+     * Scroll to the specified row.
+     * By default, the table will scroll as little as possible to ensure the row is visible.
+     * You can control the alignment of the row though by specifying an align property. Acceptable values are:
+     *
+     * - `auto` (default) - Scroll as little as possible to ensure the row is visible.
+     * - `smart` - Same as `auto` if it is less than one viewport away, or it's the same as`center`.
+     * - `center` - Center align the row within the table.
+     * - `end` - Align the row to the bottom side of the table.
+     * - `start` - Align the row to the top side of the table.
+     */
+    scrollToRow(rowIndex?: number, align?: 'auto' | 'smart' | 'center' | 'end' | 'start'): void;
+    /**
+     * Set `expandedRowKeys` manually.
+     * This method is available only if `expandedRowKeys` is uncontrolled.
+     */
+    setExpandedRowKeys(expandedRowKeys: RowKey[]): void;
   }
 
   export interface AutoResizerProps {

@@ -472,6 +472,10 @@ declare module 'react-base-table' {
       [key: string]: (args: { rowData: T; rowIndex: number; rowKey: RowKey; event: React.SyntheticEvent }) => object;
     };
     /**
+     * whether to ignore function properties while comparing column definition
+     */
+    ignoreFunctionInColumnCompare?: boolean;
+    /**
      * A object for the custom components, like `ExpandIcon` and `SortIndicator`
      */
     components?: TableComponents;

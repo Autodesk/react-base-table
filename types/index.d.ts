@@ -626,7 +626,7 @@ declare module 'react-base-table' {
 
   export function normalizeColumns(elements: React.ReactNode[]): ColumnShape<any>[];
 
-  export function isObjectEqual(objA: any, objB: any, ignoreFunction?: boolean): boolean;
+  export function isObjectEqual(objA: object, objB: object, ignoreFunction?: boolean): boolean;
 
   export function callOrReturn<T, P = any[]>(funcOrValue: CallOrReturn<T, P>, ...args: P): T;
 

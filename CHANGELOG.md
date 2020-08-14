@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- feat: add `ignoreFunctionInColumnCompare` to solve closure problem in renderers
+
 ## v1.10.9 (2020-08-13)
 
 - fix: input loses focus on unmount

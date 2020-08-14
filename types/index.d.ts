@@ -557,7 +557,12 @@ declare module 'react-base-table' {
 
   export function hasChildren(data: object): boolean;
 
-  export function unflatten<T = any>(array: T[], rootId?: any, dataKey?: string, parentKey?: string): T[];
+  export function unflatten<T = any>(
+    array: T[],
+    rootId?: any,
+    dataKey?: string,
+    parentKey?: string
+  ): (T & { children?: T[] })[];
 
   export function flattenOnKeys<T = any>(
     tree: T[],

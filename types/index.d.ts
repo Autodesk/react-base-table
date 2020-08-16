@@ -622,13 +622,16 @@ declare module 'react-base-table' {
 
   export const AutoResizer: React.FC<AutoResizerProps>;
 
-  export function renderElement(renderer: React.ReactElement | function, props?: object): React.ReactNode;
+  export function renderElement<T extends object>(
+    renderer: React.ReactElement | ((props: Partial<T>) => React.ReactNode),
+    props?: T
+  ): React.ReactNode;
 
   export function normalizeColumns(elements: React.ReactNode[]): ColumnShape<any>[];
 
   export function isObjectEqual(objA: object, objB: object, ignoreFunction?: boolean): boolean;
 
-  export function callOrReturn<T, P = any[]>(funcOrValue: CallOrReturn<T, P>, ...args: P): T;
+  export function callOrReturn<T, P extends any[] = any[]>(funcOrValue: CallOrReturn<T, P>, ...args: P): T;
 
   export function hasChildren(data: object): boolean;
 

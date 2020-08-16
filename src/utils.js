@@ -2,6 +2,7 @@ import React from 'react';
 
 export function renderElement(renderer, props) {
   if (React.isValidElement(renderer)) {
+    if (!props) return renderer;
     return React.cloneElement(renderer, props);
   } else if (typeof renderer === 'function') {
     if (renderer.prototype && renderer.prototype.isReactComponent) {

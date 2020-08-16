@@ -2,6 +2,7 @@ import React from 'react';
 
 export function renderElement(renderer, props) {
   if (React.isValidElement(renderer)) {
+    if (!props) return renderer;
     return React.cloneElement(renderer, props);
   } else if (typeof renderer === 'function') {
     if (renderer.prototype && renderer.prototype.isReactComponent) {
@@ -26,7 +27,7 @@ export function normalizeColumns(elements) {
   return columns;
 }
 
-export function isObjectEqual(objA, objB) {
+export function isObjectEqual(objA, objB, ignoreFunction = true) {
   if (objA === objB) return true;
   if (objA === null && objB === null) return true;
   if (objA === null || objB === null) return false;
@@ -38,13 +39,22 @@ export function isObjectEqual(objA, objB) {
 
   for (let i = 0; i < keysA.length; i++) {
     const key = keysA[i];
+
+    if (key === '_owner' && objA.$$typeof) {
+      // React-specific: avoid traversing React elements' _owner.
+      //  _owner contains circular references
+      // and is not needed when comparing the actual elements (and not their owners)
+      continue;
+    }
+
     const valueA = objA[key];
     const valueB = objB[key];
+    const valueAType = typeof valueA;
 
-    if (typeof valueA !== typeof valueB) return false;
-    if (typeof valueA === 'function') continue;
-    if (typeof valueA === 'object') {
-      if (!isObjectEqual(valueA, valueB)) return false;
+    if (valueAType !== typeof valueB) return false;
+    if (valueAType === 'function' && ignoreFunction) continue;
+    if (valueAType === 'object') {
+      if (!isObjectEqual(valueA, valueB, ignoreFunction)) return false;
       else continue;
     }
     if (valueA !== valueB) return false;

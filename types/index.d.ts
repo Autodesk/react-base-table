@@ -391,7 +391,7 @@ declare module 'react-base-table' {
      * ```
      */
     sortState?: {
-      [key: React.Key]: SortOrder;
+      [key in React.Key]: SortOrder;
     };
     /**
      * A callback function for the header cell click event
@@ -537,7 +537,7 @@ declare module 'react-base-table' {
     getExpandedState(): {
       expandedData: T[];
       expandedRowKeys: RowKey[];
-      expandedDepthMap: { [key: RowKey]: number };
+      expandedDepthMap: { [key in RowKey]: number };
     };
     /**
      * Get the total height of all rows, including expanded rows.
@@ -645,7 +645,7 @@ declare module 'react-base-table' {
   export function flattenOnKeys<T = any>(
     tree: T[],
     keys?: RowKey[],
-    depthMap?: { [key: RowKey]: number },
+    depthMap?: { [key in RowKey]: number },
     dataKey?: string
   ): T[];
 

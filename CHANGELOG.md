@@ -2,6 +2,9 @@
 
 ## NEXT VERSION
 
+- fix: add types folder into packages
+- chore: mark `Column.key` as required
+
 ## v1.11.0 (2020-08-17)
 
 - feat: add `ignoreFunctionInColumnCompare` to solve closure problem in renderers

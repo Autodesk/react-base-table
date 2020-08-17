@@ -21,6 +21,10 @@ class Column extends React.Component {}
 
 Column.propTypes = {
   /**
+   * Unique key for each column
+   */
+  key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  /**
    * Class name for the column cell, could be a callback to return the class name
    * The callback is of the shape of `({ cellData, columns, column, columnIndex, rowData, rowIndex }) => string`
    */

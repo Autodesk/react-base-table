@@ -91,7 +91,6 @@ declare module 'react-base-table' {
     minWidth?: number;
     /**
      * Whether the column is frozen and what's the frozen side
-     * Could be changed if we decide to allow Frozen.RIGHT
      */
     frozen?: FrozenDirection;
     /**

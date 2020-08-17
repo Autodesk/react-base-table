@@ -12,6 +12,9 @@ declare module 'react-base-table' {
   export type CallOrReturn<T, P = any[]> = T | (P extends any[] ? (...p: P) => T : (p: P) => T);
 
   export interface ColumnShape<T = unknown> {
+    /**
+     * Unique key for each column
+     */
     key: React.Key;
     /**
      * Class name for the column cell

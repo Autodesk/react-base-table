@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.11.1 (2020-08-17)
+
 - fix: add types folder into packages
 - chore: mark `Column.key` as required
 

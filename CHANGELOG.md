@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.11.0 (2020-08-17)
+
 - feat: add `ignoreFunctionInColumnCompare` to solve closure problem in renderers
 - chore: skip unnecessary cloneElement in `renderElement`
 - feat: add type declarations

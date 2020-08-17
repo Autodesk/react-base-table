@@ -212,6 +212,9 @@ class BaseTable extends React.PureComponent {
 
   /**
    * Reset cached offsets for positioning after a specific rowIndex, should be used only in dynamic mode(estimatedRowHeight is provided)
+   *
+   * @param {number} rowIndex
+   * @param {boolean} shouldForceUpdate
    */
   resetAfterRowIndex(rowIndex = 0, shouldForceUpdate = true) {
     if (!this.props.estimatedRowHeight) return;
@@ -283,7 +286,7 @@ class BaseTable extends React.PureComponent {
    * - `center` - Center align the row within the table.
    * - `end` - Align the row to the bottom side of the table.
    * - `start` - Align the row to the top side of the table.
-
+   *
    * @param {number} rowIndex
    * @param {string} align
    */

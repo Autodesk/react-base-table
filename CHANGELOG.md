@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: add missing types for propTypes of `BaseTable`
+
 ## v1.11.1 (2020-08-17)
 
 - fix: add types folder into packages

@@ -1287,7 +1287,7 @@ BaseTable.propTypes = {
   /**
    * A object for the row event handlers
    * Each of the keys is row event name, like `onClick`, `onDoubleClick` and etc.
-   * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => object`
+   * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => *`
    */
   rowEventHandlers: PropTypes.object,
   /**

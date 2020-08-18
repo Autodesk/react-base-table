@@ -468,10 +468,10 @@ declare module 'react-base-table' {
     /**
      * A object for the row event handlers
      * Each of the keys is row event name, like `onClick`, `onDoubleClick` and etc.
-     * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => object`
+     * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => *`
      */
     rowEventHandlers?: {
-      [key: string]: (args: { rowData: T; rowIndex: number; rowKey: RowKey; event: React.SyntheticEvent }) => object;
+      [key: string]: (args: { rowData: T; rowIndex: number; rowKey: RowKey; event: React.SyntheticEvent }) => void;
     };
     /**
      * whether to ignore function properties while comparing column definition
@@ -520,6 +520,8 @@ declare module 'react-base-table' {
   export default class BaseTable<T = unknown> extends React.Component<BaseTableProps<T>, any> {
     static readonly Column: typeof Column;
     static readonly PlaceholderKey = '__placeholder__';
+    static defaultProps: Partial<BaseTableProps>;
+    static propTypes: React.WeakValidationMap<BaseTableProps>;
 
     /**
      * Get the DOM node of the table

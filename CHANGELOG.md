@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: remove propTypes for Column.key
+
 ## v1.11.2 (2020-08-18)
 
 - fix: add missing types for propTypes of `BaseTable`

@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+## v1.11.3 (2020-08-24)
+
 - fix: remove propTypes for Column.key
 
 ## v1.11.2 (2020-08-18)

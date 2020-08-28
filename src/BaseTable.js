@@ -467,10 +467,10 @@ class BaseTable extends React.PureComponent {
     if (sortState) {
       const order = sortState[column.key];
       sorting = order === SortOrder.ASC || order === SortOrder.DESC;
-      sortOrder = sorting ? order : SortOrder.ASC;
+      sortOrder = sorting ? order : this.props.defaultSortOrder ? this.props.defaultSortOrder : SortOrder.ASC;
     } else {
       sorting = column.key === sortBy.key;
-      sortOrder = sorting ? sortBy.order : SortOrder.ASC;
+      sortOrder = sorting ? sortBy.order : this.props.defaultSortOrder ? this.props.defaultSortOrder : SortOrder.ASC;
     }
 
     const cellCls = callOrReturn(headerClassName, { columns, column, columnIndex, headerIndex });
@@ -980,7 +980,7 @@ class BaseTable extends React.PureComponent {
   _handleColumnSort(event) {
     const key = event.currentTarget.dataset.key;
     const { sortBy, sortState, onColumnSort } = this.props;
-    let order = SortOrder.ASC;
+    let order = this.props.defaultSortOrder ? this.props.defaultSortOrder : SortOrder.ASC;
 
     if (sortState) {
       order = sortState[key] === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
@@ -1200,6 +1200,10 @@ BaseTable.propTypes = {
    * The handler is of the shape of `(expandedRowKeys) => *`
    */
   onExpandedRowsChange: PropTypes.func,
+  /**
+   * Sets the first order to be used if no sortBy or sortState is defined
+   */
+  defaultSortOrder: PropTypes.oneOf([SortOrder.ASC, SortOrder.DESC]),
   /**
    * The sort state for the table, will be ignored if `sortState` is set
    */

@@ -208,8 +208,15 @@ declare module 'react-base-table' {
     rowHeight?: number;
     /**
      * Estimated row height, the real height will be measure dynamically according to the content
+     * The callback is of the shape of `({ rowData, rowIndex }) => number`
      */
-    estimatedRowHeight?: number;
+    estimatedRowHeight?: CallOrReturn<
+      number,
+      {
+        rowData: T;
+        rowIndex: number;
+      }
+    >;
     /**
      * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
      */

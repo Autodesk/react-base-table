@@ -19,6 +19,7 @@ import {
   renderElement,
   normalizeColumns,
   getScrollbarSize as defaultGetScrollbarSize,
+  getEstimatedTotalRowsHeight,
   isObjectEqual,
   callOrReturn,
   hasChildren,
@@ -120,6 +121,7 @@ class BaseTable extends React.PureComponent {
     this._mainRowHeightMap = {};
     this._leftRowHeightMap = {};
     this._rightRowHeightMap = {};
+    this._getEstimatedTotalRowsHeight = memoize(getEstimatedTotalRowsHeight);
     this._getRowHeight = this._getRowHeight.bind(this);
     this._updateRowHeights = debounce(() => {
       this._isResetting = true;
@@ -185,7 +187,9 @@ class BaseTable extends React.PureComponent {
     const { rowHeight, estimatedRowHeight } = this.props;
 
     if (estimatedRowHeight) {
-      return this.table ? this.table.getTotalRowsHeight() : this._data.length * estimatedRowHeight;
+      return this.table
+        ? this.table.getTotalRowsHeight()
+        : this._getEstimatedTotalRowsHeight(this._data, estimatedRowHeight);
     }
     return this._data.length * rowHeight;
   }
@@ -716,7 +720,7 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0,
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
       [`${classPrefix}--disabled`]: disabled,
-      [`${classPrefix}--dynamic`]: estimatedRowHeight > 0,
+      [`${classPrefix}--dynamic`]: !!estimatedRowHeight,
     });
     return (
       <div ref={this._setContainerRef} className={cls} style={containerStyle}>
@@ -785,7 +789,10 @@ class BaseTable extends React.PureComponent {
   // for dynamic row height
   _getRowHeight(rowIndex) {
     const { estimatedRowHeight, rowKey } = this.props;
-    return this._rowHeightMap[this._data[rowIndex][rowKey]] || estimatedRowHeight;
+    return (
+      this._rowHeightMap[this._data[rowIndex][rowKey]] ||
+      callOrReturn(estimatedRowHeight, { rowData: this._data[rowIndex], rowIndex })
+    );
   }
 
   _getIsResetting() {
@@ -1103,8 +1110,9 @@ BaseTable.propTypes = {
   rowHeight: PropTypes.number,
   /**
    * Estimated row height, the real height will be measure dynamically according to the content
+   * The callback is of the shape of `({ rowData, rowIndex }) => number`
    */
-  estimatedRowHeight: PropTypes.number,
+  estimatedRowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   /**
    * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
    */

@@ -5,6 +5,7 @@ import { FixedSizeGrid, VariableSizeGrid } from 'react-window';
 import memoize from 'memoize-one';
 
 import Header from './TableHeader';
+import { getEstimatedTotalRowsHeight } from './utils';
 
 /**
  * A wrapper of the Grid for internal only
@@ -23,6 +24,7 @@ class GridTable extends React.PureComponent {
       if (!this.props.estimatedRowHeight) return;
       this.bodyRef && this.bodyRef.resetAfterColumnIndex(0, false);
     });
+    this._getEstimatedTotalRowsHeight = memoize(getEstimatedTotalRowsHeight);
 
     this.renderRow = this.renderRow.bind(this);
   }
@@ -59,7 +61,9 @@ class GridTable extends React.PureComponent {
     const { data, rowHeight, estimatedRowHeight } = this.props;
 
     if (estimatedRowHeight) {
-      return (this.innerRef && this.innerRef.clientHeight) || data.length * estimatedRowHeight;
+      return (
+        (this.innerRef && this.innerRef.clientHeight) || this._getEstimatedTotalRowsHeight(data, estimatedRowHeight)
+      );
     }
     return data.length * rowHeight;
   }
@@ -114,7 +118,7 @@ class GridTable extends React.PureComponent {
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
           rowHeight={estimatedRowHeight ? getRowHeight : rowHeight}
-          estimatedRowHeight={estimatedRowHeight}
+          estimatedRowHeight={typeof estimatedRowHeight === 'function' ? undefined : estimatedRowHeight}
           rowCount={data.length}
           overscanRowCount={overscanRowCount}
           columnWidth={estimatedRowHeight ? this._getBodyWidth : bodyWidth}
@@ -198,7 +202,7 @@ GridTable.propTypes = {
   headerWidth: PropTypes.number.isRequired,
   bodyWidth: PropTypes.number.isRequired,
   rowHeight: PropTypes.number.isRequired,
-  estimatedRowHeight: PropTypes.number,
+  estimatedRowHeight: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
   getRowHeight: PropTypes.func,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.array.isRequired,

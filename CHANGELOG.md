@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- feat: add the ability to pass function in `estimatedRowHeight` to determine the initial height of rows
+
 ## v1.11.3 (2020-08-24)
 
 - fix: remove propTypes for Column.key

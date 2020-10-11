@@ -251,3 +251,9 @@ export function removeClassName(el, className) {
     el.className = el.className.replace(new RegExp(`(?:^|\\s)${className}(?!\\S)`, 'g'), '');
   }
 }
+
+export function getEstimatedTotalRowsHeight(data, estimatedRowHeight) {
+  return typeof estimatedRowHeight === 'function'
+    ? data.reduce((height, rowData, rowIndex) => height + estimatedRowHeight({ rowData, rowIndex }), 0)
+    : data.length * estimatedRowHeight;
+}

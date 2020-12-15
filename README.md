@@ -18,7 +18,7 @@ yarn add react-base-table
 ```
 
 ## Usage
-i
+
 ```js
 import BaseTable, { Column } from 'react-base-table'
 import 'react-base-table/styles.css'

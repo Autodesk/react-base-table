@@ -25,7 +25,7 @@ import 'react-base-table/styles.css'
 // Important: if you fail to import react-base-table/styles.css then 
 // BaseTable will not render as advertised in the included examples.
 // For advanced styling see link below:
-// https://github.com/Autodesk/react-base-table/blob/master/docs/advance.md
+// https://github.com/Autodesk/react-base-table#advance
  ...
 <BaseTable data={data} width={600} height={400}>
   <Column key="col0" dataKey="col0" width={100} />
@@ -34,8 +34,6 @@ import 'react-base-table/styles.css'
 </BaseTable>
 ...
 ```
-
-
 
 Learn more at the [website](https://autodesk.github.io/react-base-table/)
 

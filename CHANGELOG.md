@@ -2,6 +2,8 @@
 
 ## NEXT VERSION
 
+- fix: change propTypes for `BaseTable.components`
+
 ## v1.12.0 (2020-10-11)
 
 - feat: add the ability to pass function in `estimatedRowHeight` to determine the initial height of rows

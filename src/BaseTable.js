@@ -1306,10 +1306,10 @@ BaseTable.propTypes = {
    * A object for the custom components, like `ExpandIcon` and `SortIndicator`
    */
   components: PropTypes.shape({
-    TableCell: PropTypes.func,
-    TableHeaderCell: PropTypes.func,
-    ExpandIcon: PropTypes.func,
-    SortIndicator: PropTypes.func,
+    TableCell: PropTypes.elementType,
+    TableHeaderCell: PropTypes.elementType,
+    ExpandIcon: PropTypes.elementType,
+    SortIndicator: PropTypes.elementType,
   }),
 };
 

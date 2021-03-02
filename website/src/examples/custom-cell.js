@@ -80,6 +80,7 @@ export default class App extends React.Component {
       width: 60,
       align: Column.Alignment.CENTER,
       sortable: false,
+      cellRenderer: ({ cellData: score }) => <Score score={score}>{score}</Score>,
     },
     {
       key: 'gender',

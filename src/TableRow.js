@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { renderElement } from './utils';
+import { isPropsShallowEqual, renderElement } from './utils';
 
 /**
  * Row component for BaseTable
  */
-class TableRow extends React.PureComponent {
+class TableRow extends React.Component {
   constructor(props) {
     super(props);
 
@@ -16,6 +16,10 @@ class TableRow extends React.PureComponent {
 
     this._setRef = this._setRef.bind(this);
     this._handleExpand = this._handleExpand.bind(this);
+  }
+
+  shouldComponentUpdate(newProps) {
+    return !isPropsShallowEqual(this.props, newProps);
   }
 
   componentDidMount() {

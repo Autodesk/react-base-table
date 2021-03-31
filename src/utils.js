@@ -62,6 +62,30 @@ export function isObjectEqual(objA, objB, ignoreFunction = true) {
   return true;
 }
 
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+export function isPropsShallowEqual(objA, objB) {
+  if (objA === objB) return true;
+  if (objA === null || objB === null) return false;
+  if (typeof objA !== 'object' || typeof objB !== 'object') return false;
+
+  const keysA = Object.keys(objA);
+  const keysB = Object.keys(objB);
+  if (keysA.length !== keysB.length) return false;
+
+  for (let i = 0; i < keysA.length; i++) {
+    const key = keysA[i];
+    const valueA = objA[key];
+    if (
+      (!hasOwnProperty.call(objB, key) || valueA !== objB[key]) &&
+      (key !== 'style' || !isObjectEqual(valueA, objB[key]))
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export function callOrReturn(funcOrValue, ...args) {
   return typeof funcOrValue === 'function' ? funcOrValue(...args) : funcOrValue;
 }

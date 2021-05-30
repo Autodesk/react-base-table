@@ -43,6 +43,7 @@ const getContainerStyle = (width, maxWidth, height) => ({
 const DEFAULT_COMPONENTS = {
   TableCell,
   TableHeaderCell,
+  TableHeaderRow,
   ExpandIcon,
   SortIndicator,
 };
@@ -426,6 +427,8 @@ class BaseTable extends React.PureComponent {
       [this._prefixClass('header-row--resizing')]: !!this.state.resizingKey,
       [this._prefixClass('header-row--customized')]: headerRenderer,
     });
+
+    const TableHeaderRow = this._getComponent('TableHeaderRow');
 
     const headerProps = {
       ...extraProps,
@@ -1308,6 +1311,7 @@ BaseTable.propTypes = {
   components: PropTypes.shape({
     TableCell: PropTypes.elementType,
     TableHeaderCell: PropTypes.elementType,
+    TableHeaderRow: PropTypes.elementType,
     ExpandIcon: PropTypes.elementType,
     SortIndicator: PropTypes.elementType,
   }),

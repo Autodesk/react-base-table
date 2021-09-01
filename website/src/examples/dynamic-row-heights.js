@@ -191,17 +191,34 @@ export default class App extends React.Component {
         >
           Add item to top
         </button>
-        <Table
-          fixed
-          selectable
-          columns={
-            !!this.state.toggle ? this.columns.slice(0, 4) : this.columns
-          }
-          estimatedRowHeight={40}
-          data={data}
-          sortBy={sortBy}
-          onColumnSort={this.onColumnSort}
+        <input
+          placeholder="Scale factor"
+          onChange={e => {
+            if (parseFloat(e.target.value)) {
+              this.setState({ scale: parseFloat(e.target.value) })
+            }
+          }}
         />
+        <div
+          style={
+            this.state.scale
+              ? { transform: `scale(${this.state.scale})` }
+              : undefined
+          }
+        >
+          <Table
+            fixed
+            selectable
+            columns={
+              !!this.state.toggle ? this.columns.slice(0, 4) : this.columns
+            }
+            estimatedRowHeight={40}
+            data={data}
+            sortBy={sortBy}
+            onColumnSort={this.onColumnSort}
+            scale={this.state.scale}
+          />
+        </div>
       </>
     )
   }

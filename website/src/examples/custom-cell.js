@@ -80,6 +80,7 @@ export default class App extends React.Component {
       width: 60,
       align: Column.Alignment.CENTER,
       sortable: false,
+      cellRenderer: ({ cellData: score }) => <Score score={score}>{score}</Score>,
     },
     {
       key: 'gender',
@@ -175,7 +176,6 @@ export default class App extends React.Component {
     return (
       <Table
         fixed
-        selectable
         columns={this.columns}
         data={data}
         sortBy={sortBy}

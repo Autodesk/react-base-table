@@ -188,7 +188,7 @@ TableRow.propTypes = {
   rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   cellRenderer: PropTypes.func,
   expandIconRenderer: PropTypes.func,
-  estimatedRowHeight: PropTypes.number,
+  estimatedRowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   getIsResetting: PropTypes.func,
   onRowHover: PropTypes.func,
   onRowExpand: PropTypes.func,

@@ -2,6 +2,45 @@
 
 ## NEXT VERSION
 
+- fix: change propTypes for `BaseTable.components`
+
+## v1.12.0 (2020-10-11)
+
+- feat: add the ability to pass function in `estimatedRowHeight` to determine the initial height of rows
+
+## v1.11.3 (2020-08-24)
+
+- fix: remove propTypes for Column.key
+
+## v1.11.2 (2020-08-18)
+
+- fix: add missing types for propTypes of `BaseTable`
+
+## v1.11.1 (2020-08-17)
+
+- fix: add types folder into packages
+- chore: mark `Column.key` as required
+
+## v1.11.0 (2020-08-17)
+
+- feat: add `ignoreFunctionInColumnCompare` to solve closure problem in renderers
+- chore: skip unnecessary cloneElement in `renderElement`
+- feat: add type declarations
+
+## v1.10.9 (2020-08-13)
+
+- fix: input loses focus on unmount
+
+## v1.10.8 (2020-08-11)
+
+- fix: scroll position would be reset to top if column becomes frozen
+
+## v1.10.7 (2020-07-28)
+
+- fix: `getTotalRowsHeight` could be different before/after render in dynamic mode on initial render
+
+## v1.10.6 (2020-07-25)
+
 - fix: `getTotalRowsHeight` could be different before/after render in dynamic mode
 
 ## v1.10.5 (2020-07-10)

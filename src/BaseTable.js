@@ -19,6 +19,7 @@ import {
   renderElement,
   normalizeColumns,
   getScrollbarSize as defaultGetScrollbarSize,
+  getEstimatedTotalRowsHeight,
   isObjectEqual,
   callOrReturn,
   hasChildren,
@@ -97,18 +98,21 @@ class BaseTable extends React.PureComponent {
       this._depthMap = {};
       return flattenOnKeys(tree, keys, this._depthMap, dataKey);
     });
-    this._resetColumnManager = memoize((columns, fixed) => {
-      this.columnManager.reset(columns, fixed);
+    this._resetColumnManager = memoize(
+      (columns, fixed) => {
+        this.columnManager.reset(columns, fixed);
 
-      if (this.props.estimatedRowHeight && fixed) {
-        if (!this.columnManager.hasLeftFrozenColumns()) {
-          this._leftRowHeightMap = {};
+        if (this.props.estimatedRowHeight && fixed) {
+          if (!this.columnManager.hasLeftFrozenColumns()) {
+            this._leftRowHeightMap = {};
+          }
+          if (!this.columnManager.hasRightFrozenColumns()) {
+            this._rightRowHeightMap = {};
+          }
         }
-        if (!this.columnManager.hasRightFrozenColumns()) {
-          this._rightRowHeightMap = {};
-        }
-      }
-    }, isObjectEqual);
+      },
+      (newArgs, lastArgs) => isObjectEqual(newArgs, lastArgs, this.props.ignoreFunctionInColumnCompare)
+    );
 
     this._isResetting = false;
     this._resetIndex = null;
@@ -117,6 +121,7 @@ class BaseTable extends React.PureComponent {
     this._mainRowHeightMap = {};
     this._leftRowHeightMap = {};
     this._rightRowHeightMap = {};
+    this._getEstimatedTotalRowsHeight = memoize(getEstimatedTotalRowsHeight);
     this._getRowHeight = this._getRowHeight.bind(this);
     this._updateRowHeights = debounce(() => {
       this._isResetting = true;
@@ -125,6 +130,7 @@ class BaseTable extends React.PureComponent {
       this._rowHeightMapBuffer = {};
       this._resetIndex = null;
       this.forceUpdateTable();
+      this.forceUpdate();
       this._isResetting = false;
     }, 0);
 
@@ -181,7 +187,9 @@ class BaseTable extends React.PureComponent {
     const { rowHeight, estimatedRowHeight } = this.props;
 
     if (estimatedRowHeight) {
-      return this.table ? this.table.getTotalRowsHeight() : this._data.length * estimatedRowHeight;
+      return this.table
+        ? this.table.getTotalRowsHeight()
+        : this._getEstimatedTotalRowsHeight(this._data, estimatedRowHeight);
     }
     return this._data.length * rowHeight;
   }
@@ -208,6 +216,9 @@ class BaseTable extends React.PureComponent {
 
   /**
    * Reset cached offsets for positioning after a specific rowIndex, should be used only in dynamic mode(estimatedRowHeight is provided)
+   *
+   * @param {number} rowIndex
+   * @param {boolean} shouldForceUpdate
    */
   resetAfterRowIndex(rowIndex = 0, shouldForceUpdate = true) {
     if (!this.props.estimatedRowHeight) return;
@@ -279,7 +290,7 @@ class BaseTable extends React.PureComponent {
    * - `center` - Center align the row within the table.
    * - `end` - Align the row to the bottom side of the table.
    * - `start` - Align the row to the top side of the table.
-
+   *
    * @param {number} rowIndex
    * @param {string} align
    */
@@ -562,6 +573,7 @@ class BaseTable extends React.PureComponent {
         ref={this._setLeftTableRef}
         data={this._data}
         columns={this.columnManager.getLeftFrozenColumns()}
+        initialScrollTop={this._scroll.scrollTop}
         width={columnsWidth + offset}
         height={containerHeight}
         headerHeight={headerHeight}
@@ -595,6 +607,7 @@ class BaseTable extends React.PureComponent {
         ref={this._setRightTableRef}
         data={this._data}
         columns={this.columnManager.getRightFrozenColumns()}
+        initialScrollTop={this._scroll.scrollTop}
         width={columnsWidth + scrollbarWidth}
         height={containerHeight}
         headerHeight={headerHeight}
@@ -708,7 +721,7 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0,
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
       [`${classPrefix}--disabled`]: disabled,
-      [`${classPrefix}--dynamic`]: estimatedRowHeight > 0,
+      [`${classPrefix}--dynamic`]: !!estimatedRowHeight,
     });
     return (
       <div ref={this._setContainerRef} className={cls} style={containerStyle}>
@@ -743,14 +756,9 @@ class BaseTable extends React.PureComponent {
     this._maybeScrollbarPresenceChange();
 
     if (estimatedRowHeight) {
-      // we have to wrap with setTimeout or we would still get the previous value,
-      // as we reset the inner components directly instead of update the table itself after row heights measured,
-      // so `componentDidUpdate` won't be invoked after that
-      setTimeout(() => {
-        if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
-          this.forceUpdate();
-        }
-      });
+      if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
+        this.forceUpdate();
+      }
     }
   }
 
@@ -782,7 +790,10 @@ class BaseTable extends React.PureComponent {
   // for dynamic row height
   _getRowHeight(rowIndex) {
     const { estimatedRowHeight, rowKey } = this.props;
-    return this._rowHeightMap[this._data[rowIndex][rowKey]] || estimatedRowHeight;
+    return (
+      this._rowHeightMap[this._data[rowIndex][rowKey]] ||
+      callOrReturn(estimatedRowHeight, { rowData: this._data[rowIndex], rowIndex })
+    );
   }
 
   _getIsResetting() {
@@ -1036,6 +1047,7 @@ BaseTable.defaultProps = {
   overscanRowCount: 1,
   onEndReachedThreshold: 500,
   getScrollbarSize: defaultGetScrollbarSize,
+  ignoreFunctionInColumnCompare: true,
 
   onScroll: noop,
   onRowsRendered: noop,
@@ -1099,8 +1111,9 @@ BaseTable.propTypes = {
   rowHeight: PropTypes.number,
   /**
    * Estimated row height, the real height will be measure dynamically according to the content
+   * The callback is of the shape of `({ rowData, rowIndex }) => number`
    */
-  estimatedRowHeight: PropTypes.number,
+  estimatedRowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   /**
    * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
    */
@@ -1283,17 +1296,21 @@ BaseTable.propTypes = {
   /**
    * A object for the row event handlers
    * Each of the keys is row event name, like `onClick`, `onDoubleClick` and etc.
-   * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => object`
+   * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => *`
    */
   rowEventHandlers: PropTypes.object,
+  /**
+   * whether to ignore function properties while comparing column definition
+   */
+  ignoreFunctionInColumnCompare: PropTypes.bool,
   /**
    * A object for the custom components, like `ExpandIcon` and `SortIndicator`
    */
   components: PropTypes.shape({
-    TableCell: PropTypes.func,
-    TableHeaderCell: PropTypes.func,
-    ExpandIcon: PropTypes.func,
-    SortIndicator: PropTypes.func,
+    TableCell: PropTypes.elementType,
+    TableHeaderCell: PropTypes.elementType,
+    ExpandIcon: PropTypes.elementType,
+    SortIndicator: PropTypes.elementType,
   }),
 
   /**

@@ -115,8 +115,13 @@ class TableRow extends React.PureComponent {
   _measureHeight(initialMeasure) {
     if (!this.ref) return;
 
-    const { style, rowKey, onRowHeightChange, rowIndex, columns } = this.props;
-    const height = this.ref.getBoundingClientRect().height;
+    const { style, rowKey, onRowHeightChange, rowIndex, columns, scale } = this.props;
+    let height = this.ref.getBoundingClientRect().height;
+
+    if (scale && scale > 0 && scale < 1) {
+      height = height / scale;
+    }
+
     this.setState({ measured: true }, () => {
       if (initialMeasure || height !== style.height)
         onRowHeightChange(rowKey, height, rowIndex, columns[0] && !columns[0].__placeholder__ && columns[0].frozen);
@@ -189,6 +194,7 @@ TableRow.propTypes = {
   onRowExpand: PropTypes.func,
   onRowHeightChange: PropTypes.func,
   tagName: PropTypes.elementType,
+  scale: PropTypes.number,
 };
 
 export default TableRow;

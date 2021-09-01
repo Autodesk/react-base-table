@@ -317,7 +317,7 @@ class BaseTable extends React.PureComponent {
   }
 
   renderRow({ isScrolling, columns, rowData, rowIndex, style }) {
-    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey, estimatedRowHeight } = this.props;
+    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey, estimatedRowHeight, scale } = this.props;
 
     const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
     const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
@@ -357,6 +357,7 @@ class BaseTable extends React.PureComponent {
       // for fixed table, we need to sync the hover state across the inner tables
       onRowHover: hasFrozenColumns ? this._handleRowHover : null,
       onRowHeightChange: hasFrozenColumns ? this._handleFrozenRowHeightChange : this._handleRowHeightChange,
+      scale,
     };
 
     return <TableRow {...rowProps} />;
@@ -1294,6 +1295,11 @@ BaseTable.propTypes = {
     ExpandIcon: PropTypes.func,
     SortIndicator: PropTypes.func,
   }),
+
+  /**
+   * Scale factor applied to a parent element
+   */
+  scale: PropTypes.number,
 };
 
 export default BaseTable;

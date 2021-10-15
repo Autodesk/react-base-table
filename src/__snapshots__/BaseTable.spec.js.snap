@@ -47,6 +47,7 @@ exports[`Table renders correctly 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -99,6 +100,7 @@ exports[`Table renders correctly 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -275,6 +277,7 @@ exports[`Table table can be set to disabled 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -327,6 +330,7 @@ exports[`Table table can be set to disabled 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -503,6 +507,7 @@ exports[`Table table can be set to fixed 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -555,6 +560,7 @@ exports[`Table table can be set to fixed 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -731,6 +737,7 @@ exports[`Table table can freeze rows 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -783,6 +790,7 @@ exports[`Table table can freeze rows 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1057,6 +1065,7 @@ exports[`Table table can hide the header 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1109,6 +1118,7 @@ exports[`Table table can hide the header 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1209,6 +1219,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1261,6 +1272,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1437,6 +1449,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1489,6 +1502,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1622,6 +1636,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1635,6 +1650,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1772,6 +1788,7 @@ exports[`Table table can receive children 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1824,6 +1841,7 @@ exports[`Table table can receive children 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2000,6 +2018,7 @@ exports[`Table table can receive className 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2052,6 +2071,7 @@ exports[`Table table can receive className 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2228,6 +2248,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2300,6 +2321,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2648,6 +2670,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2720,6 +2743,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2936,6 +2960,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3008,6 +3033,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3224,6 +3250,7 @@ exports[`Table table can receive headerClassName 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3276,6 +3303,7 @@ exports[`Table table can receive headerClassName 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3452,6 +3480,7 @@ exports[`Table table can receive headerHeight 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3504,6 +3533,7 @@ exports[`Table table can receive headerHeight 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3680,6 +3710,7 @@ exports[`Table table can receive height 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3732,6 +3763,7 @@ exports[`Table table can receive height 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3908,6 +3940,7 @@ exports[`Table table can receive rowClassName 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3960,6 +3993,7 @@ exports[`Table table can receive rowClassName 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -4136,6 +4170,7 @@ exports[`Table table can receive rowHeight 1`] = `
               "height": 30,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4188,6 +4223,7 @@ exports[`Table table can receive rowHeight 1`] = `
               "height": 30,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 30,
               "width": 100,
             }
@@ -4365,6 +4401,7 @@ exports[`Table table can receive style 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4417,6 +4454,7 @@ exports[`Table table can receive style 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -4593,6 +4631,7 @@ exports[`Table table can receive width 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4645,6 +4684,7 @@ exports[`Table table can receive width 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -4821,6 +4861,7 @@ exports[`Table table can specific a different rowKey 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4873,6 +4914,7 @@ exports[`Table table can specific a different rowKey 1`] = `
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }

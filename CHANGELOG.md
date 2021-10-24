@@ -2,7 +2,10 @@
 
 ## NEXT VERSION
 
+## v1.13.0 (2021-10-24)
+
 - fix: change propTypes for `BaseTable.components`
+- feat: add support for React 17
 
 ## v1.12.0 (2020-10-11)
 

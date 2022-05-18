@@ -2,6 +2,10 @@
 
 ## NEXT VERSION
 
+## v1.13.2 (2022-05-14)
+
+- fix: error imported by optimization render task
+
 ## v1.13.1 (2022-05-14)
 
 - fix: optimization render task performance

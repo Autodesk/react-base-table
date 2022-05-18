@@ -11,11 +11,9 @@ class TableHeader extends React.PureComponent {
   }
 
   scrollTo(offset) {
-    if (this.headerRef) {
-      requestAnimationFrame(() => {
-        this.headerRef.scrollLeft = offset;
-      });
-    }
+    requestAnimationFrame(() => {
+      if (this.headerRef) this.headerRef.scrollLeft = offset;
+    });
   }
 
   renderHeaderRow(height, index) {

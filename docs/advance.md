@@ -18,7 +18,7 @@ $column-padding: 7.5px;
 $show-frozen-rows-shadow: false;
 $show-frozen-columns-shadow: true;
 
-@import '~react-base-table/es/_BaseTable.scss';
+@import '~react-context-table/es/_BaseTable.scss';
 
 .#{$table-prefix} {
   &:not(.#{$table-prefix}--show-left-shadow) {
@@ -56,4 +56,4 @@ You can write your own styles from scratch or use CSS-in-JS solutions to achieve
 
 ## Custom renderers & props
 
-There are a lot of highly flexible props like `xxxRenderer` and `xxxProps` for you to build your own table component, please check the [api](https://autodesk.github.io/react-base-table/api) and [examples](https://autodesk.github.io/react-base-table/examples) for more details
+There are a lot of highly flexible props like `xxxRenderer` and `xxxProps` for you to build your own table component, please check the [api](https://autodesk.github.io/react-context-table/api) and [examples](https://autodesk.github.io/react-context-table/examples) for more details

@@ -1,4 +1,5 @@
 import React from 'react';
+import { isFunction } from 'lodash';
 
 export function renderElement(renderer, props) {
   if (React.isValidElement(renderer)) {
@@ -98,6 +99,10 @@ export function unflatten(array, rootId = null, dataKey = 'id', parentKey = 'par
   return tree;
 }
 
+export function getRowKey({ rowData, rowIndex, rowKey }) {
+  return isFunction(rowKey) ? rowKey(rowData, rowIndex) : rowData[rowKey];
+}
+
 export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
   if (!keys || !keys.length) return tree;
 
@@ -106,14 +111,18 @@ export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
   keys.forEach(x => keysSet.add(x));
 
   let stack = [].concat(tree);
-  stack.forEach(x => (depthMap[x[dataKey]] = 0));
+  stack.forEach((x, index) => (depthMap[getRowKey({ rowData: x, rowIndex: index, rowKey: dataKey })] = 0));
   while (stack.length > 0) {
     const item = stack.shift();
 
     array.push(item);
     if (keysSet.has(item[dataKey]) && Array.isArray(item.children) && item.children.length > 0) {
       stack = [].concat(item.children, stack);
-      item.children.forEach(x => (depthMap[x[dataKey]] = depthMap[item[dataKey]] + 1));
+      item.children.forEach(
+        (x, index) =>
+          (depthMap[getRowKey({ rowData: x, rowIndex: index, rowKey: dataKey })] =
+            depthMap[getRowKey({ rowData: item, rowIndex: index, rowKey: dataKey })] + 1)
+      );
     }
   }
 

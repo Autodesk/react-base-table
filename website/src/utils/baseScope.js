@@ -4,7 +4,7 @@ import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import * as ReactSortableHoc from 'react-sortable-hoc'
 import * as ReactOverlays from 'react-overlays'
 import ReactTexty from 'react-texty'
-import faker from 'faker';
+import faker from 'faker'
 
 import BaseTable, {
   Column,
@@ -15,8 +15,8 @@ import BaseTable, {
   unflatten,
   TableHeader as BaseTableHeader,
   TableRow as BaseTableRow,
-} from 'react-base-table'
-import BaseTableExpandIcon from 'react-base-table/ExpandIcon'
+} from 'react-context-table'
+import BaseTableExpandIcon from 'react-context-table/ExpandIcon'
 
 const generateColumns = (count = 10, prefix = 'column-', props) =>
   new Array(count).fill(0).map((column, columnIndex) => ({

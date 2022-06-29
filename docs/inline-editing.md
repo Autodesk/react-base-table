@@ -123,4 +123,4 @@ export default () => (
 
 ## Example
 
-Check the live example [here](https://autodesk.github.io/react-base-table/examples/inline-editing).
+Check the live example [here](https://autodesk.github.io/react-context-table/examples/inline-editing).

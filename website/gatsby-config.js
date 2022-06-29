@@ -1,5 +1,5 @@
 module.exports = {
-  pathPrefix: '/react-base-table',
+  pathPrefix: '/react-context-table',
   siteMetadata: {
     title: 'BaseTable',
     description: 'BaseTable website',

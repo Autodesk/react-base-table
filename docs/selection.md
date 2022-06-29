@@ -1,6 +1,6 @@
 # Selection
 
-There is a [PR](https://github.com/Autodesk/react-base-table/pull/39) to add selection feature, but I don't want to merge it with [good reasons](https://github.com/Autodesk/react-base-table/pull/39#pullrequestreview-241987600), so I'd like to share a recipe here for reference
+There is a [PR](https://github.com/Autodesk/react-context-table/pull/39) to add selection feature, but I don't want to merge it with [good reasons](https://github.com/Autodesk/react-context-table/pull/39#pullrequestreview-241987600), so I'd like to share a recipe here for reference
 
 ## Recipe
 
@@ -155,4 +155,4 @@ SelectableTable.defaultProps = {
 
 ## Example
 
-Check the live example [here](https://autodesk.github.io/react-base-table/examples/selection).
+Check the live example [here](https://autodesk.github.io/react-context-table/examples/selection).

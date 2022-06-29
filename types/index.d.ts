@@ -1,4 +1,4 @@
-declare module 'react-base-table' {
+declare module 'react-context-table' {
   export type SortOrder = 'asc' | 'desc';
 
   export type Alignment = 'left' | 'right' | 'center';

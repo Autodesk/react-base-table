@@ -70,7 +70,7 @@ export default () => (
       <StyledLink to="/api">API</StyledLink>
       <StyledLink to="/examples">Examples</StyledLink>
       <ExternalLink
-        href="https://autodesk.github.io/react-base-table/"
+        href="https://autodesk.github.io/react-context-table/"
         rel="noopener noreferrer"
         target="_blank"
       >

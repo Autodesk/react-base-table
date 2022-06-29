@@ -1,6 +1,6 @@
 {
-  "name": "react-base-table",
-  "version": "1.13.2",
+  "name": "react-context-table",
+  "version": "1.0.0",
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Autodesk/react-base-table.git"
+    "url": "https://github.com/yuennx/react-base-table.git"
   },
   "scripts": {
     "start": "cd website && npm start",
@@ -82,12 +82,16 @@
     "jest": "^23.5.0",
     "lerna": "^3.2.1",
     "lint-staged": "^7.2.2",
-    "node-sass": "^4.9.3",
+    "node-sass": "^7.0.1",
     "prettier": "^1.14.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
     "rimraf": "^2.6.2"
+  },
+  "resolutions": {
+    "remark-mdx": "2.0.0-next.4",
+    "remark-mdxjs": "2.0.0-next.4"
   },
   "jest": {
     "roots": [

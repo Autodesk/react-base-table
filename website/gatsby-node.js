@@ -12,9 +12,12 @@ exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
     components: path.resolve(__dirname, 'src/components'),
     utils: path.resolve(__dirname, 'src/utils'),
     siteConfig: path.resolve(__dirname, 'siteConfig'),
-    'react-base-table/package.json': path.resolve(__dirname, '../package.json'),
-    'react-base-table/styles.css': path.resolve(__dirname, '../styles.css'),
-    'react-base-table': path.resolve(__dirname, '../src'),
+    'react-context-table/package.json': path.resolve(
+      __dirname,
+      '../package.json'
+    ),
+    'react-context-table/styles.css': path.resolve(__dirname, '../styles.css'),
+    'react-context-table': path.resolve(__dirname, '../src'),
   }
 
   actions.replaceWebpackConfig(config)

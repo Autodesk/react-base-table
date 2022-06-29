@@ -1,12 +1,12 @@
-# react-base-table
+# react-context-table
 
-[BaseTable website](https://autodesk.github.io/react-base-table/)
+[BaseTable website](https://autodesk.github.io/react-context-table/)
 
 ## Start
 
 ```bash
-git clone https://github.com/Autodesk/react-base-table.git
-cd react-base-table
+git clone https://github.com/Autodesk/react-context-table.git
+cd react-context-table
 cd website
 yarn # install dependencies
 ```

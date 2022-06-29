@@ -7,7 +7,7 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 
 import '../styles/index.css'
-import 'react-base-table/styles.css'
+import 'react-context-table/styles.css'
 
 const pageMixin = css`
   margin: 0 auto;

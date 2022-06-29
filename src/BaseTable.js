@@ -29,6 +29,7 @@ import {
   throttle,
   debounce,
   noop,
+  getRowKey,
 } from './utils';
 
 const getColumns = memoize((columns, children) => columns || normalizeColumns(children));
@@ -317,10 +318,15 @@ class BaseTable extends React.PureComponent {
 
   renderExpandIcon({ rowData, rowIndex, depth, onExpand }) {
     const { rowKey, expandColumnKey, expandIconProps } = this.props;
+    const _rowKey = getRowKey({
+      rowData,
+      rowIndex,
+      rowKey,
+    });
     if (!expandColumnKey) return null;
 
     const expandable = rowIndex >= 0 && hasChildren(rowData);
-    const expanded = rowIndex >= 0 && this.getExpandedRowKeys().indexOf(rowData[rowKey]) >= 0;
+    const expanded = rowIndex >= 0 && this.getExpandedRowKeys().indexOf(_rowKey) >= 0;
     const extraProps = callOrReturn(expandIconProps, { rowData, rowIndex, depth, expandable, expanded });
     const ExpandIcon = this._getComponent('ExpandIcon');
 
@@ -332,7 +338,11 @@ class BaseTable extends React.PureComponent {
 
     const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
     const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
-    const rowKey = rowData[this.props.rowKey];
+    const rowKey = getRowKey({
+      rowData,
+      rowIndex,
+      rowKey: this.props.rowKey,
+    });
     const depth = this._depthMap[rowKey] || 0;
 
     const className = cn(this._prefixClass('row'), rowClass, {
@@ -374,10 +384,15 @@ class BaseTable extends React.PureComponent {
   }
 
   renderRowCell({ isScrolling, columns, column, columnIndex, rowData, rowIndex, expandIcon }) {
+    const rowKey = getRowKey({
+      rowData,
+      rowIndex,
+      rowKey: this.props.rowKey,
+    });
     if (column[ColumnManager.PlaceholderKey]) {
       return (
         <div
-          key={`row-${rowData[this.props.rowKey]}-cell-${column.key}-placeholder`}
+          key={`row-${rowKey}-cell-${column.key}-placeholder`}
           className={this._prefixClass('row-cell-placeholder')}
           style={this.columnManager.getColumnStyle(column.key)}
         />
@@ -402,10 +417,11 @@ class BaseTable extends React.PureComponent {
     const extraProps = callOrReturn(this.props.cellProps, { columns, column, columnIndex, rowData, rowIndex });
     const { tagName, ...rest } = extraProps || {};
     const Tag = tagName || 'div';
+
     return (
       <Tag
         role="gridcell"
-        key={`row-${rowData[this.props.rowKey]}-cell-${column.key}`}
+        key={`row-${rowKey}-cell-${column.key}`}
         {...rest}
         className={cls}
         style={this.columnManager.getColumnStyle(column.key)}
@@ -788,7 +804,12 @@ class BaseTable extends React.PureComponent {
 
   // for dynamic row height
   _getRowHeight(rowIndex) {
-    const { estimatedRowHeight, rowKey } = this.props;
+    const { estimatedRowHeight } = this.props;
+    const rowKey = getRowKey({
+      rowData: this._data[rowIndex],
+      rowIndex,
+      rowKey: this.props.rowKey,
+    });
     return (
       this._rowHeightMap[this._data[rowIndex][rowKey]] ||
       callOrReturn(estimatedRowHeight, { rowData: this._data[rowIndex], rowIndex })
@@ -945,6 +966,7 @@ class BaseTable extends React.PureComponent {
   }
 
   _handleRowExpand({ expanded, rowData, rowIndex, rowKey }) {
+    // console.log('_handleRowExpand', rowKey);
     const expandedRowKeys = cloneArray(this.getExpandedRowKeys());
     if (expanded) {
       if (!expandedRowKeys.indexOf(rowKey) >= 0) expandedRowKeys.push(rowKey);
@@ -1090,7 +1112,7 @@ BaseTable.propTypes = {
   /**
    * The key field of each data item
    */
-  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]).isRequired,
   /**
    * The width of the table
    */

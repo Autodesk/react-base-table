@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
-import pkg from 'react-base-table/package.json'
+import pkg from 'react-context-table/package.json'
 
 import linkIcon from 'assets/mark-github.svg'
 
@@ -79,7 +79,7 @@ const Header = ({ pathname }) => {
       <Nav>
         <Title to="/">BaseTable</Title>
         <Version
-          href="https://github.com/Autodesk/react-base-table/blob/master/CHANGELOG.md"
+          href="https://github.com/Autodesk/react-context-table/blob/master/CHANGELOG.md"
           target="_blank"
         >
           v{pkg.version}

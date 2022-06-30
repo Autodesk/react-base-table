@@ -78,7 +78,7 @@ class TableRow extends React.PureComponent {
     if (rowRenderer) {
       cells = renderElement(rowRenderer, { isScrolling, cells, columns, rowData, rowIndex, depth });
     }
-
+    // console.log('cells', cells);
     const eventHandlers = this._getEventHandlers(rowEventHandlers);
 
     if (estimatedRowHeight && rowIndex >= 0) {
@@ -126,10 +126,10 @@ class TableRow extends React.PureComponent {
   _getEventHandlers(handlers = {}) {
     const { rowData, rowIndex, rowKey, onRowHover } = this.props;
     const eventHandlers = {};
-    Object.keys(handlers).forEach(eventKey => {
+    Object.keys(handlers).forEach((eventKey) => {
       const callback = handlers[eventKey];
       if (typeof callback === 'function') {
-        eventHandlers[eventKey] = event => {
+        eventHandlers[eventKey] = (event) => {
           callback({ rowData, rowIndex, rowKey, event });
         };
       }
@@ -137,7 +137,7 @@ class TableRow extends React.PureComponent {
 
     if (onRowHover) {
       const mouseEnterHandler = eventHandlers['onMouseEnter'];
-      eventHandlers['onMouseEnter'] = event => {
+      eventHandlers['onMouseEnter'] = (event) => {
         onRowHover({
           hovered: true,
           rowData,
@@ -149,7 +149,7 @@ class TableRow extends React.PureComponent {
       };
 
       const mouseLeaveHandler = eventHandlers['onMouseLeave'];
-      eventHandlers['onMouseLeave'] = event => {
+      eventHandlers['onMouseLeave'] = (event) => {
         onRowHover({
           hovered: false,
           rowData,

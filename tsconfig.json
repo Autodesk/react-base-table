@@ -1,0 +1,59 @@
+{
+  "compilerOptions": {
+    "outDir": "build/dist",
+    "module": "esnext",
+    "target": "es5",
+    "downlevelIteration": true,
+    "lib": [
+      "es6",
+      "dom",
+      "es2019"
+    ],
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "noFallthroughCasesInSwitch": true
+  },
+  "paths": {
+    "@src/*": [
+      "src/*"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "config-overrides.js",
+    "build",
+    "scripts",
+    "es",
+    "docs",
+    "lib",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "README.md",
+    "CHANGELOG.md",
+    "src/setupTests.ts",
+    "src/utils/*",
+    "src/libs/*",
+    "src/setupProxy.js",
+    "src/setupProxy.ts",
+    "src/version.ts",
+    "tools/version.js",
+    "t.cjs"
+  ],
+  "include": [
+    "src"
+  ]
+}

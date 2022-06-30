@@ -1,7 +1,17 @@
 {
-  "extends": ["react-app", "plugin:prettier/recommended", "prettier"],
-  "plugins": ["prettier"],
+  "extends": [
+    "react-app",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
-    "react/prop-types": 2
+    "react/prop-types": 2,
+    "indent": [
+      "error",
+      4
+    ]
   }
 }

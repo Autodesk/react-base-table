@@ -4,3 +4,4 @@ website/
 node_modules/
 package-lock.json
 yarn.lock
+/**/*.d.ts

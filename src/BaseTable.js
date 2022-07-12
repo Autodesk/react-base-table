@@ -330,7 +330,14 @@ class BaseTable extends React.PureComponent {
         const ExpandIcon = this._getComponent('ExpandIcon');
 
         return (
-            <ExpandIcon depth={depth} expandable={expandable} expanded={expanded} {...extraProps} onExpand={onExpand} />
+            <ExpandIcon
+                key={_rowKey}
+                depth={depth}
+                expandable={expandable}
+                expanded={expanded}
+                {...extraProps}
+                onExpand={onExpand}
+            />
         );
     }
 
@@ -412,10 +419,37 @@ class BaseTable extends React.PureComponent {
         //     cellProps
         // );
         // console.log('cellData', cellData, dataKey);
-        const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, {
-            ...cellProps,
-            cellData: (render && render(rowData[dataKey], rowData, rowIndex)) || cellData
-        });
+        // const cell = renderElement(
+        //     cellRenderer || (
+        //         <TableCell key={`row-${rowKey}-cell-${column.key}`} className={this._prefixClass('row-cell-text')} />
+        //     ),
+        //     {
+        //         ...cellProps,
+        //         cellData: (render && render(rowData[dataKey], rowData, rowIndex)) || cellData
+        //     }
+        // );
+        // let cell = render
+        //     ? render(rowData[dataKey], rowData, rowIndex)
+        //     : renderElement(
+        //           cellRenderer || (
+        //               <TableCell
+        //                   key={`row-${rowKey}-cell-${column.key}`}
+        //                   className={this._prefixClass('row-cell-text')}
+        //               />
+        //           ),
+        //           {
+        //               ellProps
+        //           }
+        //       );
+        let cell;
+        if (render) {
+            cell = render(rowData[dataKey], rowData, rowIndex);
+        } else {
+            cell = renderElement(
+                cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />,
+                cellProps
+            );
+        }
 
         const cellCls = callOrReturn(className, { cellData, columns, column, columnIndex, rowData, rowIndex });
         const cls = cn(this._prefixClass('row-cell'), cellCls, {
@@ -426,7 +460,6 @@ class BaseTable extends React.PureComponent {
         const extraProps = callOrReturn(this.props.cellProps, { columns, column, columnIndex, rowData, rowIndex });
         const { tagName, ...rest } = extraProps || {};
         const Tag = tagName || 'div';
-
         return (
             <Tag
                 role="gridcell"
@@ -560,6 +593,7 @@ class BaseTable extends React.PureComponent {
             <GridTable
                 {...rest}
                 {...this.state}
+                key="main"
                 className={this._prefixClass('table-main')}
                 ref={this._setMainTableRef}
                 data={this._data}
@@ -782,7 +816,7 @@ class BaseTable extends React.PureComponent {
         this._maybeScrollbarPresenceChange();
 
         if (estimatedRowHeight) {
-            console.log('componentDidUpdate5', this.getTotalRowsHeight(), this._totalRowsHeight);
+            // console.log('componentDidUpdate5', this.getTotalRowsHeight(), this._totalRowsHeight);
             if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
                 this.forceUpdate();
             }

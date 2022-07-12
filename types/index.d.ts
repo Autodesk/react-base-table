@@ -1,11 +1,13 @@
-declare module "react-context-table" {
-    export type SortOrder = "asc" | "desc";
+declare module 'react-context-table' {
+    export type SortOrder = 'asc' | 'desc';
 
-    export type Alignment = "left" | "right" | "center";
+    export type Alignment = 'left' | 'right' | 'center';
 
-    export type FrozenDirection = "left" | "right" | true | false;
+    export type FrozenDirection = 'left' | 'right' | true | false;
 
-    export type RowKey = string | number;
+    export type rowKeyFunc = (d: any, index: number) => string | number;
+
+    export type RowKey = string | number | rowKeyFunc;
 
     export type Size = { width: number; height: number };
 
@@ -144,13 +146,13 @@ declare module "react-context-table" {
 
     export class Column<T = unknown> extends React.Component<ColumnShape<T>> {
         static readonly Alignment: {
-            readonly LEFT: "left";
-            readonly CENTER: "center";
-            readonly RIGHT: "right";
+            readonly LEFT: 'left';
+            readonly CENTER: 'center';
+            readonly RIGHT: 'right';
         };
         static readonly FrozenDirection: {
-            readonly LEFT: "left";
-            readonly RIGHT: "right";
+            readonly LEFT: 'left';
+            readonly RIGHT: 'right';
             readonly DEFAULT: true;
             readonly NONE: false;
         };
@@ -444,8 +446,8 @@ declare module "react-context-table" {
         onScroll?: (args: {
             scrollLeft: number;
             scrollTop: number;
-            horizontalScrollDirection: "forward" | "backward";
-            verticalScrollDirection: "forward" | "backward";
+            horizontalScrollDirection: 'forward' | 'backward';
+            verticalScrollDirection: 'forward' | 'backward';
             scrollUpdateWasRequested: boolean;
         }) => void;
         /**
@@ -531,7 +533,7 @@ declare module "react-context-table" {
 
     export default class BaseTable<T = unknown> extends React.Component<BaseTableProps<T>, any> {
         static readonly Column: typeof Column;
-        static readonly PlaceholderKey = "__placeholder__";
+        static readonly PlaceholderKey = '__placeholder__';
         static defaultProps: Partial<BaseTableProps>;
         static propTypes: React.WeakValidationMap<BaseTableProps>;
 
@@ -553,7 +555,7 @@ declare module "react-context-table" {
         getExpandedState(): {
             expandedData: T[];
             expandedRowKeys: RowKey[];
-            expandedDepthMap: { [key in RowKey]: number };
+            expandedDepthMap: { [key: string | number]: number };
         };
         /**
          * Get the total height of all rows, including expanded rows.
@@ -603,7 +605,7 @@ declare module "react-context-table" {
          * - `end` - Align the row to the bottom side of the table.
          * - `start` - Align the row to the top side of the table.
          */
-        scrollToRow(rowIndex?: number, align?: "auto" | "smart" | "center" | "end" | "start"): void;
+        scrollToRow(rowIndex?: number, align?: 'auto' | 'smart' | 'center' | 'end' | 'start'): void;
         /**
          * Set `expandedRowKeys` manually.
          * This method is available only if `expandedRowKeys` is uncontrolled.
@@ -661,7 +663,7 @@ declare module "react-context-table" {
     export function flattenOnKeys<T = any>(
         tree: T[],
         keys?: RowKey[],
-        depthMap?: { [key in RowKey]: number },
+        depthMap?: { [key in string | number]: number },
         dataKey?: string
     ): T[];
 

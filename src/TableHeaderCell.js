@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 const TableHeaderCell = ({ className, column, columnIndex }) => <div className={className}>{column.title}</div>;
 
 TableHeaderCell.propTypes = {
-  className: PropTypes.string,
-  column: PropTypes.object,
-  columnIndex: PropTypes.number,
+    className: PropTypes.string,
+    column: PropTypes.object,
+    columnIndex: PropTypes.number
 };
 
 export default TableHeaderCell;

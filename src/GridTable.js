@@ -5,7 +5,7 @@ import { FixedSizeGrid, VariableSizeGrid } from 'react-window';
 import memoize from 'memoize-one';
 
 import Header from './TableHeader';
-import { getEstimatedTotalRowsHeight } from './utils';
+import { getEstimatedTotalRowsHeight, getRowKey } from './utils';
 
 /**
  * A wrapper of the Grid for internal only
@@ -167,8 +167,13 @@ class GridTable extends React.PureComponent {
     }
 
     _itemKey({ rowIndex }) {
-        const { data, rowKey } = this.props;
-        return data[rowIndex][rowKey];
+        const { data } = this.props;
+        const rowKey = getRowKey({
+            rowData: data[rowIndex],
+            rowIndex,
+            rowKey: this.props.rowKey
+        });
+        return rowKey;
     }
 
     _getHeaderHeight() {
@@ -208,7 +213,7 @@ GridTable.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     data: PropTypes.array.isRequired,
     frozenData: PropTypes.array,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]).isRequired,
     useIsScrolling: PropTypes.bool,
     overscanRowCount: PropTypes.number,
     hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

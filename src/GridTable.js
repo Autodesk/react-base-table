@@ -5,6 +5,7 @@ import { FixedSizeGrid, VariableSizeGrid } from 'react-window';
 import memoize from 'memoize-one';
 
 import Header from './TableHeader';
+import Footer from './TableFooter';
 import { getEstimatedTotalRowsHeight, getRowKey } from './utils';
 
 /**
@@ -15,6 +16,7 @@ class GridTable extends React.PureComponent {
         super(props);
 
         this._setHeaderRef = this._setHeaderRef.bind(this);
+        this._setFooterRef = this._setFooterRef.bind(this);
         this._setBodyRef = this._setBodyRef.bind(this);
         this._setInnerRef = this._setInnerRef.bind(this);
         this._itemKey = this._itemKey.bind(this);
@@ -36,11 +38,13 @@ class GridTable extends React.PureComponent {
 
     forceUpdateTable() {
         this.headerRef && this.headerRef.forceUpdate();
+        this.footerRef && this.footerRef.forceUpdate();
         this.bodyRef && this.bodyRef.forceUpdate();
     }
 
     scrollToPosition(args) {
         this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
+        this.footerRef && this.footerRef.scrollTo(args.scrollLeft);
         this.bodyRef && this.bodyRef.scrollTo(args);
     }
 
@@ -50,6 +54,7 @@ class GridTable extends React.PureComponent {
 
     scrollToLeft(scrollLeft) {
         this.headerRef && this.headerRef.scrollTo(scrollLeft);
+        this.footerRef && this.footerRef.scrollTo(scrollLeft);
         this.bodyRef && this.bodyRef.scrollToPosition({ scrollLeft });
     }
 
@@ -82,6 +87,7 @@ class GridTable extends React.PureComponent {
             className,
             data,
             frozenData,
+            frozenFooterData,
             width,
             height,
             rowHeight,
@@ -101,13 +107,36 @@ class GridTable extends React.PureComponent {
         const headerHeight = this._getHeaderHeight();
         const frozenRowCount = frozenData.length;
         const frozenRowsHeight = rowHeight * frozenRowCount;
+        const frozenFooterRowCount = frozenFooterData.length || 0;
+        const frozenFooterRowsHeight = rowHeight * frozenFooterRowCount;
         const cls = cn(`${classPrefix}__table`, className);
         const containerProps = containerStyle ? { style: containerStyle } : null;
         const Grid = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
 
         this._resetColumnWidthCache(bodyWidth);
+        console.log(
+            'frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0',
+            frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0
+        );
         return (
             <div role="table" className={cls} {...containerProps}>
+                {frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0 && (
+                    <Footer
+                        {...rest}
+                        className={`${classPrefix}__footer`}
+                        ref={this._setFooterRef}
+                        data={data}
+                        frozenData={frozenFooterData}
+                        width={width}
+                        height={frozenFooterRowsHeight}
+                        rowWidth={headerWidth}
+                        rowHeight={rowHeight}
+                        footerHeight={this.props.headerHeight}
+                        footerRenderer={this.props.footerRenderer}
+                        rowRenderer={this.props.rowRenderer}
+                        hoveredRowKey={frozenFooterRowCount > 0 ? hoveredRowKey : null}
+                    />
+                )}
                 <Grid
                     {...rest}
                     className={`${classPrefix}__body`}
@@ -117,7 +146,7 @@ class GridTable extends React.PureComponent {
                     data={data}
                     frozenData={frozenData}
                     width={width}
-                    height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
+                    height={Math.max(height - headerHeight - frozenRowsHeight - frozenFooterRowsHeight, 0)}
                     rowHeight={estimatedRowHeight ? getRowHeight : rowHeight}
                     estimatedRowHeight={typeof estimatedRowHeight === 'function' ? undefined : estimatedRowHeight}
                     rowCount={data.length}
@@ -156,6 +185,9 @@ class GridTable extends React.PureComponent {
 
     _setHeaderRef(ref) {
         this.headerRef = ref;
+    }
+    _setFooterRef(ref) {
+        this.footerRef = ref;
     }
 
     _setBodyRef(ref) {
@@ -213,6 +245,7 @@ GridTable.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     data: PropTypes.array.isRequired,
     frozenData: PropTypes.array,
+    frozenFooterData: PropTypes.array,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]).isRequired,
     useIsScrolling: PropTypes.bool,
     overscanRowCount: PropTypes.number,
@@ -222,6 +255,7 @@ GridTable.propTypes = {
     onScroll: PropTypes.func,
     onRowsRendered: PropTypes.func,
     headerRenderer: PropTypes.func.isRequired,
+    footerRenderer: PropTypes.func.isRequired,
     rowRenderer: PropTypes.func.isRequired
 };
 

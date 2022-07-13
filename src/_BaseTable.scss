@@ -3,7 +3,9 @@ $table-prefix: BaseTable !default;
 @mixin table-edge-padding($padding-left: null, $padding-right: null) {
   .#{$table-prefix} {
     &__header-cell,
-    &__row-cell {
+    &__row-cell, 
+    &__footer-cell
+    {
       @if $padding-left != null {
         &:first-child {
           padding-left: $padding-left;
@@ -81,6 +83,9 @@ $table-prefix: BaseTable !default;
       .#{$table-prefix}__header {
         box-shadow: 0 $box-shadow-offset $box-shadow-blur 0 $box-shadow-color;
       }
+      .#{$table-prefix}__footer {
+        box-shadow: 0 $box-shadow-offset $box-shadow-blur 0 $box-shadow-color;
+      }
     }
   }
 
@@ -101,11 +106,15 @@ $table-prefix: BaseTable !default;
       .#{$table-prefix}__header {
         background-color: $header-background-color;
       }
+      .#{$table-prefix}__footer {
+        background-color: $header-background-color;
+      }
     }
 
     &-frozen-left,
     &-frozen-right {
       .#{$table-prefix}__header,
+      .#{$table-prefix}__footer,
       .#{$table-prefix}__body {
         overflow: hidden !important;
       }
@@ -120,6 +129,7 @@ $table-prefix: BaseTable !default;
       left: 0;
 
       .#{$table-prefix}__header-row,
+      .#{$table-prefix}__footer-row,
       .#{$table-prefix}__row {
         padding-right: 0 !important;
       }
@@ -138,6 +148,7 @@ $table-prefix: BaseTable !default;
       right: 0;
 
       .#{$table-prefix}__header-row,
+      .#{$table-prefix}__footer-row,
       .#{$table-prefix}__row {
         padding-left: 0 !important;
       }
@@ -151,8 +162,12 @@ $table-prefix: BaseTable !default;
   &__header {
     overflow: hidden !important;
   }
+  &__footer {
+    overflow: hidden !important;
+  }
 
   .#{$table-prefix}__header,
+  .#{$table-prefix}__footer,
   .#{$table-prefix}__body {
     outline: none;
   }
@@ -164,8 +179,19 @@ $table-prefix: BaseTable !default;
     border-bottom: $border;
     box-sizing: border-box;
   }
+  &__footer-row {
+    display: flex;
+    align-items: center;
+    border-top: $border;
+    box-sizing: border-box;
+  }
 
   &__header-row {
+    background-color: $header-background-color;
+    font-weight: $header-font-weight;
+  }
+
+  &__footer-row {
     background-color: $header-background-color;
     font-weight: $header-font-weight;
   }
@@ -184,6 +210,7 @@ $table-prefix: BaseTable !default;
   }
 
   &__header-cell,
+  &__footer-cell,
   &__row-cell {
     min-width: 0;
     height: 100%;
@@ -203,7 +230,7 @@ $table-prefix: BaseTable !default;
     }
   }
 
-  &__header-cell {
+  &__header-cell, &__footer-cell {
     position: relative;
     cursor: default;
 
@@ -229,6 +256,12 @@ $table-prefix: BaseTable !default;
       }
 
       &:not(.#{$table-prefix}__header-cell--sorting):hover {
+        .#{$table-prefix}__sort-indicator {
+          display: block;
+          color: $sort-indicator-hovered-color;
+        }
+      }
+      &:not(.#{$table-prefix}__footer-cell--sorting):hover {
         .#{$table-prefix}__sort-indicator {
           display: block;
           color: $sort-indicator-hovered-color;
@@ -277,6 +310,24 @@ $table-prefix: BaseTable !default;
       }
 
       &:not(.#{$table-prefix}__header-cell--resizing) {
+        .#{$table-prefix}__column-resizer {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+  &__footer-row--resizing {
+    .#{$table-prefix}__footer-cell {
+      background-color: transparent;
+      cursor: col-resize;
+
+      &:not(.#{$table-prefix}__footer-cell--sorting) {
+        .#{$table-prefix}__sort-indicator {
+          display: none;
+        }
+      }
+
+      &:not(.#{$table-prefix}__footer-cell--resizing) {
         .#{$table-prefix}__column-resizer {
           visibility: hidden;
         }

@@ -79,6 +79,8 @@ class BaseTable extends React.PureComponent {
         this.renderRow = this.renderRow.bind(this);
         this.renderRowCell = this.renderRowCell.bind(this);
         this.renderHeader = this.renderHeader.bind(this);
+        this.renderFooter = this.renderFooter.bind(this);
+        this.renderRowFooter = this.renderRowFooter.bind(this);
         this.renderHeaderCell = this.renderHeaderCell.bind(this);
 
         this._handleScroll = this._handleScroll.bind(this);
@@ -502,6 +504,34 @@ class BaseTable extends React.PureComponent {
         return <TableHeaderRow {...headerProps} />;
     }
 
+    renderRowFooter({ columns, headerIndex, style }) {
+        const { headerClassName, headerRenderer } = this.props;
+
+        const headerClass = callOrReturn(headerClassName, { columns, headerIndex });
+        const extraProps = callOrReturn(this.props.headerProps, { columns, headerIndex });
+
+        const className = cn(this._prefixClass('header-row'), headerClass, {
+            [this._prefixClass('header-row--resizing')]: !!this.state.resizingKey,
+            [this._prefixClass('header-row--customized')]: headerRenderer
+        });
+
+        const headerProps = {
+            ...extraProps,
+            role: 'row',
+            key: `header-${headerIndex}`,
+            className,
+            style,
+            columns,
+            headerIndex,
+            headerRenderer,
+            cellRenderer: this.renderHeaderCell,
+            expandColumnKey: this.props.expandColumnKey,
+            expandIcon: this._getComponent('ExpandIcon')
+        };
+
+        return <TableHeaderRow {...headerProps} />;
+    }
+
     renderHeaderCell({ columns, column, columnIndex, headerIndex, expandIcon }) {
         if (column[ColumnManager.PlaceholderKey]) {
             return (
@@ -607,6 +637,7 @@ class BaseTable extends React.PureComponent {
                 headerWidth={tableWidth + (fixed ? this._verticalScrollbarSize : 0)}
                 bodyWidth={tableWidth}
                 headerRenderer={this.renderHeader}
+                footerRenderer={this.renderRowFooter}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleScroll}
                 onRowsRendered={this._handleRowsRendered}
@@ -641,6 +672,7 @@ class BaseTable extends React.PureComponent {
                 headerWidth={columnsWidth + offset}
                 bodyWidth={columnsWidth + offset}
                 headerRenderer={this.renderHeader}
+                footerRenderer={this.renderRowFooter}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleVerticalScroll}
                 onRowsRendered={noop}
@@ -675,6 +707,7 @@ class BaseTable extends React.PureComponent {
                 headerWidth={columnsWidth + scrollbarWidth}
                 bodyWidth={columnsWidth}
                 headerRenderer={this.renderHeader}
+                footerRenderer={this.renderRowFooter}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleVerticalScroll}
                 onRowsRendered={noop}
@@ -749,6 +782,7 @@ class BaseTable extends React.PureComponent {
             fixed,
             data,
             frozenData,
+            frozenFooterData,
             expandColumnKey,
             disabled,
             className,
@@ -778,7 +812,7 @@ class BaseTable extends React.PureComponent {
             [`${classPrefix}--fixed`]: fixed,
             [`${classPrefix}--expandable`]: !!expandColumnKey,
             [`${classPrefix}--empty`]: data.length === 0,
-            [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0,
+            [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0 || frozenFooterData.length > 0,
             [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
             [`${classPrefix}--disabled`]: disabled,
             [`${classPrefix}--dynamic`]: !!estimatedRowHeight
@@ -875,8 +909,8 @@ class BaseTable extends React.PureComponent {
     }
 
     _getFrozenRowsHeight() {
-        const { frozenData, rowHeight } = this.props;
-        return frozenData.length * rowHeight;
+        const { frozenData, frozenFooterData, rowHeight } = this.props;
+        return frozenData.length * rowHeight + frozenFooterData.length * rowHeight;
     }
 
     _getTableHeight() {
@@ -1104,6 +1138,7 @@ BaseTable.defaultProps = {
     rowKey: 'id',
     data: [],
     frozenData: [],
+    frozenFooterData: [],
     fixed: false,
     headerHeight: 50,
     rowHeight: 50,
@@ -1155,6 +1190,7 @@ BaseTable.propTypes = {
      * The data be frozen to top, `rowIndex` is negative and started from `-1`
      */
     frozenData: PropTypes.array,
+    frozenFooterData: PropTypes.array,
     /**
      * The key field of each data item
      */

@@ -5,23 +5,14 @@ class TableFooter extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.renderHeaderRow = this.renderHeaderRow.bind(this);
         this.renderFrozenRow = this.renderFrozenRow.bind(this);
         this._setRef = this._setRef.bind(this);
     }
 
     scrollTo(offset) {
         requestAnimationFrame(() => {
-            if (this.headerRef) this.headerRef.scrollLeft = offset;
+            if (this.footerRef) this.footerRef.scrollLeft = offset;
         });
-    }
-
-    renderHeaderRow(height, index) {
-        const { columns, footerRenderer } = this.props;
-        if (height <= 0) return null;
-
-        const style = { width: '100%', height };
-        return footerRenderer({ style, columns, headerIndex: index });
     }
 
     renderFrozenRow(rowData, index) {
@@ -59,7 +50,7 @@ class TableFooter extends React.PureComponent {
     }
 
     _setRef(ref) {
-        this.headerRef = ref;
+        this.footerRef = ref;
     }
 }
 
@@ -73,7 +64,6 @@ TableFooter.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     data: PropTypes.array.isRequired,
     frozenData: PropTypes.array,
-    footerRenderer: PropTypes.func.isRequired,
     rowRenderer: PropTypes.func.isRequired
 };
 

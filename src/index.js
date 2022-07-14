@@ -7,13 +7,13 @@ export { default as TableHeader } from './TableHeader';
 export { default as TableRow } from './TableRow';
 
 export {
-  renderElement,
-  normalizeColumns,
-  isObjectEqual,
-  callOrReturn,
-  hasChildren,
-  unflatten,
-  flattenOnKeys,
-  getScrollbarSize,
-  getValue,
+    renderElement,
+    normalizeColumns,
+    isObjectEqual,
+    callOrReturn,
+    hasChildren,
+    unflatten,
+    flattenOnKeys,
+    getScrollbarSize,
+    getValue
 } from './utils';

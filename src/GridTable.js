@@ -114,10 +114,10 @@ class GridTable extends React.PureComponent {
         const Grid = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
 
         this._resetColumnWidthCache(bodyWidth);
-        console.log(
-            'frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0',
-            frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0
-        );
+        // console.log(
+        //     'frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0',
+        //     frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0
+        // );
         return (
             <div role="table" className={cls} {...containerProps}>
                 {frozenFooterRowsHeight > 0 && frozenFooterRowCount > 0 && (
@@ -132,7 +132,6 @@ class GridTable extends React.PureComponent {
                         rowWidth={headerWidth}
                         rowHeight={rowHeight}
                         footerHeight={this.props.headerHeight}
-                        footerRenderer={this.props.footerRenderer}
                         rowRenderer={this.props.rowRenderer}
                         hoveredRowKey={frozenFooterRowCount > 0 ? hoveredRowKey : null}
                     />
@@ -255,7 +254,6 @@ GridTable.propTypes = {
     onScroll: PropTypes.func,
     onRowsRendered: PropTypes.func,
     headerRenderer: PropTypes.func.isRequired,
-    footerRenderer: PropTypes.func.isRequired,
     rowRenderer: PropTypes.func.isRequired
 };
 

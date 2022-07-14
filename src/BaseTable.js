@@ -80,7 +80,6 @@ class BaseTable extends React.PureComponent {
         this.renderRowCell = this.renderRowCell.bind(this);
         this.renderHeader = this.renderHeader.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
-        this.renderRowFooter = this.renderRowFooter.bind(this);
         this.renderHeaderCell = this.renderHeaderCell.bind(this);
 
         this._handleScroll = this._handleScroll.bind(this);
@@ -443,15 +442,19 @@ class BaseTable extends React.PureComponent {
         //               ellProps
         //           }
         //       );
-        let cell;
-        if (render) {
-            cell = render(rowData[dataKey], rowData, rowIndex);
-        } else {
-            cell = renderElement(
-                cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />,
-                cellProps
-            );
-        }
+        // let cell;
+        // if (render) {
+        //     cell = render(rowData[dataKey], rowData, rowIndex);
+        // } else {
+        //     cell = renderElement(
+        //         cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />,
+        //         cellProps
+        //     );
+        // }
+        const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, {
+            ...cellProps,
+            cellData: (render && render(rowData[dataKey], rowData, rowIndex)) || cellData
+        });
 
         const cellCls = callOrReturn(className, { cellData, columns, column, columnIndex, rowData, rowIndex });
         const cls = cn(this._prefixClass('row-cell'), cellCls, {
@@ -477,34 +480,6 @@ class BaseTable extends React.PureComponent {
     }
 
     renderHeader({ columns, headerIndex, style }) {
-        const { headerClassName, headerRenderer } = this.props;
-
-        const headerClass = callOrReturn(headerClassName, { columns, headerIndex });
-        const extraProps = callOrReturn(this.props.headerProps, { columns, headerIndex });
-
-        const className = cn(this._prefixClass('header-row'), headerClass, {
-            [this._prefixClass('header-row--resizing')]: !!this.state.resizingKey,
-            [this._prefixClass('header-row--customized')]: headerRenderer
-        });
-
-        const headerProps = {
-            ...extraProps,
-            role: 'row',
-            key: `header-${headerIndex}`,
-            className,
-            style,
-            columns,
-            headerIndex,
-            headerRenderer,
-            cellRenderer: this.renderHeaderCell,
-            expandColumnKey: this.props.expandColumnKey,
-            expandIcon: this._getComponent('ExpandIcon')
-        };
-
-        return <TableHeaderRow {...headerProps} />;
-    }
-
-    renderRowFooter({ columns, headerIndex, style }) {
         const { headerClassName, headerRenderer } = this.props;
 
         const headerClass = callOrReturn(headerClassName, { columns, headerIndex });
@@ -623,7 +598,7 @@ class BaseTable extends React.PureComponent {
             <GridTable
                 {...rest}
                 {...this.state}
-                key="main"
+                // key="main"
                 className={this._prefixClass('table-main')}
                 ref={this._setMainTableRef}
                 data={this._data}
@@ -637,7 +612,6 @@ class BaseTable extends React.PureComponent {
                 headerWidth={tableWidth + (fixed ? this._verticalScrollbarSize : 0)}
                 bodyWidth={tableWidth}
                 headerRenderer={this.renderHeader}
-                footerRenderer={this.renderRowFooter}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleScroll}
                 onRowsRendered={this._handleRowsRendered}
@@ -672,7 +646,6 @@ class BaseTable extends React.PureComponent {
                 headerWidth={columnsWidth + offset}
                 bodyWidth={columnsWidth + offset}
                 headerRenderer={this.renderHeader}
-                footerRenderer={this.renderRowFooter}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleVerticalScroll}
                 onRowsRendered={noop}
@@ -707,7 +680,6 @@ class BaseTable extends React.PureComponent {
                 headerWidth={columnsWidth + scrollbarWidth}
                 bodyWidth={columnsWidth}
                 headerRenderer={this.renderHeader}
-                footerRenderer={this.renderRowFooter}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleVerticalScroll}
                 onRowsRendered={noop}
@@ -792,12 +764,18 @@ class BaseTable extends React.PureComponent {
             estimatedRowHeight
         } = this.props;
         this._resetColumnManager(getColumns(columns, children), fixed);
-
+        // console.log('this.getExpandedRowKeys()', this.getExpandedRowKeys(), this.props.expandedRowKeys);
         const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
         if (this._data !== _data) {
             this.resetAfterRowIndex(0, false);
             this._data = _data;
         }
+        // if (expandColumnKey) {
+        //     this._data = this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey);
+        // } else {
+        //     this._data = data;
+        // }
+        // console.log('this._data', this._data);
         // should be after `this._data` assigned
         this._calcScrollbarSizes();
         this._totalRowsHeight = this.getTotalRowsHeight();

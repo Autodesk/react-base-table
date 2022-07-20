@@ -78,6 +78,12 @@ $table-prefix: BaseTable !default;
     }
   }
 
+  .#{$table-prefix}__row-cell-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   @if ($show-frozen-rows-shadow) {
     &--has-frozen-rows {
       .#{$table-prefix}__header {
@@ -179,7 +185,7 @@ $table-prefix: BaseTable !default;
     border-bottom: $border;
     box-sizing: border-box;
   }
-  
+
   &__footer-row {
     display: flex;
     align-items: center;

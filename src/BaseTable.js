@@ -403,7 +403,7 @@ class BaseTable extends React.PureComponent {
                 <div
                     key={`row-${rowKey}-cell-${column.key}-placeholder`}
                     className={this._prefixClass('row-cell-placeholder')}
-                    style={this.columnManager.getColumnStyle(column.key)}
+                    style={{ ...this.columnManager.getColumnStyle(column.key), ...column.gridCellStyle }}
                 />
             );
         }
@@ -471,7 +471,7 @@ class BaseTable extends React.PureComponent {
                 key={`row-${rowKey}-cell-${column.key}`}
                 {...rest}
                 className={cls}
-                style={this.columnManager.getColumnStyle(column.key)}
+                style={{ ...this.columnManager.getColumnStyle(column.key), ...column.gridCellStyle }}
             >
                 {expandIcon}
                 {cell}
@@ -513,7 +513,7 @@ class BaseTable extends React.PureComponent {
                 <div
                     key={`header-${headerIndex}-cell-${column.key}-placeholder`}
                     className={this._prefixClass('header-cell-placeholder')}
-                    style={this.columnManager.getColumnStyle(column.key)}
+                    style={{ ...this.columnManager.getColumnStyle(column.key), ...column.gridHeadCellStyle }}
                 />
             );
         }
@@ -558,7 +558,7 @@ class BaseTable extends React.PureComponent {
                 onClick={column.sortable ? this._handleColumnSort : null}
                 {...rest}
                 className={cls}
-                style={this.columnManager.getColumnStyle(column.key)}
+                style={{ ...this.columnManager.getColumnStyle(column.key), ...column.gridHeadCellStyle }}
                 data-key={column.key}
             >
                 {expandIcon}

@@ -62,7 +62,13 @@ class TableRow extends React.PureComponent {
         } = this.props;
         /* eslint-enable no-unused-vars */
         // console.log('rowKey', rowKey);
-        const expandIcon = expandIconRenderer({ rowData, rowIndex, depth, onExpand: this._handleExpand });
+        const expandIcon = expandIconRenderer({
+            rowData,
+            rowIndex,
+            depth,
+            onExpand: this._handleExpand
+        });
+
         let cells = columns.map((column, columnIndex) =>
             cellRenderer({
                 isScrolling,
@@ -194,6 +200,8 @@ TableRow.propTypes = {
     onRowExpand: PropTypes.func,
     onRowHeightChange: PropTypes.func,
     tagName: PropTypes.elementType
+    // expandedRowRender: PropTypes.func,
+    // rowExpandable: PropTypes.func
 };
 
 export default TableRow;

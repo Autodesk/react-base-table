@@ -163,7 +163,14 @@ $table-prefix: BaseTable !default;
         overflow-y: auto !important;
       }
     }
+    &-expand {
+        .#{$table-prefix}__body {
+            overflow-y: hidden !important;
+          }
+      }
   }
+
+
 
   &__header {
     overflow: hidden !important;

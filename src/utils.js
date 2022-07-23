@@ -105,7 +105,7 @@ export function getRowKey({ rowData, rowIndex, rowKey }) {
     return key;
 }
 
-export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
+export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id', rowExpandable) {
     if (!keys || !keys.length) return tree;
 
     const array = [];
@@ -120,6 +120,21 @@ export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id') {
 
         array.push(item);
         if (
+            rowExpandable &&
+            rowExpandable(item) &&
+            keysSet.has(getRowKey({ rowData: item, rowIndex: i, rowKey: dataKey }))
+        ) {
+            stack = [].concat(
+                [
+                    {
+                        __parentRowData: item,
+                        __expandItem: true,
+                        __key: getRowKey({ rowData: item, rowIndex: i, rowKey: dataKey }) + 'expandItem'
+                    }
+                ],
+                stack
+            );
+        } else if (
             keysSet.has(getRowKey({ rowData: item, rowIndex: i, rowKey: dataKey })) &&
             Array.isArray(item.children) &&
             item.children.length > 0

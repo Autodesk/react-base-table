@@ -74,6 +74,7 @@ class BaseTable extends React.PureComponent {
         this._setMainTableRef = this._setMainTableRef.bind(this);
         this._setLeftTableRef = this._setLeftTableRef.bind(this);
         this._setRightTableRef = this._setRightTableRef.bind(this);
+        this._setExpandTableRef = this._setExpandTableRef.bind(this);
 
         this.renderExpandIcon = this.renderExpandIcon.bind(this);
         this.renderRow = this.renderRow.bind(this);
@@ -96,9 +97,9 @@ class BaseTable extends React.PureComponent {
 
         this._getLeftTableContainerStyle = memoize(getContainerStyle);
         this._getRightTableContainerStyle = memoize(getContainerStyle);
-        this._flattenOnKeys = memoize((tree, keys, dataKey) => {
+        this._flattenOnKeys = memoize((tree, keys, dataKey, rowExpandable) => {
             this._depthMap = {};
-            return flattenOnKeys(tree, keys, this._depthMap, dataKey);
+            return flattenOnKeys(tree, keys, this._depthMap, dataKey, rowExpandable);
         });
         this._resetColumnManager = memoize(
             (columns, fixed) => {
@@ -213,6 +214,7 @@ class BaseTable extends React.PureComponent {
         this.table && this.table.forceUpdateTable();
         this.leftTable && this.leftTable.forceUpdateTable();
         this.rightTable && this.rightTable.forceUpdateTable();
+        this.expandTable && this.expandTable.forceUpdateTable();
     }
 
     /**
@@ -227,6 +229,7 @@ class BaseTable extends React.PureComponent {
         this.table && this.table.resetAfterRowIndex(rowIndex, shouldForceUpdate);
         this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
         this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
+        this.expandTable && this.expandTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
     }
 
     /**
@@ -241,6 +244,7 @@ class BaseTable extends React.PureComponent {
         this._mainRowHeightMap = {};
         this._leftRowHeightMap = {};
         this._rightRowHeightMap = {};
+        this._expandRowHeightMap = {};
     }
 
     /**
@@ -255,6 +259,7 @@ class BaseTable extends React.PureComponent {
         this.table && this.table.scrollToPosition(offset);
         this.leftTable && this.leftTable.scrollToTop(offset.scrollTop);
         this.rightTable && this.rightTable.scrollToTop(offset.scrollTop);
+        this.expandTable && this.expandTable.scrollToTop(offset.scrollTop);
     }
 
     /**
@@ -268,6 +273,7 @@ class BaseTable extends React.PureComponent {
         this.table && this.table.scrollToPosition(this._scroll);
         this.leftTable && this.leftTable.scrollToTop(scrollTop);
         this.rightTable && this.rightTable.scrollToTop(scrollTop);
+        this.expandTable && this.expandTable.scrollToTop(scrollTop);
     }
 
     /**
@@ -299,6 +305,7 @@ class BaseTable extends React.PureComponent {
         this.table && this.table.scrollToRow(rowIndex, align);
         this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
         this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
+        this.expandTable && this.expandTable.scrollToRow(rowIndex, align);
     }
 
     /**
@@ -317,7 +324,7 @@ class BaseTable extends React.PureComponent {
     }
 
     renderExpandIcon({ rowData, rowIndex, depth, onExpand }) {
-        const { rowKey, expandColumnKey, expandIconProps } = this.props;
+        const { rowKey, expandColumnKey, expandIconProps, rowExpandable } = this.props;
         const _rowKey = getRowKey({
             rowData,
             rowIndex,
@@ -325,7 +332,7 @@ class BaseTable extends React.PureComponent {
         });
         if (!expandColumnKey) return null;
 
-        const expandable = rowIndex >= 0 && hasChildren(rowData);
+        const expandable = rowIndex >= 0 && (hasChildren(rowData) || (rowExpandable && rowExpandable(rowData)));
         const expanded = rowIndex >= 0 && this.getExpandedRowKeys().indexOf(_rowKey) >= 0;
         const extraProps = callOrReturn(expandIconProps, { rowData, rowIndex, depth, expandable, expanded });
         const ExpandIcon = this._getComponent('ExpandIcon');
@@ -347,11 +354,13 @@ class BaseTable extends React.PureComponent {
 
         const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
         const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
-        const rowKey = getRowKey({
-            rowData,
-            rowIndex,
-            rowKey: this.props.rowKey
-        });
+        const rowKey =
+            rowData.__key ||
+            getRowKey({
+                rowData,
+                rowIndex,
+                rowKey: this.props.rowKey
+            });
         const depth = this._depthMap[rowKey] || 0;
 
         const className = cn(this._prefixClass('row'), rowClass, {
@@ -388,6 +397,9 @@ class BaseTable extends React.PureComponent {
             onRowHover: hasFrozenColumns ? this._handleRowHover : null,
             onRowHeightChange: hasFrozenColumns ? this._handleFrozenRowHeightChange : this._handleRowHeightChange
         };
+        if (rowData.__expandItem) {
+            return <div style={{ height: estimatedRowHeight }}></div>;
+        }
 
         return <TableRow {...rowProps} />;
     }
@@ -415,42 +427,6 @@ class BaseTable extends React.PureComponent {
             ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
             : getValue(rowData, dataKey);
         const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
-        // const cell = renderElement(
-        //     cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />,
-        //     cellProps
-        // );
-        // console.log('cellData', cellData, dataKey);
-        // const cell = renderElement(
-        //     cellRenderer || (
-        //         <TableCell key={`row-${rowKey}-cell-${column.key}`} className={this._prefixClass('row-cell-text')} />
-        //     ),
-        //     {
-        //         ...cellProps,
-        //         cellData: (render && render(rowData[dataKey], rowData, rowIndex)) || cellData
-        //     }
-        // );
-        // let cell = render
-        //     ? render(rowData[dataKey], rowData, rowIndex)
-        //     : renderElement(
-        //           cellRenderer || (
-        //               <TableCell
-        //                   key={`row-${rowKey}-cell-${column.key}`}
-        //                   className={this._prefixClass('row-cell-text')}
-        //               />
-        //           ),
-        //           {
-        //               ellProps
-        //           }
-        //       );
-        // let cell;
-        // if (render) {
-        //     cell = render(rowData[dataKey], rowData, rowIndex);
-        // } else {
-        //     cell = renderElement(
-        //         cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />,
-        //         cellProps
-        //     );
-        // }
         const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, {
             ...cellProps,
             cellData: (render && render(rowData[dataKey], rowData, rowIndex)) || cellData
@@ -666,7 +642,12 @@ class BaseTable extends React.PureComponent {
                 {...rest}
                 {...this.state}
                 containerStyle={this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
-                className={this._prefixClass('table-frozen-right')}
+                className={
+                    // isRenderExpandTable
+                    //     ? `${this._prefixClass('table-frozen-right')} ${this._prefixClass('table-none-scroll')}`
+                    //     : this._prefixClass('table-frozen-right')
+                    this._prefixClass('table-frozen-right')
+                }
                 ref={this._setRightTableRef}
                 data={this._data}
                 columns={this.columnManager.getRightFrozenColumns()}
@@ -682,6 +663,94 @@ class BaseTable extends React.PureComponent {
                 headerRenderer={this.renderHeader}
                 rowRenderer={this.renderRow}
                 onScroll={this._handleVerticalScroll}
+                onRowsRendered={noop}
+            />
+        );
+    }
+
+    renderExpandTable() {
+        const {
+            width,
+            headerHeight,
+            rowHeight,
+            estimatedRowHeight,
+            expandColumnKey,
+            expandedRowRender,
+            rowExpandable,
+            ...rest
+        } = this.props;
+
+        const containerHeight = this._getFrozenContainerHeight();
+        const scrollbarWidth = this._verticalScrollbarSize;
+        const columnsWidth = width - scrollbarWidth;
+        // console.log('this._data', columnsWidth, width);
+        return (
+            <GridTable
+                {...rest}
+                {...this.state}
+                containerStyle={{
+                    ...this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight),
+                    pointerEvents: 'none',
+                    background: '#fff0'
+                }}
+                className={`${this._prefixClass('table-frozen-left')} ${this._prefixClass('table-expand')}`}
+                ref={this._setExpandTableRef}
+                data={this._data}
+                columns={[
+                    {
+                        width,
+                        key: 'expand',
+                        title: null,
+                        render: () => {
+                            return <div></div>;
+                        }
+                    }
+                ]}
+                initialScrollTop={this._scroll.scrollTop}
+                width={columnsWidth + scrollbarWidth}
+                height={containerHeight}
+                headerHeight={headerHeight}
+                rowHeight={rowHeight}
+                estimatedRowHeight={estimatedRowHeight}
+                getRowHeight={estimatedRowHeight ? this._getRowHeight : undefined}
+                headerWidth={columnsWidth + scrollbarWidth}
+                bodyWidth={columnsWidth}
+                headerRenderer={() => null}
+                rowRenderer={({ isScrolling, columns, rowData, rowIndex, style }) => {
+                    const _rowKey =
+                        rowData.__key ||
+                        getRowKey({
+                            rowData,
+                            rowIndex,
+                            rowKey: this.props.rowKey
+                        });
+                    if (!rowData.__expandItem) {
+                        return null;
+                    }
+                    const expanded = rowIndex >= 0 && this.getExpandedRowKeys().indexOf(_rowKey) >= 0;
+                    return (
+                        <div
+                            style={{
+                                ...style,
+                                width: columnsWidth,
+                                borderBottom: '1px solid #eee',
+                                background: 'white',
+                                pointerEvents: 'auto'
+                            }}
+                            key={_rowKey}
+                        >
+                            {expandedRowRender(rowData.__parentRowData, expanded, {
+                                rowData,
+                                rowIndex,
+                                isScrolling,
+                                style,
+                                expandIconRenderer: this.renderExpandIcon,
+                                onRowExpand: this._handleRowExpand
+                            })}
+                        </div>
+                    );
+                }}
+                // onScroll={this._handleVerticalScroll}
                 onRowsRendered={noop}
             />
         );
@@ -761,11 +830,15 @@ class BaseTable extends React.PureComponent {
             style,
             footerHeight,
             classPrefix,
-            estimatedRowHeight
+            estimatedRowHeight,
+            expandedRowRender,
+            rowExpandable,
+            rowKey
         } = this.props;
         this._resetColumnManager(getColumns(columns, children), fixed);
-        // console.log('this.getExpandedRowKeys()', this.getExpandedRowKeys(), this.props.expandedRowKeys);
-        const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
+        const _data = expandColumnKey
+            ? this._flattenOnKeys(data, this.getExpandedRowKeys(), rowKey, rowExpandable)
+            : data;
         if (this._data !== _data) {
             this.resetAfterRowIndex(0, false);
             this._data = _data;
@@ -795,12 +868,14 @@ class BaseTable extends React.PureComponent {
             [`${classPrefix}--disabled`]: disabled,
             [`${classPrefix}--dynamic`]: !!estimatedRowHeight
         });
+        const isRenderExpandTable = !(!expandedRowRender || !this._data.some(item => item.__expandItem));
         return (
             <div ref={this._setContainerRef} className={cls} style={containerStyle}>
                 {this.renderFooter()}
                 {this.renderMainTable()}
                 {this.renderLeftTable()}
                 {this.renderRightTable()}
+                {isRenderExpandTable && this.renderExpandTable()}
                 {this.renderResizingLine()}
                 {this.renderEmptyLayer()}
                 {this.renderOverlay()}
@@ -853,6 +928,9 @@ class BaseTable extends React.PureComponent {
 
     _setRightTableRef(ref) {
         this.rightTable = ref;
+    }
+    _setExpandTableRef(ref) {
+        this.expandTable = ref;
     }
 
     _getComponent(name) {
@@ -1290,6 +1368,14 @@ BaseTable.propTypes = {
      * The handler is of the shape of `(expandedRowKeys) => *`
      */
     onExpandedRowsChange: PropTypes.func,
+    /**
+     * expanded row render func `(rowData, {rowIndex}) => *`
+     */
+    expandedRowRender: PropTypes.func,
+    /**
+     * row expandable func `(rowData) => *`
+     */
+    rowExpandable: PropTypes.func,
     /**
      * The sort state for the table, will be ignored if `sortState` is set
      */

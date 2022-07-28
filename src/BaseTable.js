@@ -750,7 +750,7 @@ class BaseTable extends React.PureComponent {
                         </div>
                     );
                 }}
-                // onScroll={this._handleVerticalScroll}
+                onScroll={this._handleVerticalScroll}
                 onRowsRendered={noop}
             />
         );

@@ -14,8 +14,10 @@ const TableHeaderRow = ({
     cellRenderer,
     headerRenderer,
     expandColumnKey,
+    isForceKey,
     expandIcon: ExpandIcon,
     tagName: Tag,
+    checkDisabled,
     ...rest
 }) => {
     let cells = columns.map((column, columnIndex) =>
@@ -24,12 +26,13 @@ const TableHeaderRow = ({
             column,
             columnIndex,
             headerIndex,
+            isForceKey,
             expandIcon: column.key === expandColumnKey && <ExpandIcon />
         })
     );
 
     if (headerRenderer) {
-        cells = renderElement(headerRenderer, { cells, columns, headerIndex });
+        cells = renderElement(headerRenderer, { cells, columns, headerIndex, checkDisabled, isForceKey });
     }
 
     return (
@@ -53,7 +56,9 @@ TableHeaderRow.propTypes = {
     headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
     expandColumnKey: PropTypes.string,
     expandIcon: PropTypes.func,
-    tagName: PropTypes.elementType
+    tagName: PropTypes.elementType,
+    checkDisabled: PropTypes.bool,
+    isForceKey: PropTypes.bool
 };
 
 export default TableHeaderRow;

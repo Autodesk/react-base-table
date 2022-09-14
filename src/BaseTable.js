@@ -426,7 +426,18 @@ class BaseTable extends React.PureComponent {
         const cellData = dataGetter
             ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
             : getValue(rowData, dataKey);
-        const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
+        const cellProps = {
+            isScrolling,
+            cellData,
+            columns,
+            column,
+            columnIndex,
+            rowData,
+            rowIndex,
+            container: this,
+            isForceKey: this.props.isForceKey,
+            baseIdx: this.props.baseIdx
+        };
         const cell = renderElement(cellRenderer || <TableCell className={this._prefixClass('row-cell-text')} />, {
             ...cellProps,
             cellData: (render && render(rowData[dataKey], rowData, rowIndex)) || cellData
@@ -475,6 +486,8 @@ class BaseTable extends React.PureComponent {
             columns,
             headerIndex,
             headerRenderer,
+            isForceKey: this.props.isForceKey,
+            baseIdx: this.props.baseIdx,
             cellRenderer: this.renderHeaderCell,
             expandColumnKey: this.props.expandColumnKey,
             expandIcon: this._getComponent('ExpandIcon')
@@ -499,7 +512,15 @@ class BaseTable extends React.PureComponent {
         const TableHeaderCell = this._getComponent('TableHeaderCell');
         const SortIndicator = this._getComponent('SortIndicator');
 
-        const cellProps = { columns, column, columnIndex, headerIndex, container: this };
+        const cellProps = {
+            columns,
+            column,
+            columnIndex,
+            headerIndex,
+            container: this,
+            isForceKey: this.props.isForceKey,
+            baseIdx: this.props.baseIdx
+        };
         const cell = renderElement(
             headerRenderer || <TableHeaderCell className={this._prefixClass('header-cell-text')} />,
             cellProps
@@ -1251,6 +1272,7 @@ BaseTable.propTypes = {
      * The key field of each data item
      */
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]).isRequired,
+    isForceKey: PropTypes.bool,
     /**
      * The width of the table
      */
@@ -1478,7 +1500,8 @@ BaseTable.propTypes = {
         TableHeaderCell: PropTypes.elementType,
         ExpandIcon: PropTypes.elementType,
         SortIndicator: PropTypes.elementType
-    })
+    }),
+    baseIdx: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default BaseTable;

@@ -508,7 +508,7 @@ class BaseTable extends React.PureComponent {
         }
 
         const { headerClassName, headerRenderer } = column;
-        const { sortBy, sortState, headerCellProps } = this.props;
+        const { sortBy, sortState, headerCellProps, headerProps } = this.props;
         const TableHeaderCell = this._getComponent('TableHeaderCell');
         const SortIndicator = this._getComponent('SortIndicator');
 
@@ -517,6 +517,7 @@ class BaseTable extends React.PureComponent {
             column,
             columnIndex,
             headerIndex,
+            ...headerProps,
             container: this,
             isForceKey: this.props.isForceKey,
             baseIdx: this.props.baseIdx

@@ -1,5 +1,5 @@
 {
-  "name": "react-base-table",
+  "name": "@datafoldcom/react-base-table",
   "version": "1.13.2",
   "description": "a react table component to display large data set with high performance and flexibility, forked from https://github.com/Autodesk/react-base-table.git",
   "main": "lib/index.js",
@@ -31,7 +31,7 @@
     "precommit": "lint-staged",
     "prepush": "npm run test",
     "prepublish": "npm run build && npm run test",
-    "test": "echo 'please, anyone take care of the tests'"
+    "test": "echo 'please, somebody take care of the tests'"
   },
   "lint-staged": {
     "packages/**/*.scss": [

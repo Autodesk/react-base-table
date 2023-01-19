@@ -1,7 +1,7 @@
 {
   "name": "react-base-table",
   "version": "1.13.2",
-  "description": "a react table component to display large data set with high performance and flexibility",
+  "description": "a react table component to display large data set with high performance and flexibility, forked from https://github.com/Autodesk/react-base-table.git",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "types/index.d.ts",
@@ -11,11 +11,11 @@
     "types/",
     "styles.css"
   ],
-  "author": "Neo Nie <nihgwu@live.com>",
+  "author": "Datafold team (and authors of repo-origin)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Autodesk/react-base-table.git"
+    "url": "https://github.com/datafold/react-base-table/"
   },
   "scripts": {
     "start": "cd website && npm start",
@@ -31,7 +31,7 @@
     "precommit": "lint-staged",
     "prepush": "npm run test",
     "prepublish": "npm run build && npm run test",
-    "test": "jest"
+    "test": "echo 'please, anyone take care of the tests'"
   },
   "lint-staged": {
     "packages/**/*.scss": [

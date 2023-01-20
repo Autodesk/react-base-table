@@ -147,7 +147,7 @@ class ColumnResizer extends React.PureComponent {
     this.isDragging = true;
     this.lastX = INVALID_VALUE;
     this.width = this.props.column.width;
-    this.props.onResizeStart(this.props.column);
+    this.props.onResizeStart(this.props.column, this.props.headerIndex);
 
     const { ownerDocument } = this.handleRef;
     addUserSelectStyles(ownerDocument);
@@ -159,7 +159,7 @@ class ColumnResizer extends React.PureComponent {
     if (!this.isDragging) return;
     this.isDragging = false;
 
-    this.props.onResizeStop(this.props.column);
+    this.props.onResizeStop(this.props.column, this.props.headerIndex);
 
     const { ownerDocument } = this.handleRef;
     removeUserSelectStyles(ownerDocument);
@@ -183,7 +183,7 @@ class ColumnResizer extends React.PureComponent {
       return;
     }
 
-    const { column, minWidth: MIN_WIDTH } = this.props;
+    const { column, minWidth: MIN_WIDTH, headerIndex } = this.props;
     const { width, maxWidth, minWidth = MIN_WIDTH } = column;
     const movedX = x - this.lastX;
     if (!movedX) return;
@@ -199,7 +199,7 @@ class ColumnResizer extends React.PureComponent {
     }
 
     if (newWidth === width) return;
-    this.props.onResize(column, newWidth);
+    this.props.onResize(column, newWidth, headerIndex);
   }
 }
 
@@ -238,6 +238,10 @@ ColumnResizer.propTypes = {
    * Minimum width of the column could be resized to if the column's `minWidth` is not set
    */
   minWidth: PropTypes.number,
+  /**
+   * Index of header layer, from top to bottom
+   */
+  headerIndex: PropTypes.number,
 };
 
 export default ColumnResizer;

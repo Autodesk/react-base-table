@@ -411,12 +411,12 @@ declare module 'react-base-table' {
      * A callback function when resizing the column width
      * The handler is of the shape of `({ column, width }) => *`
      */
-    onColumnResize?: (args: { column: ColumnShape<T>; width: number }) => void;
+    onColumnResize?: (args: { column: ColumnShape<T>; width: number, headerIndex: number }) => void;
     /**
      * A callback function when resizing the column width ends
      * The handler is of the shape of `({ column, width }) => *`
      */
-    onColumnResizeEnd?: (args: { column: ColumnShape<T>; width: number }) => void;
+    onColumnResizeEnd?: (args: { column: ColumnShape<T>; width: number, headerIndex: number }) => void;
     /**
      * Adds an additional isScrolling parameter to the row renderer.
      * This parameter can be used to show a placeholder row while scrolling.

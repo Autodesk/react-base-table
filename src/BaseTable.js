@@ -512,6 +512,7 @@ class BaseTable extends React.PureComponent {
           <ColumnResizer
             className={this._prefixClass('column-resizer')}
             column={column}
+            headerIndex={headerIndex}
             onResizeStart={this._handleColumnResizeStart}
             onResizeStop={this._handleColumnResizeStop}
             onResize={this._handleColumnResize}
@@ -962,12 +963,12 @@ class BaseTable extends React.PureComponent {
     this.props.onExpandedRowsChange(expandedRowKeys);
   }
 
-  _handleColumnResize({ key }, width) {
+  _handleColumnResize({ key }, width, headerIndex) {
     this.columnManager.setColumnWidth(key, width);
     this.setState({ resizingWidth: width });
 
     const column = this.columnManager.getColumn(key);
-    this.props.onColumnResize({ column, width });
+    this.props.onColumnResize({ column, width, headerIndex });
   }
 
   _handleColumnResizeStart({ key }) {

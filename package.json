@@ -1,6 +1,6 @@
 {
   "name": "@datafoldcom/react-base-table",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "description": "a react table component to display large data set with high performance and flexibility, forked from https://github.com/Autodesk/react-base-table.git",
   "main": "lib/index.js",
   "module": "es/index.js",

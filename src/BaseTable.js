@@ -66,6 +66,8 @@ class BaseTable extends React.PureComponent {
       resizingKey: null,
       resizingWidth: 0,
       expandedRowKeys: cloneArray(defaultExpandedRowKeys),
+      leftEdgeOutOfSight: false,
+      rightEdgeOutOfSight: false,
     };
     this.columnManager = new ColumnManager(getColumns(columns, children), props.fixed);
 
@@ -698,6 +700,7 @@ class BaseTable extends React.PureComponent {
       estimatedRowHeight,
     } = this.props;
     this._resetColumnManager(getColumns(columns, children), fixed);
+    const { leftEdgeOutOfSight, rightEdgeOutOfSight } = this.state;
 
     const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
     if (this._data !== _data) {
@@ -722,7 +725,10 @@ class BaseTable extends React.PureComponent {
       [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
       [`${classPrefix}--disabled`]: disabled,
       [`${classPrefix}--dynamic`]: !!estimatedRowHeight,
+      [`${classPrefix}--left-out`]: leftEdgeOutOfSight,
+      [`${classPrefix}--right-out`]: rightEdgeOutOfSight,
     });
+
     return (
       <div ref={this._setContainerRef} className={cls} style={containerStyle}>
         {this.renderFooter()}
@@ -740,6 +746,7 @@ class BaseTable extends React.PureComponent {
     const scrollbarSize = this.props.getScrollbarSize();
     if (scrollbarSize > 0) {
       this.setState({ scrollbarSize });
+      this._checkEdgesVisibility();
     }
   }
 
@@ -923,6 +930,34 @@ class BaseTable extends React.PureComponent {
     this.props.onScroll(args);
 
     if (args.scrollTop > lastScrollTop) this._maybeCallOnEndReached();
+    this._checkEdgesVisibility(args.scrollLeft);
+  }
+
+  _checkEdgesVisibility(scrollLeft = 0) {
+    if (this.table) {
+      const gridNode = this.table.bodyRef._outerRef;
+
+      let leftEdgeOutOfSight = false;
+      let rightEdgeOutOfSight = false;
+
+      if (scrollLeft > 0) {
+        leftEdgeOutOfSight = true;
+      }
+
+      if (gridNode.scrollWidth > scrollLeft + gridNode.clientWidth) {
+        rightEdgeOutOfSight = true;
+      }
+
+      if (
+        leftEdgeOutOfSight !== this.state.leftEdgeOutOfSight ||
+        rightEdgeOutOfSight !== this.state.rightEdgeOutOfSight
+      ) {
+        this.setState({
+          leftEdgeOutOfSight: leftEdgeOutOfSight,
+          rightEdgeOutOfSight: rightEdgeOutOfSight,
+        });
+      }
+    }
   }
 
   _handleVerticalScroll({ scrollTop }) {

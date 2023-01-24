@@ -67,6 +67,35 @@ $table-prefix: BaseTable !default;
     }
   }
 
+  &--left-out {
+    &::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: calc(calc(2 + 1) + 1);
+      width: 30px;
+      transition: box-shadow 0.3s;
+      content: '';
+      pointer-events: none;
+      box-shadow: inset 10px 0 8px -8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &--right-out {
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0px;
+      z-index: calc(calc(2 + 1) + 1);
+      width: 30px;
+      transition: box-shadow 0.3s;
+      content: '';
+      pointer-events: none;
+      box-shadow: inset -10px 0 8px -8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
   &:not(.#{$table-prefix}--dynamic),
   .#{$table-prefix}__row--frozen {
     .#{$table-prefix}__row-cell-text {

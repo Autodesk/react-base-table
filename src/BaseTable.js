@@ -751,7 +751,7 @@ class BaseTable extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { data, height, maxHeight, estimatedRowHeight } = this.props;
+    const { data, height, maxHeight, estimatedRowHeight, width } = this.props;
     if (data !== prevProps.data) {
       this._lastScannedRowIndex = -1;
       this._hasDataChangedSinceEndReached = true;
@@ -766,6 +766,10 @@ class BaseTable extends React.PureComponent {
       if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
         this.forceUpdate();
       }
+    }
+
+    if (width !== prevProps.width) {
+      this._checkEdgesVisibility();
     }
   }
 
@@ -933,9 +937,13 @@ class BaseTable extends React.PureComponent {
     this._checkEdgesVisibility(args.scrollLeft);
   }
 
-  _checkEdgesVisibility(scrollLeft = 0) {
+  _checkEdgesVisibility(scrollLeft = null) {
     if (this.table) {
       const gridNode = this.table.bodyRef._outerRef;
+
+      if (scrollLeft === null) {
+        scrollLeft = gridNode.scrollLeft;
+      }
 
       let leftEdgeOutOfSight = false;
       let rightEdgeOutOfSight = false;

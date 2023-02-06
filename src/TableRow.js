@@ -69,8 +69,11 @@ class TableRow extends React.PureComponent {
             onExpand: this._handleExpand
         });
 
-        let cells = columns.map((column, columnIndex) =>
-            cellRenderer({
+        let cells = columns.map((column, columnIndex) => {
+            if (column.width === 0) {
+                return null;
+            }
+            return cellRenderer({
                 isScrolling,
                 columns,
                 column,
@@ -78,8 +81,8 @@ class TableRow extends React.PureComponent {
                 rowData,
                 rowIndex,
                 expandIcon: column.key === expandColumnKey && expandIcon
-            })
-        );
+            });
+        });
 
         if (rowRenderer) {
             cells = renderElement(rowRenderer, { isScrolling, cells, columns, rowData, rowIndex, depth });

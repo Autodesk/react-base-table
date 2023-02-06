@@ -52,8 +52,8 @@ class TableHeader extends React.PureComponent {
         return (
             <div role="grid" ref={this._setRef} className={className} style={style}>
                 <div role="rowgroup" style={innerStyle}>
-                    {rowHeights.map(this.renderHeaderRow)}
-                    {frozenData.map(this.renderFrozenRow)}
+                    {rowHeights.filter(item => item.width !== 0).map(this.renderHeaderRow)}
+                    {frozenData.filter(item => item.width !== 0).map(this.renderFrozenRow)}
                 </div>
             </div>
         );

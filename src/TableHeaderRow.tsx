@@ -3,6 +3,22 @@ import PropTypes from 'prop-types';
 
 import { renderElement } from './utils';
 
+interface TableHeaderRowProps {
+    isScrolling?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
+    columns: any[];
+    headerIndex?: number;
+    cellRenderer?: (params: any) => any;
+    headerRenderer?: any;
+    expandColumnKey?: string;
+    expandIcon?: any;
+    tagName?: HTMLElement;
+    checkDisabled?: boolean;
+    isForceKey?: boolean;
+    [key: string]: any;
+}
+
 /**
  * HeaderRow component for BaseTable
  */
@@ -16,10 +32,10 @@ const TableHeaderRow = ({
     expandColumnKey,
     isForceKey,
     expandIcon: ExpandIcon,
-    tagName: Tag,
+    tagName: Tag = 'div',
     checkDisabled,
     ...rest
-}) => {
+}: any) => {
     let cells = columns.map((column, columnIndex) =>
         cellRenderer({
             columns,
@@ -40,25 +56,6 @@ const TableHeaderRow = ({
             {cells}
         </Tag>
     );
-};
-
-TableHeaderRow.defaultProps = {
-    tagName: 'div'
-};
-
-TableHeaderRow.propTypes = {
-    isScrolling: PropTypes.bool,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    headerIndex: PropTypes.number,
-    cellRenderer: PropTypes.func,
-    headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    expandColumnKey: PropTypes.string,
-    expandIcon: PropTypes.func,
-    tagName: PropTypes.elementType,
-    checkDisabled: PropTypes.bool,
-    isForceKey: PropTypes.bool
 };
 
 export default TableHeaderRow;

@@ -1,12 +1,44 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { renderElement } from './utils';
+
+type RowKey = (params: any) => string;
+
+interface TableRowProps {
+    isScrolling?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
+    columns: any[];
+    rowIndex?: number;
+    rowData?: any;
+    expandColumnKey?: string;
+    depth?: number;
+    rowEventHandlers?: any;
+    estimatedRowHeight?: number;
+    rowRenderer?: any;
+    cellRenderer?: any;
+    expandIconRenderer?: any;
+    tagName?: any;
+    // omit the following from rest
+    rowKey?: string | RowKey;
+    getIsResetting?: () => any;
+    onRowHover?: any;
+    onRowExpand?: any;
+    onRowHeightChange?: any;
+    [key: string]: any;
+}
+interface TableRowState {
+    measured: boolean;
+}
 
 /**
  * Row component for BaseTable
  */
-class TableRow extends React.PureComponent {
+class TableRow extends React.PureComponent<TableRowProps, TableRowState> {
+    static defaultProps = {
+        tagName: 'div'
+    };
+    ref: any = null;
     constructor(props) {
         super(props);
 
@@ -121,7 +153,7 @@ class TableRow extends React.PureComponent {
         onRowExpand && onRowExpand({ expanded, rowData, rowIndex, rowKey });
     }
 
-    _measureHeight(initialMeasure) {
+    _measureHeight(initialMeasure?: boolean) {
         if (!this.ref) return;
 
         const { style, rowKey, onRowHeightChange, rowIndex, columns } = this.props;
@@ -178,33 +210,5 @@ class TableRow extends React.PureComponent {
         return eventHandlers;
     }
 }
-
-TableRow.defaultProps = {
-    tagName: 'div'
-};
-
-TableRow.propTypes = {
-    isScrolling: PropTypes.bool,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowData: PropTypes.object.isRequired,
-    rowIndex: PropTypes.number.isRequired,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    expandColumnKey: PropTypes.string,
-    depth: PropTypes.number,
-    rowEventHandlers: PropTypes.object,
-    rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    cellRenderer: PropTypes.func,
-    expandIconRenderer: PropTypes.func,
-    estimatedRowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    getIsResetting: PropTypes.func,
-    onRowHover: PropTypes.func,
-    onRowExpand: PropTypes.func,
-    onRowHeightChange: PropTypes.func,
-    tagName: PropTypes.elementType
-    // expandedRowRender: PropTypes.func,
-    // rowExpandable: PropTypes.func
-};
 
 export default TableRow;

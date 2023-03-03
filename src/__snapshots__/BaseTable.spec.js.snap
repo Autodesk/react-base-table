@@ -4,7 +4,7 @@ exports[`Table renders correctly 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -19,7 +19,7 @@ exports[`Table renders correctly 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -32,7 +32,7 @@ exports[`Table renders correctly 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -43,10 +43,11 @@ exports[`Table renders correctly 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -56,7 +57,7 @@ exports[`Table renders correctly 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -75,7 +76,7 @@ exports[`Table renders correctly 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -95,10 +96,11 @@ exports[`Table renders correctly 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -108,7 +110,7 @@ exports[`Table renders correctly 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -127,7 +129,7 @@ exports[`Table renders correctly 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -149,7 +151,7 @@ exports[`Table renders correctly 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -160,7 +162,7 @@ exports[`Table renders correctly 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -170,7 +172,7 @@ exports[`Table renders correctly 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -182,7 +184,7 @@ exports[`Table renders correctly 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -203,7 +205,7 @@ exports[`Table renders correctly 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -232,7 +234,7 @@ exports[`Table table can be set to disabled 1`] = `
 <div
   className="BaseTable BaseTable--disabled"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -247,7 +249,7 @@ exports[`Table table can be set to disabled 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -260,7 +262,7 @@ exports[`Table table can be set to disabled 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -271,10 +273,11 @@ exports[`Table table can be set to disabled 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -284,7 +287,7 @@ exports[`Table table can be set to disabled 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -303,7 +306,7 @@ exports[`Table table can be set to disabled 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -323,10 +326,11 @@ exports[`Table table can be set to disabled 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -336,7 +340,7 @@ exports[`Table table can be set to disabled 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -355,7 +359,7 @@ exports[`Table table can be set to disabled 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -377,7 +381,7 @@ exports[`Table table can be set to disabled 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -388,7 +392,7 @@ exports[`Table table can be set to disabled 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -398,7 +402,7 @@ exports[`Table table can be set to disabled 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -410,7 +414,7 @@ exports[`Table table can be set to disabled 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -431,7 +435,7 @@ exports[`Table table can be set to disabled 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -460,7 +464,7 @@ exports[`Table table can be set to fixed 1`] = `
 <div
   className="BaseTable BaseTable--fixed"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -475,7 +479,7 @@ exports[`Table table can be set to fixed 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -488,7 +492,7 @@ exports[`Table table can be set to fixed 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -499,10 +503,11 @@ exports[`Table table can be set to fixed 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -512,7 +517,7 @@ exports[`Table table can be set to fixed 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 0 auto",
                 "flex": "0 0 auto",
                 "msFlex": "0 0 auto",
@@ -531,7 +536,7 @@ exports[`Table table can be set to fixed 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 0 auto",
                 "flex": "0 0 auto",
                 "msFlex": "0 0 auto",
@@ -551,10 +556,11 @@ exports[`Table table can be set to fixed 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -564,7 +570,7 @@ exports[`Table table can be set to fixed 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 0 auto",
                 "flex": "0 0 auto",
                 "msFlex": "0 0 auto",
@@ -583,7 +589,7 @@ exports[`Table table can be set to fixed 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 0 auto",
                 "flex": "0 0 auto",
                 "msFlex": "0 0 auto",
@@ -605,7 +611,7 @@ exports[`Table table can be set to fixed 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -616,7 +622,7 @@ exports[`Table table can be set to fixed 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -626,7 +632,7 @@ exports[`Table table can be set to fixed 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -638,7 +644,7 @@ exports[`Table table can be set to fixed 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 0 auto",
                 "flex": "0 0 auto",
                 "msFlex": "0 0 auto",
@@ -659,7 +665,7 @@ exports[`Table table can be set to fixed 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 0 auto",
                 "flex": "0 0 auto",
                 "msFlex": "0 0 auto",
@@ -688,7 +694,7 @@ exports[`Table table can freeze rows 1`] = `
 <div
   className="BaseTable BaseTable--has-frozen-rows"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -703,7 +709,7 @@ exports[`Table table can freeze rows 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 0,
@@ -716,7 +722,7 @@ exports[`Table table can freeze rows 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -727,10 +733,11 @@ exports[`Table table can freeze rows 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -740,7 +747,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -759,7 +766,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -779,10 +786,11 @@ exports[`Table table can freeze rows 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -792,7 +800,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -811,7 +819,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -833,7 +841,7 @@ exports[`Table table can freeze rows 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 100,
           "overflow": "hidden",
           "position": "relative",
@@ -844,7 +852,7 @@ exports[`Table table can freeze rows 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 100,
             "width": 100,
           }
@@ -854,7 +862,7 @@ exports[`Table table can freeze rows 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -866,7 +874,7 @@ exports[`Table table can freeze rows 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -887,7 +895,7 @@ exports[`Table table can freeze rows 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -907,7 +915,7 @@ exports[`Table table can freeze rows 1`] = `
           className="BaseTable__row BaseTable__row--frozen"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -917,7 +925,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -936,7 +944,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -956,7 +964,7 @@ exports[`Table table can freeze rows 1`] = `
           className="BaseTable__row BaseTable__row--frozen"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -966,7 +974,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -985,7 +993,7 @@ exports[`Table table can freeze rows 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1014,7 +1022,7 @@ exports[`Table table can hide the header 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -1029,7 +1037,7 @@ exports[`Table table can hide the header 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 100,
@@ -1042,7 +1050,7 @@ exports[`Table table can hide the header 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -1053,10 +1061,11 @@ exports[`Table table can hide the header 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1066,7 +1075,7 @@ exports[`Table table can hide the header 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1085,7 +1094,7 @@ exports[`Table table can hide the header 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1105,10 +1114,11 @@ exports[`Table table can hide the header 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1118,7 +1128,7 @@ exports[`Table table can hide the header 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1137,7 +1147,7 @@ exports[`Table table can hide the header 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1166,7 +1176,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -1181,7 +1191,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -1194,7 +1204,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -1205,10 +1215,11 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1218,7 +1229,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1237,7 +1248,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1257,10 +1268,11 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1270,7 +1282,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1289,7 +1301,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1311,7 +1323,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -1322,7 +1334,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -1332,7 +1344,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -1344,7 +1356,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1365,7 +1377,7 @@ exports[`Table table can receive an emptyRenderer callback 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1394,7 +1406,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -1409,7 +1421,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -1422,7 +1434,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -1433,10 +1445,11 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1446,7 +1459,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1465,7 +1478,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1485,10 +1498,11 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1498,7 +1512,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1517,7 +1531,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1539,7 +1553,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -1550,7 +1564,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -1560,7 +1574,7 @@ exports[`Table table can receive an headerRenderer callback 1`] = `
           className="BaseTable__header-row BaseTable__header-row--customized"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -1579,7 +1593,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -1594,7 +1608,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -1607,7 +1621,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -1618,10 +1632,11 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
           className="BaseTable__row BaseTable__row--customized"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1631,10 +1646,11 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
           className="BaseTable__row BaseTable__row--customized"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1646,7 +1662,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -1657,7 +1673,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -1667,7 +1683,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -1679,7 +1695,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1700,7 +1716,7 @@ exports[`Table table can receive an rowRenderer callback 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1729,7 +1745,7 @@ exports[`Table table can receive children 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -1744,7 +1760,7 @@ exports[`Table table can receive children 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -1757,7 +1773,7 @@ exports[`Table table can receive children 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -1768,10 +1784,11 @@ exports[`Table table can receive children 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -1781,7 +1798,7 @@ exports[`Table table can receive children 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1800,7 +1817,7 @@ exports[`Table table can receive children 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1820,10 +1837,11 @@ exports[`Table table can receive children 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -1833,7 +1851,7 @@ exports[`Table table can receive children 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1852,7 +1870,7 @@ exports[`Table table can receive children 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1874,7 +1892,7 @@ exports[`Table table can receive children 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -1885,7 +1903,7 @@ exports[`Table table can receive children 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -1895,7 +1913,7 @@ exports[`Table table can receive children 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -1907,7 +1925,7 @@ exports[`Table table can receive children 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1928,7 +1946,7 @@ exports[`Table table can receive children 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -1957,7 +1975,7 @@ exports[`Table table can receive className 1`] = `
 <div
   className="BaseTable custom-class"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -1972,7 +1990,7 @@ exports[`Table table can receive className 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -1985,7 +2003,7 @@ exports[`Table table can receive className 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -1996,10 +2014,11 @@ exports[`Table table can receive className 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2009,7 +2028,7 @@ exports[`Table table can receive className 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2028,7 +2047,7 @@ exports[`Table table can receive className 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2048,10 +2067,11 @@ exports[`Table table can receive className 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2061,7 +2081,7 @@ exports[`Table table can receive className 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2080,7 +2100,7 @@ exports[`Table table can receive className 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2102,7 +2122,7 @@ exports[`Table table can receive className 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -2113,7 +2133,7 @@ exports[`Table table can receive className 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -2123,7 +2143,7 @@ exports[`Table table can receive className 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -2135,7 +2155,7 @@ exports[`Table table can receive className 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2156,7 +2176,7 @@ exports[`Table table can receive className 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2185,7 +2205,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
 <div
   className="BaseTable BaseTable--expandable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -2200,7 +2220,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -2213,7 +2233,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -2224,10 +2244,11 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
           className="BaseTable__row BaseTable__row--depth-0 BaseTable__row--expanded"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2237,7 +2258,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2250,7 +2271,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               className="BaseTable__expand-icon BaseTable__expand-icon--expanded"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2276,7 +2297,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2296,10 +2317,11 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
           className="BaseTable__row BaseTable__row--depth-0"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2309,7 +2331,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2322,7 +2344,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2348,7 +2370,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2370,7 +2392,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -2381,7 +2403,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -2391,7 +2413,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -2403,7 +2425,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2416,7 +2438,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2444,7 +2466,7 @@ exports[`Table table can receive defaultExpandedRowKeys 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2473,7 +2495,7 @@ exports[`Table table can receive empty data 1`] = `
 <div
   className="BaseTable BaseTable--empty"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -2488,7 +2510,7 @@ exports[`Table table can receive empty data 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -2501,7 +2523,7 @@ exports[`Table table can receive empty data 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 0,
             "pointerEvents": undefined,
             "width": 100,
@@ -2513,7 +2535,7 @@ exports[`Table table can receive empty data 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -2524,7 +2546,7 @@ exports[`Table table can receive empty data 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -2534,7 +2556,7 @@ exports[`Table table can receive empty data 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -2546,7 +2568,7 @@ exports[`Table table can receive empty data 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2567,7 +2589,7 @@ exports[`Table table can receive empty data 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2589,7 +2611,7 @@ exports[`Table table can receive empty data 1`] = `
   <div
     className="BaseTable__empty-layer"
     style={
-      Object {
+      {
         "bottom": 0,
         "top": 50,
       }
@@ -2605,7 +2627,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
 <div
   className="BaseTable BaseTable--expandable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -2620,7 +2642,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -2633,7 +2655,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -2644,10 +2666,11 @@ exports[`Table table can receive expandColumnKey 1`] = `
           className="BaseTable__row BaseTable__row--depth-0"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2657,7 +2680,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2670,7 +2693,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2696,7 +2719,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2716,10 +2739,11 @@ exports[`Table table can receive expandColumnKey 1`] = `
           className="BaseTable__row BaseTable__row--depth-0"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -2729,7 +2753,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2742,7 +2766,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2768,7 +2792,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2790,7 +2814,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -2801,7 +2825,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -2811,7 +2835,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -2823,7 +2847,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2836,7 +2860,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2864,7 +2888,7 @@ exports[`Table table can receive expandColumnKey 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2893,7 +2917,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
 <div
   className="BaseTable BaseTable--expandable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -2908,7 +2932,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -2921,7 +2945,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -2932,10 +2956,11 @@ exports[`Table table can receive expandedRowKeys 1`] = `
           className="BaseTable__row BaseTable__row--depth-0 BaseTable__row--expanded"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -2945,7 +2970,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -2958,7 +2983,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               className="BaseTable__expand-icon BaseTable__expand-icon--expanded"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -2984,7 +3009,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3004,10 +3029,11 @@ exports[`Table table can receive expandedRowKeys 1`] = `
           className="BaseTable__row BaseTable__row--depth-0"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3017,7 +3043,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3030,7 +3056,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -3056,7 +3082,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3078,7 +3104,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -3089,7 +3115,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -3099,7 +3125,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -3111,7 +3137,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3124,7 +3150,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
               className="BaseTable__expand-icon"
               onClick={null}
               style={
-                Object {
+                {
                   "cursor": "pointer",
                   "fontFamily": "initial",
                   "fontSize": "16px",
@@ -3152,7 +3178,7 @@ exports[`Table table can receive expandedRowKeys 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3181,7 +3207,7 @@ exports[`Table table can receive headerClassName 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -3196,7 +3222,7 @@ exports[`Table table can receive headerClassName 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -3209,7 +3235,7 @@ exports[`Table table can receive headerClassName 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -3220,10 +3246,11 @@ exports[`Table table can receive headerClassName 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3233,7 +3260,7 @@ exports[`Table table can receive headerClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3252,7 +3279,7 @@ exports[`Table table can receive headerClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3272,10 +3299,11 @@ exports[`Table table can receive headerClassName 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3285,7 +3313,7 @@ exports[`Table table can receive headerClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3304,7 +3332,7 @@ exports[`Table table can receive headerClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3326,7 +3354,7 @@ exports[`Table table can receive headerClassName 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -3337,7 +3365,7 @@ exports[`Table table can receive headerClassName 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -3347,7 +3375,7 @@ exports[`Table table can receive headerClassName 1`] = `
           className="BaseTable__header-row custom-class"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -3359,7 +3387,7 @@ exports[`Table table can receive headerClassName 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3380,7 +3408,7 @@ exports[`Table table can receive headerClassName 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3409,7 +3437,7 @@ exports[`Table table can receive headerHeight 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -3424,7 +3452,7 @@ exports[`Table table can receive headerHeight 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 70,
@@ -3437,7 +3465,7 @@ exports[`Table table can receive headerHeight 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -3448,10 +3476,11 @@ exports[`Table table can receive headerHeight 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3461,7 +3490,7 @@ exports[`Table table can receive headerHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3480,7 +3509,7 @@ exports[`Table table can receive headerHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3500,10 +3529,11 @@ exports[`Table table can receive headerHeight 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3513,7 +3543,7 @@ exports[`Table table can receive headerHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3532,7 +3562,7 @@ exports[`Table table can receive headerHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3554,7 +3584,7 @@ exports[`Table table can receive headerHeight 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 30,
           "overflow": "hidden",
           "position": "relative",
@@ -3565,7 +3595,7 @@ exports[`Table table can receive headerHeight 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 30,
             "width": 100,
           }
@@ -3575,7 +3605,7 @@ exports[`Table table can receive headerHeight 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 30,
               "width": "100%",
             }
@@ -3587,7 +3617,7 @@ exports[`Table table can receive headerHeight 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3608,7 +3638,7 @@ exports[`Table table can receive headerHeight 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3637,7 +3667,7 @@ exports[`Table table can receive height 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -3652,7 +3682,7 @@ exports[`Table table can receive height 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -3665,7 +3695,7 @@ exports[`Table table can receive height 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -3676,10 +3706,11 @@ exports[`Table table can receive height 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3689,7 +3720,7 @@ exports[`Table table can receive height 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3708,7 +3739,7 @@ exports[`Table table can receive height 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3728,10 +3759,11 @@ exports[`Table table can receive height 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3741,7 +3773,7 @@ exports[`Table table can receive height 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3760,7 +3792,7 @@ exports[`Table table can receive height 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3782,7 +3814,7 @@ exports[`Table table can receive height 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -3793,7 +3825,7 @@ exports[`Table table can receive height 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -3803,7 +3835,7 @@ exports[`Table table can receive height 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -3815,7 +3847,7 @@ exports[`Table table can receive height 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3836,7 +3868,7 @@ exports[`Table table can receive height 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3865,7 +3897,7 @@ exports[`Table table can receive rowClassName 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -3880,7 +3912,7 @@ exports[`Table table can receive rowClassName 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -3893,7 +3925,7 @@ exports[`Table table can receive rowClassName 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -3904,10 +3936,11 @@ exports[`Table table can receive rowClassName 1`] = `
           className="BaseTable__row custom-class"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -3917,7 +3950,7 @@ exports[`Table table can receive rowClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3936,7 +3969,7 @@ exports[`Table table can receive rowClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3956,10 +3989,11 @@ exports[`Table table can receive rowClassName 1`] = `
           className="BaseTable__row custom-class"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -3969,7 +4003,7 @@ exports[`Table table can receive rowClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -3988,7 +4022,7 @@ exports[`Table table can receive rowClassName 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4010,7 +4044,7 @@ exports[`Table table can receive rowClassName 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -4021,7 +4055,7 @@ exports[`Table table can receive rowClassName 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -4031,7 +4065,7 @@ exports[`Table table can receive rowClassName 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -4043,7 +4077,7 @@ exports[`Table table can receive rowClassName 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4064,7 +4098,7 @@ exports[`Table table can receive rowClassName 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4093,7 +4127,7 @@ exports[`Table table can receive rowHeight 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -4108,7 +4142,7 @@ exports[`Table table can receive rowHeight 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -4121,7 +4155,7 @@ exports[`Table table can receive rowHeight 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 60,
             "pointerEvents": undefined,
             "width": 100,
@@ -4132,10 +4166,11 @@ exports[`Table table can receive rowHeight 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 30,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4145,7 +4180,7 @@ exports[`Table table can receive rowHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4164,7 +4199,7 @@ exports[`Table table can receive rowHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4184,10 +4219,11 @@ exports[`Table table can receive rowHeight 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 30,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 30,
               "width": 100,
             }
@@ -4197,7 +4233,7 @@ exports[`Table table can receive rowHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4216,7 +4252,7 @@ exports[`Table table can receive rowHeight 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4238,7 +4274,7 @@ exports[`Table table can receive rowHeight 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -4249,7 +4285,7 @@ exports[`Table table can receive rowHeight 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -4259,7 +4295,7 @@ exports[`Table table can receive rowHeight 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -4271,7 +4307,7 @@ exports[`Table table can receive rowHeight 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4292,7 +4328,7 @@ exports[`Table table can receive rowHeight 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4321,7 +4357,7 @@ exports[`Table table can receive style 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "color": "red",
       "height": 100,
       "position": "relative",
@@ -4337,7 +4373,7 @@ exports[`Table table can receive style 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -4350,7 +4386,7 @@ exports[`Table table can receive style 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -4361,10 +4397,11 @@ exports[`Table table can receive style 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4374,7 +4411,7 @@ exports[`Table table can receive style 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4393,7 +4430,7 @@ exports[`Table table can receive style 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4413,10 +4450,11 @@ exports[`Table table can receive style 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -4426,7 +4464,7 @@ exports[`Table table can receive style 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4445,7 +4483,7 @@ exports[`Table table can receive style 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4467,7 +4505,7 @@ exports[`Table table can receive style 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -4478,7 +4516,7 @@ exports[`Table table can receive style 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -4488,7 +4526,7 @@ exports[`Table table can receive style 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -4500,7 +4538,7 @@ exports[`Table table can receive style 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4521,7 +4559,7 @@ exports[`Table table can receive style 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4550,7 +4588,7 @@ exports[`Table table can receive width 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -4565,7 +4603,7 @@ exports[`Table table can receive width 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -4578,7 +4616,7 @@ exports[`Table table can receive width 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -4589,10 +4627,11 @@ exports[`Table table can receive width 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4602,7 +4641,7 @@ exports[`Table table can receive width 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4621,7 +4660,7 @@ exports[`Table table can receive width 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4641,10 +4680,11 @@ exports[`Table table can receive width 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -4654,7 +4694,7 @@ exports[`Table table can receive width 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4673,7 +4713,7 @@ exports[`Table table can receive width 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4695,7 +4735,7 @@ exports[`Table table can receive width 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -4706,7 +4746,7 @@ exports[`Table table can receive width 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -4716,7 +4756,7 @@ exports[`Table table can receive width 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -4728,7 +4768,7 @@ exports[`Table table can receive width 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4749,7 +4789,7 @@ exports[`Table table can receive width 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4778,7 +4818,7 @@ exports[`Table table can specific a different rowKey 1`] = `
 <div
   className="BaseTable"
   style={
-    Object {
+    {
       "height": 100,
       "position": "relative",
       "width": 100,
@@ -4793,7 +4833,7 @@ exports[`Table table can specific a different rowKey 1`] = `
       className="BaseTable__body"
       onScroll={[Function]}
       style={
-        Object {
+        {
           "WebkitOverflowScrolling": "touch",
           "direction": "ltr",
           "height": 50,
@@ -4806,7 +4846,7 @@ exports[`Table table can specific a different rowKey 1`] = `
     >
       <div
         style={
-          Object {
+          {
             "height": 100,
             "pointerEvents": undefined,
             "width": 100,
@@ -4817,10 +4857,11 @@ exports[`Table table can specific a different rowKey 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 0,
               "width": 100,
             }
@@ -4830,7 +4871,7 @@ exports[`Table table can specific a different rowKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4849,7 +4890,7 @@ exports[`Table table can specific a different rowKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4869,10 +4910,11 @@ exports[`Table table can specific a different rowKey 1`] = `
           className="BaseTable__row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "left": 0,
               "position": "absolute",
+              "right": undefined,
               "top": 50,
               "width": 100,
             }
@@ -4882,7 +4924,7 @@ exports[`Table table can specific a different rowKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4901,7 +4943,7 @@ exports[`Table table can specific a different rowKey 1`] = `
             className="BaseTable__row-cell"
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4923,7 +4965,7 @@ exports[`Table table can specific a different rowKey 1`] = `
       className="BaseTable__header"
       role="grid"
       style={
-        Object {
+        {
           "height": 50,
           "overflow": "hidden",
           "position": "relative",
@@ -4934,7 +4976,7 @@ exports[`Table table can specific a different rowKey 1`] = `
       <div
         role="rowgroup"
         style={
-          Object {
+          {
             "height": 50,
             "width": 100,
           }
@@ -4944,7 +4986,7 @@ exports[`Table table can specific a different rowKey 1`] = `
           className="BaseTable__header-row"
           role="row"
           style={
-            Object {
+            {
               "height": 50,
               "width": "100%",
             }
@@ -4956,7 +4998,7 @@ exports[`Table table can specific a different rowKey 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",
@@ -4977,7 +5019,7 @@ exports[`Table table can specific a different rowKey 1`] = `
             onClick={null}
             role="gridcell"
             style={
-              Object {
+              {
                 "WebkitFlex": "0 1 auto",
                 "flex": "0 1 auto",
                 "msFlex": "0 1 auto",

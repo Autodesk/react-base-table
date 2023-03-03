@@ -17,7 +17,7 @@ export function renderElement(renderer, props) {
     }
 }
 
-export function normalizeColumns(elements) {
+export function normalizeColumns(elements: React.ReactNode[]) {
     const columns = [];
     React.Children.forEach(elements, element => {
         if (React.isValidElement(element) && element.key) {

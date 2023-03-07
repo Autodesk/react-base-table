@@ -1,6 +1,6 @@
 {
   "name": "react-context-table",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -30,9 +30,10 @@
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
     "prepush": "npm run test",
+    "publish": "npm publish",
     "release": "npx standard-version --release-as patch && npm run build && npm run publish",
-    "prerelease": "npx standard-version -- --prerelease alpha && npm run build && npm run publish",
-    "release-minor": "npx standard-version --release-as minor && npm run build && npm run publish",
+    "prerelease": "npx standard-version -- --prerelease alpha && npm run build && npm  publish",
+    "release-minor": "npx standard-version --release-as minor && npm run build && npm  ",
     "prepublish": "npm run build && npm run test",
     "test": "jest"
   },

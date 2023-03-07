@@ -1,17 +1,26 @@
 {
-  "extends": [
-    "react-app",
-    "plugin:prettier/recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "prettier"
-  ],
-  "rules": {
-    "react/prop-types": 2,
-    "indent": [
-      "error",
-      4
-    ]
-  }
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "react-app",
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "plugins": [
+        "eslint-plugin-react",
+        "prettier",
+        "@typescript-eslint"
+    ],
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    }
 }

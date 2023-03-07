@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { renderElement } from './utils';
 
 interface TableHeaderRowProps {
@@ -13,7 +11,7 @@ interface TableHeaderRowProps {
     headerRenderer?: any;
     expandColumnKey?: string;
     expandIcon?: any;
-    tagName?: HTMLElement;
+    tagName?: any;
     checkDisabled?: boolean;
     isForceKey?: boolean;
     [key: string]: any;
@@ -35,7 +33,7 @@ const TableHeaderRow = ({
     tagName: Tag = 'div',
     checkDisabled,
     ...rest
-}: any) => {
+}: TableHeaderRowProps) => {
     let cells = columns.map((column, columnIndex) =>
         cellRenderer({
             columns,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { isFunction } from 'lodash';
 
-export function renderElement(renderer, props) {
+export function renderElement(renderer, props?: any) {
     if (React.isValidElement(renderer)) {
         if (!props) return renderer;
         return React.cloneElement(renderer, props);
@@ -187,7 +187,7 @@ function getPathSegments(path) {
 }
 
 // changed from https://github.com/sindresorhus/dot-prop/blob/master/index.js
-export function getValue(object, path, defaultValue) {
+export function getValue(object: any, path: string, defaultValue?: any) {
     if (object === null || typeof object !== 'object' || typeof path !== 'string') {
         return defaultValue;
     }

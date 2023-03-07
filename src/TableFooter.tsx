@@ -1,7 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class TableFooter extends React.PureComponent {
+interface TableFooterProps {
+    className?: string;
+    width: number;
+    height: number;
+    footerHeight: number | any[];
+    rowWidth: number;
+    rowHeight: number;
+    columns: any[];
+    data: any[];
+    frozenData?: any[];
+    headerRenderer?: any;
+    rowRenderer: any;
+    hoveredRowKey?: any;
+}
+interface TableFooterState {}
+
+class TableFooter extends React.PureComponent<TableFooterProps, TableFooterState> {
+    footerRef: any = null;
     constructor(props) {
         super(props);
 
@@ -24,10 +40,10 @@ class TableFooter extends React.PureComponent {
     }
 
     render() {
-        const { className, width, height, rowWidth, footerHeight, frozenData } = this.props;
+        const { className, width, height, rowWidth, frozenData } = this.props;
         if (height <= 0) return null;
 
-        const style = {
+        const style: React.CSSProperties = {
             width,
             height: height,
             position: 'relative',
@@ -54,17 +70,17 @@ class TableFooter extends React.PureComponent {
     }
 }
 
-TableFooter.propTypes = {
-    className: PropTypes.string,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    footerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
-    rowWidth: PropTypes.number.isRequired,
-    rowHeight: PropTypes.number.isRequired,
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    data: PropTypes.array.isRequired,
-    frozenData: PropTypes.array,
-    rowRenderer: PropTypes.func.isRequired
-};
+// TableFooter.propTypes = {
+//     className: PropTypes.string,
+//     width: PropTypes.number.isRequired,
+//     height: PropTypes.number.isRequired,
+//     footerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
+//     rowWidth: PropTypes.number.isRequired,
+//     rowHeight: PropTypes.number.isRequired,
+//     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+//     data: PropTypes.array.isRequired,
+//     frozenData: PropTypes.array,
+//     rowRenderer: PropTypes.func.isRequired
+// };
 
 export default TableFooter;

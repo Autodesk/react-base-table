@@ -11,7 +11,7 @@ declare module 'react-context-table' {
 
     export type Size = { width: number; height: number };
 
-    export type CallOrReturn<T, P = any[]> = T | (P extends any[] ? (...p: P) => T : (p: P) => T);
+    export type CallOrReturn<T, P = any[]> = T | P extends any[] ? (...p: P) => T : (p: P) => T;
 
     export interface ColumnShape<T = unknown> {
         /**
@@ -427,7 +427,7 @@ declare module 'react-context-table' {
         /**
          * Number of rows to render above/below the visible bounds of the list
          */
-        overscanRowCount?: number;
+        overScanRowCount?: number;
         /**
          * Custom scrollbar size measurement
          */
@@ -461,11 +461,11 @@ declare module 'react-context-table' {
         onEndReachedThreshold?: number;
         /**
          * A callback function with information about the slice of rows that were just rendered
-         * The handler is of the shape of `({ overscanStartIndex, overscanStopIndex, startIndex， stopIndex }) => *`
+         * The handler is of the shape of `({ overscanStartIndex, overScanStopIndex, startIndex， stopIndex }) => *`
          */
         onRowsRendered?: (args: {
             overscanStartIndex: number;
-            overscanStopIndex: number;
+            overScanStopIndex: number;
             startIndex: number;
             stopIndex: number;
         }) => void;
@@ -641,7 +641,7 @@ declare module 'react-context-table' {
     export const AutoResizer: React.FC<AutoResizerProps>;
 
     export function renderElement<T extends object>(
-        renderer: React.ReactElement | ((props: Partial<T>) => React.ReactNode),
+        renderer: React.ReactElement | (props: Partial<T>) => React.ReactNode,
         props?: T
     ): React.ReactNode;
 
@@ -658,7 +658,7 @@ declare module 'react-context-table' {
         rootId?: any,
         dataKey?: string,
         parentKey?: string
-    ): (T & { children?: T[] })[];
+    ): T & { children?: T[] }[];
 
     export function flattenOnKeys<T = any>(
         tree: T[],

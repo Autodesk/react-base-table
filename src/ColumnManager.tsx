@@ -1,6 +1,25 @@
 import { FrozenDirection } from './Column';
 
+interface Cached {
+    visibleColumns?: any[];
+    hasFrozenColumns?: any[];
+    hasLeftFrozenColumns?: any[];
+    hasRightFrozenColumns?: any[];
+    mainColumns?: any[];
+    leftFrozenColumns?: any[];
+    rightFrozenColumns?: any[];
+    columnsWidth?: number;
+    leftFrozenColumnsWidth?: number;
+    rightFrozenColumnsWidth?: number;
+}
+
 export default class ColumnManager {
+    static PlaceholderKey = '__placeholder__';
+    _origColumns: any[] = [];
+    _columns: any[] = [];
+    _cached: Cached = {};
+    _fixed: any = null;
+    _columnStyles: React.CSSProperties = {};
     constructor(columns, fixed) {
         this._origColumns = [];
         this.reset(columns, fixed);
@@ -187,4 +206,4 @@ export default class ColumnManager {
     }
 }
 
-ColumnManager.PlaceholderKey = '__placeholder__';
+// ColumnManager.PlaceholderKey = '__placeholder__';

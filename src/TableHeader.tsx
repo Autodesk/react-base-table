@@ -1,7 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class TableHeader extends React.PureComponent {
+interface TableHeaderProps {
+    className?: string;
+    width: number;
+    height: number;
+    headerHeight: number | any[];
+    rowWidth: number;
+    rowHeight: number;
+    columns: any[];
+    data: any[];
+    frozenData?: any[];
+    headerRenderer?: any;
+    rowRenderer: any;
+    hoveredRowKey?: any;
+}
+interface TableHeaderState {}
+
+class TableHeader extends React.PureComponent<TableHeaderProps, TableHeaderState> {
+    headerRef: any = null;
     constructor(props) {
         super(props);
 
@@ -36,7 +52,7 @@ class TableHeader extends React.PureComponent {
         const { className, width, height, rowWidth, headerHeight, frozenData } = this.props;
         if (height <= 0) return null;
 
-        const style = {
+        const style: React.CSSProperties = {
             width,
             height: height,
             position: 'relative',
@@ -63,19 +79,5 @@ class TableHeader extends React.PureComponent {
         this.headerRef = ref;
     }
 }
-
-TableHeader.propTypes = {
-    className: PropTypes.string,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
-    rowWidth: PropTypes.number.isRequired,
-    rowHeight: PropTypes.number.isRequired,
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    data: PropTypes.array.isRequired,
-    frozenData: PropTypes.array,
-    headerRenderer: PropTypes.func.isRequired,
-    rowRenderer: PropTypes.func.isRequired
-};
 
 export default TableHeader;

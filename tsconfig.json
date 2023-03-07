@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "build/dist",
+    "outDir": "es",
     "module": "esnext",
     "target": "es5",
     "downlevelIteration": true,
@@ -32,26 +32,7 @@
     ]
   },
   "exclude": [
-    "node_modules",
-    "config-overrides.js",
-    "build",
-    "scripts",
-    "es",
-    "docs",
-    "lib",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "README.md",
-    "CHANGELOG.md",
-    "src/setupTests.ts",
-    "src/utils/*",
-    "src/libs/*",
-    "src/setupProxy.js",
-    "src/setupProxy.ts",
-    "src/version.ts",
-    "tools/version.js",
-    "t.cjs"
+    "node_modules"
   ],
   "include": [
     "src"

@@ -54,10 +54,52 @@ const eventsFor = {
 
 let dragEventFor = eventsFor.mouse;
 
+interface ColumnResizerProps {
+    /**
+     * Custom style for the drag handler
+     */
+    style?: React.CSSProperties;
+    /**
+     * The column object to be dragged
+     */
+    column: any;
+    /**
+     * A callback function when resizing started
+     * The callback is of the shape of `(column) => *`
+     */
+    onResizeStart: any;
+    /**
+     * A callback function when resizing the column
+     * The callback is of the shape of `(column, width) => *`
+     */
+    onResize: any;
+    /**
+     * A callback function when resizing stopped
+     * The callback is of the shape of `(column) => *`
+     */
+    onResizeStop?: any;
+    /**
+     * Minimum width of the column could be resized to if the column's `minWidth` is not set
+     */
+    minWidth?: number;
+    [key: string]: any;
+}
+interface ColumnResizerState {}
+
 /**
  * ColumnResizer for BaseTable
  */
-class ColumnResizer extends React.PureComponent {
+class ColumnResizer extends React.PureComponent<ColumnResizerProps, ColumnResizerState> {
+    static defaultProps = {
+        onResizeStart: noop,
+        onResize: noop,
+        onResizeStop: noop,
+        minWidth: 30
+    };
+    isDragging: boolean = false;
+    lastX: number = INVALID_VALUE;
+    width: number = 0;
+    handleRef: any = null;
     constructor(props) {
         super(props);
 
@@ -203,41 +245,11 @@ class ColumnResizer extends React.PureComponent {
     }
 }
 
-ColumnResizer.defaultProps = {
-    onResizeStart: noop,
-    onResize: noop,
-    onResizeStop: noop,
-    minWidth: 30
-};
-
-ColumnResizer.propTypes = {
-    /**
-     * Custom style for the drag handler
-     */
-    style: PropTypes.object,
-    /**
-     * The column object to be dragged
-     */
-    column: PropTypes.object,
-    /**
-     * A callback function when resizing started
-     * The callback is of the shape of `(column) => *`
-     */
-    onResizeStart: PropTypes.func,
-    /**
-     * A callback function when resizing the column
-     * The callback is of the shape of `(column, width) => *`
-     */
-    onResize: PropTypes.func,
-    /**
-     * A callback function when resizing stopped
-     * The callback is of the shape of `(column) => *`
-     */
-    onResizeStop: PropTypes.func,
-    /**
-     * Minimum width of the column could be resized to if the column's `minWidth` is not set
-     */
-    minWidth: PropTypes.number
-};
+// ColumnResizer.defaultProps = {
+//     onResizeStart: noop,
+//     onResize: noop,
+//     onResizeStop: noop,
+//     minWidth: 30
+// };
 
 export default ColumnResizer;

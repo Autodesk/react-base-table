@@ -2,10 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+interface ExpandIconProps {
+    expandable: boolean;
+    expanded: boolean;
+    indentSize: number;
+    depth: number;
+    onExpand: any;
+    expandedRowRender: any;
+    rowExpandable: any;
+    rowData: any;
+}
+
+interface ExpandIconState {}
+
 /**
  * default ExpandIcon for BaseTable
  */
-class ExpandIcon extends React.PureComponent {
+class ExpandIcon extends React.PureComponent<ExpandIconProps, ExpandIconState> {
+    static defaultProps = {
+        depth: 0,
+        indentSize: 16
+    };
     constructor(props) {
         super(props);
 
@@ -52,20 +69,20 @@ class ExpandIcon extends React.PureComponent {
     }
 }
 
-ExpandIcon.defaultProps = {
-    depth: 0,
-    indentSize: 16
-};
+// ExpandIcon.defaultProps = {
+//     depth: 0,
+//     indentSize: 16
+// };
 
-ExpandIcon.propTypes = {
-    expandable: PropTypes.bool,
-    expanded: PropTypes.bool,
-    indentSize: PropTypes.number,
-    depth: PropTypes.number,
-    onExpand: PropTypes.func,
-    expandedRowRender: PropTypes.func,
-    rowExpandable: PropTypes.func,
-    rowData: PropTypes.object
-};
+// ExpandIcon.propTypes = {
+//     expandable: PropTypes.bool,
+//     expanded: PropTypes.bool,
+//     indentSize: PropTypes.number,
+//     depth: PropTypes.number,
+//     onExpand: PropTypes.func,
+//     expandedRowRender: PropTypes.func,
+//     rowExpandable: PropTypes.func,
+//     rowData: PropTypes.object
+// };
 
 export default ExpandIcon;

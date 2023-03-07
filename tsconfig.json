@@ -22,8 +22,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "noFallthroughCasesInSwitch": true
   },
   "paths": {

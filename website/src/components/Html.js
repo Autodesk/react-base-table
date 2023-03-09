@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import rehypeReact from 'rehype-react'
-import rehypeParse from 'rehype-parse'
+// import rehypeParse from 'rehype-parse'
 import { unified } from 'unified'
 import CodeBlock from './CodeBlock'
 import CodePreview from './CodePreview'

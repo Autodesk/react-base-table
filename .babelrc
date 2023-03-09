@@ -7,8 +7,15 @@
             }
         ],
         "@babel/preset-typescript",
-        "@babel/preset-react"
+        "@babel/preset-react",
+        [
+            "minify",
+            {
+                "builtIns": false
+            }
+        ]
     ],
+    "comments": false,
     "plugins": [
         "@babel/plugin-proposal-class-properties",
         "@babel/plugin-proposal-object-rest-spread",

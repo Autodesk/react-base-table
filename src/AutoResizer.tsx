@@ -1,11 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AutoSizer from 'react-virtualized-auto-sizer';
 // console.log('AutoSizer', AutoSizer)
+interface AutoResizerProps {
+    className: string;
+    width: number;
+    height: number;
+    children: any;
+    onResize: (params: { height: number; width: number; [key: string]: any }) => void;
+}
+
 /**
  * Decorator component that automatically adjusts the width and height of a single child
  */
-const AutoResizer = ({ className, width, height, children, onResize }) => {
+const AutoResizer = ({ className, width, height, children, onResize }: AutoResizerProps) => {
     const disableWidth = typeof width === 'number';
     const disableHeight = typeof height === 'number';
 
@@ -20,7 +27,7 @@ const AutoResizer = ({ className, width, height, children, onResize }) => {
     return (
         // <div style={{minHeight: height}}>
         <AutoSizer className={className} disableWidth={!!disableWidth} disableHeight={true} onResize={onResize}>
-            {size =>
+            {(size) =>
                 children({
                     width: disableWidth ? width : size.width,
                     height: disableHeight ? height : size.height
@@ -29,31 +36,6 @@ const AutoResizer = ({ className, width, height, children, onResize }) => {
         </AutoSizer>
         // </div>
     );
-};
-
-AutoResizer.propTypes = {
-    /**
-     * Class name for the component
-     */
-    className: PropTypes.string,
-    /**
-     * the width of the component, will be the container's width if not set
-     */
-    width: PropTypes.number,
-    /**
-     * the height of the component, will be the container's width if not set
-     */
-    height: PropTypes.number,
-    /**
-     * A callback function to render the children component
-     * The handler is of the shape of `({ width, height }) => node`
-     */
-    children: PropTypes.func.isRequired,
-    /**
-     * A callback function when the size of the table container changed if the width and height are not set
-     * The handler is of the shape of `({ width, height }) => *`
-     */
-    onResize: PropTypes.func
 };
 
 export default AutoResizer;

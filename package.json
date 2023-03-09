@@ -52,7 +52,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "classnames": "^2.2.5",
-    "memoize-one": "^5.0.0",
+    "memoize-one": "^6.0.0",
     "prop-types": "^15.7.0",
     "react-context-table": "^1.0.12",
     "react-virtualized-auto-sizer": "^1.0.6",

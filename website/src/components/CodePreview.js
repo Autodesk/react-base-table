@@ -59,10 +59,11 @@ const CodePreview = ({
         _scope,
     ])
     const { element, error, onChange } = useLiveRunner({
-        sourceCode,
+        initialCode: sourceCode,
         scope,
         type,
     })
+    // const { element, error } = useRunner({ code: sourceCode, scope })
 
     return (
         <Container {...rest}>

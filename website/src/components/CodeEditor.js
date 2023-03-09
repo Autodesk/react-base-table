@@ -44,12 +44,14 @@ const CodeEditor = ({ sourceCode, language, onChange, ...rest }) => {
         [debouncedChange]
     )
     useEffect(() => setCode(sourceCode), [sourceCode])
+    // const { element, error } = useRunner({ code, scope: {} })
 
     return (
         <Container {...rest}>
             <EditorContainer>
                 <StyledEditor
                     code={code}
+                    value={code}
                     language={language}
                     onChange={handleChange}
                 />

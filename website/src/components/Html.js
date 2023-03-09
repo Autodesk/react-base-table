@@ -35,7 +35,7 @@ const parseMeta = meta => {
 
 const Pre = props => {
     if (!props.children[0]) {
-        console.log('props', props)
+        // console.log('props', props)
         return <pre {...props} />
     }
 
@@ -63,28 +63,35 @@ const Pre = props => {
 //     },
 // }).Compiler
 
-function useProcessor(text) {
-    const [Content, setContent] = useState(null)
+// function useProcessor(text) {
+//     const [Content, setContent] = useState(null)
+//     useEffect(() => {
+//         unified()
+//             .use(rehypeParse, { fragment: true })
+//             .use(rehypeReact, {
+//                 createElement: React.createElement,
+//                 Fragment: React.Fragment,
+//                 passNode: true,
+//                 components: {
+//                     pre: Pre,
+//                 },
+//             })
+//             .process(text)
+//             .then(file => {
+//                 console.log('file', text, file)
+//                 setContent(file.result)
+//             })
+//     }, [text])
+//     console.log('Content', Content)
+//     return Content
+// }
 
-    useEffect(() => {
-        unified()
-            .use(rehypeParse, { fragment: true })
-            .use(rehypeReact, {
-                createElement: React.createElement,
-                // Fragment: React.Fragment,
-                components: {
-                    pre: Pre,
-                },
-            })
-            .process(text)
-            .then(file => {
-                // console.log('text', text, file)
-                setContent(file.result)
-            })
-    }, [text])
-
-    return Content
-}
+const processor = unified().use(rehypeReact, {
+    createElement: React.createElement,
+    components: {
+        pre: Pre,
+    },
+})
 
 // const renderAst = htmlAst => {
 //     const C = new Promise((resolve, reject) => {
@@ -102,10 +109,10 @@ function useProcessor(text) {
 // }
 
 const Html = ({ html, htmlAst, ...rest }) => {
-    const renderAst = useProcessor(htmlAst)
-    // console.log('htmlAst', htmlAst, renderAst)
+    // const renderAst = useProcessor(htmlAst)
+    // console.log('htmlAst', html, htmlAst, renderAst)
     if (htmlAst) {
-        return <div {...rest}>{renderAst || null}</div>
+        return <div {...rest}>{processor.stringify(htmlAst) || null}</div>
     }
 
     if (html) {

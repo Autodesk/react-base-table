@@ -24,38 +24,41 @@ const Content = styled.div`
     margin-left: 240px;
 `
 
-const Page = ({ title, location = {}, children, links, ...rest }) => (
-    <StaticQuery
-        query={detailsQuery}
-        render={({ site }) => (
-            <React.Fragment>
-                <Helmet
-                    title={title || site.config.title}
-                    titleTemplate={`%s | ${site.config.title}`}
-                    meta={[
-                        {
-                            name: 'description',
-                            content: site.config.description,
-                        },
-                        { name: 'keywords', content: site.config.keywords },
-                        { name: 'author', content: site.config.author },
-                    ]}
-                />
-                <Header pathname={location.pathname} />
-                <Container {...rest}>
-                    {links ? (
-                        <React.Fragment>
-                            <Sidebar links={links} />
-                            <Content>{children}</Content>
-                        </React.Fragment>
-                    ) : (
-                        children
-                    )}
-                </Container>
-            </React.Fragment>
-        )}
-    />
-)
+const Page = ({ title, location = {}, children, links, ...rest }) => {
+    console.log('Page', title, children)
+    return (
+        <StaticQuery
+            query={detailsQuery}
+            render={({ site }) => (
+                <React.Fragment>
+                    <Helmet
+                        title={title || site.config.title}
+                        titleTemplate={`%s | ${site.config.title}`}
+                        meta={[
+                            {
+                                name: 'description',
+                                content: site.config.description,
+                            },
+                            { name: 'keywords', content: site.config.keywords },
+                            { name: 'author', content: site.config.author },
+                        ]}
+                    />
+                    <Header pathname={location.pathname} />
+                    <Container {...rest}>
+                        {links ? (
+                            <React.Fragment>
+                                <Sidebar links={links} />
+                                <Content>{children}</Content>
+                            </React.Fragment>
+                        ) : (
+                            children
+                        )}
+                    </Container>
+                </React.Fragment>
+            )}
+        />
+    )
+}
 
 export default Page
 

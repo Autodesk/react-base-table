@@ -113,6 +113,7 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
             }
         `
     )
+    console.log('result', result)
     if (result.errors) {
         throw new Error(result.errors)
     }

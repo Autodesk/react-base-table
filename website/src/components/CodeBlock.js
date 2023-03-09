@@ -24,6 +24,8 @@ const CodeBlock = ({ code = '', language = 'jsx', ...rest }) => (
         <Scroll>
             <StyledCode
                 code={code.trim()}
+                value={code.trim()}
+                children={code.trim()}
                 language={language}
                 padding={10}
                 noWrap

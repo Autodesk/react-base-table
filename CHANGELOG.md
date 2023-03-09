@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0-alpha.0](https://github.com/royue/react-context-table/compare/v1.1.2-alpha.3...v1.2.0-alpha.0) (2023-03-09)
+
+
+### Features
+
+* **tsx:** update dependencies ([eadb26e](https://github.com/royue/react-context-table/commit/eadb26eb7892b2a0c16a2a424e9f22b3d3638137))
+
 ### [1.1.2-alpha.3](https://github.com/royue/react-context-table/compare/v1.1.2-alpha.2...v1.1.2-alpha.3) (2023-03-07)
 
 ### [1.1.2-alpha.2](https://github.com/royue/react-context-table/compare/v1.1.2-alpha.1...v1.1.2-alpha.2) (2023-03-07)

@@ -1,6 +1,6 @@
 {
   "name": "react-context-table",
-  "version": "1.1.2-alpha.3",
+  "version": "1.2.0-alpha.0",
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -33,7 +33,7 @@
     "prepush": "npm run test",
     "publish": "npm publish",
     "release": "npx standard-version --release-as patch && npm run build && npm run publish",
-    "release:alpha": "npx standard-version --prerelease alpha && npm run build && npm publish --tag alpha && npm run publish",
+    "release:alpha": "npx standard-version --prerelease alpha && npm run build && npm publish --tag alpha",
     "release:minor": "npx standard-version --release-as minor && npm run build && npm run publish ",
     "prepublish": "npm run build && npm run test",
     "test": "jest"
@@ -79,6 +79,7 @@
     "@typescript-eslint/parser": "^5.54.0",
     "@typescript-eslint/typescript-estree": "^5.54.0",
     "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
+    "babel-preset-minify": "^0.5.2",
     "cross-env": "^5.2.0",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^3.0.1",

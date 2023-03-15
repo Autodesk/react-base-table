@@ -37,7 +37,7 @@ Column.propTypes = {
   /**
    * Title for the column header
    */
-  title: PropTypes.string,
+  title: PropTypes.node,
   /**
    * Data key for the column cell, could be "a.b.c"
    */

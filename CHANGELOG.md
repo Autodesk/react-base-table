@@ -2,6 +2,10 @@
 
 ## NEXT VERSION
 
+## v1.13.4 (2023-03-15)
+
+- fix: allow any react node to be used as column title
+
 ## v1.13.3 (2023-03-13)
 
 - fix: pass extra sorting props to custom SortIndicator component

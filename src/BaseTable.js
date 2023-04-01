@@ -725,13 +725,13 @@ class BaseTable extends React.PureComponent {
     });
     return (
       <div ref={this._setContainerRef} className={cls} style={containerStyle}>
-        {this.renderFooter()}
         {this.renderMainTable()}
         {this.renderLeftTable()}
         {this.renderRightTable()}
         {this.renderResizingLine()}
         {this.renderEmptyLayer()}
         {this.renderOverlay()}
+        {this.renderFooter()}
       </div>
     );
   }

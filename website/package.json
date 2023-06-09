@@ -8,7 +8,7 @@
     "classnames": "^2.2.6",
     "clipboard": "^2.0.4",
     "faker": "^4.1.0",
-    "gatsby": "^2.13.1",
+    "gatsby": "^4.25.7",
     "gatsby-plugin-catch-links": "^2.1.0",
     "gatsby-plugin-google-analytics": "^2.1.1",
     "gatsby-plugin-lodash": "^3.1.0",

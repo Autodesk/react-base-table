@@ -19,7 +19,7 @@ export function renderElement(renderer, props?: any) {
 
 export function normalizeColumns(elements: React.ReactNode[]) {
     const columns = [];
-    React.Children.forEach(elements, element => {
+    React.Children.forEach(elements, (element) => {
         if (React.isValidElement(element) && element.key) {
             const column = { ...element.props, key: element.key };
             columns.push(column);
@@ -110,7 +110,7 @@ export function flattenOnKeys(tree, keys, depthMap = {}, dataKey = 'id', rowExpa
 
     const array = [];
     const keysSet = new Set();
-    keys.forEach(x => keysSet.add(x));
+    keys.forEach((x) => keysSet.add(x));
 
     let stack = [].concat(tree);
     stack.forEach((x, index) => (depthMap[getRowKey({ rowData: x, rowIndex: index, rowKey: dataKey })] = 0));
@@ -216,7 +216,7 @@ export function getValue(object: any, path: string, defaultValue?: any) {
 // copied from https://www.30secondsofcode.org/js/s/debounce
 export const debounce = (fn, ms = 0) => {
     let timeoutId;
-    return function(...args) {
+    return function (...args) {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => fn.apply(this, args), ms);
     };
@@ -225,7 +225,7 @@ export const debounce = (fn, ms = 0) => {
 // copied from https://www.30secondsofcode.org/js/s/throttle
 export const throttle = (fn, wait) => {
     let inThrottle, lastFn, lastTime;
-    return function() {
+    return function () {
         const context = this,
             args = arguments;
         if (!inThrottle) {
@@ -234,7 +234,7 @@ export const throttle = (fn, wait) => {
             inThrottle = true;
         } else {
             clearTimeout(lastFn);
-            lastFn = setTimeout(function() {
+            lastFn = setTimeout(function () {
                 if (Date.now() - lastTime >= wait) {
                     fn.apply(context, args);
                     lastTime = Date.now();

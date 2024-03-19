@@ -122,6 +122,7 @@ interface BaseTableProps {
     onColumnResize?: any;
     onColumnResizeEnd?: any;
     onColumnSort?: any;
+    children?: any;
 }
 interface BaseTableState {
     expandedRowKeys: any[];
@@ -928,7 +929,7 @@ class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
         if (!fixed || !resizingKey) return null;
 
         const columns = this.columnManager.getMainColumns();
-        const idx = columns.findIndex(column => column.key === resizingKey);
+        const idx = columns.findIndex((column) => column.key === resizingKey);
         const column = columns[idx];
         const { width: columnWidth, frozen } = column;
         const leftWidth = this.columnManager.recomputeColumnsWidth(columns.slice(0, idx));
@@ -1034,7 +1035,7 @@ class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
             [`${classPrefix}--disabled`]: disabled,
             [`${classPrefix}--dynamic`]: !!estimatedRowHeight
         });
-        const isRenderExpandTable = !(!expandedRowRender || !this._data.some(item => item.__expandItem));
+        const isRenderExpandTable = !(!expandedRowRender || !this._data.some((item) => item.__expandItem));
         return (
             <div ref={this._setContainerRef} className={cls} style={containerStyle}>
                 {this.renderFooter()}

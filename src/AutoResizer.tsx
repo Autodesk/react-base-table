@@ -1,5 +1,5 @@
 import React from 'react';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import AutoSizer, { Size } from 'react-virtualized-auto-sizer';
 // console.log('AutoSizer', AutoSizer)
 interface AutoResizerProps {
     className: string;
@@ -26,8 +26,8 @@ const AutoResizer = ({ className, width, height, children, onResize }: AutoResiz
     // console.log('AutoResizer', AutoSizer)
     return (
         // <div style={{minHeight: height}}>
-        <AutoSizer className={className} disableWidth={!!disableWidth} disableHeight={true} onResize={onResize}>
-            {(size) =>
+        <AutoSizer className={className} onResize={onResize}>
+            {(size: Size) =>
                 children({
                     width: disableWidth ? width : size.width,
                     height: disableHeight ? height : size.height

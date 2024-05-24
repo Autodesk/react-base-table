@@ -15,7 +15,7 @@ declare module 'react-base-table' {
     /**
      * Unique key for each column
      */
-    key: React.Key;
+    key: string | number;
     /**
      * Class name for the column cell
      */
@@ -385,7 +385,7 @@ declare module 'react-base-table' {
      * The sort state for the table, will be ignored if `sortState` is set
      */
     sortBy?: {
-      key: React.Key;
+      key: string | number;
       order: SortOrder;
     };
     /**
@@ -400,13 +400,13 @@ declare module 'react-base-table' {
      * ```
      */
     sortState?: {
-      [key in React.Key]: SortOrder;
+      [key in string | number]: SortOrder;
     };
     /**
      * A callback function for the header cell click event
      * The handler is of the shape of `({ column, key, order }) => *`
      */
-    onColumnSort?: (args: { column: ColumnShape<T>; key: React.Key; order: SortOrder }) => void;
+    onColumnSort?: (args: { column: ColumnShape<T>; key: string | number; order: SortOrder }) => void;
     /**
      * A callback function when resizing the column width
      * The handler is of the shape of `({ column, width }) => *`

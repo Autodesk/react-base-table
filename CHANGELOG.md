@@ -2,6 +2,10 @@
 
 ## NEXT VERSION
 
+## v1.13.5 (2024-05-24)
+
+- fix: stop using React.Key in typings (#428)
+
 ## v1.13.4 (2023-03-15)
 
 - fix: allow any react node to be used as column title

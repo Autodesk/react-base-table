@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.1.0 (2026-04-16)
+
+- feat: add `TableHeaderRow` to customizable `components` prop, allowing custom header row rendering
+
 ## v2.0.0 (2026-04-16)
 
 ### Breaking Changes

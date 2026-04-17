@@ -14,17 +14,15 @@ yarn add react-base-table
 
 ## Usage
 
-```js
+```tsx
 import BaseTable, { Column } from 'react-base-table'
-import 'react-base-table/styles.css'
+import 'react-base-table/dist/styles.css'
 
-...
 <BaseTable data={data} width={600} height={400}>
   <Column key="col0" dataKey="col0" width={100} />
   <Column key="col1" dataKey="col1" width={100} />
   ...
 </BaseTable>
-...
 ```
 
 ### unique key
@@ -56,9 +54,7 @@ Here is an [example](https://autodesk.github.io/react-base-table/playground#MYew
 
 ## Browser Support
 
-`BaseTable` is well tested on all modern browsers and IE11. _You have to polyfill `Array.prototype.findIndex` to make it works on IE_
-
-**The [examples](https://autodesk.github.io/react-base-table/examples) don't work on IE as they are powered by [react-runner](https://github.com/nihgwu/react-runner) which is a `react-live` like library but only for modern browsers.**
+`BaseTable` is tested on all modern browsers (Chrome, Firefox, Safari, Edge). IE is no longer supported.
 
 ## Playground
 

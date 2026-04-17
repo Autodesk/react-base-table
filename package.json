@@ -6,7 +6,9 @@
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "LICENSE.md",
+    "README.md"
   ],
   "author": "Autodesk, Inc.",
   "license": "MIT",

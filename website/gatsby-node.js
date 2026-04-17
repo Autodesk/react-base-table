@@ -13,7 +13,10 @@ exports.onCreateWebpackConfig = ({ stage, getConfig, actions }) => {
     utils: path.resolve(__dirname, 'src/utils'),
     siteConfig: path.resolve(__dirname, 'siteConfig'),
     'react-base-table/package.json': path.resolve(__dirname, '../package.json'),
-    'react-base-table/styles.css': path.resolve(__dirname, '../styles.css'),
+    'react-base-table/dist/styles.css': path.resolve(
+      __dirname,
+      '../dist/styles.css'
+    ),
     'react-base-table': path.resolve(__dirname, '../src'),
   }
 
@@ -44,8 +47,8 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
     node.methods.length
   ) {
     node.methods
-      .filter(method => method.docblock)
-      .map(method => {
+      .filter((method) => method.docblock)
+      .map((method) => {
         const methodNode = {
           id: createNodeId(`${node.id} >>> ${method.name}`),
           parent: node.id,
@@ -74,44 +77,42 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
   const apiPage = path.resolve('src/templates/api.js')
   const examplePage = path.resolve('src/templates/example.js')
 
-  const result = await graphql(
-    `
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-        allComponentMetadata {
-          edges {
-            node {
-              parent {
-                id
-              }
-              displayName
-              docblock
-            }
-          }
-        }
-        allRawCode {
-          edges {
-            node {
-              name
+  const result = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `
-  )
+      allComponentMetadata {
+        edges {
+          node {
+            parent {
+              id
+            }
+            displayName
+            docblock
+          }
+        }
+      }
+      allRawCode {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+    }
+  `)
   if (result.errors) {
     throw new Error(result.errors)
   }
 
-  result.data.allMarkdownRemark.edges.forEach(edge => {
+  result.data.allMarkdownRemark.edges.forEach((edge) => {
     const slug = _.get(edge, 'node.fields.slug')
     if (!slug || !slug.includes('docs')) return
     createPage({
@@ -123,7 +124,7 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
     })
   })
 
-  result.data.allComponentMetadata.edges.forEach(edge => {
+  result.data.allComponentMetadata.edges.forEach((edge) => {
     const node = edge.node
     const fileNode = getNode(node.parent.id)
     if (fileNode.sourceInstanceName !== 'api') return
@@ -138,7 +139,7 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
     })
   })
 
-  result.data.allRawCode.edges.forEach(edge => {
+  result.data.allRawCode.edges.forEach((edge) => {
     const name = edge.node.name
     createPage({
       path: `/examples/${name}`,

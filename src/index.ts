@@ -11,6 +11,7 @@ export {
   normalizeColumns,
   isObjectEqual,
   callOrReturn,
+  cloneArray,
   hasChildren,
   unflatten,
   flattenOnKeys,

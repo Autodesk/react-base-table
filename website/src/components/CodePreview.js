@@ -54,14 +54,13 @@ const CodePreview = ({
   ...rest
 }) => {
   const { action, channel } = useMemo(createActionChannel, [])
-  const scope = useMemo(() => ({ ...baseScope, action, ..._scope }), [
-    action,
-    _scope,
-  ])
+  const scope = useMemo(
+    () => ({ ...baseScope, action, ..._scope }),
+    [action, _scope]
+  )
   const { element, error, onChange } = useLiveRunner({
-    sourceCode,
+    initialCode: sourceCode,
     scope,
-    type,
   })
 
   return (

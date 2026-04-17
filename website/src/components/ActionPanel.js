@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Inspector from 'react-inspector'
+import { Inspector } from 'react-inspector'
 
 import CornerButton from './CornerButton'
 
@@ -54,7 +54,7 @@ class ActionPanel extends React.Component {
     )
   }
 
-  onAction = action => {
+  onAction = (action) => {
     this.setState(({ actions }) => ({
       actions: [action, ...actions.slice(0, 99)],
     }))

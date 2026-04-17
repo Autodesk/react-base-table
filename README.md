@@ -19,21 +19,18 @@ yarn add react-base-table
 
 ## Usage
 
-```js
+```tsx
 import BaseTable, { Column } from 'react-base-table'
-import 'react-base-table/styles.css'
-// Important: if you fail to import react-base-table/styles.css then 
-// BaseTable will not render as advertised in the included examples.
-// For advanced styling see link below:
-// https://github.com/Autodesk/react-base-table#advance
- ...
+import 'react-base-table/dist/styles.css'
+
 <BaseTable data={data} width={600} height={400}>
   <Column key="col0" dataKey="col0" width={100} />
   <Column key="col1" dataKey="col1" width={100} />
   ...
 </BaseTable>
-...
 ```
+
+> **Note:** You must import the stylesheet for BaseTable to render correctly. For advanced styling see [below](#advance).
 
 Learn more at the [website](https://autodesk.github.io/react-base-table/)
 
@@ -64,11 +61,17 @@ Things getting worse with the introduction of React hooks, we use primitive stat
 
 Here is an [example](https://autodesk.github.io/react-base-table/playground#MYewdgzgLgBKA2BXAtpGBeGBzApmHATgIZQ4DCISqEAFAIwAMAlAFCiSwAmJRG2ehEjgAiPGghSQANDABMDZixY4AHgAcQBLjgBmRRPFg0mGAHwwA3ixhxw0GAG1QiMKQIyIOKBRduAunwASjhEwFAAdIieAMpQQjSKNuz2DgCWWGCaOABiLmGp4B5eAJIZWblg+eABmMGhEVE4sfFQBIg4rEl2sGlgAFY4YRRUYEVQxf2D3pSSNTB1YZExcaQ0evCenTAEXogEYDA01jYwADymxydnnKkAbjDQAJ7wOOgWFjBqRJw3YFgAXDAACwyG4QNTwIiPQEAch0LxUMJkfSiUFSOkeFFceCgsPBoRwAFoAEZeADuODwMJgAF8aRcrldTsTEFAoOAYOAyPBUsAANZvYxmB5eHzYgjiEC+QgwADUMDoTHpstOAHoWWzwAzGTZTpDSfBtTrdakwGpWZdjTYoI81K8AETAAAWgz5xJAKntlqtztdOE4b3SmR2FSqYBp3uNXKdRD+rwsOGFnnGZRDeTR4BoOHCcQIuAivv5-qVkauqqNxtKwcTOnTBQOptsI1syC+O1LZ1V+pwho7eqIBorOtOpvNUA7VxtdvQjpd-PdnonJ0LfP9gcmQxmqAjVqu0djuDeifQ5mTEwGm5GWZzRDzXnCK+LO935aX56mMFUrV43DiMHZTaSDAnC6KaqQZmAfZdgOPZDp2Ny3HBpwACoDi8MA6KkKj+sBPBvL+RA0jAQblHW4ATMMkgUK2t7xiRaaVBB9J9pRqBLhY4ScRI1AOAwfjPlaBEAOJeG4gomCetjSgQAnGs44rrhe0zNgA-FJ4owICLggZh+CcLJZZwbqrEHBxXFbpADh0PxMCvlapwmZYnEPhZEAOLINl2caDkWU55kjG5ADMnlGWcjlmS5AUOECIWRmqqHEi8FZqtqrARkAA) to demonstrate 
 
+## TypeScript
+
+This package is written in TypeScript and ships type declarations out of the box. All public types are exported from the main entry point:
+
+```ts
+import type { ColumnShape, RowData, SortOrderValue } from 'react-base-table'
+```
+
 ## Browser Support
 
-`BaseTable` is well tested on all modern browsers and IE11. _You have to polyfill `Array.prototype.findIndex` to make it works on IE_
-
-**The [examples](https://autodesk.github.io/react-base-table/examples) don't work on IE as they are powered by [react-runner](https://github.com/nihgwu/react-runner) which is a `react-live` like library but only for modern browsers.**
+`BaseTable` is tested on all modern browsers (Chrome, Firefox, Safari, Edge). IE is no longer supported.
 
 ## Advance
 
@@ -90,7 +93,7 @@ $column-padding: 7.5px;
 $show-frozen-rows-shadow: false;
 $show-frozen-columns-shadow: true;
 
-@import '~react-base-table/es/_BaseTable.scss';
+@import 'react-base-table/dist/esm/_BaseTable.scss';
 
 .#{$table-prefix} {
   &:not(.#{$table-prefix}--show-left-shadow) {
@@ -140,7 +143,16 @@ We are using a advanced table component based on `BaseTable` internally, with mu
 
 ## Development
 
-We use `Yarn` as the package manager, checkout this repo and run `yarn` under both root folder and `website` folder in install packages, then run `yarn start` to start the demo site powered by `Gatsby`
+Requires **Node.js >= 18** (Node 24 recommended). We use `Yarn` as the package manager.
+
+```bash
+yarn install --ignore-scripts
+cd website && yarn install
+cd ..
+yarn start
+```
+
+This starts the demo site powered by Gatsby.
 
 ## Contributing
 

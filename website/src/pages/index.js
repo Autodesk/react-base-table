@@ -62,13 +62,13 @@ export default () => (
         BaseTable is a react table component to display large data set with high
         performance and flexibility
       </Description>
-      <StartLink to="/docs">Get Started</StartLink>
-      <ExampleLink to="/examples">View Examples</ExampleLink>
+      <StartLink to="/docs/get-started">Get Started</StartLink>
+      <ExampleLink to="/examples/default">View Examples</ExampleLink>
     </Hero>
     <Content>
-      <StyledLink to="/docs">Docs</StyledLink>
-      <StyledLink to="/api">API</StyledLink>
-      <StyledLink to="/examples">Examples</StyledLink>
+      <StyledLink to="/docs/get-started">Docs</StyledLink>
+      <StyledLink to="/api/basetable">API</StyledLink>
+      <StyledLink to="/examples/default">Examples</StyledLink>
       <ExternalLink
         href="https://autodesk.github.io/react-base-table/"
         rel="noopener noreferrer"

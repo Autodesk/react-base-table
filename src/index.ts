@@ -17,3 +17,23 @@ export {
   getScrollbarSize,
   getValue,
 } from './utils';
+
+export type {
+  ColumnShape,
+  RowData,
+  RowKey,
+  SortOrderValue,
+  AlignmentValue,
+  FrozenDirectionValue,
+  CellRendererProps,
+  HeaderRendererProps,
+  RowRendererProps,
+  RowEventHandlerParams,
+  RowEventHandlers,
+  CallOrReturn,
+  ScrollArgs,
+  RowsRenderedArgs,
+  SortByShape,
+  SortState,
+  TableComponents,
+} from './types';

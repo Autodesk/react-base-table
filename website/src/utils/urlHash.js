@@ -1,7 +1,8 @@
 import LZString from 'lz-string'
 
 // eslint-disable-next-line
-const sampleCode = require('!raw-loader!./sample.code')
+const _sampleCode = require('!raw-loader!./sample.code')
+const sampleCode = _sampleCode.default || _sampleCode
 
 export const getCode = () => {
   if (typeof document === 'undefined') return sampleCode
@@ -14,7 +15,7 @@ export const getCode = () => {
   )
 }
 
-export const replaceState = code => {
+export const replaceState = (code) => {
   const hash = code ? LZString.compressToEncodedURIComponent(code) : ''
 
   if (

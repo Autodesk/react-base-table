@@ -51,8 +51,11 @@ const NavLink = styled(Link).attrs({
   }
   &,
   &:focus {
-    color: ${props =>
-      props.pathname && props.pathname.includes(props.to) ? '#fff' : '#bcc9d1'};
+    color: ${(props) =>
+      props.pathname &&
+      props.pathname.startsWith(props.activePrefix || props.to)
+        ? '#fff'
+        : '#bcc9d1'};
   }
   &:last-child {
     padding-right: 0;
@@ -85,13 +88,21 @@ const Header = ({ pathname }) => {
           v{pkg.version}
         </Version>
         <Spacer />
-        <NavLink to="/docs" pathname={pathname}>
+        <NavLink
+          to="/docs/get-started"
+          activePrefix="/docs"
+          pathname={pathname}
+        >
           Docs
         </NavLink>
-        <NavLink to="/api" pathname={pathname}>
+        <NavLink to="/api/basetable" activePrefix="/api" pathname={pathname}>
           API
         </NavLink>
-        <NavLink to="/examples" pathname={pathname}>
+        <NavLink
+          to="/examples/default"
+          activePrefix="/examples"
+          pathname={pathname}
+        >
           Examples
         </NavLink>
         <NavLink to="/playground" pathname={pathname}>

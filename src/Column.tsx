@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Alignment = {
+import type { AlignmentValue, FrozenDirectionValue } from './types';
+
+export const Alignment: Record<string, AlignmentValue> = {
   LEFT: 'left',
   CENTER: 'center',
   RIGHT: 'right',
 };
 
-export const FrozenDirection = {
+export const FrozenDirection: Record<string, FrozenDirectionValue> = {
   LEFT: 'left',
   RIGHT: 'right',
   DEFAULT: true,
@@ -99,7 +101,7 @@ Column.propTypes = {
   headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };
 
-Column.Alignment = Alignment;
-Column.FrozenDirection = FrozenDirection;
+(Column as any).Alignment = Alignment;
+(Column as any).FrozenDirection = FrozenDirection;
 
 export default Column;

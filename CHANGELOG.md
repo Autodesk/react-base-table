@@ -1,6 +1,38 @@
 # CHANGELOG
 
-## NEXT VERSION
+## v2.0.0 (2026-04-16)
+
+### Breaking Changes
+
+- **Build output restructured**: `lib/` → `dist/cjs/`, `es/` → `dist/esm/`, `types/` → `dist/types/`, `styles.css` → `dist/styles.css`
+  - CSS import changed from `react-base-table/styles.css` to `react-base-table/dist/styles.css`
+  - SCSS import changed from `~react-base-table/es/_BaseTable.scss` to `react-base-table/dist/esm/_BaseTable.scss`
+- **Peer dependency**: requires React >= 17.0.2 (dropped IE11 support)
+- **Removed hand-written `types/index.d.ts`**: replaced by auto-generated declarations from TypeScript source
+
+### Features
+
+- **TypeScript**: rewritten all source files (`src/`) and specs (`spec/`) in TypeScript; ships `.d.ts` declarations out of the box
+- **Exported types**: `ColumnShape`, `RowData`, `RowKey`, `CellRendererProps`, `HeaderRendererProps`, `RowRendererProps`, `ScrollArgs`, `SortByShape`, `SortState`, `TableComponents`, and more
+- **New utility export**: `cloneArray`
+
+### Upgrades
+
+- Upgraded all dev dependencies: ESLint 9, Jest 30, Prettier 3, Husky 9, Sass (Dart), TypeScript 6
+- Replaced `node-sass` with `sass` (Dart Sass)
+- Replaced `react-test-renderer` with `@testing-library/react`
+- Migrated ESLint from `.eslintrc` to flat config (`eslint.config.mjs`) with `@typescript-eslint/parser`
+- Moved test files from `src/` to dedicated `spec/` directory
+
+### Bug Fixes
+
+- fix: `_handleRowExpand` expand logic was always true (`!arr.indexOf(x) >= 0` → `arr.indexOf(x) < 0`)
+
+### Website (Gatsby demo)
+
+- Upgraded Gatsby 2 → 4, React 16 → 18, and all associated plugins
+- Migrated `faker` → `@faker-js/faker` v8
+- Fixed navigation links, code block rendering, and live code examples
 
 ## v1.13.5 (2024-05-24)
 

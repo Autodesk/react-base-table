@@ -18,7 +18,7 @@ $column-padding: 7.5px;
 $show-frozen-rows-shadow: false;
 $show-frozen-columns-shadow: true;
 
-@import '~react-base-table/es/_BaseTable.scss';
+@import 'react-base-table/dist/esm/_BaseTable.scss';
 
 .#{$table-prefix} {
   &:not(.#{$table-prefix}--show-left-shadow) {

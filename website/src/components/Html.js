@@ -4,12 +4,12 @@ import rehypeReact from 'rehype-react'
 import CodeBlock from './CodeBlock'
 import CodePreview from './CodePreview'
 
-const parseMeta = meta => {
+const parseMeta = (meta) => {
   const options = {}
   if (!meta) return options
 
   const items = meta.split(/\s+/)
-  items.forEach(item => {
+  items.forEach((item) => {
     if (/^[\w-]+=?$/.test(item)) options[item] = true
     else if (/^[\w-]+=[^=]+$/.test(item)) {
       const [key, value] = item.split('=')
@@ -32,7 +32,7 @@ const parseMeta = meta => {
   return options
 }
 
-const Pre = props => {
+const Pre = (props) => {
   if (!props.children[0]) return <pre {...props} />
 
   const { children, className } = props.children[0].props
@@ -54,6 +54,7 @@ const Pre = props => {
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
+  Fragment: React.Fragment,
   components: {
     pre: Pre,
   },

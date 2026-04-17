@@ -1,24 +1,24 @@
 const dataGenerator = () => ({
-  id: faker.random.uuid(),
-  name: faker.name.findName(),
-  gender: faker.random.boolean() ? 'male' : 'female',
+  id: faker.string.uuid(),
+  name: faker.person.fullName(),
+  gender: faker.datatype.boolean() ? 'male' : 'female',
   score: {
-    math: faker.random.number(70) + 30,
+    math: faker.number.int({ min: 30, max: 100 }),
   },
-  birthday: faker.date.between(1995, 2005),
-  attachments: faker.random.number(5),
+  birthday: faker.date.between({ from: '1995-01-01', to: '2005-12-31' }),
+  attachments: faker.number.int({ max: 5 }),
   description: faker.lorem.sentence(),
   email: faker.internet.email(),
-  country: faker.address.country(),
+  country: faker.location.country(),
   address: {
-    street: faker.address.streetAddress(),
-    city: faker.address.city(),
-    zipCode: faker.address.zipCode(),
+    street: faker.location.streetAddress(),
+    city: faker.location.city(),
+    zipCode: faker.location.zipCode(),
   },
 })
 
 const GenderContainer = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.gender === 'male' ? 'lightblue' : 'pink'};
   color: white;
   border-radius: 3px;
@@ -37,7 +37,7 @@ const Gender = ({ gender }) => (
 )
 
 const Score = styled.span`
-  color: ${props => (props.score >= 60 ? 'green' : 'red')};
+  color: ${(props) => (props.score >= 60 ? 'green' : 'red')};
 `
 
 const Attachment = styled.div`
@@ -80,7 +80,9 @@ export default class App extends React.Component {
       width: 60,
       align: Column.Alignment.CENTER,
       sortable: false,
-      cellRenderer: ({ cellData: score }) => <Score score={score}>{score}</Score>,
+      cellRenderer: ({ cellData: score }) => (
+        <Score score={score}>{score}</Score>
+      ),
     },
     {
       key: 'gender',
@@ -151,7 +153,7 @@ export default class App extends React.Component {
         <button
           onClick={() => {
             this.setState({
-              data: this.state.data.filter(x => x.id !== rowData.id),
+              data: this.state.data.filter((x) => x.id !== rowData.id),
             })
           }}
         >
@@ -161,7 +163,7 @@ export default class App extends React.Component {
     },
   ]
 
-  onColumnSort = sortBy => {
+  onColumnSort = (sortBy) => {
     const order = sortBy.order === SortOrder.ASC ? 1 : -1
     const data = [...this.state.data]
     data.sort((a, b) => (a[sortBy.key] > b[sortBy.key] ? order : -order))

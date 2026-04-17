@@ -16,7 +16,13 @@ const EditorContainer = styled.div`
 `
 
 const StyledEditor = styled(Editor)`
-  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
+  font-family:
+    source-code-pro,
+    Menlo,
+    Monaco,
+    Consolas,
+    Courier New,
+    monospace;
   font-size: 1.4rem;
   white-space: pre;
   background: #222;
@@ -35,16 +41,23 @@ const StyledEditor = styled(Editor)`
 const CodeEditor = ({ sourceCode, language, onChange, ...rest }) => {
   const [code, setCode] = useState(sourceCode)
   const debouncedChange = useMemo(() => debounce(onChange, 300), [onChange])
-  const handleChange = useCallback(code => {
-    setCode(code)
-    debouncedChange(code)
-  }, [debouncedChange])
+  const handleChange = useCallback(
+    (code) => {
+      setCode(code)
+      debouncedChange(code)
+    },
+    [debouncedChange]
+  )
   useEffect(() => setCode(sourceCode), [sourceCode])
 
   return (
     <Container {...rest}>
       <EditorContainer>
-        <StyledEditor code={code} language={language} onChange={handleChange} />
+        <StyledEditor
+          value={code}
+          language={language}
+          onChange={handleChange}
+        />
       </EditorContainer>
       <CopyButton content={code} />
     </Container>

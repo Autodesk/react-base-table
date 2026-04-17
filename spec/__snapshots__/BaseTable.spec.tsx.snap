@@ -1,0 +1,2612 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Table renders correctly 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can be set to disabled 1`] = `
+<div
+  class="BaseTable BaseTable--disabled"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can be set to fixed 1`] = `
+<div
+  class="BaseTable BaseTable--fixed"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 0 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 0 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 0 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 0 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 0 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 0 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can freeze rows 1`] = `
+<div
+  class="BaseTable BaseTable--has-frozen-rows"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 0px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 100px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 100px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row BaseTable__row--frozen"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row BaseTable__row--frozen"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can hide the header 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 100px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive an emptyRenderer callback 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive an headerRenderer callback 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row BaseTable__header-row--customized"
+          role="row"
+          style="width: 100%; height: 50px;"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive an rowRenderer callback 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row BaseTable__row--customized"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        />
+        <div
+          class="BaseTable__row BaseTable__row--customized"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        />
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive children 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive className 1`] = `
+<div
+  class="BaseTable custom-class"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive defaultExpandedRowKeys 1`] = `
+<div
+  class="BaseTable BaseTable--expandable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row BaseTable__row--depth-0 BaseTable__row--expanded"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon BaseTable__expand-icon--expanded"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row BaseTable__row--depth-0"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive empty data 1`] = `
+<div
+  class="BaseTable BaseTable--empty"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 0px; width: 100px;"
+      />
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__empty-layer"
+    style="top: 50px; bottom: 0px;"
+  />
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive expandColumnKey 1`] = `
+<div
+  class="BaseTable BaseTable--expandable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row BaseTable__row--depth-0"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row BaseTable__row--depth-0"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive expandedRowKeys 1`] = `
+<div
+  class="BaseTable BaseTable--expandable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row BaseTable__row--depth-0 BaseTable__row--expanded"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon BaseTable__expand-icon--expanded"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row BaseTable__row--depth-0"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__expand-icon"
+              style="font-family: initial; cursor: pointer; user-select: none; width: 16px; min-width: 16px; height: 16px; line-height: 16px; font-size: 16px; text-align: center; transition: transform 0.15s ease-out; transform: rotate(0deg); margin-left: 0px;"
+            />
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive headerClassName 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row custom-class"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive headerHeight 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 70px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 30px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 30px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 30px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive height 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive rowClassName 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row custom-class"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row custom-class"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive rowHeight 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 60px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 30px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 30px; height: 30px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive style 1`] = `
+<div
+  class="BaseTable"
+  style="color: red; width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can receive width 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;
+
+exports[`Table table can specific a different rowKey 1`] = `
+<div
+  class="BaseTable"
+  style="width: 100px; height: 100px; position: relative;"
+>
+  <div
+    class="BaseTable__table BaseTable__table-main"
+    role="table"
+  >
+    <div
+      class="BaseTable__body"
+      style="position: relative; height: 50px; width: 100px; overflow: auto; -webkit-overflow-scrolling: touch; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 100px; width: 100px;"
+      >
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 0px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              1
+            </div>
+          </div>
+        </div>
+        <div
+          class="BaseTable__row"
+          role="row"
+          style="position: absolute; left: 0px; top: 50px; height: 50px; width: 100px;"
+        >
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="BaseTable__row-cell"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__row-cell-text"
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="BaseTable__header"
+      role="grid"
+      style="width: 100px; height: 50px; position: relative; overflow: hidden;"
+    >
+      <div
+        role="rowgroup"
+        style="width: 100px; height: 50px;"
+      >
+        <div
+          class="BaseTable__header-row"
+          role="row"
+          style="width: 100%; height: 50px;"
+        >
+          <div
+            class="BaseTable__header-cell"
+            data-key="code"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              code
+            </div>
+          </div>
+          <div
+            class="BaseTable__header-cell"
+            data-key="name"
+            role="gridcell"
+            style="flex: 0 1 auto; width: 50px; overflow: hidden;"
+          >
+            <div
+              class="BaseTable__header-cell-text"
+            >
+              name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="BaseTable__overlay"
+  />
+</div>
+`;

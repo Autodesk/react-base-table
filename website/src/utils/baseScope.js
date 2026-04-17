@@ -4,7 +4,7 @@ import styled, { css, keyframes, createGlobalStyle } from 'styled-components'
 import * as ReactSortableHoc from 'react-sortable-hoc'
 import * as ReactOverlays from 'react-overlays'
 import ReactTexty from 'react-texty'
-import faker from 'faker';
+import { faker } from '@faker-js/faker'
 
 import BaseTable, {
   Column,
@@ -42,8 +42,8 @@ const generateData = (columns, count = 200, prefix = 'row-') =>
   })
 
 const noop = () => {}
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-const action = message => args => console.log(message, args)
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+const action = (message) => (args) => console.log(message, args)
 
 const Table = React.forwardRef((props, ref) => (
   <BaseTable ref={ref} width={700} height={400} {...props} />

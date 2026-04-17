@@ -3,10 +3,26 @@ import PropTypes from 'prop-types';
 
 import { renderElement } from './utils';
 
+import type { ColumnShape } from './types';
+
+export interface TableHeaderRowProps {
+  isScrolling?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  columns: ColumnShape[];
+  headerIndex?: number;
+  cellRenderer?: (args: any) => React.ReactNode;
+  headerRenderer?: React.ComponentType<any> | React.ReactElement | ((props: any) => React.ReactNode);
+  expandColumnKey?: string;
+  expandIcon?: React.ComponentType<any>;
+  tagName?: React.ElementType;
+  [key: string]: any;
+}
+
 /**
  * HeaderRow component for BaseTable
  */
-const TableHeaderRow = ({
+const TableHeaderRow: React.FC<TableHeaderRowProps> = ({
   className,
   style,
   columns,
@@ -15,21 +31,21 @@ const TableHeaderRow = ({
   headerRenderer,
   expandColumnKey,
   expandIcon: ExpandIcon,
-  tagName: Tag,
+  tagName: Tag = 'div',
   ...rest
 }) => {
-  let cells = columns.map((column, columnIndex) =>
-    cellRenderer({
+  let cells: React.ReactNode = columns.map((column, columnIndex) =>
+    cellRenderer!({
       columns,
       column,
       columnIndex,
       headerIndex,
-      expandIcon: column.key === expandColumnKey && <ExpandIcon />,
-    })
+      expandIcon: column.key === expandColumnKey && ExpandIcon && <ExpandIcon />,
+    }),
   );
 
   if (headerRenderer) {
-    cells = renderElement(headerRenderer, { cells, columns, headerIndex });
+    cells = renderElement(headerRenderer as any, { cells, columns, headerIndex });
   }
 
   return (
@@ -37,10 +53,6 @@ const TableHeaderRow = ({
       {cells}
     </Tag>
   );
-};
-
-TableHeaderRow.defaultProps = {
-  tagName: 'div',
 };
 
 TableHeaderRow.propTypes = {

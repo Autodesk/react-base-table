@@ -1,7 +1,7 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
-import BaseTable from './BaseTable';
+import BaseTable from '../src/BaseTable';
 
 const RENDERER = () => null;
 
@@ -33,123 +33,126 @@ const data = [
   },
 ];
 
-const Table = props => <BaseTable width={100} height={100} data={data} columns={columns} {...props} />;
+const Table = (props: any) => <BaseTable width={100} height={100} data={data} columns={columns} {...props} />;
 
-describe('Table', function() {
+function renderSnapshot(element: React.ReactElement) {
+  const { container } = render(element);
+  return container.firstChild;
+}
+
+describe('Table', function () {
   test('renders correctly', () => {
-    const tree = renderer.create(<Table />).toJSON();
+    const tree = renderSnapshot(<Table />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive className', () => {
-    const tree = renderer.create(<Table className="custom-class" />).toJSON();
+    const tree = renderSnapshot(<Table className="custom-class" />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive style', () => {
-    const tree = renderer.create(<Table style={{ color: 'red' }} />).toJSON();
+    const tree = renderSnapshot(<Table style={{ color: 'red' }} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive children', () => {
-    const tree = renderer
-      .create(
-        <Table>
-          <BaseTable.Column key="code" dataKey="code" width={30} />
-          <BaseTable.Column key="name" dataKey="name" width={30} />
-        </Table>
-      )
-      .toJSON();
+    const tree = renderSnapshot(
+      <Table>
+        <BaseTable.Column key="code" dataKey="code" width={30} />
+        <BaseTable.Column key="name" dataKey="name" width={30} />
+      </Table>,
+    );
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive empty data', () => {
-    const tree = renderer.create(<Table data={[]} />).toJSON();
+    const tree = renderSnapshot(<Table data={[]} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can specific a different rowKey', () => {
-    const tree = renderer.create(<Table rowKey="code" />).toJSON();
+    const tree = renderSnapshot(<Table rowKey="code" />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive width', () => {
-    const tree = renderer.create(<Table width={100} />).toJSON();
+    const tree = renderSnapshot(<Table width={100} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive height', () => {
-    const tree = renderer.create(<Table height={100} />).toJSON();
+    const tree = renderSnapshot(<Table height={100} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive rowHeight', () => {
-    const tree = renderer.create(<Table rowHeight={30} />).toJSON();
+    const tree = renderSnapshot(<Table rowHeight={30} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive headerHeight', () => {
-    const tree = renderer.create(<Table headerHeight={30} />).toJSON();
+    const tree = renderSnapshot(<Table headerHeight={30} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can be set to fixed', () => {
-    const tree = renderer.create(<Table fixed />).toJSON();
+    const tree = renderSnapshot(<Table fixed />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can be set to disabled', () => {
-    const tree = renderer.create(<Table disabled />).toJSON();
+    const tree = renderSnapshot(<Table disabled />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can hide the header', () => {
-    const tree = renderer.create(<Table headerHeight={0} />).toJSON();
+    const tree = renderSnapshot(<Table headerHeight={0} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can freeze rows', () => {
-    const tree = renderer.create(<Table frozenData={data} />).toJSON();
+    const tree = renderSnapshot(<Table frozenData={data} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive an emptyRenderer callback', () => {
-    const tree = renderer.create(<Table emptyRenderer={RENDERER} />).toJSON();
+    const tree = renderSnapshot(<Table emptyRenderer={RENDERER} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive an headerRenderer callback', () => {
-    const tree = renderer.create(<Table headerRenderer={RENDERER} />).toJSON();
+    const tree = renderSnapshot(<Table headerRenderer={RENDERER} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive an rowRenderer callback', () => {
-    const tree = renderer.create(<Table rowRenderer={RENDERER} />).toJSON();
+    const tree = renderSnapshot(<Table rowRenderer={RENDERER} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive headerClassName', () => {
-    const tree = renderer.create(<Table headerClassName="custom-class" />).toJSON();
+    const tree = renderSnapshot(<Table headerClassName="custom-class" />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive rowClassName', () => {
-    const tree = renderer.create(<Table rowClassName="custom-class" />).toJSON();
+    const tree = renderSnapshot(<Table rowClassName="custom-class" />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive expandColumnKey', () => {
-    const tree = renderer.create(<Table expandColumnKey="code" />).toJSON();
+    const tree = renderSnapshot(<Table expandColumnKey="code" />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive defaultExpandedRowKeys', () => {
-    const tree = renderer.create(<Table expandColumnKey="code" defaultExpandedRowKeys={['1']} />).toJSON();
+    const tree = renderSnapshot(<Table expandColumnKey="code" defaultExpandedRowKeys={['1']} />);
     expect(tree).toMatchSnapshot();
   });
 
   test('table can receive expandedRowKeys', () => {
-    const tree = renderer.create(<Table expandColumnKey="code" expandedRowKeys={['1']} />).toJSON();
+    const tree = renderSnapshot(<Table expandColumnKey="code" expandedRowKeys={['1']} />);
     expect(tree).toMatchSnapshot();
   });
 });

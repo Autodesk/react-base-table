@@ -7,7 +7,7 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 
 import '../styles/index.css'
-import 'react-base-table/styles.css'
+import 'react-base-table/dist/styles.css'
 
 const pageMixin = css`
   margin: 0 auto;
@@ -17,7 +17,7 @@ const pageMixin = css`
 const Container = styled.div`
   position: relative;
   padding: 70px 20px 20px;
-  ${props => !props.full && pageMixin};
+  ${(props) => !props.full && pageMixin};
 `
 
 const Content = styled.div`

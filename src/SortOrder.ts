@@ -10,6 +10,6 @@ const SortOrder = {
    * Sort data in descending order
    */
   DESC: 'desc',
-};
+} as const;
 
 export default SortOrder;

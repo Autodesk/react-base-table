@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Alignment = {
+import type { AlignmentValue, FrozenDirectionValue } from './types';
+
+export const Alignment: Record<string, AlignmentValue> = {
   LEFT: 'left',
   CENTER: 'center',
   RIGHT: 'right',
 };
 
-export const FrozenDirection = {
+export const FrozenDirection: Record<string, FrozenDirectionValue> = {
   LEFT: 'left',
   RIGHT: 'right',
   DEFAULT: true,
@@ -17,7 +19,10 @@ export const FrozenDirection = {
 /**
  * Column for BaseTable
  */
-class Column extends React.Component {}
+class Column extends React.Component {
+  static Alignment = Alignment;
+  static FrozenDirection = FrozenDirection;
+}
 
 Column.propTypes = {
   /**
@@ -98,8 +103,5 @@ Column.propTypes = {
    */
   headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };
-
-Column.Alignment = Alignment;
-Column.FrozenDirection = FrozenDirection;
 
 export default Column;

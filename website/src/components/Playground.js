@@ -50,12 +50,11 @@ const Playground = ({ scope: _scope, language, type, ...rest }) => {
   const scope = useMemo(() => ({ ...baseScope, ..._scope }), [_scope])
   const [sourceCode, setSourceCode] = useState(getCode)
   const { element, error, onChange } = useLiveRunner({
-    sourceCode,
+    initialCode: sourceCode,
     scope,
-    type,
   })
   const handleChange = useCallback(
-    code => {
+    (code) => {
       onChange(code)
       replaceState(code)
     },

@@ -2,27 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
+export interface AutoResizerProps {
+  className?: string;
+  width?: number;
+  height?: number;
+  children: (size: { width: number; height: number }) => React.ReactNode;
+  onResize?: (size: { width: number; height: number }) => void;
+}
+
 /**
  * Decorator component that automatically adjusts the width and height of a single child
  */
-const AutoResizer = ({ className, width, height, children, onResize }) => {
+const AutoResizer: React.FC<AutoResizerProps> = ({ className, width, height, children, onResize }) => {
   const disableWidth = typeof width === 'number';
   const disableHeight = typeof height === 'number';
 
   if (disableWidth && disableHeight) {
     return (
       <div className={className} style={{ width, height, position: 'relative' }}>
-        {children({ width, height })}
+        {children({ width: width!, height: height! })}
       </div>
     );
   }
 
   return (
-    <AutoSizer className={className} disableWidth={disableWidth} disableHeight={disableHeight} onResize={onResize}>
-      {size =>
+    <AutoSizer
+      className={className}
+      disableWidth={disableWidth as any}
+      disableHeight={disableHeight as any}
+      onResize={onResize}
+    >
+      {(size: { width: number; height: number }) =>
         children({
-          width: disableWidth ? width : size.width,
-          height: disableHeight ? height : size.height,
+          width: disableWidth ? width! : size.width,
+          height: disableHeight ? height! : size.height,
         })
       }
     </AutoSizer>

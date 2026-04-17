@@ -7,11 +7,75 @@ import memoize from 'memoize-one';
 import Header from './TableHeader';
 import { getEstimatedTotalRowsHeight } from './utils';
 
+import type { ColumnShape, RowData, RowKey } from './types';
+
+export interface GridTableProps {
+  containerStyle?: React.CSSProperties;
+  classPrefix?: string;
+  className?: string;
+  width: number;
+  height: number;
+  headerHeight: number | number[];
+  headerWidth: number;
+  bodyWidth: number;
+  rowHeight: number;
+  estimatedRowHeight?: number | ((args: { rowData: RowData; rowIndex: number }) => number);
+  getRowHeight?: (rowIndex: number) => number;
+  columns: ColumnShape[];
+  data: RowData[];
+  frozenData?: RowData[];
+  rowKey: string | number;
+  useIsScrolling?: boolean;
+  overscanRowCount?: number;
+  hoveredRowKey?: RowKey | null;
+  style?: React.CSSProperties;
+  onScrollbarPresenceChange?: (...args: any[]) => void;
+  onScroll?: (...args: any[]) => void;
+  onRowsRendered?: (args: any) => void;
+  headerRenderer: (args: any) => React.ReactNode;
+  rowRenderer: (args: any) => React.ReactNode;
+  [key: string]: any;
+}
+
 /**
  * A wrapper of the Grid for internal only
  */
-class GridTable extends React.PureComponent {
-  constructor(props) {
+class GridTable extends React.PureComponent<GridTableProps> {
+  headerRef: InstanceType<typeof Header> | null = null;
+  bodyRef: InstanceType<typeof FixedSizeGrid> | InstanceType<typeof VariableSizeGrid> | null = null;
+  innerRef: HTMLElement | null = null;
+
+  _resetColumnWidthCache: (bodyWidth: number) => void;
+  _getEstimatedTotalRowsHeight: typeof getEstimatedTotalRowsHeight;
+
+  static propTypes = {
+    containerStyle: PropTypes.object,
+    classPrefix: PropTypes.string,
+    className: PropTypes.string,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
+    headerWidth: PropTypes.number.isRequired,
+    bodyWidth: PropTypes.number.isRequired,
+    rowHeight: PropTypes.number.isRequired,
+    estimatedRowHeight: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
+    getRowHeight: PropTypes.func,
+    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    data: PropTypes.array.isRequired,
+    frozenData: PropTypes.array,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    useIsScrolling: PropTypes.bool,
+    overscanRowCount: PropTypes.number,
+    hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    style: PropTypes.object,
+    onScrollbarPresenceChange: PropTypes.func,
+    onScroll: PropTypes.func,
+    onRowsRendered: PropTypes.func,
+    headerRenderer: PropTypes.func.isRequired,
+    rowRenderer: PropTypes.func.isRequired,
+  };
+
+  constructor(props: GridTableProps) {
     super(props);
 
     this._setHeaderRef = this._setHeaderRef.bind(this);
@@ -20,18 +84,18 @@ class GridTable extends React.PureComponent {
     this._itemKey = this._itemKey.bind(this);
     this._getBodyWidth = this._getBodyWidth.bind(this);
     this._handleItemsRendered = this._handleItemsRendered.bind(this);
-    this._resetColumnWidthCache = memoize(bodyWidth => {
+    this._resetColumnWidthCache = memoize((_bodyWidth: number) => {
       if (!this.props.estimatedRowHeight) return;
-      this.bodyRef && this.bodyRef.resetAfterColumnIndex(0, false);
+      this.bodyRef && (this.bodyRef as any).resetAfterColumnIndex(0, false);
     });
     this._getEstimatedTotalRowsHeight = memoize(getEstimatedTotalRowsHeight);
 
     this.renderRow = this.renderRow.bind(this);
   }
 
-  resetAfterRowIndex(rowIndex = 0, shouldForceUpdate) {
+  resetAfterRowIndex(rowIndex: number = 0, shouldForceUpdate?: boolean) {
     if (!this.props.estimatedRowHeight) return;
-    this.bodyRef && this.bodyRef.resetAfterRowIndex(rowIndex, shouldForceUpdate);
+    this.bodyRef && (this.bodyRef as any).resetAfterRowIndex(rowIndex, shouldForceUpdate);
   }
 
   forceUpdateTable() {
@@ -39,25 +103,25 @@ class GridTable extends React.PureComponent {
     this.bodyRef && this.bodyRef.forceUpdate();
   }
 
-  scrollToPosition(args) {
-    this.headerRef && this.headerRef.scrollTo(args.scrollLeft);
-    this.bodyRef && this.bodyRef.scrollTo(args);
+  scrollToPosition(args: { scrollLeft?: number; scrollTop?: number }) {
+    this.headerRef && this.headerRef.scrollTo(args.scrollLeft || 0);
+    this.bodyRef && this.bodyRef.scrollTo(args as any);
   }
 
-  scrollToTop(scrollTop) {
-    this.bodyRef && this.bodyRef.scrollTo({ scrollTop });
+  scrollToTop(scrollTop: number) {
+    this.bodyRef && this.bodyRef.scrollTo({ scrollTop } as any);
   }
 
-  scrollToLeft(scrollLeft) {
+  scrollToLeft(scrollLeft: number) {
     this.headerRef && this.headerRef.scrollTo(scrollLeft);
-    this.bodyRef && this.bodyRef.scrollToPosition({ scrollLeft });
+    this.bodyRef && (this.bodyRef as any).scrollToPosition({ scrollLeft });
   }
 
-  scrollToRow(rowIndex = 0, align = 'auto') {
-    this.bodyRef && this.bodyRef.scrollToItem({ rowIndex, align });
+  scrollToRow(rowIndex: number = 0, align: string = 'auto') {
+    this.bodyRef && (this.bodyRef as any).scrollToItem({ rowIndex, align });
   }
 
-  getTotalRowsHeight() {
+  getTotalRowsHeight(): number {
     const { data, rowHeight, estimatedRowHeight } = this.props;
 
     if (estimatedRowHeight) {
@@ -68,7 +132,7 @@ class GridTable extends React.PureComponent {
     return data.length * rowHeight;
   }
 
-  renderRow(args) {
+  renderRow(args: any) {
     const { data, columns, rowRenderer } = this.props;
     const rowData = data[args.rowIndex];
     return rowRenderer({ ...args, columns, rowData });
@@ -98,11 +162,11 @@ class GridTable extends React.PureComponent {
       ...rest
     } = this.props;
     const headerHeight = this._getHeaderHeight();
-    const frozenRowCount = frozenData.length;
+    const frozenRowCount = frozenData ? frozenData.length : 0;
     const frozenRowsHeight = rowHeight * frozenRowCount;
     const cls = cn(`${classPrefix}__table`, className);
     const containerProps = containerStyle ? { style: containerStyle } : null;
-    const Grid = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
+    const Grid: any = estimatedRowHeight ? VariableSizeGrid : FixedSizeGrid;
 
     this._resetColumnWidthCache(bodyWidth);
     return (
@@ -117,7 +181,7 @@ class GridTable extends React.PureComponent {
           frozenData={frozenData}
           width={width}
           height={Math.max(height - headerHeight - frozenRowsHeight, 0)}
-          rowHeight={estimatedRowHeight ? getRowHeight : rowHeight}
+          rowHeight={estimatedRowHeight ? getRowHeight! : rowHeight}
           estimatedRowHeight={typeof estimatedRowHeight === 'function' ? undefined : estimatedRowHeight}
           rowCount={data.length}
           overscanRowCount={overscanRowCount}
@@ -131,8 +195,6 @@ class GridTable extends React.PureComponent {
           children={this.renderRow}
         />
         {headerHeight + frozenRowsHeight > 0 && (
-          // put header after body and reverse the display order via css
-          // to prevent header's shadow being covered by body
           <Header
             {...rest}
             className={`${classPrefix}__header`}
@@ -153,24 +215,24 @@ class GridTable extends React.PureComponent {
     );
   }
 
-  _setHeaderRef(ref) {
+  _setHeaderRef(ref: InstanceType<typeof Header> | null) {
     this.headerRef = ref;
   }
 
-  _setBodyRef(ref) {
+  _setBodyRef(ref: any) {
     this.bodyRef = ref;
   }
 
-  _setInnerRef(ref) {
+  _setInnerRef(ref: HTMLElement | null) {
     this.innerRef = ref;
   }
 
-  _itemKey({ rowIndex }) {
+  _itemKey({ rowIndex }: { rowIndex: number }) {
     const { data, rowKey } = this.props;
-    return data[rowIndex][rowKey];
+    return data[rowIndex][rowKey as string];
   }
 
-  _getHeaderHeight() {
+  _getHeaderHeight(): number {
     const { headerHeight } = this.props;
     if (Array.isArray(headerHeight)) {
       return headerHeight.reduce((sum, height) => sum + height, 0);
@@ -178,12 +240,17 @@ class GridTable extends React.PureComponent {
     return headerHeight;
   }
 
-  _getBodyWidth() {
+  _getBodyWidth(): number {
     return this.props.bodyWidth;
   }
 
-  _handleItemsRendered({ overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex }) {
-    this.props.onRowsRendered({
+  _handleItemsRendered({
+    overscanRowStartIndex,
+    overscanRowStopIndex,
+    visibleRowStartIndex,
+    visibleRowStopIndex,
+  }: any) {
+    this.props.onRowsRendered!({
       overscanStartIndex: overscanRowStartIndex,
       overscanStopIndex: overscanRowStopIndex,
       startIndex: visibleRowStartIndex,
@@ -191,32 +258,5 @@ class GridTable extends React.PureComponent {
     });
   }
 }
-
-GridTable.propTypes = {
-  containerStyle: PropTypes.object,
-  classPrefix: PropTypes.string,
-  className: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
-  headerWidth: PropTypes.number.isRequired,
-  bodyWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.number.isRequired,
-  estimatedRowHeight: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
-  getRowHeight: PropTypes.func,
-  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  data: PropTypes.array.isRequired,
-  frozenData: PropTypes.array,
-  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  useIsScrolling: PropTypes.bool,
-  overscanRowCount: PropTypes.number,
-  hoveredRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  style: PropTypes.object,
-  onScrollbarPresenceChange: PropTypes.func,
-  onScroll: PropTypes.func,
-  onRowsRendered: PropTypes.func,
-  headerRenderer: PropTypes.func.isRequired,
-  rowRenderer: PropTypes.func.isRequired,
-};
 
 export default GridTable;

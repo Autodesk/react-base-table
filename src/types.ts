@@ -135,6 +135,7 @@ export type SortState = Record<string, SortOrderValue>;
 export interface TableComponents {
   TableCell?: React.ElementType;
   TableHeaderCell?: React.ElementType;
+  TableHeaderRow?: React.ElementType;
   ExpandIcon?: React.ElementType;
   SortIndicator?: React.ElementType;
 }

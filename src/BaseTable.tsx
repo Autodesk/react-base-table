@@ -58,6 +58,7 @@ const getContainerStyle = (width: number, maxWidth: number, height: number): Rea
 const DEFAULT_COMPONENTS: Record<string, React.ComponentType<any>> = {
   TableCell,
   TableHeaderCell,
+  TableHeaderRow,
   ExpandIcon,
   SortIndicator,
 };
@@ -862,8 +863,8 @@ class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
       expandColumnKey: this.props.expandColumnKey,
       expandIcon: this._getComponent('ExpandIcon'),
     };
-
-    return <TableHeaderRow {...headerProps} />;
+    const TableHeaderRowComp = this._getComponent('TableHeaderRow');
+    return <TableHeaderRowComp {...headerProps} />;
   }
 
   renderHeaderCell({ columns, column, columnIndex, headerIndex, expandIcon }: any) {

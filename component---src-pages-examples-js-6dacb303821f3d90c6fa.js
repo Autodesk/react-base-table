@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_base_table_website=self.webpackChunkreact_base_table_website||[]).push([[80],{3320:function(e,t,a){a.r(t);var l=a(6540),s=a(5702),r=a(7078),c=a(4765);t.default=()=>l.createElement(c.A,{title:"Examples"},l.createElement(s.Redirect,{from:(0,r.Fe)("/examples"),to:(0,r.Fe)("/examples/default"),noThrow:!0}))}}]);
+//# sourceMappingURL=component---src-pages-examples-js-6dacb303821f3d90c6fa.js.map

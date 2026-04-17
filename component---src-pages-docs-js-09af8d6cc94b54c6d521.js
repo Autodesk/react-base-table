@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_base_table_website=self.webpackChunkreact_base_table_website||[]).push([[116],{968:function(e,t,a){a.r(t);var s=a(6540),c=a(5702),r=a(7078),b=a(4765);t.default=()=>s.createElement(b.A,{title:"Docs"},s.createElement(c.Redirect,{from:(0,r.Fe)("/docs"),to:(0,r.Fe)("/docs/get-started"),noThrow:!0}))}}]);
+//# sourceMappingURL=component---src-pages-docs-js-09af8d6cc94b54c6d521.js.map

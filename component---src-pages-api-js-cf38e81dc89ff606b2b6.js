@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_base_table_website=self.webpackChunkreact_base_table_website||[]).push([[37],{6035:function(e,t,a){a.r(t);var b=a(6540),r=a(5702),s=a(7078),c=a(4765);t.default=()=>b.createElement(c.A,{title:"API"},b.createElement(r.Redirect,{from:(0,s.Fe)("/api"),to:(0,s.Fe)("/api/basetable"),noThrow:!0}))}}]);
+//# sourceMappingURL=component---src-pages-api-js-cf38e81dc89ff606b2b6.js.map

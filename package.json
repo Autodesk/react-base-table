@@ -16,6 +16,9 @@
     "type": "git",
     "url": "https://github.com/Autodesk/react-base-table.git"
   },
+  "bugs": {
+    "url": "https://github.com/Autodesk/react-base-table/issues"
+  },
   "scripts": {
     "start": "cd website && npm start",
     "deploy": "cd website && npm run deploy",

@@ -1,6 +1,9 @@
 {
   "name": "react-base-table",
   "version": "2.1.0",
+  "bugs": {
+    "url": "https://github.com/Autodesk/react-base-table/issues"
+  },
   "description": "a react table component to display large data set with high performance and flexibility",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

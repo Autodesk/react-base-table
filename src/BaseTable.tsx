@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useCallback, useMemo, useEffect, useReducer, useImperativeHandle } from 'react';
 import cn from 'classnames';
 import memoize from 'memoize-one';
 
 import GridTable from './GridTable';
+import type { GridTableHandle } from './types';
 import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
@@ -32,6 +32,8 @@ import {
 } from './utils';
 
 import type {
+  BaseTableProps,
+  BaseTableHandle,
   ColumnShape,
   RowData,
   RowKey,
@@ -67,645 +69,488 @@ const RESIZE_THROTTLE_WAIT = 50;
 
 const EMPTY_ARRAY: any[] = [];
 
-export interface BaseTableProps {
-  classPrefix?: string;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-  columns?: ColumnShape[];
-  data: RowData[];
-  frozenData?: RowData[];
-  rowKey: string | number;
-  width: number;
-  height?: number;
-  maxHeight?: number;
-  rowHeight?: number;
-  estimatedRowHeight?: number | ((args: { rowData: RowData; rowIndex: number }) => number);
-  headerHeight: number | number[];
-  footerHeight?: number;
-  fixed?: boolean;
-  disabled?: boolean;
-  overlayRenderer?: React.ComponentType<any> | React.ReactElement;
-  emptyRenderer?: React.ComponentType<any> | React.ReactElement;
-  footerRenderer?: React.ComponentType<any> | React.ReactElement;
-  headerRenderer?: React.ComponentType<any> | React.ReactElement;
-  rowRenderer?: React.ComponentType<any> | React.ReactElement;
-  headerClassName?: string | ((args: { columns: ColumnShape[]; headerIndex: number }) => string);
-  rowClassName?: string | ((args: { columns: ColumnShape[]; rowData: RowData; rowIndex: number }) => string);
-  headerProps?: Record<string, any> | ((args: { columns: ColumnShape[]; headerIndex: number }) => Record<string, any>);
-  headerCellProps?:
-    | Record<string, any>
-    | ((args: {
-        columns: ColumnShape[];
-        column: ColumnShape;
-        columnIndex: number;
-        headerIndex: number;
-      }) => Record<string, any>);
-  rowProps?:
-    | Record<string, any>
-    | ((args: { columns: ColumnShape[]; rowData: RowData; rowIndex: number }) => Record<string, any>);
-  cellProps?:
-    | Record<string, any>
-    | ((args: {
-        columns: ColumnShape[];
-        column: ColumnShape;
-        columnIndex: number;
-        rowData: RowData;
-        rowIndex: number;
-      }) => Record<string, any>);
-  expandIconProps?:
-    | Record<string, any>
-    | ((args: {
-        rowData: RowData;
-        rowIndex: number;
-        depth: number;
-        expandable: boolean;
-        expanded: boolean;
-      }) => Record<string, any>);
-  expandColumnKey?: string;
-  defaultExpandedRowKeys?: RowKey[];
-  expandedRowKeys?: RowKey[];
-  onRowExpand?: (args: { expanded: boolean; rowData: RowData; rowIndex: number; rowKey: RowKey }) => void;
-  onExpandedRowsChange?: (expandedRowKeys: RowKey[]) => void;
-  sortBy?: SortByShape;
-  sortState?: SortState;
-  onColumnSort?: (args: { column: ColumnShape; key: string; order: string }) => void;
-  onColumnResize?: (args: { column: ColumnShape; width: number }) => void;
-  onColumnResizeEnd?: (args: { column: ColumnShape; width: number }) => void;
-  useIsScrolling?: boolean;
-  overscanRowCount?: number;
-  getScrollbarSize?: () => number;
-  onScroll?: (args: ScrollArgs) => void;
-  onEndReached?: (args: { distanceFromEnd: number }) => void;
-  onEndReachedThreshold?: number;
-  onRowsRendered?: (args: RowsRenderedArgs) => void;
-  onScrollbarPresenceChange?: (args: { size: number; horizontal: boolean; vertical: boolean }) => void;
-  rowEventHandlers?: RowEventHandlers;
-  ignoreFunctionInColumnCompare?: boolean;
-  components?: TableComponents;
-}
-
-interface BaseTableState {
-  scrollbarSize: number;
-  hoveredRowKey: RowKey | null;
-  resizingKey: string | null;
-  resizingWidth: number;
-  expandedRowKeys: RowKey[];
-}
+const DEFAULT_PROPS = {
+  classPrefix: 'BaseTable',
+  rowKey: 'id' as string | number,
+  data: [] as RowData[],
+  frozenData: [] as RowData[],
+  fixed: false,
+  headerHeight: 50 as number | number[],
+  rowHeight: 50,
+  footerHeight: 0,
+  defaultExpandedRowKeys: [] as RowKey[],
+  sortBy: {} as SortByShape,
+  useIsScrolling: false,
+  overscanRowCount: 1,
+  onEndReachedThreshold: 500,
+  getScrollbarSize: defaultGetScrollbarSize,
+  ignoreFunctionInColumnCompare: true,
+  onScroll: noop as (...args: any[]) => void,
+  onRowsRendered: noop as (...args: any[]) => void,
+  onScrollbarPresenceChange: noop as (...args: any[]) => void,
+  onRowExpand: noop as (...args: any[]) => void,
+  onExpandedRowsChange: noop as (...args: any[]) => void,
+  onColumnSort: noop as (...args: any[]) => void,
+  onColumnResize: noop as (...args: any[]) => void,
+  onColumnResizeEnd: noop as (...args: any[]) => void,
+};
 
 /**
  * React table component
  */
-class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
-  static Column = Column;
-  static PlaceholderKey = ColumnManager.PlaceholderKey;
+const InnerBaseTable = React.forwardRef<BaseTableHandle, BaseTableProps>((rawProps, ref) => {
+  // Merge with defaults (equivalent to static defaultProps)
+  const props = { ...DEFAULT_PROPS, ...rawProps };
+  const {
+    classPrefix,
+    className,
+    style,
+    children,
+    columns,
+    data,
+    frozenData,
+    rowKey,
+    width,
+    height,
+    maxHeight,
+    rowHeight,
+    estimatedRowHeight,
+    headerHeight,
+    footerHeight,
+    fixed,
+    disabled,
+    overlayRenderer,
+    emptyRenderer,
+    footerRenderer,
+    headerRenderer,
+    rowRenderer,
+    headerClassName,
+    rowClassName,
+    rowProps: rowPropsProp,
+    headerProps: headerPropsProp,
+    headerCellProps: headerCellPropsProp,
+    cellProps: cellPropsProp,
+    expandIconProps,
+    expandColumnKey,
+    defaultExpandedRowKeys,
+    expandedRowKeys: expandedRowKeysProp,
+    onRowExpand,
+    onExpandedRowsChange,
+    sortBy,
+    sortState,
+    onColumnSort,
+    onColumnResize,
+    onColumnResizeEnd,
+    useIsScrolling,
+    overscanRowCount,
+    getScrollbarSize,
+    onScroll,
+    onEndReached,
+    onEndReachedThreshold,
+    onRowsRendered,
+    onScrollbarPresenceChange,
+    rowEventHandlers,
+    ignoreFunctionInColumnCompare,
+    components,
+  } = props;
 
-  static defaultProps = {
-    classPrefix: 'BaseTable',
-    rowKey: 'id',
-    data: [],
-    frozenData: [],
-    fixed: false,
-    headerHeight: 50,
-    rowHeight: 50,
-    footerHeight: 0,
-    defaultExpandedRowKeys: [],
-    sortBy: {},
-    useIsScrolling: false,
-    overscanRowCount: 1,
-    onEndReachedThreshold: 500,
-    getScrollbarSize: defaultGetScrollbarSize,
-    ignoreFunctionInColumnCompare: true,
+  // State
+  const [scrollbarSize, setScrollbarSize] = useState(0);
+  const [hoveredRowKey, setHoveredRowKey] = useState<RowKey | null>(null);
+  const [resizingKey, setResizingKey] = useState<string | null>(null);
+  const [resizingWidth, setResizingWidth] = useState(0);
+  const [expandedRowKeysState, setExpandedRowKeysState] = useState<RowKey[]>(() =>
+    cloneArray(rawProps.defaultExpandedRowKeys || []),
+  );
+  const [, forceRender] = useReducer((x: number) => x + 1, 0);
 
-    onScroll: noop,
-    onRowsRendered: noop,
-    onScrollbarPresenceChange: noop,
-    onRowExpand: noop,
-    onExpandedRowsChange: noop,
-    onColumnSort: noop,
-    onColumnResize: noop,
-    onColumnResizeEnd: noop,
-  };
+  // DOM/component refs
+  const tableNodeRef = useRef<HTMLDivElement | null>(null);
+  const tableRef = useRef<GridTableHandle | null>(null);
+  const leftTableRef = useRef<GridTableHandle | null>(null);
+  const rightTableRef = useRef<GridTableHandle | null>(null);
 
-  static propTypes = {
-    /**
-     * Prefix for table's inner className
-     */
-    classPrefix: PropTypes.string,
-    /**
-     * Class name for the table
-     */
-    className: PropTypes.string,
-    /**
-     * Custom style for the table
-     */
-    style: PropTypes.object,
-    /**
-     * A collection of Column
-     */
-    children: PropTypes.node,
-    /**
-     * Columns for the table
-     */
-    columns: PropTypes.arrayOf(PropTypes.shape(Column.propTypes as any)),
-    /**
-     * The data for the table
-     */
-    data: PropTypes.array.isRequired,
-    /**
-     * The data be frozen to top, `rowIndex` is negative and started from `-1`
-     */
-    frozenData: PropTypes.array,
-    /**
-     * The key field of each data item
-     */
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    /**
-     * The width of the table
-     */
-    width: PropTypes.number.isRequired,
-    /**
-     * The height of the table, will be ignored if `maxHeight` is set
-     */
-    height: PropTypes.number,
-    /**
-     * The max height of the table, the table's height will auto change when data changes,
-     * will turns to vertical scroll if reaches the max height
-     */
-    maxHeight: PropTypes.number,
-    /**
-     * The height of each table row, will be only used by frozen rows if `estimatedRowHeight` is set
-     */
-    rowHeight: PropTypes.number,
-    /**
-     * Estimated row height, the real height will be measure dynamically according to the content
-     * The callback is of the shape of `({ rowData, rowIndex }) => number`
-     */
-    estimatedRowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    /**
-     * The height of the table header, set to 0 to hide the header, could be an array to render multi headers.
-     */
-    headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]).isRequired,
-    /**
-     * The height of the table footer
-     */
-    footerHeight: PropTypes.number,
-    /**
-     * Whether the width of the columns are fixed or flexible
-     */
-    fixed: PropTypes.bool,
-    /**
-     * Whether the table is disabled
-     */
-    disabled: PropTypes.bool,
-    /**
-     * Custom renderer on top of the table component
-     */
-    overlayRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    /**
-     * Custom renderer when the length of data is 0
-     */
-    emptyRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    /**
-     * Custom footer renderer, available only if `footerHeight` is larger then 0
-     */
-    footerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    /**
-     * Custom header renderer
-     * The renderer receives props `{ cells, columns, headerIndex }`
-     */
-    headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    /**
-     * Custom row renderer
-     * The renderer receives props `{ isScrolling, cells, columns, rowData, rowIndex, depth }`
-     */
-    rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    /**
-     * Class name for the table header, could be a callback to return the class name
-     * The callback is of the shape of `({ columns, headerIndex }) => string`
-     */
-    headerClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * Class name for the table row, could be a callback to return the class name
-     * The callback is of the shape of `({ columns, rowData, rowIndex }) => string`
-     */
-    rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * Extra props applied to header element
-     * The handler is of the shape of `({ columns, headerIndex }) object`
-     */
-    headerProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /**
-     * Extra props applied to header cell element
-     * The handler is of the shape of `({ columns, column, columnIndex, headerIndex }) => object`
-     */
-    headerCellProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /**
-     * Extra props applied to row element
-     * The handler is of the shape of `({ columns, rowData, rowIndex }) => object`
-     */
-    rowProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /**
-     * Extra props applied to row cell element
-     * The handler is of the shape of `({ columns, column, columnIndex, rowData, rowIndex }) => object`
-     */
-    cellProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /**
-     * Extra props applied to ExpandIcon component
-     * The handler is of the shape of `({ rowData, rowIndex, depth, expandable, expanded }) => object`
-     */
-    expandIconProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /**
-     * The key for the expand column which render the expand icon if the data is a tree
-     */
-    expandColumnKey: PropTypes.string,
-    /**
-     * Default expanded row keys when initialize the table
-     */
-    defaultExpandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    /**
-     * Controlled expanded row keys
-     */
-    expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    /**
-     * A callback function when expand or collapse a tree node
-     * The handler is of the shape of `({ expanded, rowData, rowIndex, rowKey }) => *`
-     */
-    onRowExpand: PropTypes.func,
-    /**
-     * A callback function when the expanded row keys changed
-     * The handler is of the shape of `(expandedRowKeys) => *`
-     */
-    onExpandedRowsChange: PropTypes.func,
-    /**
-     * The sort state for the table, will be ignored if `sortState` is set
-     */
-    sortBy: PropTypes.shape({
-      /**
-       * Sort key
-       */
-      key: PropTypes.string,
-      /**
-       * Sort order
-       */
-      order: PropTypes.oneOf([SortOrder.ASC, SortOrder.DESC]),
-    }),
-    /**
-     * Multiple columns sort state for the table
-     *
-     * example:
-     * ```js
-     * {
-     *   'column-0': SortOrder.ASC,
-     *   'column-1': SortOrder.DESC,
-     * }
-     * ```
-     */
-    sortState: PropTypes.object,
-    /**
-     * A callback function for the header cell click event
-     * The handler is of the shape of `({ column, key, order }) => *`
-     */
-    onColumnSort: PropTypes.func,
-    /**
-     * A callback function when resizing the column width
-     * The handler is of the shape of `({ column, width }) => *`
-     */
-    onColumnResize: PropTypes.func,
-    /**
-     * A callback function when resizing the column width ends
-     * The handler is of the shape of `({ column, width }) => *`
-     */
-    onColumnResizeEnd: PropTypes.func,
-    /**
-     * Adds an additional isScrolling parameter to the row renderer.
-     * This parameter can be used to show a placeholder row while scrolling.
-     */
-    useIsScrolling: PropTypes.bool,
-    /**
-     * Number of rows to render above/below the visible bounds of the list
-     */
-    overscanRowCount: PropTypes.number,
-    /**
-     * Custom scrollbar size measurement
-     */
-    getScrollbarSize: PropTypes.func,
-    /**
-     * A callback function when scrolling the table
-     * The handler is of the shape of `({ scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested }) => *`
-     *
-     * `scrollLeft` and `scrollTop` are numbers.
-     *
-     * `horizontalDirection` and `verticalDirection` are either `forward` or `backward`.
-     *
-     * `scrollUpdateWasRequested` is a boolean. This value is true if the scroll was caused by `scrollTo*`,
-     * and false if it was the result of a user interaction in the browser.
-     */
-    onScroll: PropTypes.func,
-    /**
-     * A callback function when scrolling the table within `onEndReachedThreshold` of the bottom
-     * The handler is of the shape of `({ distanceFromEnd }) => *`
-     */
-    onEndReached: PropTypes.func,
-    /**
-     * Threshold in pixels for calling `onEndReached`.
-     */
-    onEndReachedThreshold: PropTypes.number,
-    /**
-     * A callback function with information about the slice of rows that were just rendered
-     * The handler is of the shape of `({ overscanStartIndex, overscanStopIndex, startIndex, stopIndex }) => *`
-     */
-    onRowsRendered: PropTypes.func,
-    /**
-     * A callback function when the scrollbar presence state changed
-     * The handler is of the shape of `({ size, vertical, horizontal }) => *`
-     */
-    onScrollbarPresenceChange: PropTypes.func,
-    /**
-     * A object for the row event handlers
-     * Each of the keys is row event name, like `onClick`, `onDoubleClick` and etc.
-     * Each of the handlers is of the shape of `({ rowData, rowIndex, rowKey, event }) => *`
-     */
-    rowEventHandlers: PropTypes.object,
-    /**
-     * whether to ignore function properties while comparing column definition
-     */
-    ignoreFunctionInColumnCompare: PropTypes.bool,
-    /**
-     * A object for the custom components, like `ExpandIcon` and `SortIndicator`
-     */
-    components: PropTypes.shape({
-      TableCell: PropTypes.elementType,
-      TableHeaderCell: PropTypes.elementType,
-      ExpandIcon: PropTypes.elementType,
-      SortIndicator: PropTypes.elementType,
-    }),
-  };
+  // Instance variable refs
+  const isResettingRef = useRef(false);
+  const resetIndexRef = useRef<number | null>(null);
+  const rowHeightMapRef = useRef<Record<string, number>>({});
+  const rowHeightMapBufferRef = useRef<Record<string, number>>({});
+  const mainRowHeightMapRef = useRef<Record<string, number>>({});
+  const leftRowHeightMapRef = useRef<Record<string, number>>({});
+  const rightRowHeightMapRef = useRef<Record<string, number>>({});
+  const scrollRef = useRef({ scrollLeft: 0, scrollTop: 0 });
+  const scrollHeightRef = useRef(0);
+  const lastScannedRowIndexRef = useRef(-1);
+  const hasDataChangedSinceEndReachedRef = useRef(true);
+  const dataRef = useRef<RowData[]>(data);
+  const depthMapRef = useRef<Record<string, number>>({});
+  const horizontalScrollbarSizeRef = useRef(0);
+  const verticalScrollbarSizeRef = useRef(0);
+  const scrollbarPresenceChangedRef = useRef(false);
+  const totalRowsHeightRef = useRef(0);
 
-  columnManager: ColumnManager;
-  tableNode: HTMLDivElement | null = null;
-  table: GridTable | null = null;
-  leftTable: GridTable | null = null;
-  rightTable: GridTable | null = null;
+  // ColumnManager — initialized once
+  const columnManagerRef = useRef<ColumnManager | null>(null);
+  if (!columnManagerRef.current) {
+    columnManagerRef.current = new ColumnManager(getColumns(columns, children), fixed);
+  }
+  const columnManager = columnManagerRef.current;
 
-  _isResetting: boolean;
-  _resetIndex: number | null;
-  _rowHeightMap: Record<string, number>;
-  _rowHeightMapBuffer: Record<string, number>;
-  _mainRowHeightMap: Record<string, number>;
-  _leftRowHeightMap: Record<string, number>;
-  _rightRowHeightMap: Record<string, number>;
-  _scroll: { scrollLeft: number; scrollTop: number };
-  _scrollHeight: number;
-  _lastScannedRowIndex: number;
-  _hasDataChangedSinceEndReached: boolean;
-  _data: RowData[];
-  _depthMap: Record<string, number>;
-  _horizontalScrollbarSize: number;
-  _verticalScrollbarSize: number;
-  _scrollbarPresenceChanged: boolean;
-  _totalRowsHeight: number;
+  // Refs to hold latest prop values for use in stable callbacks
+  const onColumnResizeRef = useRef(onColumnResize);
+  onColumnResizeRef.current = onColumnResize;
+  const estimatedRowHeightRef = useRef(estimatedRowHeight);
+  estimatedRowHeightRef.current = estimatedRowHeight;
+  const ignoreFunctionInColumnCompareRef = useRef(ignoreFunctionInColumnCompare);
+  ignoreFunctionInColumnCompareRef.current = ignoreFunctionInColumnCompare;
 
-  _getLeftTableContainerStyle: typeof getContainerStyle;
-  _getRightTableContainerStyle: typeof getContainerStyle;
-  _flattenOnKeys: (tree: RowData[], keys: RowKey[], dataKey: string | number) => RowData[];
-  _resetColumnManager: (columns: ColumnShape[], fixed: boolean) => void;
-  _getEstimatedTotalRowsHeight: typeof getEstimatedTotalRowsHeight;
-  _getRowHeight: (rowIndex: number) => number;
-  _updateRowHeights: () => void;
+  // Memoized helpers (stable across renders)
+  const _getLeftTableContainerStyle = useMemo(() => memoize(getContainerStyle), []);
+  const _getRightTableContainerStyle = useMemo(() => memoize(getContainerStyle), []);
 
-  constructor(props: BaseTableProps) {
-    super(props);
+  const _flattenOnKeys = useMemo(
+    () =>
+      memoize((tree: RowData[], keys: RowKey[], dataKey: string | number) => {
+        depthMapRef.current = {};
+        return flattenOnKeys(tree, keys, depthMapRef.current, dataKey as string);
+      }),
+    [],
+  );
 
-    const { columns, children, defaultExpandedRowKeys } = props;
-    this.state = {
-      scrollbarSize: 0,
-      hoveredRowKey: null,
-      resizingKey: null,
-      resizingWidth: 0,
-      expandedRowKeys: cloneArray(defaultExpandedRowKeys || []),
-    };
-    this.columnManager = new ColumnManager(getColumns(columns, children), props.fixed!);
+  const _getEstimatedTotalRowsHeight = useMemo(() => memoize(getEstimatedTotalRowsHeight), []);
 
-    this._setContainerRef = this._setContainerRef.bind(this);
-    this._setMainTableRef = this._setMainTableRef.bind(this);
-    this._setLeftTableRef = this._setLeftTableRef.bind(this);
-    this._setRightTableRef = this._setRightTableRef.bind(this);
-
-    this.renderExpandIcon = this.renderExpandIcon.bind(this);
-    this.renderRow = this.renderRow.bind(this);
-    this.renderRowCell = this.renderRowCell.bind(this);
-    this.renderHeader = this.renderHeader.bind(this);
-    this.renderHeaderCell = this.renderHeaderCell.bind(this);
-
-    this._handleScroll = this._handleScroll.bind(this);
-    this._handleVerticalScroll = this._handleVerticalScroll.bind(this);
-    this._handleRowsRendered = this._handleRowsRendered.bind(this);
-    this._handleRowHover = this._handleRowHover.bind(this);
-    this._handleRowExpand = this._handleRowExpand.bind(this);
-    this._handleColumnResize = throttle(this._handleColumnResize.bind(this), RESIZE_THROTTLE_WAIT);
-    this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
-    this._handleColumnResizeStop = this._handleColumnResizeStop.bind(this);
-    this._handleColumnSort = this._handleColumnSort.bind(this);
-    this._handleFrozenRowHeightChange = this._handleFrozenRowHeightChange.bind(this);
-    this._handleRowHeightChange = this._handleRowHeightChange.bind(this);
-
-    this._getLeftTableContainerStyle = memoize(getContainerStyle);
-    this._getRightTableContainerStyle = memoize(getContainerStyle);
-    this._flattenOnKeys = memoize((tree: RowData[], keys: RowKey[], dataKey: string | number) => {
-      this._depthMap = {};
-      return flattenOnKeys(tree, keys, this._depthMap, dataKey as string);
-    });
-    this._resetColumnManager = memoize(
-      (columns: ColumnShape[], fixed: boolean) => {
-        this.columnManager.reset(columns, fixed);
-
-        if (this.props.estimatedRowHeight && fixed) {
-          if (!this.columnManager.hasLeftFrozenColumns()) {
-            this._leftRowHeightMap = {};
+  const _resetColumnManager = useMemo(
+    () =>
+      memoize(
+        (cols: ColumnShape[], isFixed: boolean) => {
+          columnManager.reset(cols, isFixed);
+          if (estimatedRowHeightRef.current && isFixed) {
+            if (!columnManager.hasLeftFrozenColumns()) {
+              leftRowHeightMapRef.current = {};
+            }
+            if (!columnManager.hasRightFrozenColumns()) {
+              rightRowHeightMapRef.current = {};
+            }
           }
-          if (!this.columnManager.hasRightFrozenColumns()) {
-            this._rightRowHeightMap = {};
+        },
+        (newArgs: any, lastArgs: any) => isObjectEqual(newArgs, lastArgs, ignoreFunctionInColumnCompareRef.current),
+      ),
+    [columnManager],
+  );
+
+  // Helper methods
+  const _prefixClass = (cls: string): string => `${classPrefix}__${cls}`;
+
+  const _getComponent = (name: keyof TableComponents): React.ComponentType<any> => {
+    if (components && components[name]) return components[name] as React.ComponentType<any>;
+    return DEFAULT_COMPONENTS[name];
+  };
+
+  const getExpandedRowKeys = (): RowKey[] => {
+    return expandedRowKeysProp !== undefined ? expandedRowKeysProp || EMPTY_ARRAY : expandedRowKeysState;
+  };
+
+  const _getHeaderHeight = (): number => {
+    if (Array.isArray(headerHeight)) {
+      return headerHeight.reduce((sum, h) => sum + h, 0);
+    }
+    return headerHeight;
+  };
+
+  const _getFrozenRowsHeight = (): number => {
+    return frozenData.length * rowHeight;
+  };
+
+  const getTotalRowsHeight = (): number => {
+    if (estimatedRowHeight) {
+      return tableRef.current
+        ? tableRef.current.getTotalRowsHeight()
+        : _getEstimatedTotalRowsHeight(dataRef.current, estimatedRowHeight);
+    }
+    return dataRef.current.length * rowHeight;
+  };
+
+  const _getTableHeight = (): number => {
+    let tableHeight = height! - footerHeight;
+
+    if (maxHeight! > 0) {
+      const frozenRowsHeight = _getFrozenRowsHeight();
+      const totalRowsHeight = getTotalRowsHeight();
+      const hHeight = _getHeaderHeight();
+      const totalHeight = hHeight + frozenRowsHeight + totalRowsHeight + horizontalScrollbarSizeRef.current;
+      tableHeight = Math.min(totalHeight, maxHeight! - footerHeight);
+    }
+
+    return tableHeight;
+  };
+
+  const _getBodyHeight = (): number => {
+    return _getTableHeight() - _getHeaderHeight() - _getFrozenRowsHeight();
+  };
+
+  const _getFrozenContainerHeight = (): number => {
+    const tableHeight = _getTableHeight() - (dataRef.current.length > 0 ? horizontalScrollbarSizeRef.current : 0);
+    if (maxHeight! > 0) return tableHeight;
+
+    const totalHeight = getTotalRowsHeight() + _getHeaderHeight() + _getFrozenRowsHeight();
+    return Math.min(tableHeight, totalHeight);
+  };
+
+  const _calcScrollbarSizes = () => {
+    const totalRowsHeight = getTotalRowsHeight();
+    const totalColumnsWidth = columnManager.getColumnsWidth();
+
+    const prevHorizontalScrollbarSize = horizontalScrollbarSizeRef.current;
+    const prevVerticalScrollbarSize = verticalScrollbarSizeRef.current;
+
+    if (scrollbarSize === 0) {
+      horizontalScrollbarSizeRef.current = 0;
+      verticalScrollbarSizeRef.current = 0;
+    } else {
+      if (!fixed || totalColumnsWidth <= width - scrollbarSize) {
+        horizontalScrollbarSizeRef.current = 0;
+        verticalScrollbarSizeRef.current = totalRowsHeight > _getBodyHeight() ? scrollbarSize : 0;
+      } else {
+        if (totalColumnsWidth > width) {
+          horizontalScrollbarSizeRef.current = scrollbarSize;
+          verticalScrollbarSizeRef.current =
+            totalRowsHeight > _getBodyHeight() - horizontalScrollbarSizeRef.current ? scrollbarSize : 0;
+        } else {
+          horizontalScrollbarSizeRef.current = 0;
+          verticalScrollbarSizeRef.current = 0;
+          if (totalRowsHeight > _getBodyHeight()) {
+            horizontalScrollbarSizeRef.current = scrollbarSize;
+            verticalScrollbarSizeRef.current = scrollbarSize;
           }
         }
-      },
-      (newArgs: any, lastArgs: any) => isObjectEqual(newArgs, lastArgs, this.props.ignoreFunctionInColumnCompare),
+      }
+    }
+
+    if (
+      prevHorizontalScrollbarSize !== horizontalScrollbarSizeRef.current ||
+      prevVerticalScrollbarSize !== verticalScrollbarSizeRef.current
+    ) {
+      scrollbarPresenceChangedRef.current = true;
+    }
+  };
+
+  const _maybeScrollbarPresenceChange = () => {
+    if (scrollbarPresenceChangedRef.current) {
+      scrollbarPresenceChangedRef.current = false;
+      onScrollbarPresenceChange({
+        size: scrollbarSize,
+        horizontal: horizontalScrollbarSizeRef.current > 0,
+        vertical: verticalScrollbarSizeRef.current > 0,
+      });
+    }
+  };
+
+  const _maybeCallOnEndReached = () => {
+    const { scrollTop } = scrollRef.current;
+    const scrollHeight = getTotalRowsHeight();
+    const clientHeight = _getBodyHeight();
+
+    if (!onEndReached || !clientHeight || !scrollHeight) return;
+    const distanceFromEnd = scrollHeight - scrollTop - clientHeight + horizontalScrollbarSizeRef.current;
+    if (
+      lastScannedRowIndexRef.current >= 0 &&
+      distanceFromEnd <= onEndReachedThreshold &&
+      (hasDataChangedSinceEndReachedRef.current || scrollHeight !== scrollHeightRef.current)
+    ) {
+      hasDataChangedSinceEndReachedRef.current = false;
+      scrollHeightRef.current = scrollHeight;
+      onEndReached({ distanceFromEnd });
+    }
+  };
+
+  // Imperative scroll methods (used internally and exposed via ref)
+  const _forceUpdateTable = () => {
+    tableRef.current && tableRef.current.forceUpdateTable();
+    leftTableRef.current && leftTableRef.current.forceUpdateTable();
+    rightTableRef.current && rightTableRef.current.forceUpdateTable();
+  };
+
+  const _resetAfterRowIndex = (rowIndex: number = 0, shouldForceUpdate: boolean = true) => {
+    if (!estimatedRowHeightRef.current) return;
+    tableRef.current && tableRef.current.resetAfterRowIndex(rowIndex, shouldForceUpdate);
+    leftTableRef.current && leftTableRef.current.resetAfterRowIndex(rowIndex, shouldForceUpdate);
+    rightTableRef.current && rightTableRef.current.resetAfterRowIndex(rowIndex, shouldForceUpdate);
+  };
+
+  const _scrollToPosition = (offset: { scrollLeft: number; scrollTop: number }) => {
+    scrollRef.current = offset;
+    tableRef.current && tableRef.current.scrollToPosition(offset);
+    leftTableRef.current && leftTableRef.current.scrollToTop(offset.scrollTop);
+    rightTableRef.current && rightTableRef.current.scrollToTop(offset.scrollTop);
+  };
+
+  const _scrollToTop = (scrollTop: number) => {
+    scrollRef.current.scrollTop = scrollTop;
+    tableRef.current && tableRef.current.scrollToPosition(scrollRef.current);
+    leftTableRef.current && leftTableRef.current.scrollToTop(scrollTop);
+    rightTableRef.current && rightTableRef.current.scrollToTop(scrollTop);
+  };
+
+  // Stable callbacks (throttled/debounced — must have stable identity)
+  const _updateRowHeights = useMemo(
+    () =>
+      debounce(() => {
+        isResettingRef.current = true;
+        rowHeightMapRef.current = { ...rowHeightMapRef.current, ...rowHeightMapBufferRef.current };
+        _resetAfterRowIndex(resetIndexRef.current!, false);
+        rowHeightMapBufferRef.current = {};
+        resetIndexRef.current = null;
+        _forceUpdateTable();
+        forceRender();
+        isResettingRef.current = false;
+      }, 0),
+    [],
+  );
+
+  const _handleColumnResize = useMemo(
+    () =>
+      throttle((column: { key: string }, w: number) => {
+        columnManager.setColumnWidth(column.key, w);
+        setResizingWidth(w);
+        const col = columnManager.getColumn(column.key);
+        onColumnResizeRef.current({ column: col, width: w });
+      }, RESIZE_THROTTLE_WAIT),
+    [columnManager],
+  );
+
+  // Stable callback for _getIsResetting (reads only from ref)
+  const _getIsResetting = useCallback((): boolean => isResettingRef.current, []);
+
+  const _getRowHeight = (rowIndex: number): number => {
+    return (
+      rowHeightMapRef.current[dataRef.current[rowIndex][rowKey as string]] ||
+      callOrReturn(estimatedRowHeight!, { rowData: dataRef.current[rowIndex], rowIndex })
+    );
+  };
+
+  // Ref setters
+  const _setContainerRef = useCallback((r: HTMLDivElement | null) => {
+    tableNodeRef.current = r;
+  }, []);
+  const _setMainTableRef = useCallback((r: GridTableHandle | null) => {
+    tableRef.current = r;
+  }, []);
+  const _setLeftTableRef = useCallback((r: GridTableHandle | null) => {
+    leftTableRef.current = r;
+  }, []);
+  const _setRightTableRef = useCallback((r: GridTableHandle | null) => {
+    rightTableRef.current = r;
+  }, []);
+
+  // Event handlers
+  const _handleScroll = (args: any) => {
+    const lastScrollTop = scrollRef.current.scrollTop;
+    _scrollToPosition(args);
+    onScroll(args);
+    if (args.scrollTop > lastScrollTop) _maybeCallOnEndReached();
+  };
+
+  const _handleVerticalScroll = ({ scrollTop }: { scrollTop: number }) => {
+    const lastScrollTop = scrollRef.current.scrollTop;
+    if (scrollTop !== lastScrollTop) _scrollToTop(scrollTop);
+    if (scrollTop > lastScrollTop) _maybeCallOnEndReached();
+  };
+
+  const _handleRowsRendered = (args: RowsRenderedArgs) => {
+    onRowsRendered(args);
+    if (args.overscanStopIndex > lastScannedRowIndexRef.current) {
+      lastScannedRowIndexRef.current = args.overscanStopIndex;
+      _maybeCallOnEndReached();
+    }
+  };
+
+  const _handleRowHover = ({ hovered, rowKey: rk }: { hovered: boolean; rowKey: RowKey }) => {
+    setHoveredRowKey(hovered ? rk : null);
+  };
+
+  const _handleRowExpand = ({
+    expanded,
+    rowData,
+    rowIndex,
+    rowKey: rk,
+  }: {
+    expanded: boolean;
+    rowData: RowData;
+    rowIndex: number;
+    rowKey: RowKey;
+  }) => {
+    const keys = cloneArray(getExpandedRowKeys());
+    if (expanded) {
+      if (keys.indexOf(rk) < 0) keys.push(rk);
+    } else {
+      const index = keys.indexOf(rk);
+      if (index > -1) keys.splice(index, 1);
+    }
+    if (expandedRowKeysProp === undefined) {
+      setExpandedRowKeysState(keys);
+    }
+    onRowExpand({ expanded, rowData, rowIndex, rowKey: rk });
+    onExpandedRowsChange(keys);
+  };
+
+  const _handleColumnResizeStart = ({ key }: { key: string }) => {
+    setResizingKey(key);
+  };
+
+  const _handleColumnResizeStop = () => {
+    const rk = resizingKey;
+    const rw = resizingWidth;
+    setResizingKey(null);
+    setResizingWidth(0);
+    if (!rk || !rw) return;
+    const column = columnManager.getColumn(rk);
+    onColumnResizeEnd({ column, width: rw });
+  };
+
+  const _handleColumnSort = (event: React.MouseEvent) => {
+    const key = (event.currentTarget as HTMLElement).dataset.key!;
+    let order: string = SortOrder.ASC;
+
+    if (sortState) {
+      order = sortState[key] === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
+    } else if (key === sortBy.key) {
+      order = sortBy.order === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
+    }
+
+    const column = columnManager.getColumn(key);
+    onColumnSort({ column, key, order });
+  };
+
+  const _handleFrozenRowHeightChange = (rk: RowKey, size: number, rowIndex: number, frozen: any) => {
+    if (!frozen) {
+      mainRowHeightMapRef.current[rk] = size;
+    } else if (frozen === FrozenDirection.RIGHT) {
+      rightRowHeightMapRef.current[rk] = size;
+    } else {
+      leftRowHeightMapRef.current[rk] = size;
+    }
+
+    const h = Math.max(
+      mainRowHeightMapRef.current[rk] || 0,
+      leftRowHeightMapRef.current[rk] || 0,
+      rightRowHeightMapRef.current[rk] || 0,
     );
 
-    this._isResetting = false;
-    this._resetIndex = null;
-    this._rowHeightMap = {};
-    this._rowHeightMapBuffer = {};
-    this._mainRowHeightMap = {};
-    this._leftRowHeightMap = {};
-    this._rightRowHeightMap = {};
-    this._getEstimatedTotalRowsHeight = memoize(getEstimatedTotalRowsHeight);
-    this._getRowHeight = this.__getRowHeight.bind(this);
-    this._updateRowHeights = debounce(() => {
-      this._isResetting = true;
-      this._rowHeightMap = { ...this._rowHeightMap, ...this._rowHeightMapBuffer };
-      this.resetAfterRowIndex(this._resetIndex!, false);
-      this._rowHeightMapBuffer = {};
-      this._resetIndex = null;
-      this.forceUpdateTable();
-      this.forceUpdate();
-      this._isResetting = false;
-    }, 0);
-
-    this._scroll = { scrollLeft: 0, scrollTop: 0 };
-    this._scrollHeight = 0;
-    this._lastScannedRowIndex = -1;
-    this._hasDataChangedSinceEndReached = true;
-
-    this._data = props.data;
-    this._depthMap = {};
-
-    this._horizontalScrollbarSize = 0;
-    this._verticalScrollbarSize = 0;
-    this._scrollbarPresenceChanged = false;
-    this._totalRowsHeight = 0;
-  }
-
-  /**
-   * Get the DOM node of the table
-   */
-  getDOMNode(): HTMLDivElement | null {
-    return this.tableNode;
-  }
-
-  /**
-   * Get the column manager
-   */
-  getColumnManager(): ColumnManager {
-    return this.columnManager;
-  }
-
-  /**
-   * Get internal `expandedRowKeys` state
-   */
-  getExpandedRowKeys(): RowKey[] {
-    const { expandedRowKeys } = this.props;
-    return expandedRowKeys !== undefined ? expandedRowKeys || EMPTY_ARRAY : this.state.expandedRowKeys;
-  }
-
-  /**
-   * Get the expanded state, fallback to normal state if not expandable.
-   */
-  getExpandedState() {
-    return {
-      expandedData: this._data,
-      expandedRowKeys: this.getExpandedRowKeys(),
-      expandedDepthMap: this._depthMap,
-    };
-  }
-
-  /**
-   * Get the total height of all rows, including expanded rows.
-   */
-  getTotalRowsHeight(): number {
-    const { rowHeight, estimatedRowHeight } = this.props;
-
-    if (estimatedRowHeight) {
-      return this.table
-        ? this.table.getTotalRowsHeight()
-        : this._getEstimatedTotalRowsHeight(this._data, estimatedRowHeight);
+    if (rowHeightMapRef.current[rk] !== h) {
+      _handleRowHeightChange(rk, h, rowIndex);
     }
-    return this._data.length * rowHeight!;
-  }
+  };
 
-  /**
-   * Get the total width of all columns.
-   */
-  getTotalColumnsWidth(): number {
-    return this.columnManager.getColumnsWidth();
-  }
+  const _handleRowHeightChange = (rk: RowKey, size: number, rowIndex: number) => {
+    if (resetIndexRef.current === null) resetIndexRef.current = rowIndex;
+    else if (resetIndexRef.current > rowIndex) resetIndexRef.current = rowIndex;
 
-  /**
-   * Forcefully re-render the inner Grid component.
-   */
-  forceUpdateTable() {
-    this.table && this.table.forceUpdateTable();
-    this.leftTable && this.leftTable.forceUpdateTable();
-    this.rightTable && this.rightTable.forceUpdateTable();
-  }
+    rowHeightMapBufferRef.current[rk] = size;
+    _updateRowHeights();
+  };
 
-  /**
-   * Reset cached offsets for positioning after a specific rowIndex
-   */
-  resetAfterRowIndex(rowIndex: number = 0, shouldForceUpdate: boolean = true) {
-    if (!this.props.estimatedRowHeight) return;
-
-    this.table && this.table.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-    this.leftTable && this.leftTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-    this.rightTable && this.rightTable.resetAfterRowIndex(rowIndex, shouldForceUpdate);
-  }
-
-  /**
-   * Reset row height cache
-   */
-  resetRowHeightCache() {
-    if (!this.props.estimatedRowHeight) return;
-
-    this._resetIndex = null;
-    this._rowHeightMapBuffer = {};
-    this._rowHeightMap = {};
-    this._mainRowHeightMap = {};
-    this._leftRowHeightMap = {};
-    this._rightRowHeightMap = {};
-  }
-
-  /**
-   * Scroll to the specified offset.
-   */
-  scrollToPosition(offset: { scrollLeft: number; scrollTop: number }) {
-    this._scroll = offset;
-
-    this.table && this.table.scrollToPosition(offset);
-    this.leftTable && this.leftTable.scrollToTop(offset.scrollTop);
-    this.rightTable && this.rightTable.scrollToTop(offset.scrollTop);
-  }
-
-  /**
-   * Scroll to the specified offset vertically.
-   */
-  scrollToTop(scrollTop: number) {
-    this._scroll.scrollTop = scrollTop;
-
-    this.table && this.table.scrollToPosition(this._scroll);
-    this.leftTable && this.leftTable.scrollToTop(scrollTop);
-    this.rightTable && this.rightTable.scrollToTop(scrollTop);
-  }
-
-  /**
-   * Scroll to the specified offset horizontally.
-   */
-  scrollToLeft(scrollLeft: number) {
-    this._scroll.scrollLeft = scrollLeft;
-
-    this.table && this.table.scrollToPosition(this._scroll);
-  }
-
-  /**
-   * Scroll to the specified row.
-   */
-  scrollToRow(rowIndex: number = 0, align: string = 'auto') {
-    this.table && this.table.scrollToRow(rowIndex, align);
-    this.leftTable && this.leftTable.scrollToRow(rowIndex, align);
-    this.rightTable && this.rightTable.scrollToRow(rowIndex, align);
-  }
-
-  /**
-   * Set `expandedRowKeys` manually.
-   */
-  setExpandedRowKeys(expandedRowKeys: RowKey[]) {
-    if (this.props.expandedRowKeys !== undefined) return;
-
-    this.setState({
-      expandedRowKeys: cloneArray(expandedRowKeys),
-    });
-  }
-
-  renderExpandIcon({
+  // Render methods
+  const renderExpandIcon = ({
     rowData,
     rowIndex,
     depth,
@@ -715,177 +560,177 @@ class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
     rowIndex: number;
     depth: number;
     onExpand: (expanded: boolean) => void;
-  }) {
-    const { rowKey, expandColumnKey, expandIconProps } = this.props;
+  }) => {
     if (!expandColumnKey) return null;
 
     const expandable = rowIndex >= 0 && hasChildren(rowData);
-    const expanded = rowIndex >= 0 && this.getExpandedRowKeys().indexOf(rowData[rowKey as string]) >= 0;
+    const expanded = rowIndex >= 0 && getExpandedRowKeys().indexOf(rowData[rowKey as string]) >= 0;
     const extraProps = callOrReturn(expandIconProps, { rowData, rowIndex, depth, expandable, expanded });
-    const ExpandIconComp = this._getComponent('ExpandIcon');
+    const ExpandIconComp = _getComponent('ExpandIcon');
 
     return (
       <ExpandIconComp depth={depth} expandable={expandable} expanded={expanded} {...extraProps} onExpand={onExpand} />
     );
-  }
+  };
 
-  renderRow({
+  const renderRow = ({
     isScrolling,
-    columns,
+    columns: cols,
     rowData,
     rowIndex,
-    style,
+    style: rowStyle,
   }: {
     isScrolling: boolean;
     columns: ColumnShape[];
     rowData: RowData;
     rowIndex: number;
     style: React.CSSProperties;
-  }) {
-    const { rowClassName, rowRenderer, rowEventHandlers, expandColumnKey, estimatedRowHeight } = this.props;
+  }) => {
+    const rowClass = callOrReturn(rowClassName, { columns: cols, rowData, rowIndex });
+    const extraProps = callOrReturn(rowPropsProp, { columns: cols, rowData, rowIndex });
+    const rk = rowData[rowKey as string];
+    const depth = depthMapRef.current[rk] || 0;
 
-    const rowClass = callOrReturn(rowClassName, { columns, rowData, rowIndex });
-    const extraProps = callOrReturn(this.props.rowProps, { columns, rowData, rowIndex });
-    const rowKey = rowData[this.props.rowKey as string];
-    const depth = this._depthMap[rowKey] || 0;
-
-    const className = cn(this._prefixClass('row'), rowClass, {
-      [this._prefixClass(`row--depth-${depth}`)]: !!expandColumnKey && rowIndex >= 0,
-      [this._prefixClass('row--expanded')]: !!expandColumnKey && this.getExpandedRowKeys().indexOf(rowKey) >= 0,
-      [this._prefixClass('row--hovered')]: !isScrolling && rowKey === this.state.hoveredRowKey,
-      [this._prefixClass('row--frozen')]: depth === 0 && rowIndex < 0,
-      [this._prefixClass('row--customized')]: rowRenderer,
+    const cls = cn(_prefixClass('row'), rowClass, {
+      [_prefixClass(`row--depth-${depth}`)]: !!expandColumnKey && rowIndex >= 0,
+      [_prefixClass('row--expanded')]: !!expandColumnKey && getExpandedRowKeys().indexOf(rk) >= 0,
+      [_prefixClass('row--hovered')]: !isScrolling && rk === hoveredRowKey,
+      [_prefixClass('row--frozen')]: depth === 0 && rowIndex < 0,
+      [_prefixClass('row--customized')]: rowRenderer,
     });
 
-    const hasFrozenColumns = this.columnManager.hasFrozenColumns();
+    const hasFrozenColumns = columnManager.hasFrozenColumns();
     const rowProps = {
       ...extraProps,
       role: 'row',
-      key: `row-${rowKey}`,
+      key: `row-${rk}`,
       isScrolling,
-      className,
-      style,
-      columns,
+      className: cls,
+      style: rowStyle,
+      columns: cols,
       rowIndex,
       rowData,
-      rowKey,
+      rowKey: rk,
       expandColumnKey,
       depth,
       rowEventHandlers,
       rowRenderer,
       estimatedRowHeight: rowIndex >= 0 ? estimatedRowHeight : undefined,
-      getIsResetting: this._getIsResetting,
-      cellRenderer: this.renderRowCell,
-      expandIconRenderer: this.renderExpandIcon,
-      onRowExpand: this._handleRowExpand,
-      onRowHover: hasFrozenColumns ? this._handleRowHover : undefined,
-      onRowHeightChange: hasFrozenColumns ? this._handleFrozenRowHeightChange : this._handleRowHeightChange,
+      getIsResetting: _getIsResetting,
+      cellRenderer: renderRowCell,
+      expandIconRenderer: renderExpandIcon,
+      onRowExpand: _handleRowExpand,
+      onRowHover: hasFrozenColumns ? _handleRowHover : undefined,
+      onRowHeightChange: hasFrozenColumns ? _handleFrozenRowHeightChange : _handleRowHeightChange,
     };
 
     return <TableRow {...rowProps} />;
-  }
+  };
 
-  renderRowCell({ isScrolling, columns, column, columnIndex, rowData, rowIndex, expandIcon }: any) {
+  const renderRowCell = ({ isScrolling, columns: cols, column, columnIndex, rowData, rowIndex, expandIcon }: any) => {
     if (column[ColumnManager.PlaceholderKey]) {
       return (
         <div
-          key={`row-${rowData[this.props.rowKey as string]}-cell-${column.key}-placeholder`}
-          className={this._prefixClass('row-cell-placeholder')}
-          style={this.columnManager.getColumnStyle(column.key)}
+          key={`row-${rowData[rowKey as string]}-cell-${column.key}-placeholder`}
+          className={_prefixClass('row-cell-placeholder')}
+          style={columnManager.getColumnStyle(column.key)}
         />
       );
     }
 
-    const { className, dataKey, dataGetter, cellRenderer } = column;
-    const TableCellComp = this._getComponent('TableCell');
+    const { className: colClassName, dataKey, dataGetter, cellRenderer } = column;
+    const TableCellComp = _getComponent('TableCell');
 
     const cellData = dataGetter
-      ? dataGetter({ columns, column, columnIndex, rowData, rowIndex })
+      ? dataGetter({ columns: cols, column, columnIndex, rowData, rowIndex })
       : getValue(rowData, dataKey);
-    const cellProps = { isScrolling, cellData, columns, column, columnIndex, rowData, rowIndex, container: this };
-    const cell = renderElement(
-      cellRenderer || <TableCellComp className={this._prefixClass('row-cell-text')} />,
-      cellProps,
-    );
+    const cellProps = {
+      isScrolling,
+      cellData,
+      columns: cols,
+      column,
+      columnIndex,
+      rowData,
+      rowIndex,
+      container: containerRef,
+    };
+    const cell = renderElement(cellRenderer || <TableCellComp className={_prefixClass('row-cell-text')} />, cellProps);
 
-    const cellCls = callOrReturn(className, { cellData, columns, column, columnIndex, rowData, rowIndex });
-    const cls = cn(this._prefixClass('row-cell'), cellCls, {
-      [this._prefixClass('row-cell--align-center')]: column.align === Alignment.CENTER,
-      [this._prefixClass('row-cell--align-right')]: column.align === Alignment.RIGHT,
+    const cellCls = callOrReturn(colClassName, { cellData, columns: cols, column, columnIndex, rowData, rowIndex });
+    const cls = cn(_prefixClass('row-cell'), cellCls, {
+      [_prefixClass('row-cell--align-center')]: column.align === Alignment.CENTER,
+      [_prefixClass('row-cell--align-right')]: column.align === Alignment.RIGHT,
     });
 
-    const extraProps = callOrReturn(this.props.cellProps, { columns, column, columnIndex, rowData, rowIndex });
+    const extraProps = callOrReturn(cellPropsProp, { columns: cols, column, columnIndex, rowData, rowIndex });
     const { tagName, ...rest } = extraProps || {};
     const Tag = tagName || 'div';
     return (
       <Tag
         role="gridcell"
-        key={`row-${rowData[this.props.rowKey as string]}-cell-${column.key}`}
+        key={`row-${rowData[rowKey as string]}-cell-${column.key}`}
         {...rest}
         className={cls}
-        style={this.columnManager.getColumnStyle(column.key)}
+        style={columnManager.getColumnStyle(column.key)}
       >
         {expandIcon}
         {cell}
       </Tag>
     );
-  }
+  };
 
-  renderHeader({
-    columns,
+  const renderHeader = ({
+    columns: cols,
     headerIndex,
-    style,
+    style: headerStyle,
   }: {
     columns: ColumnShape[];
     headerIndex: number;
     style: React.CSSProperties;
-  }) {
-    const { headerClassName, headerRenderer } = this.props;
+  }) => {
+    const headerClass = callOrReturn(headerClassName, { columns: cols, headerIndex });
+    const extraProps = callOrReturn(headerPropsProp, { columns: cols, headerIndex });
 
-    const headerClass = callOrReturn(headerClassName, { columns, headerIndex });
-    const extraProps = callOrReturn(this.props.headerProps, { columns, headerIndex });
-
-    const className = cn(this._prefixClass('header-row'), headerClass, {
-      [this._prefixClass('header-row--resizing')]: !!this.state.resizingKey,
-      [this._prefixClass('header-row--customized')]: headerRenderer,
+    const cls = cn(_prefixClass('header-row'), headerClass, {
+      [_prefixClass('header-row--resizing')]: !!resizingKey,
+      [_prefixClass('header-row--customized')]: headerRenderer,
     });
 
-    const headerProps = {
+    const hProps = {
       ...extraProps,
       role: 'row',
       key: `header-${headerIndex}`,
-      className,
-      style,
-      columns,
+      className: cls,
+      style: headerStyle,
+      columns: cols,
       headerIndex,
       headerRenderer,
-      cellRenderer: this.renderHeaderCell,
-      expandColumnKey: this.props.expandColumnKey,
-      expandIcon: this._getComponent('ExpandIcon'),
+      cellRenderer: renderHeaderCell,
+      expandColumnKey,
+      expandIcon: _getComponent('ExpandIcon'),
     };
-    const TableHeaderRowComp = this._getComponent('TableHeaderRow');
-    return <TableHeaderRowComp {...headerProps} />;
-  }
+    const TableHeaderRowComp = _getComponent('TableHeaderRow');
+    return <TableHeaderRowComp {...hProps} />;
+  };
 
-  renderHeaderCell({ columns, column, columnIndex, headerIndex, expandIcon }: any) {
+  const renderHeaderCell = ({ columns: cols, column, columnIndex, headerIndex, expandIcon }: any) => {
     if (column[ColumnManager.PlaceholderKey]) {
       return (
         <div
           key={`header-${headerIndex}-cell-${column.key}-placeholder`}
-          className={this._prefixClass('header-cell-placeholder')}
-          style={this.columnManager.getColumnStyle(column.key)}
+          className={_prefixClass('header-cell-placeholder')}
+          style={columnManager.getColumnStyle(column.key)}
         />
       );
     }
 
-    const { headerClassName, headerRenderer } = column;
-    const { sortBy, sortState, headerCellProps } = this.props;
-    const TableHeaderCellComp = this._getComponent('TableHeaderCell');
-    const SortIndicatorComp = this._getComponent('SortIndicator');
+    const { headerClassName: colHeaderClassName, headerRenderer: colHeaderRenderer } = column;
+    const TableHeaderCellComp = _getComponent('TableHeaderCell');
+    const SortIndicatorComp = _getComponent('SortIndicator');
 
-    const cellProps = { columns, column, columnIndex, headerIndex, container: this };
+    const cellProps = { columns: cols, column, columnIndex, headerIndex, container: containerRef };
     const cell = renderElement(
-      headerRenderer || <TableHeaderCellComp className={this._prefixClass('header-cell-text')} />,
+      colHeaderRenderer || <TableHeaderCellComp className={_prefixClass('header-cell-text')} />,
       cellProps,
     );
 
@@ -896,29 +741,29 @@ class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
       sorting = order === SortOrder.ASC || order === SortOrder.DESC;
       sortOrder = sorting ? order : SortOrder.ASC;
     } else {
-      sorting = column.key === sortBy!.key;
-      sortOrder = sorting ? sortBy!.order! : SortOrder.ASC;
+      sorting = column.key === sortBy.key;
+      sortOrder = sorting ? sortBy.order! : SortOrder.ASC;
     }
 
-    const cellCls = callOrReturn(headerClassName, { columns, column, columnIndex, headerIndex });
-    const cls = cn(this._prefixClass('header-cell'), cellCls, {
-      [this._prefixClass('header-cell--align-center')]: column.align === Alignment.CENTER,
-      [this._prefixClass('header-cell--align-right')]: column.align === Alignment.RIGHT,
-      [this._prefixClass('header-cell--sortable')]: column.sortable,
-      [this._prefixClass('header-cell--sorting')]: sorting,
-      [this._prefixClass('header-cell--resizing')]: column.key === this.state.resizingKey,
+    const cellCls = callOrReturn(colHeaderClassName, { columns: cols, column, columnIndex, headerIndex });
+    const cls = cn(_prefixClass('header-cell'), cellCls, {
+      [_prefixClass('header-cell--align-center')]: column.align === Alignment.CENTER,
+      [_prefixClass('header-cell--align-right')]: column.align === Alignment.RIGHT,
+      [_prefixClass('header-cell--sortable')]: column.sortable,
+      [_prefixClass('header-cell--sorting')]: sorting,
+      [_prefixClass('header-cell--resizing')]: column.key === resizingKey,
     });
-    const extraProps = callOrReturn(headerCellProps, { columns, column, columnIndex, headerIndex });
+    const extraProps = callOrReturn(headerCellPropsProp, { columns: cols, column, columnIndex, headerIndex });
     const { tagName, ...rest } = extraProps || {};
     const Tag = tagName || 'div';
     return (
       <Tag
         role="gridcell"
         key={`header-${headerIndex}-cell-${column.key}`}
-        onClick={column.sortable ? this._handleColumnSort : null}
+        onClick={column.sortable ? _handleColumnSort : null}
         {...rest}
         className={cls}
-        style={this.columnManager.getColumnStyle(column.key)}
+        style={columnManager.getColumnStyle(column.key)}
         data-key={column.key}
       >
         {expandIcon}
@@ -927,534 +772,327 @@ class BaseTable extends React.PureComponent<BaseTableProps, BaseTableState> {
           <SortIndicatorComp
             sorting={sorting}
             sortOrder={sortOrder}
-            className={cn(this._prefixClass('sort-indicator'), {
-              [this._prefixClass('sort-indicator--descending')]: sortOrder === SortOrder.DESC,
+            className={cn(_prefixClass('sort-indicator'), {
+              [_prefixClass('sort-indicator--descending')]: sortOrder === SortOrder.DESC,
             })}
           />
         )}
         {column.resizable && (
           <ColumnResizer
-            className={this._prefixClass('column-resizer')}
+            className={_prefixClass('column-resizer')}
             column={column}
-            onResizeStart={this._handleColumnResizeStart}
-            onResizeStop={this._handleColumnResizeStop}
-            onResize={this._handleColumnResize}
+            onResizeStart={_handleColumnResizeStart}
+            onResizeStop={_handleColumnResizeStop}
+            onResize={_handleColumnResize}
           />
         )}
       </Tag>
     );
-  }
+  };
 
-  renderMainTable() {
-    const { width, headerHeight, rowHeight, fixed, estimatedRowHeight, ...rest } = this.props;
-    const height = this._getTableHeight();
+  const renderMainTable = () => {
+    const tableHeight = _getTableHeight();
 
-    let tableWidth = width - this._verticalScrollbarSize;
+    let tableWidth = width - verticalScrollbarSizeRef.current;
     if (fixed) {
-      const columnsWidth = this.columnManager.getColumnsWidth();
+      const columnsWidth = columnManager.getColumnsWidth();
       tableWidth = Math.max(Math.round(columnsWidth), tableWidth);
     }
     return (
       <GridTable
-        {...rest}
-        {...this.state}
-        className={this._prefixClass('table-main')}
-        ref={this._setMainTableRef}
-        data={this._data}
-        columns={this.columnManager.getMainColumns()}
+        classPrefix={classPrefix}
+        frozenData={frozenData}
+        rowKey={rowKey}
+        useIsScrolling={useIsScrolling}
+        overscanRowCount={overscanRowCount}
+        onScrollbarPresenceChange={onScrollbarPresenceChange}
+        scrollbarSize={scrollbarSize}
+        hoveredRowKey={hoveredRowKey}
+        resizingKey={resizingKey}
+        resizingWidth={resizingWidth}
+        expandedRowKeys={getExpandedRowKeys()}
+        className={_prefixClass('table-main')}
+        ref={_setMainTableRef}
+        data={dataRef.current}
+        columns={columnManager.getMainColumns()}
         width={width}
-        height={height}
+        height={tableHeight}
         headerHeight={headerHeight}
-        rowHeight={rowHeight!}
+        rowHeight={rowHeight}
         estimatedRowHeight={estimatedRowHeight}
-        getRowHeight={estimatedRowHeight ? this._getRowHeight : undefined}
-        headerWidth={tableWidth + (fixed ? this._verticalScrollbarSize : 0)}
+        getRowHeight={estimatedRowHeight ? _getRowHeight : undefined}
+        headerWidth={tableWidth + (fixed ? verticalScrollbarSizeRef.current : 0)}
         bodyWidth={tableWidth}
-        headerRenderer={this.renderHeader}
-        rowRenderer={this.renderRow}
-        onScroll={this._handleScroll}
-        onRowsRendered={this._handleRowsRendered}
+        headerRenderer={renderHeader}
+        rowRenderer={renderRow}
+        onScroll={_handleScroll}
+        onRowsRendered={_handleRowsRendered}
       />
     );
-  }
+  };
 
-  renderLeftTable() {
-    if (!this.columnManager.hasLeftFrozenColumns()) return null;
+  const renderLeftTable = () => {
+    if (!columnManager.hasLeftFrozenColumns()) return null;
 
-    const { width, headerHeight, rowHeight, estimatedRowHeight, ...rest } = this.props;
-
-    const containerHeight = this._getFrozenContainerHeight();
-    const offset = this._verticalScrollbarSize || 20;
-    const columnsWidth = this.columnManager.getLeftFrozenColumnsWidth();
+    const containerHeight = _getFrozenContainerHeight();
+    const offset = verticalScrollbarSizeRef.current || 20;
+    const columnsWidth = columnManager.getLeftFrozenColumnsWidth();
     return (
       <GridTable
-        {...rest}
-        {...this.state}
-        containerStyle={this._getLeftTableContainerStyle(columnsWidth, width, containerHeight)}
-        className={this._prefixClass('table-frozen-left')}
-        ref={this._setLeftTableRef}
-        data={this._data}
-        columns={this.columnManager.getLeftFrozenColumns()}
-        initialScrollTop={this._scroll.scrollTop}
+        classPrefix={classPrefix}
+        frozenData={frozenData}
+        rowKey={rowKey}
+        useIsScrolling={useIsScrolling}
+        overscanRowCount={overscanRowCount}
+        onScrollbarPresenceChange={onScrollbarPresenceChange}
+        scrollbarSize={scrollbarSize}
+        hoveredRowKey={hoveredRowKey}
+        resizingKey={resizingKey}
+        resizingWidth={resizingWidth}
+        expandedRowKeys={getExpandedRowKeys()}
+        containerStyle={_getLeftTableContainerStyle(columnsWidth, width, containerHeight)}
+        className={_prefixClass('table-frozen-left')}
+        ref={_setLeftTableRef}
+        data={dataRef.current}
+        columns={columnManager.getLeftFrozenColumns()}
+        initialScrollTop={scrollRef.current.scrollTop}
         width={columnsWidth + offset}
         height={containerHeight}
         headerHeight={headerHeight}
-        rowHeight={rowHeight!}
+        rowHeight={rowHeight}
         estimatedRowHeight={estimatedRowHeight}
-        getRowHeight={estimatedRowHeight ? this._getRowHeight : undefined}
+        getRowHeight={estimatedRowHeight ? _getRowHeight : undefined}
         headerWidth={columnsWidth + offset}
         bodyWidth={columnsWidth + offset}
-        headerRenderer={this.renderHeader}
-        rowRenderer={this.renderRow}
-        onScroll={this._handleVerticalScroll}
+        headerRenderer={renderHeader}
+        rowRenderer={renderRow}
+        onScroll={_handleVerticalScroll}
         onRowsRendered={noop}
       />
     );
-  }
+  };
 
-  renderRightTable() {
-    if (!this.columnManager.hasRightFrozenColumns()) return null;
+  const renderRightTable = () => {
+    if (!columnManager.hasRightFrozenColumns()) return null;
 
-    const { width, headerHeight, rowHeight, estimatedRowHeight, ...rest } = this.props;
-
-    const containerHeight = this._getFrozenContainerHeight();
-    const columnsWidth = this.columnManager.getRightFrozenColumnsWidth();
-    const scrollbarWidth = this._verticalScrollbarSize;
+    const containerHeight = _getFrozenContainerHeight();
+    const columnsWidth = columnManager.getRightFrozenColumnsWidth();
+    const scrollbarWidth = verticalScrollbarSizeRef.current;
     return (
       <GridTable
-        {...rest}
-        {...this.state}
-        containerStyle={this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
-        className={this._prefixClass('table-frozen-right')}
-        ref={this._setRightTableRef}
-        data={this._data}
-        columns={this.columnManager.getRightFrozenColumns()}
-        initialScrollTop={this._scroll.scrollTop}
+        classPrefix={classPrefix}
+        frozenData={frozenData}
+        rowKey={rowKey}
+        useIsScrolling={useIsScrolling}
+        overscanRowCount={overscanRowCount}
+        onScrollbarPresenceChange={onScrollbarPresenceChange}
+        scrollbarSize={scrollbarSize}
+        hoveredRowKey={hoveredRowKey}
+        resizingKey={resizingKey}
+        resizingWidth={resizingWidth}
+        expandedRowKeys={getExpandedRowKeys()}
+        containerStyle={_getRightTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
+        className={_prefixClass('table-frozen-right')}
+        ref={_setRightTableRef}
+        data={dataRef.current}
+        columns={columnManager.getRightFrozenColumns()}
+        initialScrollTop={scrollRef.current.scrollTop}
         width={columnsWidth + scrollbarWidth}
         height={containerHeight}
         headerHeight={headerHeight}
-        rowHeight={rowHeight!}
+        rowHeight={rowHeight}
         estimatedRowHeight={estimatedRowHeight}
-        getRowHeight={estimatedRowHeight ? this._getRowHeight : undefined}
+        getRowHeight={estimatedRowHeight ? _getRowHeight : undefined}
         headerWidth={columnsWidth + scrollbarWidth}
         bodyWidth={columnsWidth}
-        headerRenderer={this.renderHeader}
-        rowRenderer={this.renderRow}
-        onScroll={this._handleVerticalScroll}
+        headerRenderer={renderHeader}
+        rowRenderer={renderRow}
+        onScroll={_handleVerticalScroll}
         onRowsRendered={noop}
       />
     );
-  }
+  };
 
-  renderResizingLine() {
-    const { width, fixed } = this.props;
-    const { resizingKey } = this.state;
+  const renderResizingLine = () => {
     if (!fixed || !resizingKey) return null;
 
-    const columns = this.columnManager.getMainColumns();
-    const idx = columns.findIndex((column) => column.key === resizingKey);
-    const column = columns[idx];
+    const cols = columnManager.getMainColumns();
+    const idx = cols.findIndex((column) => column.key === resizingKey);
+    const column = cols[idx];
     const { width: columnWidth, frozen } = column;
-    const leftWidth = this.columnManager.recomputeColumnsWidth(columns.slice(0, idx));
+    const leftWidth = columnManager.recomputeColumnsWidth(cols.slice(0, idx));
 
     let left = leftWidth + columnWidth;
     if (!frozen) {
-      left -= this._scroll.scrollLeft;
+      left -= scrollRef.current.scrollLeft;
     } else if (frozen === FrozenDirection.RIGHT) {
-      const rightWidth = this.columnManager.recomputeColumnsWidth(columns.slice(idx + 1));
-      if (rightWidth + columnWidth > width - this._verticalScrollbarSize) {
+      const rightWidth = columnManager.recomputeColumnsWidth(cols.slice(idx + 1));
+      if (rightWidth + columnWidth > width - verticalScrollbarSizeRef.current) {
         left = columnWidth;
       } else {
-        left = width - this._verticalScrollbarSize - rightWidth;
+        left = width - verticalScrollbarSizeRef.current - rightWidth;
       }
     }
-    const style = {
+    const lineStyle = {
       left,
-      height: this._getTableHeight() - this._horizontalScrollbarSize,
+      height: _getTableHeight() - horizontalScrollbarSizeRef.current,
     };
-    return <div className={this._prefixClass('resizing-line')} style={style} />;
-  }
+    return <div className={_prefixClass('resizing-line')} style={lineStyle} />;
+  };
 
-  renderFooter() {
-    const { footerHeight, footerRenderer } = this.props;
+  const renderFooter = () => {
     if (footerHeight === 0) return null;
     return (
-      <div className={this._prefixClass('footer')} style={{ height: footerHeight }}>
+      <div className={_prefixClass('footer')} style={{ height: footerHeight }}>
         {renderElement(footerRenderer)}
       </div>
     );
-  }
+  };
 
-  renderEmptyLayer() {
-    const { data, frozenData, footerHeight, emptyRenderer } = this.props;
-
+  const renderEmptyLayer = () => {
     if ((data && data.length) || (frozenData && frozenData.length)) return null;
-    const headerHeight = this._getHeaderHeight();
+    const hHeight = _getHeaderHeight();
     return (
-      <div className={this._prefixClass('empty-layer')} style={{ top: headerHeight, bottom: footerHeight }}>
+      <div className={_prefixClass('empty-layer')} style={{ top: hHeight, bottom: footerHeight }}>
         {renderElement(emptyRenderer)}
       </div>
     );
-  }
+  };
 
-  renderOverlay() {
-    const { overlayRenderer } = this.props;
+  const renderOverlay = () => {
+    return <div className={_prefixClass('overlay')}>{!!overlayRenderer && renderElement(overlayRenderer)}</div>;
+  };
 
-    return <div className={this._prefixClass('overlay')}>{!!overlayRenderer && renderElement(overlayRenderer)}</div>;
-  }
+  // Container ref for imperative handle (passed as `container` to cell renderers)
+  const containerRef = useRef<BaseTableHandle | null>(null);
 
-  render() {
-    const {
-      columns,
-      children,
-      width,
-      fixed,
-      data,
-      frozenData,
-      expandColumnKey,
-      disabled,
-      className,
-      style,
-      footerHeight,
-      classPrefix,
-      estimatedRowHeight,
-    } = this.props;
-    this._resetColumnManager(getColumns(columns, children), fixed!);
-
-    const _data = expandColumnKey ? this._flattenOnKeys(data, this.getExpandedRowKeys(), this.props.rowKey) : data;
-    if (this._data !== _data) {
-      this.resetAfterRowIndex(0, false);
-      this._data = _data;
-    }
-    this._calcScrollbarSizes();
-    this._totalRowsHeight = this.getTotalRowsHeight();
-
-    const containerStyle: React.CSSProperties = {
-      ...style,
-      width,
-      height: this._getTableHeight() + footerHeight!,
-      position: 'relative',
+  // useImperativeHandle
+  useImperativeHandle(ref, () => {
+    const handle: BaseTableHandle = {
+      getDOMNode: () => tableNodeRef.current,
+      getColumnManager: () => columnManager,
+      getExpandedRowKeys,
+      getExpandedState: () => ({
+        expandedData: dataRef.current,
+        expandedRowKeys: getExpandedRowKeys(),
+        expandedDepthMap: depthMapRef.current,
+      }),
+      getTotalRowsHeight,
+      getTotalColumnsWidth: () => columnManager.getColumnsWidth(),
+      forceUpdateTable: _forceUpdateTable,
+      resetAfterRowIndex: _resetAfterRowIndex,
+      resetRowHeightCache: () => {
+        if (!estimatedRowHeight) return;
+        resetIndexRef.current = null;
+        rowHeightMapBufferRef.current = {};
+        rowHeightMapRef.current = {};
+        mainRowHeightMapRef.current = {};
+        leftRowHeightMapRef.current = {};
+        rightRowHeightMapRef.current = {};
+      },
+      scrollToPosition: _scrollToPosition,
+      scrollToTop: _scrollToTop,
+      scrollToLeft: (scrollLeft: number) => {
+        scrollRef.current.scrollLeft = scrollLeft;
+        tableRef.current && tableRef.current.scrollToPosition(scrollRef.current);
+      },
+      scrollToRow: (rowIndex: number = 0, align: string = 'auto') => {
+        tableRef.current && tableRef.current.scrollToRow(rowIndex, align);
+        leftTableRef.current && leftTableRef.current.scrollToRow(rowIndex, align);
+        rightTableRef.current && rightTableRef.current.scrollToRow(rowIndex, align);
+      },
+      setExpandedRowKeys: (keys: RowKey[]) => {
+        if (expandedRowKeysProp !== undefined) return;
+        setExpandedRowKeysState(cloneArray(keys));
+      },
     };
-    const cls = cn(classPrefix, className, {
-      [`${classPrefix}--fixed`]: fixed,
-      [`${classPrefix}--expandable`]: !!expandColumnKey,
-      [`${classPrefix}--empty`]: data.length === 0,
-      [`${classPrefix}--has-frozen-rows`]: frozenData!.length > 0,
-      [`${classPrefix}--has-frozen-columns`]: this.columnManager.hasFrozenColumns(),
-      [`${classPrefix}--disabled`]: disabled,
-      [`${classPrefix}--dynamic`]: !!estimatedRowHeight,
-    });
-    return (
-      <div ref={this._setContainerRef} className={cls} style={containerStyle}>
-        {this.renderFooter()}
-        {this.renderMainTable()}
-        {this.renderLeftTable()}
-        {this.renderRightTable()}
-        {this.renderResizingLine()}
-        {this.renderEmptyLayer()}
-        {this.renderOverlay()}
-      </div>
-    );
-  }
+    containerRef.current = handle;
+    return handle;
+  });
 
-  componentDidMount() {
-    const scrollbarSize = this.props.getScrollbarSize!();
-    if (scrollbarSize > 0) {
-      this.setState({ scrollbarSize });
+  // Lifecycle: componentDidMount
+  useEffect(() => {
+    const size = getScrollbarSize();
+    if (size > 0) {
+      setScrollbarSize(size);
     }
-  }
+  }, []);
 
-  componentDidUpdate(prevProps: BaseTableProps, prevState: BaseTableState) {
-    const { data, height, maxHeight, estimatedRowHeight } = this.props;
-    if (data !== prevProps.data) {
-      this._lastScannedRowIndex = -1;
-      this._hasDataChangedSinceEndReached = true;
+  // Lifecycle: componentDidUpdate — track data changes
+  const prevDataRef = useRef(data);
+  const prevHeightRef = useRef(height);
+  const prevMaxHeightRef = useRef(maxHeight);
+  useEffect(() => {
+    if (data !== prevDataRef.current) {
+      lastScannedRowIndexRef.current = -1;
+      hasDataChangedSinceEndReachedRef.current = true;
     }
+    prevDataRef.current = data;
 
-    if (maxHeight !== prevProps.maxHeight || height !== prevProps.height) {
-      this._maybeCallOnEndReached();
+    if (maxHeight !== prevMaxHeightRef.current || height !== prevHeightRef.current) {
+      _maybeCallOnEndReached();
     }
-    this._maybeScrollbarPresenceChange();
+    prevHeightRef.current = height;
+    prevMaxHeightRef.current = maxHeight;
+
+    _maybeScrollbarPresenceChange();
 
     if (estimatedRowHeight) {
-      if (this.getTotalRowsHeight() !== this._totalRowsHeight) {
-        this.forceUpdate();
+      if (getTotalRowsHeight() !== totalRowsHeightRef.current) {
+        forceRender();
       }
     }
+  });
+
+  // === Render logic (equivalent to class render() method) ===
+
+  _resetColumnManager(getColumns(columns, children), fixed);
+
+  const _data = expandColumnKey ? _flattenOnKeys(data, getExpandedRowKeys(), rowKey) : data;
+  if (dataRef.current !== _data) {
+    _resetAfterRowIndex(0, false);
+    dataRef.current = _data;
   }
+  _calcScrollbarSizes();
+  totalRowsHeightRef.current = getTotalRowsHeight();
 
-  _prefixClass(className: string): string {
-    return `${this.props.classPrefix}__${className}`;
-  }
+  const containerStyle: React.CSSProperties = {
+    ...style,
+    width,
+    height: _getTableHeight() + footerHeight,
+    position: 'relative',
+  };
+  const cls = cn(classPrefix, className, {
+    [`${classPrefix}--fixed`]: fixed,
+    [`${classPrefix}--expandable`]: !!expandColumnKey,
+    [`${classPrefix}--empty`]: data.length === 0,
+    [`${classPrefix}--has-frozen-rows`]: frozenData.length > 0,
+    [`${classPrefix}--has-frozen-columns`]: columnManager.hasFrozenColumns(),
+    [`${classPrefix}--disabled`]: disabled,
+    [`${classPrefix}--dynamic`]: !!estimatedRowHeight,
+  });
 
-  _setContainerRef(ref: HTMLDivElement | null) {
-    this.tableNode = ref;
-  }
+  return (
+    <div ref={_setContainerRef} className={cls} style={containerStyle}>
+      {renderFooter()}
+      {renderMainTable()}
+      {renderLeftTable()}
+      {renderRightTable()}
+      {renderResizingLine()}
+      {renderEmptyLayer()}
+      {renderOverlay()}
+    </div>
+  );
+});
 
-  _setMainTableRef(ref: GridTable | null) {
-    this.table = ref;
-  }
+const BaseTable = React.memo(InnerBaseTable) as React.MemoExoticComponent<
+  React.ForwardRefExoticComponent<BaseTableProps & React.RefAttributes<BaseTableHandle>>
+> & {
+  Column: typeof Column;
+  PlaceholderKey: string;
+};
 
-  _setLeftTableRef(ref: GridTable | null) {
-    this.leftTable = ref;
-  }
-
-  _setRightTableRef(ref: GridTable | null) {
-    this.rightTable = ref;
-  }
-
-  _getComponent(name: keyof TableComponents): React.ComponentType<any> {
-    if (this.props.components && this.props.components[name])
-      return this.props.components[name] as React.ComponentType<any>;
-    return DEFAULT_COMPONENTS[name];
-  }
-
-  __getRowHeight(rowIndex: number): number {
-    const { estimatedRowHeight, rowKey } = this.props;
-    return (
-      this._rowHeightMap[this._data[rowIndex][rowKey as string]] ||
-      callOrReturn(estimatedRowHeight!, { rowData: this._data[rowIndex], rowIndex })
-    );
-  }
-
-  _getIsResetting(): boolean {
-    return this._isResetting;
-  }
-
-  _getHeaderHeight(): number {
-    const { headerHeight } = this.props;
-    if (Array.isArray(headerHeight)) {
-      return headerHeight.reduce((sum, height) => sum + height, 0);
-    }
-    return headerHeight;
-  }
-
-  _getFrozenRowsHeight(): number {
-    const { frozenData, rowHeight } = this.props;
-    return frozenData!.length * rowHeight!;
-  }
-
-  _getTableHeight(): number {
-    const { height, maxHeight, footerHeight } = this.props;
-    let tableHeight = height! - footerHeight!;
-
-    if (maxHeight! > 0) {
-      const frozenRowsHeight = this._getFrozenRowsHeight();
-      const totalRowsHeight = this.getTotalRowsHeight();
-      const headerHeight = this._getHeaderHeight();
-      const totalHeight = headerHeight + frozenRowsHeight + totalRowsHeight + this._horizontalScrollbarSize;
-      tableHeight = Math.min(totalHeight, maxHeight! - footerHeight!);
-    }
-
-    return tableHeight;
-  }
-
-  _getBodyHeight(): number {
-    return this._getTableHeight() - this._getHeaderHeight() - this._getFrozenRowsHeight();
-  }
-
-  _getFrozenContainerHeight(): number {
-    const { maxHeight } = this.props;
-
-    const tableHeight = this._getTableHeight() - (this._data.length > 0 ? this._horizontalScrollbarSize : 0);
-    if (maxHeight! > 0) return tableHeight;
-
-    const totalHeight = this.getTotalRowsHeight() + this._getHeaderHeight() + this._getFrozenRowsHeight();
-    return Math.min(tableHeight, totalHeight);
-  }
-
-  _calcScrollbarSizes() {
-    const { fixed, width } = this.props;
-    const { scrollbarSize } = this.state;
-
-    const totalRowsHeight = this.getTotalRowsHeight();
-    const totalColumnsWidth = this.getTotalColumnsWidth();
-
-    const prevHorizontalScrollbarSize = this._horizontalScrollbarSize;
-    const prevVerticalScrollbarSize = this._verticalScrollbarSize;
-
-    if (scrollbarSize === 0) {
-      this._horizontalScrollbarSize = 0;
-      this._verticalScrollbarSize = 0;
-    } else {
-      if (!fixed || totalColumnsWidth <= width - scrollbarSize) {
-        this._horizontalScrollbarSize = 0;
-        this._verticalScrollbarSize = totalRowsHeight > this._getBodyHeight() ? scrollbarSize : 0;
-      } else {
-        if (totalColumnsWidth > width) {
-          this._horizontalScrollbarSize = scrollbarSize;
-          this._verticalScrollbarSize =
-            totalRowsHeight > this._getBodyHeight() - this._horizontalScrollbarSize ? scrollbarSize : 0;
-        } else {
-          this._horizontalScrollbarSize = 0;
-          this._verticalScrollbarSize = 0;
-          if (totalRowsHeight > this._getBodyHeight()) {
-            this._horizontalScrollbarSize = scrollbarSize;
-            this._verticalScrollbarSize = scrollbarSize;
-          }
-        }
-      }
-    }
-
-    if (
-      prevHorizontalScrollbarSize !== this._horizontalScrollbarSize ||
-      prevVerticalScrollbarSize !== this._verticalScrollbarSize
-    ) {
-      this._scrollbarPresenceChanged = true;
-    }
-  }
-
-  _maybeScrollbarPresenceChange() {
-    if (this._scrollbarPresenceChanged) {
-      const { onScrollbarPresenceChange } = this.props;
-      this._scrollbarPresenceChanged = false;
-
-      onScrollbarPresenceChange!({
-        size: this.state.scrollbarSize,
-        horizontal: this._horizontalScrollbarSize > 0,
-        vertical: this._verticalScrollbarSize > 0,
-      });
-    }
-  }
-
-  _maybeCallOnEndReached() {
-    const { onEndReached, onEndReachedThreshold } = this.props;
-    const { scrollTop } = this._scroll;
-    const scrollHeight = this.getTotalRowsHeight();
-    const clientHeight = this._getBodyHeight();
-
-    if (!onEndReached || !clientHeight || !scrollHeight) return;
-    const distanceFromEnd = scrollHeight - scrollTop - clientHeight + this._horizontalScrollbarSize;
-    if (
-      this._lastScannedRowIndex >= 0 &&
-      distanceFromEnd <= onEndReachedThreshold! &&
-      (this._hasDataChangedSinceEndReached || scrollHeight !== this._scrollHeight)
-    ) {
-      this._hasDataChangedSinceEndReached = false;
-      this._scrollHeight = scrollHeight;
-      onEndReached({ distanceFromEnd });
-    }
-  }
-
-  _handleScroll(args: any) {
-    const lastScrollTop = this._scroll.scrollTop;
-    this.scrollToPosition(args);
-    this.props.onScroll!(args);
-
-    if (args.scrollTop > lastScrollTop) this._maybeCallOnEndReached();
-  }
-
-  _handleVerticalScroll({ scrollTop }: { scrollTop: number }) {
-    const lastScrollTop = this._scroll.scrollTop;
-
-    if (scrollTop !== lastScrollTop) this.scrollToTop(scrollTop);
-    if (scrollTop > lastScrollTop) this._maybeCallOnEndReached();
-  }
-
-  _handleRowsRendered(args: RowsRenderedArgs) {
-    this.props.onRowsRendered!(args);
-
-    if (args.overscanStopIndex > this._lastScannedRowIndex) {
-      this._lastScannedRowIndex = args.overscanStopIndex;
-      this._maybeCallOnEndReached();
-    }
-  }
-
-  _handleRowHover({ hovered, rowKey }: { hovered: boolean; rowKey: RowKey }) {
-    this.setState({ hoveredRowKey: hovered ? rowKey : null });
-  }
-
-  _handleRowExpand({
-    expanded,
-    rowData,
-    rowIndex,
-    rowKey,
-  }: {
-    expanded: boolean;
-    rowData: RowData;
-    rowIndex: number;
-    rowKey: RowKey;
-  }) {
-    const expandedRowKeys = cloneArray(this.getExpandedRowKeys());
-    if (expanded) {
-      if (expandedRowKeys.indexOf(rowKey) < 0) expandedRowKeys.push(rowKey);
-    } else {
-      const index = expandedRowKeys.indexOf(rowKey);
-      if (index > -1) {
-        expandedRowKeys.splice(index, 1);
-      }
-    }
-    if (this.props.expandedRowKeys === undefined) {
-      this.setState({ expandedRowKeys });
-    }
-    this.props.onRowExpand!({ expanded, rowData, rowIndex, rowKey });
-    this.props.onExpandedRowsChange!(expandedRowKeys);
-  }
-
-  _handleColumnResize({ key }: { key: string }, width: number) {
-    this.columnManager.setColumnWidth(key, width);
-    this.setState({ resizingWidth: width });
-
-    const column = this.columnManager.getColumn(key);
-    this.props.onColumnResize!({ column, width });
-  }
-
-  _handleColumnResizeStart({ key }: { key: string }) {
-    this.setState({ resizingKey: key });
-  }
-
-  _handleColumnResizeStop() {
-    const { resizingKey, resizingWidth } = this.state;
-    this.setState({ resizingKey: null, resizingWidth: 0 });
-
-    if (!resizingKey || !resizingWidth) return;
-
-    const column = this.columnManager.getColumn(resizingKey);
-    this.props.onColumnResizeEnd!({ column, width: resizingWidth });
-  }
-
-  _handleColumnSort(event: React.MouseEvent) {
-    const key = (event.currentTarget as HTMLElement).dataset.key!;
-    const { sortBy, sortState, onColumnSort } = this.props;
-    let order: string = SortOrder.ASC;
-
-    if (sortState) {
-      order = sortState[key] === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
-    } else if (key === sortBy!.key) {
-      order = sortBy!.order === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
-    }
-
-    const column = this.columnManager.getColumn(key);
-    onColumnSort!({ column, key, order });
-  }
-
-  _handleFrozenRowHeightChange(rowKey: RowKey, size: number, rowIndex: number, frozen: any) {
-    if (!frozen) {
-      this._mainRowHeightMap[rowKey] = size;
-    } else if (frozen === FrozenDirection.RIGHT) {
-      this._rightRowHeightMap[rowKey] = size;
-    } else {
-      this._leftRowHeightMap[rowKey] = size;
-    }
-
-    const height = Math.max(
-      this._mainRowHeightMap[rowKey] || 0,
-      this._leftRowHeightMap[rowKey] || 0,
-      this._rightRowHeightMap[rowKey] || 0,
-    );
-
-    if (this._rowHeightMap[rowKey] !== height) {
-      this._handleRowHeightChange(rowKey, height, rowIndex);
-    }
-  }
-
-  _handleRowHeightChange(rowKey: RowKey, size: number, rowIndex: number) {
-    if (this._resetIndex === null) this._resetIndex = rowIndex;
-    else if (this._resetIndex > rowIndex) this._resetIndex = rowIndex;
-
-    this._rowHeightMapBuffer[rowKey] = size;
-    this._updateRowHeights();
-  }
-}
+(BaseTable as any).Column = Column;
+(BaseTable as any).PlaceholderKey = ColumnManager.PlaceholderKey;
 
 export default BaseTable;

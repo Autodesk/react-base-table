@@ -1,128 +1,129 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import { renderElement } from './utils';
 
-import type { ColumnShape, RowData, RowKey, RowEventHandlers } from './types';
-
-export interface TableRowProps {
-  isScrolling?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-  columns: ColumnShape[];
-  rowData: RowData;
-  rowIndex: number;
-  rowKey?: RowKey;
-  expandColumnKey?: string;
-  depth?: number;
-  rowEventHandlers?: RowEventHandlers;
-  rowRenderer?: React.ComponentType<any> | React.ReactElement | ((props: any) => React.ReactNode);
-  cellRenderer?: (args: any) => React.ReactNode;
-  expandIconRenderer?: (args: any) => React.ReactNode;
-  estimatedRowHeight?: number | ((args: { rowData: RowData; rowIndex: number }) => number);
-  getIsResetting?: () => boolean;
-  onRowHover?: (args: {
-    hovered: boolean;
-    rowData: RowData;
-    rowIndex: number;
-    rowKey: RowKey;
-    event: React.SyntheticEvent;
-  }) => void;
-  onRowExpand?: (args: { expanded: boolean; rowData: RowData; rowIndex: number; rowKey: RowKey }) => void;
-  onRowHeightChange?: (rowKey: RowKey, height: number, rowIndex: number, frozen?: any) => void;
-  tagName?: React.ElementType;
-  [key: string]: any;
-}
-
-interface TableRowState {
-  measured: boolean;
-}
+import type { TableRowProps } from './types';
 
 /**
  * Row component for BaseTable
  */
-class TableRow extends React.PureComponent<TableRowProps, TableRowState> {
-  ref: HTMLElement | null = null;
+const TableRow: React.FC<TableRowProps> = React.memo(
+  ({
+    isScrolling,
+    className,
+    style,
+    columns,
+    rowIndex,
+    rowData,
+    expandColumnKey,
+    depth,
+    rowEventHandlers,
+    estimatedRowHeight,
+    rowRenderer,
+    cellRenderer,
+    expandIconRenderer,
+    tagName: Tag = 'div',
+    // omit the following from rest
+    rowKey,
+    getIsResetting,
+    onRowHover,
+    onRowExpand,
+    onRowHeightChange,
+    ...rest
+  }) => {
+    const [measured, setMeasured] = useState(false);
+    const ref = useRef<HTMLElement | null>(null);
 
-  static defaultProps = {
-    tagName: 'div',
-  };
+    const measureHeight = useCallback(
+      (initialMeasure?: boolean) => {
+        if (!ref.current) return;
 
-  static propTypes = {
-    isScrolling: PropTypes.bool,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowData: PropTypes.object.isRequired,
-    rowIndex: PropTypes.number.isRequired,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    expandColumnKey: PropTypes.string,
-    depth: PropTypes.number,
-    rowEventHandlers: PropTypes.object,
-    rowRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    cellRenderer: PropTypes.func,
-    expandIconRenderer: PropTypes.func,
-    estimatedRowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    getIsResetting: PropTypes.func,
-    onRowHover: PropTypes.func,
-    onRowExpand: PropTypes.func,
-    onRowHeightChange: PropTypes.func,
-    tagName: PropTypes.elementType,
-  };
+        const height = ref.current.getBoundingClientRect().height;
+        setMeasured(true);
+        if (initialMeasure || height !== (style as any)?.height)
+          onRowHeightChange!(
+            rowKey!,
+            height,
+            rowIndex,
+            columns[0] && !(columns[0] as any).__placeholder__ && columns[0].frozen,
+          );
+      },
+      [style, rowKey, onRowHeightChange, rowIndex, columns],
+    );
 
-  constructor(props: TableRowProps) {
-    super(props);
+    // componentDidMount: initial measurement
+    useEffect(() => {
+      if (estimatedRowHeight && rowIndex >= 0) {
+        measureHeight(true);
+      }
+    }, []);
 
-    this.state = {
-      measured: false,
-    };
+    // componentDidUpdate: re-measure when props change
+    const prevMeasuredRef = useRef(false);
+    useEffect(() => {
+      const prevMeasured = prevMeasuredRef.current;
+      prevMeasuredRef.current = measured;
 
-    this._setRef = this._setRef.bind(this);
-    this._handleExpand = this._handleExpand.bind(this);
-  }
+      if (estimatedRowHeight && rowIndex >= 0 && !getIsResetting!() && measured && prevMeasured) {
+        setMeasured(false);
+      }
+    });
 
-  componentDidMount() {
-    this.props.estimatedRowHeight && this.props.rowIndex >= 0 && this._measureHeight(true);
-  }
+    // When measured transitions to false, trigger re-measurement
+    useEffect(() => {
+      if (!measured && estimatedRowHeight && rowIndex >= 0) {
+        measureHeight();
+      }
+    }, [measured, estimatedRowHeight, rowIndex, measureHeight]);
 
-  componentDidUpdate(prevProps: TableRowProps, prevState: TableRowState) {
-    if (
-      this.props.estimatedRowHeight &&
-      this.props.rowIndex >= 0 &&
-      !this.props.getIsResetting!() &&
-      this.state.measured &&
-      prevState.measured
-    ) {
-      this.setState({ measured: false }, () => this._measureHeight());
-    }
-  }
+    const handleExpand = useCallback(
+      (expanded: boolean) => {
+        onRowExpand && onRowExpand({ expanded, rowData, rowIndex, rowKey: rowKey! });
+      },
+      [onRowExpand, rowData, rowIndex, rowKey],
+    );
 
-  render() {
-    const {
-      isScrolling,
-      className,
-      style,
-      columns,
-      rowIndex,
-      rowData,
-      expandColumnKey,
-      depth,
-      rowEventHandlers,
-      estimatedRowHeight,
-      rowRenderer,
-      cellRenderer,
-      expandIconRenderer,
-      tagName: Tag = 'div',
-      // omit the following from rest
-      rowKey,
-      getIsResetting,
-      onRowHover,
-      onRowExpand,
-      onRowHeightChange,
-      ...rest
-    } = this.props;
+    const eventHandlers = useMemo(() => {
+      const handlers: Record<string, any> = rowEventHandlers || {};
+      const result: Record<string, (event: React.SyntheticEvent) => void> = {};
+      Object.keys(handlers).forEach((eventKey) => {
+        const callback = handlers[eventKey];
+        if (typeof callback === 'function') {
+          result[eventKey] = (event: React.SyntheticEvent) => {
+            callback({ rowData, rowIndex, rowKey, event });
+          };
+        }
+      });
 
-    const expandIcon = expandIconRenderer!({ rowData, rowIndex, depth, onExpand: this._handleExpand });
+      if (onRowHover) {
+        const mouseEnterHandler = result['onMouseEnter'];
+        result['onMouseEnter'] = (event: React.SyntheticEvent) => {
+          onRowHover({
+            hovered: true,
+            rowData,
+            rowIndex,
+            rowKey: rowKey!,
+            event,
+          });
+          mouseEnterHandler && mouseEnterHandler(event);
+        };
+
+        const mouseLeaveHandler = result['onMouseLeave'];
+        result['onMouseLeave'] = (event: React.SyntheticEvent) => {
+          onRowHover({
+            hovered: false,
+            rowData,
+            rowIndex,
+            rowKey: rowKey!,
+            event,
+          });
+          mouseLeaveHandler && mouseLeaveHandler(event);
+        };
+      }
+
+      return result;
+    }, [rowEventHandlers, rowData, rowIndex, rowKey, onRowHover]);
+
+    const expandIcon = expandIconRenderer!({ rowData, rowIndex, depth, onExpand: handleExpand });
     let cells: React.ReactNode = columns.map((column, columnIndex) =>
       cellRenderer!({
         isScrolling,
@@ -139,17 +140,15 @@ class TableRow extends React.PureComponent<TableRowProps, TableRowState> {
       cells = renderElement(rowRenderer as any, { isScrolling, cells, columns, rowData, rowIndex, depth });
     }
 
-    const eventHandlers = this._getEventHandlers(rowEventHandlers);
-
     if (estimatedRowHeight && rowIndex >= 0) {
       const { height, ...otherStyles } = style || ({} as any);
       return (
         <Tag
           {...rest}
-          ref={this._setRef}
+          ref={ref}
           className={className}
-          style={this.state.measured ? style : otherStyles}
-          {...(this.state.measured && eventHandlers)}
+          style={measured ? style : otherStyles}
+          {...(measured && eventHandlers)}
         >
           {cells}
         </Tag>
@@ -161,73 +160,7 @@ class TableRow extends React.PureComponent<TableRowProps, TableRowState> {
         {cells}
       </Tag>
     );
-  }
-
-  _setRef(ref: HTMLElement | null) {
-    this.ref = ref;
-  }
-
-  _handleExpand(expanded: boolean) {
-    const { onRowExpand, rowData, rowIndex, rowKey } = this.props;
-    onRowExpand && onRowExpand({ expanded, rowData, rowIndex, rowKey: rowKey! });
-  }
-
-  _measureHeight(initialMeasure?: boolean) {
-    if (!this.ref) return;
-
-    const { style, rowKey, onRowHeightChange, rowIndex, columns } = this.props;
-    const height = this.ref.getBoundingClientRect().height;
-    this.setState({ measured: true }, () => {
-      if (initialMeasure || height !== (style as any)?.height)
-        onRowHeightChange!(
-          rowKey!,
-          height,
-          rowIndex,
-          columns[0] && !(columns[0] as any).__placeholder__ && columns[0].frozen,
-        );
-    });
-  }
-
-  _getEventHandlers(handlers: Record<string, any> = {}) {
-    const { rowData, rowIndex, rowKey, onRowHover } = this.props;
-    const eventHandlers: Record<string, (event: React.SyntheticEvent) => void> = {};
-    Object.keys(handlers).forEach((eventKey) => {
-      const callback = handlers[eventKey];
-      if (typeof callback === 'function') {
-        eventHandlers[eventKey] = (event: React.SyntheticEvent) => {
-          callback({ rowData, rowIndex, rowKey, event });
-        };
-      }
-    });
-
-    if (onRowHover) {
-      const mouseEnterHandler = eventHandlers['onMouseEnter'];
-      eventHandlers['onMouseEnter'] = (event: React.SyntheticEvent) => {
-        onRowHover({
-          hovered: true,
-          rowData,
-          rowIndex,
-          rowKey: rowKey!,
-          event,
-        });
-        mouseEnterHandler && mouseEnterHandler(event);
-      };
-
-      const mouseLeaveHandler = eventHandlers['onMouseLeave'];
-      eventHandlers['onMouseLeave'] = (event: React.SyntheticEvent) => {
-        onRowHover({
-          hovered: false,
-          rowData,
-          rowIndex,
-          rowKey: rowKey!,
-          event,
-        });
-        mouseLeaveHandler && mouseLeaveHandler(event);
-      };
-    }
-
-    return eventHandlers;
-  }
-}
+  },
+);
 
 export default TableRow;

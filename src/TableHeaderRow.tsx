@@ -1,23 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { renderElement } from './utils';
 
-import type { ColumnShape } from './types';
-
-export interface TableHeaderRowProps {
-  isScrolling?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-  columns: ColumnShape[];
-  headerIndex?: number;
-  cellRenderer?: (args: any) => React.ReactNode;
-  headerRenderer?: React.ComponentType<any> | React.ReactElement | ((props: any) => React.ReactNode);
-  expandColumnKey?: string;
-  expandIcon?: React.ComponentType<any>;
-  tagName?: React.ElementType;
-  [key: string]: any;
-}
+import type { TableHeaderRowProps } from './types';
 
 /**
  * HeaderRow component for BaseTable
@@ -53,19 +37,6 @@ const TableHeaderRow: React.FC<TableHeaderRowProps> = ({
       {cells}
     </Tag>
   );
-};
-
-TableHeaderRow.propTypes = {
-  isScrolling: PropTypes.bool,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headerIndex: PropTypes.number,
-  cellRenderer: PropTypes.func,
-  headerRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-  expandColumnKey: PropTypes.string,
-  expandIcon: PropTypes.func,
-  tagName: PropTypes.elementType,
 };
 
 export default TableHeaderRow;

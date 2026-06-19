@@ -1,9 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import React, { useRef, useCallback, useEffect } from 'react';
 import { noop, addClassName, removeClassName } from './utils';
 
-import type { ColumnShape } from './types';
+import type { ColumnResizerProps } from './types';
 
 const INVALID_VALUE = null;
 
@@ -54,100 +52,151 @@ const eventsFor = {
 
 let dragEventFor = eventsFor.mouse;
 
-export interface ColumnResizerProps {
-  style?: React.CSSProperties;
-  column?: ColumnShape;
-  onResizeStart?: (column: ColumnShape) => void;
-  onResize?: (column: ColumnShape, width: number) => void;
-  onResizeStop?: (column: ColumnShape) => void;
-  minWidth?: number;
-  className?: string;
-  [key: string]: any;
-}
-
 /**
  * ColumnResizer for BaseTable
  */
-class ColumnResizer extends React.PureComponent<ColumnResizerProps> {
-  isDragging = false;
-  lastX: number | null = INVALID_VALUE;
-  width = 0;
-  handleRef: HTMLDivElement | null = null;
+const ColumnResizer: React.FC<ColumnResizerProps> = React.memo(
+  ({ style, column, onResizeStart = noop, onResize = noop, onResizeStop = noop, minWidth = 30, ...rest }) => {
+    const handleRef = useRef<HTMLDivElement | null>(null);
+    const isDraggingRef = useRef(false);
+    const lastXRef = useRef<number | null>(INVALID_VALUE);
+    const widthRef = useRef(0);
 
-  static defaultProps = {
-    onResizeStart: noop,
-    onResize: noop,
-    onResizeStop: noop,
-    minWidth: 30,
-  };
+    // Refs to hold latest props for use in DOM event listeners
+    const columnRef = useRef(column);
+    columnRef.current = column;
+    const onResizeRef = useRef(onResize);
+    onResizeRef.current = onResize;
+    const onResizeStopRef = useRef(onResizeStop);
+    onResizeStopRef.current = onResizeStop;
+    const minWidthRef = useRef(minWidth);
+    minWidthRef.current = minWidth;
 
-  static propTypes = {
-    /**
-     * Custom style for the drag handler
-     */
-    style: PropTypes.object,
-    /**
-     * The column object to be dragged
-     */
-    column: PropTypes.object,
-    /**
-     * A callback function when resizing started
-     * The callback is of the shape of `(column) => *`
-     */
-    onResizeStart: PropTypes.func,
-    /**
-     * A callback function when resizing the column
-     * The callback is of the shape of `(column, width) => *`
-     */
-    onResize: PropTypes.func,
-    /**
-     * A callback function when resizing stopped
-     * The callback is of the shape of `(column) => *`
-     */
-    onResizeStop: PropTypes.func,
-    /**
-     * Minimum width of the column could be resized to if the column's `minWidth` is not set
-     */
-    minWidth: PropTypes.number,
-  };
+    const handleDrag = useCallback((e: any) => {
+      let clientX = e.clientX;
+      if (e.type === eventsFor.touch.move) {
+        e.preventDefault();
+        if (e.targetTouches && e.targetTouches[0]) clientX = e.targetTouches[0].clientX;
+      }
 
-  constructor(props: ColumnResizerProps) {
-    super(props);
+      const { offsetParent } = handleRef.current!;
+      const offsetParentRect = (offsetParent as HTMLElement).getBoundingClientRect();
+      const x = clientX + (offsetParent as HTMLElement).scrollLeft - offsetParentRect.left;
 
-    this._setHandleRef = this._setHandleRef.bind(this);
-    this._handleClick = this._handleClick.bind(this);
-    this._handleMouseDown = this._handleMouseDown.bind(this);
-    this._handleMouseUp = this._handleMouseUp.bind(this);
-    this._handleTouchStart = this._handleTouchStart.bind(this);
-    this._handleTouchEnd = this._handleTouchEnd.bind(this);
-    this._handleDragStart = this._handleDragStart.bind(this);
-    this._handleDragStop = this._handleDragStop.bind(this);
-    this._handleDrag = this._handleDrag.bind(this);
-  }
+      if (lastXRef.current === INVALID_VALUE) {
+        lastXRef.current = x;
+        return;
+      }
 
-  componentWillUnmount() {
-    if (this.handleRef) {
-      const { ownerDocument } = this.handleRef;
-      ownerDocument.removeEventListener(eventsFor.mouse.move, this._handleDrag);
-      ownerDocument.removeEventListener(eventsFor.mouse.stop, this._handleDragStop);
-      ownerDocument.removeEventListener(eventsFor.touch.move, this._handleDrag);
-      ownerDocument.removeEventListener(eventsFor.touch.stop, this._handleDragStop);
-      removeUserSelectStyles(ownerDocument);
-    }
-  }
+      const col = columnRef.current!;
+      const { width, maxWidth, minWidth: colMinWidth = minWidthRef.current } = col;
+      const movedX = x - lastXRef.current!;
+      if (!movedX) return;
 
-  render() {
-    const { style, column, onResizeStart, onResize, onResizeStop, minWidth, ...rest } = this.props;
+      widthRef.current = widthRef.current + movedX;
+      lastXRef.current = x;
+
+      let newWidth = widthRef.current;
+      if (maxWidth && newWidth > maxWidth) {
+        newWidth = maxWidth;
+      } else if (newWidth < colMinWidth!) {
+        newWidth = colMinWidth!;
+      }
+
+      if (newWidth === width) return;
+      onResizeRef.current!(col, newWidth);
+    }, []);
+
+    const handleDragStop = useCallback(
+      (e: any) => {
+        if (!isDraggingRef.current) return;
+        isDraggingRef.current = false;
+
+        onResizeStopRef.current!(columnRef.current!);
+
+        const { ownerDocument } = handleRef.current!;
+        removeUserSelectStyles(ownerDocument);
+        ownerDocument.removeEventListener(dragEventFor.move, handleDrag);
+        ownerDocument.removeEventListener(dragEventFor.stop, handleDragStop);
+      },
+      [handleDrag],
+    );
+
+    const handleDragStart = useCallback(
+      (e: any) => {
+        if (typeof e.button === 'number' && e.button !== 0) return;
+
+        isDraggingRef.current = true;
+        lastXRef.current = INVALID_VALUE;
+        widthRef.current = columnRef.current!.width;
+        onResizeStart!(columnRef.current!);
+
+        const { ownerDocument } = handleRef.current!;
+        addUserSelectStyles(ownerDocument);
+        ownerDocument.addEventListener(dragEventFor.move, handleDrag);
+        ownerDocument.addEventListener(dragEventFor.stop, handleDragStop);
+      },
+      [onResizeStart, handleDrag, handleDragStop],
+    );
+
+    const handleClick = useCallback((e: React.MouseEvent) => {
+      e.stopPropagation();
+    }, []);
+
+    const handleMouseDown = useCallback(
+      (e: React.MouseEvent) => {
+        dragEventFor = eventsFor.mouse;
+        handleDragStart(e as any);
+      },
+      [handleDragStart],
+    );
+
+    const handleMouseUp = useCallback(
+      (e: React.MouseEvent) => {
+        dragEventFor = eventsFor.mouse;
+        handleDragStop(e as any);
+      },
+      [handleDragStop],
+    );
+
+    const handleTouchStart = useCallback(
+      (e: React.TouchEvent) => {
+        dragEventFor = eventsFor.touch;
+        handleDragStart(e as any);
+      },
+      [handleDragStart],
+    );
+
+    const handleTouchEnd = useCallback(
+      (e: React.TouchEvent) => {
+        dragEventFor = eventsFor.touch;
+        handleDragStop(e as any);
+      },
+      [handleDragStop],
+    );
+
+    useEffect(() => {
+      return () => {
+        if (handleRef.current) {
+          const { ownerDocument } = handleRef.current;
+          ownerDocument.removeEventListener(eventsFor.mouse.move, handleDrag);
+          ownerDocument.removeEventListener(eventsFor.mouse.stop, handleDragStop);
+          ownerDocument.removeEventListener(eventsFor.touch.move, handleDrag);
+          ownerDocument.removeEventListener(eventsFor.touch.stop, handleDragStop);
+          removeUserSelectStyles(ownerDocument);
+        }
+      };
+    }, [handleDrag, handleDragStop]);
 
     return (
       <div
         {...rest}
-        ref={this._setHandleRef}
-        onClick={this._handleClick}
-        onMouseDown={this._handleMouseDown}
-        onMouseUp={this._handleMouseUp}
-        onTouchStart={this._handleTouchStart}
-        onTouchEnd={this._handleTouchEnd}
+        ref={handleRef}
+        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         style={{
           userSelect: 'none',
           touchAction: 'none',
@@ -160,96 +209,7 @@ class ColumnResizer extends React.PureComponent<ColumnResizerProps> {
         }}
       />
     );
-  }
-
-  _setHandleRef(ref: HTMLDivElement | null) {
-    this.handleRef = ref;
-  }
-
-  _handleClick(e: React.MouseEvent) {
-    e.stopPropagation();
-  }
-
-  _handleMouseDown(e: React.MouseEvent) {
-    dragEventFor = eventsFor.mouse;
-    this._handleDragStart(e as any);
-  }
-
-  _handleMouseUp(e: React.MouseEvent) {
-    dragEventFor = eventsFor.mouse;
-    this._handleDragStop(e as any);
-  }
-
-  _handleTouchStart(e: React.TouchEvent) {
-    dragEventFor = eventsFor.touch;
-    this._handleDragStart(e as any);
-  }
-
-  _handleTouchEnd(e: React.TouchEvent) {
-    dragEventFor = eventsFor.touch;
-    this._handleDragStop(e as any);
-  }
-
-  _handleDragStart(e: any) {
-    if (typeof e.button === 'number' && e.button !== 0) return;
-
-    this.isDragging = true;
-    this.lastX = INVALID_VALUE;
-    this.width = this.props.column!.width;
-    this.props.onResizeStart!(this.props.column!);
-
-    const { ownerDocument } = this.handleRef!;
-    addUserSelectStyles(ownerDocument);
-    ownerDocument.addEventListener(dragEventFor.move, this._handleDrag);
-    ownerDocument.addEventListener(dragEventFor.stop, this._handleDragStop);
-  }
-
-  _handleDragStop(e: any) {
-    if (!this.isDragging) return;
-    this.isDragging = false;
-
-    this.props.onResizeStop!(this.props.column!);
-
-    const { ownerDocument } = this.handleRef!;
-    removeUserSelectStyles(ownerDocument);
-    ownerDocument.removeEventListener(dragEventFor.move, this._handleDrag);
-    ownerDocument.removeEventListener(dragEventFor.stop, this._handleDragStop);
-  }
-
-  _handleDrag(e: any) {
-    let clientX = e.clientX;
-    if (e.type === eventsFor.touch.move) {
-      e.preventDefault();
-      if (e.targetTouches && e.targetTouches[0]) clientX = e.targetTouches[0].clientX;
-    }
-
-    const { offsetParent } = this.handleRef!;
-    const offsetParentRect = (offsetParent as HTMLElement).getBoundingClientRect();
-    const x = clientX + (offsetParent as HTMLElement).scrollLeft - offsetParentRect.left;
-
-    if (this.lastX === INVALID_VALUE) {
-      this.lastX = x;
-      return;
-    }
-
-    const { column, minWidth: MIN_WIDTH } = this.props;
-    const { width, maxWidth, minWidth = MIN_WIDTH } = column!;
-    const movedX = x - this.lastX!;
-    if (!movedX) return;
-
-    this.width = this.width + movedX;
-    this.lastX = x;
-
-    let newWidth = this.width;
-    if (maxWidth && newWidth > maxWidth) {
-      newWidth = maxWidth;
-    } else if (newWidth < minWidth!) {
-      newWidth = minWidth!;
-    }
-
-    if (newWidth === width) return;
-    this.props.onResize!(column!, newWidth);
-  }
-}
+  },
+);
 
 export default ColumnResizer;

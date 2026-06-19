@@ -1,17 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import SortOrder from './SortOrder';
 
-import type { SortOrderValue } from './types';
-
-export interface SortIndicatorProps {
-  sortOrder?: SortOrderValue;
-  className?: string;
-  style?: React.CSSProperties;
-  [key: string]: any;
-}
+import type { SortIndicatorProps } from './types';
 
 /**
  * default SortIndicator for BaseTable
@@ -35,12 +27,6 @@ const SortIndicator: React.FC<SortIndicatorProps> = ({ sortOrder, className, sty
       {sortOrder === SortOrder.DESC ? '\u2193' : '\u2191'}
     </div>
   );
-};
-
-SortIndicator.propTypes = {
-  sortOrder: PropTypes.oneOf([SortOrder.ASC, SortOrder.DESC]),
-  className: PropTypes.string,
-  style: PropTypes.object,
 };
 
 export default SortIndicator;

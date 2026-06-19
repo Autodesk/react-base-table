@@ -42,7 +42,7 @@ export default [
       },
     },
     rules: {
-      'react/prop-types': 2,
+      'react/prop-types': 0,
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
       'prettier/prettier': 'error',
